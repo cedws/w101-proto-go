@@ -228,8 +228,8 @@ type CharacterInfo struct {
 }
 
 func (s *CharacterInfo) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	writeString_7(&b, s.CharacterInfo)
+	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.CharacterInfo)))
+	writeString_7(b, s.CharacterInfo)
 	return b.Bytes(), nil
 }
 
@@ -247,8 +247,8 @@ type CharacterList struct {
 }
 
 func (s *CharacterList) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	binary.Write(&b, binary.LittleEndian, s.Error)
+	b := bytes.NewBuffer(make([]byte, 0, 4))
+	binary.Write(b, binary.LittleEndian, s.Error)
 	return b.Bytes(), nil
 }
 
@@ -278,20 +278,20 @@ type CharacterSelected struct {
 }
 
 func (s *CharacterSelected) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	writeString_7(&b, s.IP)
-	binary.Write(&b, binary.LittleEndian, s.TCPPort)
-	binary.Write(&b, binary.LittleEndian, s.UDPPort)
-	writeString_7(&b, s.Key)
-	binary.Write(&b, binary.LittleEndian, s.UserID)
-	binary.Write(&b, binary.LittleEndian, s.CharID)
-	binary.Write(&b, binary.LittleEndian, s.ZoneID)
-	writeString_7(&b, s.ZoneName)
-	writeString_7(&b, s.Location)
-	binary.Write(&b, binary.LittleEndian, s.Slot)
-	binary.Write(&b, binary.LittleEndian, s.PrepPhase)
-	binary.Write(&b, binary.LittleEndian, s.Error)
-	writeString_7(&b, s.LoginServer)
+	b := bytes.NewBuffer(make([]byte, 0, 54+len(s.IP)+len(s.Key)+len(s.ZoneName)+len(s.Location)+len(s.LoginServer)))
+	writeString_7(b, s.IP)
+	binary.Write(b, binary.LittleEndian, s.TCPPort)
+	binary.Write(b, binary.LittleEndian, s.UDPPort)
+	writeString_7(b, s.Key)
+	binary.Write(b, binary.LittleEndian, s.UserID)
+	binary.Write(b, binary.LittleEndian, s.CharID)
+	binary.Write(b, binary.LittleEndian, s.ZoneID)
+	writeString_7(b, s.ZoneName)
+	writeString_7(b, s.Location)
+	binary.Write(b, binary.LittleEndian, s.Slot)
+	binary.Write(b, binary.LittleEndian, s.PrepPhase)
+	binary.Write(b, binary.LittleEndian, s.Error)
+	writeString_7(b, s.LoginServer)
 	return b.Bytes(), nil
 }
 
@@ -345,8 +345,8 @@ type CreateCharacter struct {
 }
 
 func (s *CreateCharacter) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	writeString_7(&b, s.CreationInfo)
+	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.CreationInfo)))
+	writeString_7(b, s.CreationInfo)
 	return b.Bytes(), nil
 }
 
@@ -364,8 +364,8 @@ type CreateCharacterResponse struct {
 }
 
 func (s *CreateCharacterResponse) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	binary.Write(&b, binary.LittleEndian, s.ErrorCode)
+	b := bytes.NewBuffer(make([]byte, 0, 4))
+	binary.Write(b, binary.LittleEndian, s.ErrorCode)
 	return b.Bytes(), nil
 }
 
@@ -383,8 +383,8 @@ type DeleteCharacter struct {
 }
 
 func (s *DeleteCharacter) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	binary.Write(&b, binary.LittleEndian, s.CharID)
+	b := bytes.NewBuffer(make([]byte, 0, 8))
+	binary.Write(b, binary.LittleEndian, s.CharID)
 	return b.Bytes(), nil
 }
 
@@ -402,8 +402,8 @@ type DeleteCharacterResponse struct {
 }
 
 func (s *DeleteCharacterResponse) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	binary.Write(&b, binary.LittleEndian, s.ErrorCode)
+	b := bytes.NewBuffer(make([]byte, 0, 4))
+	binary.Write(b, binary.LittleEndian, s.ErrorCode)
 	return b.Bytes(), nil
 }
 
@@ -420,8 +420,7 @@ type RequestCharacterList struct {
 }
 
 func (s *RequestCharacterList) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	return b.Bytes(), nil
+	return []byte{}, nil
 }
 
 func (s *RequestCharacterList) UnmarshalBinary(data []byte) error {
@@ -432,8 +431,7 @@ type RequestServerList struct {
 }
 
 func (s *RequestServerList) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	return b.Bytes(), nil
+	return []byte{}, nil
 }
 
 func (s *RequestServerList) UnmarshalBinary(data []byte) error {
@@ -446,9 +444,9 @@ type SelectCharacter struct {
 }
 
 func (s *SelectCharacter) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	binary.Write(&b, binary.LittleEndian, s.CharID)
-	writeString_7(&b, s.ServerName)
+	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.ServerName)))
+	binary.Write(b, binary.LittleEndian, s.CharID)
+	writeString_7(b, s.ServerName)
 	return b.Bytes(), nil
 }
 
@@ -468,8 +466,7 @@ type ServerList struct {
 }
 
 func (s *ServerList) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	return b.Bytes(), nil
+	return []byte{}, nil
 }
 
 func (s *ServerList) UnmarshalBinary(data []byte) error {
@@ -482,9 +479,9 @@ type StartCharacterList struct {
 }
 
 func (s *StartCharacterList) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	writeString_7(&b, s.LoginServer)
-	binary.Write(&b, binary.LittleEndian, s.PurchasedCharacterSlots)
+	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.LoginServer)))
+	writeString_7(b, s.LoginServer)
+	binary.Write(b, binary.LittleEndian, s.PurchasedCharacterSlots)
 	return b.Bytes(), nil
 }
 
@@ -511,14 +508,14 @@ type UserAuthen struct {
 }
 
 func (s *UserAuthen) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	writeString_7(&b, s.Rec1)
-	writeString_7(&b, s.Version)
-	writeString_7(&b, s.Revision)
-	writeString_7(&b, s.DataRevision)
-	writeString_7(&b, s.CRC)
-	binary.Write(&b, binary.LittleEndian, s.MachineID)
-	writeString_7(&b, s.PatchClientID)
+	b := bytes.NewBuffer(make([]byte, 0, 20+len(s.Rec1)+len(s.Version)+len(s.Revision)+len(s.DataRevision)+len(s.CRC)+len(s.PatchClientID)))
+	writeString_7(b, s.Rec1)
+	writeString_7(b, s.Version)
+	writeString_7(b, s.Revision)
+	writeString_7(b, s.DataRevision)
+	writeString_7(b, s.CRC)
+	binary.Write(b, binary.LittleEndian, s.MachineID)
+	writeString_7(b, s.PatchClientID)
 	return b.Bytes(), nil
 }
 
@@ -560,14 +557,14 @@ type UserAuthenRsp struct {
 }
 
 func (s *UserAuthenRsp) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	binary.Write(&b, binary.LittleEndian, s.Error)
-	binary.Write(&b, binary.LittleEndian, s.UserID)
-	writeString_7(&b, s.Rec1)
-	writeString_7(&b, s.Reason)
-	writeString_7(&b, s.TimeStamp)
-	binary.Write(&b, binary.LittleEndian, s.PayingUser)
-	binary.Write(&b, binary.LittleEndian, s.Flags)
+	b := bytes.NewBuffer(make([]byte, 0, 26+len(s.Rec1)+len(s.Reason)+len(s.TimeStamp)))
+	binary.Write(b, binary.LittleEndian, s.Error)
+	binary.Write(b, binary.LittleEndian, s.UserID)
+	writeString_7(b, s.Rec1)
+	writeString_7(b, s.Reason)
+	writeString_7(b, s.TimeStamp)
+	binary.Write(b, binary.LittleEndian, s.PayingUser)
+	binary.Write(b, binary.LittleEndian, s.Flags)
 	return b.Bytes(), nil
 }
 
@@ -607,12 +604,12 @@ type UserValidate struct {
 }
 
 func (s *UserValidate) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	binary.Write(&b, binary.LittleEndian, s.UserID)
-	writeString_7(&b, s.PassKey3)
-	binary.Write(&b, binary.LittleEndian, s.MachineID)
-	writeString_7(&b, s.Locale)
-	writeString_7(&b, s.PatchClientID)
+	b := bytes.NewBuffer(make([]byte, 0, 22+len(s.PassKey3)+len(s.Locale)+len(s.PatchClientID)))
+	binary.Write(b, binary.LittleEndian, s.UserID)
+	writeString_7(b, s.PassKey3)
+	binary.Write(b, binary.LittleEndian, s.MachineID)
+	writeString_7(b, s.Locale)
+	writeString_7(b, s.PatchClientID)
 	return b.Bytes(), nil
 }
 
@@ -647,13 +644,13 @@ type UserValidateRsp struct {
 }
 
 func (s *UserValidateRsp) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	binary.Write(&b, binary.LittleEndian, s.Error)
-	writeString_7(&b, s.Reason)
-	binary.Write(&b, binary.LittleEndian, s.UserID)
-	writeString_7(&b, s.TimeStamp)
-	binary.Write(&b, binary.LittleEndian, s.PayingUser)
-	binary.Write(&b, binary.LittleEndian, s.Flags)
+	b := bytes.NewBuffer(make([]byte, 0, 24+len(s.Reason)+len(s.TimeStamp)))
+	binary.Write(b, binary.LittleEndian, s.Error)
+	writeString_7(b, s.Reason)
+	binary.Write(b, binary.LittleEndian, s.UserID)
+	writeString_7(b, s.TimeStamp)
+	binary.Write(b, binary.LittleEndian, s.PayingUser)
+	binary.Write(b, binary.LittleEndian, s.Flags)
 	return b.Bytes(), nil
 }
 
@@ -686,8 +683,8 @@ type DisconnectLoginAfk struct {
 }
 
 func (s *DisconnectLoginAfk) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	binary.Write(&b, binary.LittleEndian, s.Warning)
+	b := bytes.NewBuffer(make([]byte, 0, 1))
+	binary.Write(b, binary.LittleEndian, s.Warning)
 	return b.Bytes(), nil
 }
 
@@ -705,8 +702,8 @@ type LoginNotAfk struct {
 }
 
 func (s *LoginNotAfk) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	binary.Write(&b, binary.LittleEndian, s.BadgeNameID)
+	b := bytes.NewBuffer(make([]byte, 0, 4))
+	binary.Write(b, binary.LittleEndian, s.BadgeNameID)
 	return b.Bytes(), nil
 }
 
@@ -724,8 +721,8 @@ type ServerShutdown struct {
 }
 
 func (s *ServerShutdown) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	binary.Write(&b, binary.LittleEndian, s.Message)
+	b := bytes.NewBuffer(make([]byte, 0, 4))
+	binary.Write(b, binary.LittleEndian, s.Message)
 	return b.Bytes(), nil
 }
 
@@ -744,9 +741,9 @@ type UserAdmitInd struct {
 }
 
 func (s *UserAdmitInd) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	binary.Write(&b, binary.LittleEndian, s.Status)
-	binary.Write(&b, binary.LittleEndian, s.PositionInQueue)
+	b := bytes.NewBuffer(make([]byte, 0, 8))
+	binary.Write(b, binary.LittleEndian, s.Status)
+	binary.Write(b, binary.LittleEndian, s.PositionInQueue)
 	return b.Bytes(), nil
 }
 
@@ -769,10 +766,10 @@ type WebCharacterInfo struct {
 }
 
 func (s *WebCharacterInfo) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	binary.Write(&b, binary.LittleEndian, s.Name)
-	binary.Write(&b, binary.LittleEndian, s.Gender)
-	binary.Write(&b, binary.LittleEndian, s.School)
+	b := bytes.NewBuffer(make([]byte, 0, 12))
+	binary.Write(b, binary.LittleEndian, s.Name)
+	binary.Write(b, binary.LittleEndian, s.Gender)
+	binary.Write(b, binary.LittleEndian, s.School)
 	return b.Bytes(), nil
 }
 
@@ -803,15 +800,15 @@ type UserAuthenV2 struct {
 }
 
 func (s *UserAuthenV2) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	writeString_7(&b, s.Rec1)
-	writeString_7(&b, s.Version)
-	writeString_7(&b, s.Revision)
-	writeString_7(&b, s.DataRevision)
-	writeString_7(&b, s.CRC)
-	binary.Write(&b, binary.LittleEndian, s.MachineID)
-	writeString_7(&b, s.Locale)
-	writeString_7(&b, s.PatchClientID)
+	b := bytes.NewBuffer(make([]byte, 0, 22+len(s.Rec1)+len(s.Version)+len(s.Revision)+len(s.DataRevision)+len(s.CRC)+len(s.Locale)+len(s.PatchClientID)))
+	writeString_7(b, s.Rec1)
+	writeString_7(b, s.Version)
+	writeString_7(b, s.Revision)
+	writeString_7(b, s.DataRevision)
+	writeString_7(b, s.CRC)
+	binary.Write(b, binary.LittleEndian, s.MachineID)
+	writeString_7(b, s.Locale)
+	writeString_7(b, s.PatchClientID)
 	return b.Bytes(), nil
 }
 
@@ -851,9 +848,9 @@ type SaveCharacter struct {
 }
 
 func (s *SaveCharacter) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	binary.Write(&b, binary.LittleEndian, s.CharID)
-	binary.Write(&b, binary.LittleEndian, s.Success)
+	b := bytes.NewBuffer(make([]byte, 0, 9))
+	binary.Write(b, binary.LittleEndian, s.CharID)
+	binary.Write(b, binary.LittleEndian, s.Success)
 	return b.Bytes(), nil
 }
 
@@ -879,13 +876,13 @@ type WebAuthen struct {
 }
 
 func (s *WebAuthen) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	writeString_7(&b, s.Rec1)
-	writeString_7(&b, s.Version)
-	writeString_7(&b, s.Revision)
-	writeString_7(&b, s.DataRevision)
-	writeString_7(&b, s.CRC)
-	binary.Write(&b, binary.LittleEndian, s.MachineID)
+	b := bytes.NewBuffer(make([]byte, 0, 18+len(s.Rec1)+len(s.Version)+len(s.Revision)+len(s.DataRevision)+len(s.CRC)))
+	writeString_7(b, s.Rec1)
+	writeString_7(b, s.Version)
+	writeString_7(b, s.Revision)
+	writeString_7(b, s.DataRevision)
+	writeString_7(b, s.CRC)
+	binary.Write(b, binary.LittleEndian, s.MachineID)
 	return b.Bytes(), nil
 }
 
@@ -921,11 +918,11 @@ type WebValidate struct {
 }
 
 func (s *WebValidate) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	binary.Write(&b, binary.LittleEndian, s.UserID)
-	writeString_7(&b, s.PassKey3)
-	binary.Write(&b, binary.LittleEndian, s.MachineID)
-	writeString_7(&b, s.Locale)
+	b := bytes.NewBuffer(make([]byte, 0, 20+len(s.PassKey3)+len(s.Locale)))
+	binary.Write(b, binary.LittleEndian, s.UserID)
+	writeString_7(b, s.PassKey3)
+	binary.Write(b, binary.LittleEndian, s.MachineID)
+	writeString_7(b, s.Locale)
 	return b.Bytes(), nil
 }
 
@@ -954,10 +951,10 @@ type ChangeCharacterName struct {
 }
 
 func (s *ChangeCharacterName) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	binary.Write(&b, binary.LittleEndian, s.CharID)
-	writeString_7(&b, s.NewName)
-	writeString_7(&b, s.ServerName)
+	b := bytes.NewBuffer(make([]byte, 0, 12+len(s.NewName)+len(s.ServerName)))
+	binary.Write(b, binary.LittleEndian, s.CharID)
+	writeString_7(b, s.NewName)
+	writeString_7(b, s.ServerName)
 	return b.Bytes(), nil
 }
 
@@ -990,17 +987,17 @@ type UserAuthenV3 struct {
 }
 
 func (s *UserAuthenV3) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	writeString_7(&b, s.Rec1)
-	writeString_7(&b, s.Version)
-	writeString_7(&b, s.Revision)
-	writeString_7(&b, s.DataRevision)
-	writeString_7(&b, s.CRC)
-	binary.Write(&b, binary.LittleEndian, s.MachineID)
-	writeString_7(&b, s.Locale)
-	writeString_7(&b, s.PatchClientID)
-	binary.Write(&b, binary.LittleEndian, s.IsSteamPatcher)
-	binary.Write(&b, binary.LittleEndian, s.ConsoleType)
+	b := bytes.NewBuffer(make([]byte, 0, 27+len(s.Rec1)+len(s.Version)+len(s.Revision)+len(s.DataRevision)+len(s.CRC)+len(s.Locale)+len(s.PatchClientID)))
+	writeString_7(b, s.Rec1)
+	writeString_7(b, s.Version)
+	writeString_7(b, s.Revision)
+	writeString_7(b, s.DataRevision)
+	writeString_7(b, s.CRC)
+	binary.Write(b, binary.LittleEndian, s.MachineID)
+	writeString_7(b, s.Locale)
+	writeString_7(b, s.PatchClientID)
+	binary.Write(b, binary.LittleEndian, s.IsSteamPatcher)
+	binary.Write(b, binary.LittleEndian, s.ConsoleType)
 	return b.Bytes(), nil
 }
 
@@ -1046,9 +1043,9 @@ type LoginLogCharacterCreation struct {
 }
 
 func (s *LoginLogCharacterCreation) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	binary.Write(&b, binary.LittleEndian, s.Stage)
-	binary.Write(&b, binary.LittleEndian, s.Parameter)
+	b := bytes.NewBuffer(make([]byte, 0, 8))
+	binary.Write(b, binary.LittleEndian, s.Stage)
+	binary.Write(b, binary.LittleEndian, s.Parameter)
 	return b.Bytes(), nil
 }
 
@@ -1072,11 +1069,11 @@ func writeString_7(b *bytes.Buffer, v string) {
 func readString_7(buf *bytes.Reader) (string, error) {
 	var length uint16
 	if err := binary.Read(buf, binary.LittleEndian, &length); err != nil {
-		return ``, err
+		return "", err
 	}
 	data := make([]byte, length)
 	if _, err := buf.Read(data); err != nil {
-		return ``, err
+		return "", err
 	}
 	return *(*string)(unsafe.Pointer(&data)), nil
 }

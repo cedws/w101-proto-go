@@ -61,16 +61,16 @@ type LatestFileList struct {
 }
 
 func (s *LatestFileList) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	binary.Write(&b, binary.LittleEndian, s.LatestVersion)
-	writeString_8(&b, s.ListFileName)
-	binary.Write(&b, binary.LittleEndian, s.ListFileType)
-	binary.Write(&b, binary.LittleEndian, s.ListFileTime)
-	binary.Write(&b, binary.LittleEndian, s.ListFileSize)
-	binary.Write(&b, binary.LittleEndian, s.ListFileCRC)
-	writeString_8(&b, s.ListFileURL)
-	writeString_8(&b, s.URLPrefix)
-	writeString_8(&b, s.URLSuffix)
+	b := bytes.NewBuffer(make([]byte, 0, 28+len(s.ListFileName)+len(s.ListFileURL)+len(s.URLPrefix)+len(s.URLSuffix)))
+	binary.Write(b, binary.LittleEndian, s.LatestVersion)
+	writeString_8(b, s.ListFileName)
+	binary.Write(b, binary.LittleEndian, s.ListFileType)
+	binary.Write(b, binary.LittleEndian, s.ListFileTime)
+	binary.Write(b, binary.LittleEndian, s.ListFileSize)
+	binary.Write(b, binary.LittleEndian, s.ListFileCRC)
+	writeString_8(b, s.ListFileURL)
+	writeString_8(b, s.URLPrefix)
+	writeString_8(b, s.URLSuffix)
 	return b.Bytes(), nil
 }
 
@@ -121,17 +121,17 @@ type LatestFileListV2 struct {
 }
 
 func (s *LatestFileListV2) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	binary.Write(&b, binary.LittleEndian, s.LatestVersion)
-	writeString_8(&b, s.ListFileName)
-	binary.Write(&b, binary.LittleEndian, s.ListFileType)
-	binary.Write(&b, binary.LittleEndian, s.ListFileTime)
-	binary.Write(&b, binary.LittleEndian, s.ListFileSize)
-	binary.Write(&b, binary.LittleEndian, s.ListFileCRC)
-	writeString_8(&b, s.ListFileURL)
-	writeString_8(&b, s.URLPrefix)
-	writeString_8(&b, s.URLSuffix)
-	writeString_8(&b, s.Locale)
+	b := bytes.NewBuffer(make([]byte, 0, 30+len(s.ListFileName)+len(s.ListFileURL)+len(s.URLPrefix)+len(s.URLSuffix)+len(s.Locale)))
+	binary.Write(b, binary.LittleEndian, s.LatestVersion)
+	writeString_8(b, s.ListFileName)
+	binary.Write(b, binary.LittleEndian, s.ListFileType)
+	binary.Write(b, binary.LittleEndian, s.ListFileTime)
+	binary.Write(b, binary.LittleEndian, s.ListFileSize)
+	binary.Write(b, binary.LittleEndian, s.ListFileCRC)
+	writeString_8(b, s.ListFileURL)
+	writeString_8(b, s.URLPrefix)
+	writeString_8(b, s.URLSuffix)
+	writeString_8(b, s.Locale)
 	return b.Bytes(), nil
 }
 
@@ -180,12 +180,12 @@ type NextVersion struct {
 }
 
 func (s *NextVersion) MarshalBinary() ([]byte, error) {
-	var b bytes.Buffer
-	writeString_8(&b, s.PkgName)
-	binary.Write(&b, binary.LittleEndian, s.Version)
-	writeString_8(&b, s.URLPrefix)
-	writeString_8(&b, s.FileName)
-	binary.Write(&b, binary.LittleEndian, s.FileType)
+	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.PkgName)+len(s.URLPrefix)+len(s.FileName)))
+	writeString_8(b, s.PkgName)
+	binary.Write(b, binary.LittleEndian, s.Version)
+	writeString_8(b, s.URLPrefix)
+	writeString_8(b, s.FileName)
+	binary.Write(b, binary.LittleEndian, s.FileType)
 	return b.Bytes(), nil
 }
 
@@ -218,11 +218,11 @@ func writeString_8(b *bytes.Buffer, v string) {
 func readString_8(buf *bytes.Reader) (string, error) {
 	var length uint16
 	if err := binary.Read(buf, binary.LittleEndian, &length); err != nil {
-		return ``, err
+		return "", err
 	}
 	data := make([]byte, length)
 	if _, err := buf.Read(data); err != nil {
-		return ``, err
+		return "", err
 	}
 	return *(*string)(unsafe.Pointer(&data)), nil
 }
