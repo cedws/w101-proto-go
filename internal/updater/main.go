@@ -14,7 +14,7 @@ import (
 
 	"github.com/cedws/w101-client-go/proto"
 	"github.com/cedws/w101-client-go/wad"
-	"github.com/cedws/w101-proto-go/patch"
+	"github.com/cedws/w101-proto-go/pkg/patch"
 )
 
 const patchServer = "patch.us.wizard101.com:12500"
