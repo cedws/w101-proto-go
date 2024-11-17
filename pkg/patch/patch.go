@@ -60,7 +60,7 @@ type LatestFileList struct {
 	URLSuffix     string
 }
 
-func (s *LatestFileList) MarshalBinary() ([]byte, error) {
+func (s *LatestFileList) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 28+len(s.ListFileName)+len(s.ListFileURL)+len(s.URLPrefix)+len(s.URLSuffix)))
 	binary.Write(b, binary.LittleEndian, s.LatestVersion)
 	writeString_8(b, s.ListFileName)
@@ -71,10 +71,10 @@ func (s *LatestFileList) MarshalBinary() ([]byte, error) {
 	writeString_8(b, s.ListFileURL)
 	writeString_8(b, s.URLPrefix)
 	writeString_8(b, s.URLSuffix)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *LatestFileList) UnmarshalBinary(data []byte) error {
+func (s *LatestFileList) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if err = binary.Read(b, binary.LittleEndian, &s.LatestVersion); err != nil {
@@ -120,7 +120,7 @@ type LatestFileListV2 struct {
 	Locale        string
 }
 
-func (s *LatestFileListV2) MarshalBinary() ([]byte, error) {
+func (s *LatestFileListV2) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 30+len(s.ListFileName)+len(s.ListFileURL)+len(s.URLPrefix)+len(s.URLSuffix)+len(s.Locale)))
 	binary.Write(b, binary.LittleEndian, s.LatestVersion)
 	writeString_8(b, s.ListFileName)
@@ -132,10 +132,10 @@ func (s *LatestFileListV2) MarshalBinary() ([]byte, error) {
 	writeString_8(b, s.URLPrefix)
 	writeString_8(b, s.URLSuffix)
 	writeString_8(b, s.Locale)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *LatestFileListV2) UnmarshalBinary(data []byte) error {
+func (s *LatestFileListV2) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if err = binary.Read(b, binary.LittleEndian, &s.LatestVersion); err != nil {
@@ -179,17 +179,17 @@ type NextVersion struct {
 	FileType  int32
 }
 
-func (s *NextVersion) MarshalBinary() ([]byte, error) {
+func (s *NextVersion) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.PkgName)+len(s.URLPrefix)+len(s.FileName)))
 	writeString_8(b, s.PkgName)
 	binary.Write(b, binary.LittleEndian, s.Version)
 	writeString_8(b, s.URLPrefix)
 	writeString_8(b, s.FileName)
 	binary.Write(b, binary.LittleEndian, s.FileType)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *NextVersion) UnmarshalBinary(data []byte) error {
+func (s *NextVersion) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if s.PkgName, err = readString_8(b); err != nil {

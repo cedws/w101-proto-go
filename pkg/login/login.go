@@ -229,15 +229,15 @@ type ChangeCharacterName struct {
 	ServerName string
 }
 
-func (s *ChangeCharacterName) MarshalBinary() ([]byte, error) {
+func (s *ChangeCharacterName) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12+len(s.NewName)+len(s.ServerName)))
 	binary.Write(b, binary.LittleEndian, s.CharID)
 	writeString_7(b, s.NewName)
 	writeString_7(b, s.ServerName)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *ChangeCharacterName) UnmarshalBinary(data []byte) error {
+func (s *ChangeCharacterName) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if err = binary.Read(b, binary.LittleEndian, &s.CharID); err != nil {
@@ -256,13 +256,13 @@ type CharacterInfo struct {
 	CharacterInfo string
 }
 
-func (s *CharacterInfo) MarshalBinary() ([]byte, error) {
+func (s *CharacterInfo) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.CharacterInfo)))
 	writeString_7(b, s.CharacterInfo)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *CharacterInfo) UnmarshalBinary(data []byte) error {
+func (s *CharacterInfo) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if s.CharacterInfo, err = readString_7(b); err != nil {
@@ -275,13 +275,13 @@ type CharacterList struct {
 	Error uint32
 }
 
-func (s *CharacterList) MarshalBinary() ([]byte, error) {
+func (s *CharacterList) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
 	binary.Write(b, binary.LittleEndian, s.Error)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *CharacterList) UnmarshalBinary(data []byte) error {
+func (s *CharacterList) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if err = binary.Read(b, binary.LittleEndian, &s.Error); err != nil {
@@ -306,7 +306,7 @@ type CharacterSelected struct {
 	LoginServer string
 }
 
-func (s *CharacterSelected) MarshalBinary() ([]byte, error) {
+func (s *CharacterSelected) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 54+len(s.IP)+len(s.Key)+len(s.ZoneName)+len(s.Location)+len(s.LoginServer)))
 	writeString_7(b, s.IP)
 	binary.Write(b, binary.LittleEndian, s.TCPPort)
@@ -321,10 +321,10 @@ func (s *CharacterSelected) MarshalBinary() ([]byte, error) {
 	binary.Write(b, binary.LittleEndian, s.PrepPhase)
 	binary.Write(b, binary.LittleEndian, s.Error)
 	writeString_7(b, s.LoginServer)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *CharacterSelected) UnmarshalBinary(data []byte) error {
+func (s *CharacterSelected) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if s.IP, err = readString_7(b); err != nil {
@@ -373,13 +373,13 @@ type CreateCharacter struct {
 	CreationInfo string
 }
 
-func (s *CreateCharacter) MarshalBinary() ([]byte, error) {
+func (s *CreateCharacter) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.CreationInfo)))
 	writeString_7(b, s.CreationInfo)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *CreateCharacter) UnmarshalBinary(data []byte) error {
+func (s *CreateCharacter) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if s.CreationInfo, err = readString_7(b); err != nil {
@@ -392,13 +392,13 @@ type CreateCharacterResponse struct {
 	ErrorCode int32
 }
 
-func (s *CreateCharacterResponse) MarshalBinary() ([]byte, error) {
+func (s *CreateCharacterResponse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
 	binary.Write(b, binary.LittleEndian, s.ErrorCode)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *CreateCharacterResponse) UnmarshalBinary(data []byte) error {
+func (s *CreateCharacterResponse) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if err = binary.Read(b, binary.LittleEndian, &s.ErrorCode); err != nil {
@@ -411,13 +411,13 @@ type DeleteCharacter struct {
 	CharID uint64
 }
 
-func (s *DeleteCharacter) MarshalBinary() ([]byte, error) {
+func (s *DeleteCharacter) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
 	binary.Write(b, binary.LittleEndian, s.CharID)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *DeleteCharacter) UnmarshalBinary(data []byte) error {
+func (s *DeleteCharacter) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if err = binary.Read(b, binary.LittleEndian, &s.CharID); err != nil {
@@ -430,13 +430,13 @@ type DeleteCharacterResponse struct {
 	ErrorCode int32
 }
 
-func (s *DeleteCharacterResponse) MarshalBinary() ([]byte, error) {
+func (s *DeleteCharacterResponse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
 	binary.Write(b, binary.LittleEndian, s.ErrorCode)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *DeleteCharacterResponse) UnmarshalBinary(data []byte) error {
+func (s *DeleteCharacterResponse) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if err = binary.Read(b, binary.LittleEndian, &s.ErrorCode); err != nil {
@@ -449,13 +449,13 @@ type DisconnectLoginAfk struct {
 	Warning int8
 }
 
-func (s *DisconnectLoginAfk) MarshalBinary() ([]byte, error) {
+func (s *DisconnectLoginAfk) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
 	binary.Write(b, binary.LittleEndian, s.Warning)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *DisconnectLoginAfk) UnmarshalBinary(data []byte) error {
+func (s *DisconnectLoginAfk) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if err = binary.Read(b, binary.LittleEndian, &s.Warning); err != nil {
@@ -469,14 +469,14 @@ type LoginLogCharacterCreation struct {
 	Parameter uint32
 }
 
-func (s *LoginLogCharacterCreation) MarshalBinary() ([]byte, error) {
+func (s *LoginLogCharacterCreation) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
 	binary.Write(b, binary.LittleEndian, s.Stage)
 	binary.Write(b, binary.LittleEndian, s.Parameter)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *LoginLogCharacterCreation) UnmarshalBinary(data []byte) error {
+func (s *LoginLogCharacterCreation) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if err = binary.Read(b, binary.LittleEndian, &s.Stage); err != nil {
@@ -492,13 +492,13 @@ type ServerShutdown struct {
 	Message uint32
 }
 
-func (s *ServerShutdown) MarshalBinary() ([]byte, error) {
+func (s *ServerShutdown) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
 	binary.Write(b, binary.LittleEndian, s.Message)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *ServerShutdown) UnmarshalBinary(data []byte) error {
+func (s *ServerShutdown) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if err = binary.Read(b, binary.LittleEndian, &s.Message); err != nil {
@@ -511,13 +511,13 @@ type LoginNotAfk struct {
 	BadgeNameID uint32
 }
 
-func (s *LoginNotAfk) MarshalBinary() ([]byte, error) {
+func (s *LoginNotAfk) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
 	binary.Write(b, binary.LittleEndian, s.BadgeNameID)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *LoginNotAfk) UnmarshalBinary(data []byte) error {
+func (s *LoginNotAfk) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if err = binary.Read(b, binary.LittleEndian, &s.BadgeNameID); err != nil {
@@ -529,22 +529,22 @@ func (s *LoginNotAfk) UnmarshalBinary(data []byte) error {
 type RequestCharacterList struct {
 }
 
-func (s *RequestCharacterList) MarshalBinary() ([]byte, error) {
-	return []byte{}, nil
+func (s *RequestCharacterList) Marshal() []byte {
+	return []byte{}
 }
 
-func (s *RequestCharacterList) UnmarshalBinary(data []byte) error {
+func (s *RequestCharacterList) Unmarshal(data []byte) error {
 	return nil
 }
 
 type RequestServerList struct {
 }
 
-func (s *RequestServerList) MarshalBinary() ([]byte, error) {
-	return []byte{}, nil
+func (s *RequestServerList) Marshal() []byte {
+	return []byte{}
 }
 
-func (s *RequestServerList) UnmarshalBinary(data []byte) error {
+func (s *RequestServerList) Unmarshal(data []byte) error {
 	return nil
 }
 
@@ -553,14 +553,14 @@ type SaveCharacter struct {
 	Success uint8
 }
 
-func (s *SaveCharacter) MarshalBinary() ([]byte, error) {
+func (s *SaveCharacter) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9))
 	binary.Write(b, binary.LittleEndian, s.CharID)
 	binary.Write(b, binary.LittleEndian, s.Success)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *SaveCharacter) UnmarshalBinary(data []byte) error {
+func (s *SaveCharacter) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if err = binary.Read(b, binary.LittleEndian, &s.CharID); err != nil {
@@ -577,14 +577,14 @@ type SelectCharacter struct {
 	ServerName string
 }
 
-func (s *SelectCharacter) MarshalBinary() ([]byte, error) {
+func (s *SelectCharacter) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.ServerName)))
 	binary.Write(b, binary.LittleEndian, s.CharID)
 	writeString_7(b, s.ServerName)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *SelectCharacter) UnmarshalBinary(data []byte) error {
+func (s *SelectCharacter) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if err = binary.Read(b, binary.LittleEndian, &s.CharID); err != nil {
@@ -599,11 +599,11 @@ func (s *SelectCharacter) UnmarshalBinary(data []byte) error {
 type ServerList struct {
 }
 
-func (s *ServerList) MarshalBinary() ([]byte, error) {
-	return []byte{}, nil
+func (s *ServerList) Marshal() []byte {
+	return []byte{}
 }
 
-func (s *ServerList) UnmarshalBinary(data []byte) error {
+func (s *ServerList) Unmarshal(data []byte) error {
 	return nil
 }
 
@@ -612,14 +612,14 @@ type StartCharacterList struct {
 	PurchasedCharacterSlots int32
 }
 
-func (s *StartCharacterList) MarshalBinary() ([]byte, error) {
+func (s *StartCharacterList) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.LoginServer)))
 	writeString_7(b, s.LoginServer)
 	binary.Write(b, binary.LittleEndian, s.PurchasedCharacterSlots)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *StartCharacterList) UnmarshalBinary(data []byte) error {
+func (s *StartCharacterList) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if s.LoginServer, err = readString_7(b); err != nil {
@@ -636,14 +636,14 @@ type UserAdmitInd struct {
 	PositionInQueue uint32
 }
 
-func (s *UserAdmitInd) MarshalBinary() ([]byte, error) {
+func (s *UserAdmitInd) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
 	binary.Write(b, binary.LittleEndian, s.Status)
 	binary.Write(b, binary.LittleEndian, s.PositionInQueue)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *UserAdmitInd) UnmarshalBinary(data []byte) error {
+func (s *UserAdmitInd) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if err = binary.Read(b, binary.LittleEndian, &s.Status); err != nil {
@@ -665,7 +665,7 @@ type UserAuthen struct {
 	PatchClientID string
 }
 
-func (s *UserAuthen) MarshalBinary() ([]byte, error) {
+func (s *UserAuthen) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20+len(s.Rec1)+len(s.Version)+len(s.Revision)+len(s.DataRevision)+len(s.CRC)+len(s.PatchClientID)))
 	writeString_7(b, s.Rec1)
 	writeString_7(b, s.Version)
@@ -674,10 +674,10 @@ func (s *UserAuthen) MarshalBinary() ([]byte, error) {
 	writeString_7(b, s.CRC)
 	binary.Write(b, binary.LittleEndian, s.MachineID)
 	writeString_7(b, s.PatchClientID)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *UserAuthen) UnmarshalBinary(data []byte) error {
+func (s *UserAuthen) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if s.Rec1, err = readString_7(b); err != nil {
@@ -714,7 +714,7 @@ type UserAuthenRsp struct {
 	Flags      int32
 }
 
-func (s *UserAuthenRsp) MarshalBinary() ([]byte, error) {
+func (s *UserAuthenRsp) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 26+len(s.Rec1)+len(s.Reason)+len(s.TimeStamp)))
 	binary.Write(b, binary.LittleEndian, s.Error)
 	binary.Write(b, binary.LittleEndian, s.UserID)
@@ -723,10 +723,10 @@ func (s *UserAuthenRsp) MarshalBinary() ([]byte, error) {
 	writeString_7(b, s.TimeStamp)
 	binary.Write(b, binary.LittleEndian, s.PayingUser)
 	binary.Write(b, binary.LittleEndian, s.Flags)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *UserAuthenRsp) UnmarshalBinary(data []byte) error {
+func (s *UserAuthenRsp) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if err = binary.Read(b, binary.LittleEndian, &s.Error); err != nil {
@@ -764,7 +764,7 @@ type UserAuthenV2 struct {
 	PatchClientID string
 }
 
-func (s *UserAuthenV2) MarshalBinary() ([]byte, error) {
+func (s *UserAuthenV2) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 22+len(s.Rec1)+len(s.Version)+len(s.Revision)+len(s.DataRevision)+len(s.CRC)+len(s.Locale)+len(s.PatchClientID)))
 	writeString_7(b, s.Rec1)
 	writeString_7(b, s.Version)
@@ -774,10 +774,10 @@ func (s *UserAuthenV2) MarshalBinary() ([]byte, error) {
 	binary.Write(b, binary.LittleEndian, s.MachineID)
 	writeString_7(b, s.Locale)
 	writeString_7(b, s.PatchClientID)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *UserAuthenV2) UnmarshalBinary(data []byte) error {
+func (s *UserAuthenV2) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if s.Rec1, err = readString_7(b); err != nil {
@@ -820,7 +820,7 @@ type UserAuthenV3 struct {
 	ConsoleType    uint8
 }
 
-func (s *UserAuthenV3) MarshalBinary() ([]byte, error) {
+func (s *UserAuthenV3) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 27+len(s.Rec1)+len(s.Version)+len(s.Revision)+len(s.DataRevision)+len(s.CRC)+len(s.Locale)+len(s.PatchClientID)))
 	writeString_7(b, s.Rec1)
 	writeString_7(b, s.Version)
@@ -832,10 +832,10 @@ func (s *UserAuthenV3) MarshalBinary() ([]byte, error) {
 	writeString_7(b, s.PatchClientID)
 	binary.Write(b, binary.LittleEndian, s.IsSteamPatcher)
 	binary.Write(b, binary.LittleEndian, s.ConsoleType)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *UserAuthenV3) UnmarshalBinary(data []byte) error {
+func (s *UserAuthenV3) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if s.Rec1, err = readString_7(b); err != nil {
@@ -879,17 +879,17 @@ type UserValidate struct {
 	PatchClientID string
 }
 
-func (s *UserValidate) MarshalBinary() ([]byte, error) {
+func (s *UserValidate) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 22+len(s.PassKey3)+len(s.Locale)+len(s.PatchClientID)))
 	binary.Write(b, binary.LittleEndian, s.UserID)
 	writeString_7(b, s.PassKey3)
 	binary.Write(b, binary.LittleEndian, s.MachineID)
 	writeString_7(b, s.Locale)
 	writeString_7(b, s.PatchClientID)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *UserValidate) UnmarshalBinary(data []byte) error {
+func (s *UserValidate) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if err = binary.Read(b, binary.LittleEndian, &s.UserID); err != nil {
@@ -919,7 +919,7 @@ type UserValidateRsp struct {
 	Flags      int32
 }
 
-func (s *UserValidateRsp) MarshalBinary() ([]byte, error) {
+func (s *UserValidateRsp) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24+len(s.Reason)+len(s.TimeStamp)))
 	binary.Write(b, binary.LittleEndian, s.Error)
 	writeString_7(b, s.Reason)
@@ -927,10 +927,10 @@ func (s *UserValidateRsp) MarshalBinary() ([]byte, error) {
 	writeString_7(b, s.TimeStamp)
 	binary.Write(b, binary.LittleEndian, s.PayingUser)
 	binary.Write(b, binary.LittleEndian, s.Flags)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *UserValidateRsp) UnmarshalBinary(data []byte) error {
+func (s *UserValidateRsp) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if err = binary.Read(b, binary.LittleEndian, &s.Error); err != nil {
@@ -960,15 +960,15 @@ type WebCharacterInfo struct {
 	School int32
 }
 
-func (s *WebCharacterInfo) MarshalBinary() ([]byte, error) {
+func (s *WebCharacterInfo) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
 	binary.Write(b, binary.LittleEndian, s.Name)
 	binary.Write(b, binary.LittleEndian, s.Gender)
 	binary.Write(b, binary.LittleEndian, s.School)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *WebCharacterInfo) UnmarshalBinary(data []byte) error {
+func (s *WebCharacterInfo) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if err = binary.Read(b, binary.LittleEndian, &s.Name); err != nil {
@@ -992,7 +992,7 @@ type WebAuthen struct {
 	MachineID    uint64
 }
 
-func (s *WebAuthen) MarshalBinary() ([]byte, error) {
+func (s *WebAuthen) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 18+len(s.Rec1)+len(s.Version)+len(s.Revision)+len(s.DataRevision)+len(s.CRC)))
 	writeString_7(b, s.Rec1)
 	writeString_7(b, s.Version)
@@ -1000,10 +1000,10 @@ func (s *WebAuthen) MarshalBinary() ([]byte, error) {
 	writeString_7(b, s.DataRevision)
 	writeString_7(b, s.CRC)
 	binary.Write(b, binary.LittleEndian, s.MachineID)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *WebAuthen) UnmarshalBinary(data []byte) error {
+func (s *WebAuthen) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if s.Rec1, err = readString_7(b); err != nil {
@@ -1034,16 +1034,16 @@ type WebValidate struct {
 	Locale    string
 }
 
-func (s *WebValidate) MarshalBinary() ([]byte, error) {
+func (s *WebValidate) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20+len(s.PassKey3)+len(s.Locale)))
 	binary.Write(b, binary.LittleEndian, s.UserID)
 	writeString_7(b, s.PassKey3)
 	binary.Write(b, binary.LittleEndian, s.MachineID)
 	writeString_7(b, s.Locale)
-	return b.Bytes(), nil
+	return b.Bytes()
 }
 
-func (s *WebValidate) UnmarshalBinary(data []byte) error {
+func (s *WebValidate) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if err = binary.Read(b, binary.LittleEndian, &s.UserID); err != nil {
