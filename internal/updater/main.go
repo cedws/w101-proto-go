@@ -203,6 +203,7 @@ func requestRootWAD(ctx context.Context, fileList patch.LatestFileListV2) (io.Re
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("User-Agent", "KingsIsle Patcher")
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
