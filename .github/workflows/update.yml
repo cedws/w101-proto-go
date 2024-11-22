@@ -29,4 +29,4 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@8621497c8c39c72f3e2a999a26b4ca1b5058a842
         with:
           commit_message: "chore(generate): Update generated code"
-          file_pattern: "pkg/login/*.go pkg/patch/*.go" # TODO: remove this
+          file_pattern: "pkg/login/*.go pkg/patch/*.go pkg/game/*.go" # TODO: remove this
