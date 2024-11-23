@@ -9,7 +9,6 @@ import (
 )
 
 type loginService interface {
-	ChangeCharacterName(ChangeCharacterName)
 	CharacterInfo(CharacterInfo)
 	CharacterList(CharacterList)
 	CharacterSelected(CharacterSelected)
@@ -17,26 +16,27 @@ type loginService interface {
 	CreateCharacterResponse(CreateCharacterResponse)
 	DeleteCharacter(DeleteCharacter)
 	DeleteCharacterResponse(DeleteCharacterResponse)
-	DisconnectLoginAfk(DisconnectLoginAfk)
-	LoginLogCharacterCreation(LoginLogCharacterCreation)
-	ServerShutdown(ServerShutdown)
-	LoginNotAfk(LoginNotAfk)
 	RequestCharacterList(RequestCharacterList)
 	RequestServerList(RequestServerList)
-	SaveCharacter(SaveCharacter)
 	SelectCharacter(SelectCharacter)
 	ServerList(ServerList)
 	StartCharacterList(StartCharacterList)
-	UserAdmitInd(UserAdmitInd)
 	UserAuthen(UserAuthen)
 	UserAuthenRsp(UserAuthenRsp)
-	UserAuthenV2(UserAuthenV2)
-	UserAuthenV3(UserAuthenV3)
 	UserValidate(UserValidate)
 	UserValidateRsp(UserValidateRsp)
+	DisconnectLoginAfk(DisconnectLoginAfk)
+	LoginNotAfk(LoginNotAfk)
+	ServerShutdown(ServerShutdown)
+	UserAdmitInd(UserAdmitInd)
 	WebCharacterInfo(WebCharacterInfo)
+	UserAuthenV2(UserAuthenV2)
+	SaveCharacter(SaveCharacter)
 	WebAuthen(WebAuthen)
 	WebValidate(WebValidate)
+	ChangeCharacterName(ChangeCharacterName)
+	UserAuthenV3(UserAuthenV3)
+	LoginLogCharacterCreation(LoginLogCharacterCreation)
 }
 
 type LoginService struct {
@@ -47,7 +47,6 @@ type LoginClient struct {
 	c *proto.Client
 }
 
-func (l *LoginService) ChangeCharacterName(_ ChangeCharacterName)             {}
 func (l *LoginService) CharacterInfo(_ CharacterInfo)                         {}
 func (l *LoginService) CharacterList(_ CharacterList)                         {}
 func (l *LoginService) CharacterSelected(_ CharacterSelected)                 {}
@@ -55,29 +54,29 @@ func (l *LoginService) CreateCharacter(_ CreateCharacter)                     {}
 func (l *LoginService) CreateCharacterResponse(_ CreateCharacterResponse)     {}
 func (l *LoginService) DeleteCharacter(_ DeleteCharacter)                     {}
 func (l *LoginService) DeleteCharacterResponse(_ DeleteCharacterResponse)     {}
-func (l *LoginService) DisconnectLoginAfk(_ DisconnectLoginAfk)               {}
-func (l *LoginService) LoginLogCharacterCreation(_ LoginLogCharacterCreation) {}
-func (l *LoginService) ServerShutdown(_ ServerShutdown)                       {}
-func (l *LoginService) LoginNotAfk(_ LoginNotAfk)                             {}
 func (l *LoginService) RequestCharacterList(_ RequestCharacterList)           {}
 func (l *LoginService) RequestServerList(_ RequestServerList)                 {}
-func (l *LoginService) SaveCharacter(_ SaveCharacter)                         {}
 func (l *LoginService) SelectCharacter(_ SelectCharacter)                     {}
 func (l *LoginService) ServerList(_ ServerList)                               {}
 func (l *LoginService) StartCharacterList(_ StartCharacterList)               {}
-func (l *LoginService) UserAdmitInd(_ UserAdmitInd)                           {}
 func (l *LoginService) UserAuthen(_ UserAuthen)                               {}
 func (l *LoginService) UserAuthenRsp(_ UserAuthenRsp)                         {}
-func (l *LoginService) UserAuthenV2(_ UserAuthenV2)                           {}
-func (l *LoginService) UserAuthenV3(_ UserAuthenV3)                           {}
 func (l *LoginService) UserValidate(_ UserValidate)                           {}
 func (l *LoginService) UserValidateRsp(_ UserValidateRsp)                     {}
+func (l *LoginService) DisconnectLoginAfk(_ DisconnectLoginAfk)               {}
+func (l *LoginService) LoginNotAfk(_ LoginNotAfk)                             {}
+func (l *LoginService) ServerShutdown(_ ServerShutdown)                       {}
+func (l *LoginService) UserAdmitInd(_ UserAdmitInd)                           {}
 func (l *LoginService) WebCharacterInfo(_ WebCharacterInfo)                   {}
+func (l *LoginService) UserAuthenV2(_ UserAuthenV2)                           {}
+func (l *LoginService) SaveCharacter(_ SaveCharacter)                         {}
 func (l *LoginService) WebAuthen(_ WebAuthen)                                 {}
 func (l *LoginService) WebValidate(_ WebValidate)                             {}
+func (l *LoginService) ChangeCharacterName(_ ChangeCharacterName)             {}
+func (l *LoginService) UserAuthenV3(_ UserAuthenV3)                           {}
+func (l *LoginService) LoginLogCharacterCreation(_ LoginLogCharacterCreation) {}
 
 func RegisterLoginService(r *proto.MessageRouter, s loginService) {
-	proto.RegisterMessageHandler(r, 7, 26, s.ChangeCharacterName)
 	proto.RegisterMessageHandler(r, 7, 1, s.CharacterInfo)
 	proto.RegisterMessageHandler(r, 7, 2, s.CharacterList)
 	proto.RegisterMessageHandler(r, 7, 3, s.CharacterSelected)
@@ -85,34 +84,31 @@ func RegisterLoginService(r *proto.MessageRouter, s loginService) {
 	proto.RegisterMessageHandler(r, 7, 5, s.CreateCharacterResponse)
 	proto.RegisterMessageHandler(r, 7, 6, s.DeleteCharacter)
 	proto.RegisterMessageHandler(r, 7, 7, s.DeleteCharacterResponse)
-	proto.RegisterMessageHandler(r, 7, 17, s.DisconnectLoginAfk)
-	proto.RegisterMessageHandler(r, 7, 28, s.LoginLogCharacterCreation)
-	proto.RegisterMessageHandler(r, 7, 19, s.ServerShutdown)
-	proto.RegisterMessageHandler(r, 7, 18, s.LoginNotAfk)
 	proto.RegisterMessageHandler(r, 7, 8, s.RequestCharacterList)
 	proto.RegisterMessageHandler(r, 7, 9, s.RequestServerList)
-	proto.RegisterMessageHandler(r, 7, 23, s.SaveCharacter)
 	proto.RegisterMessageHandler(r, 7, 10, s.SelectCharacter)
 	proto.RegisterMessageHandler(r, 7, 11, s.ServerList)
 	proto.RegisterMessageHandler(r, 7, 12, s.StartCharacterList)
-	proto.RegisterMessageHandler(r, 7, 20, s.UserAdmitInd)
 	proto.RegisterMessageHandler(r, 7, 13, s.UserAuthen)
 	proto.RegisterMessageHandler(r, 7, 14, s.UserAuthenRsp)
-	proto.RegisterMessageHandler(r, 7, 22, s.UserAuthenV2)
-	proto.RegisterMessageHandler(r, 7, 27, s.UserAuthenV3)
 	proto.RegisterMessageHandler(r, 7, 15, s.UserValidate)
 	proto.RegisterMessageHandler(r, 7, 16, s.UserValidateRsp)
+	proto.RegisterMessageHandler(r, 7, 17, s.DisconnectLoginAfk)
+	proto.RegisterMessageHandler(r, 7, 18, s.LoginNotAfk)
+	proto.RegisterMessageHandler(r, 7, 19, s.ServerShutdown)
+	proto.RegisterMessageHandler(r, 7, 20, s.UserAdmitInd)
 	proto.RegisterMessageHandler(r, 7, 21, s.WebCharacterInfo)
+	proto.RegisterMessageHandler(r, 7, 22, s.UserAuthenV2)
+	proto.RegisterMessageHandler(r, 7, 23, s.SaveCharacter)
 	proto.RegisterMessageHandler(r, 7, 24, s.WebAuthen)
 	proto.RegisterMessageHandler(r, 7, 25, s.WebValidate)
+	proto.RegisterMessageHandler(r, 7, 26, s.ChangeCharacterName)
+	proto.RegisterMessageHandler(r, 7, 27, s.UserAuthenV3)
+	proto.RegisterMessageHandler(r, 7, 28, s.LoginLogCharacterCreation)
 }
 
 func NewLoginClient(c *proto.Client) LoginClient {
 	return LoginClient{c}
-}
-
-func (c LoginClient) ChangeCharacterName(m *ChangeCharacterName) error {
-	return c.c.WriteMessage(7, 26, m)
 }
 
 func (c LoginClient) CharacterInfo(m *CharacterInfo) error {
@@ -143,32 +139,12 @@ func (c LoginClient) DeleteCharacterResponse(m *DeleteCharacterResponse) error {
 	return c.c.WriteMessage(7, 7, m)
 }
 
-func (c LoginClient) DisconnectLoginAfk(m *DisconnectLoginAfk) error {
-	return c.c.WriteMessage(7, 17, m)
-}
-
-func (c LoginClient) LoginLogCharacterCreation(m *LoginLogCharacterCreation) error {
-	return c.c.WriteMessage(7, 28, m)
-}
-
-func (c LoginClient) ServerShutdown(m *ServerShutdown) error {
-	return c.c.WriteMessage(7, 19, m)
-}
-
-func (c LoginClient) LoginNotAfk(m *LoginNotAfk) error {
-	return c.c.WriteMessage(7, 18, m)
-}
-
 func (c LoginClient) RequestCharacterList(m *RequestCharacterList) error {
 	return c.c.WriteMessage(7, 8, m)
 }
 
 func (c LoginClient) RequestServerList(m *RequestServerList) error {
 	return c.c.WriteMessage(7, 9, m)
-}
-
-func (c LoginClient) SaveCharacter(m *SaveCharacter) error {
-	return c.c.WriteMessage(7, 23, m)
 }
 
 func (c LoginClient) SelectCharacter(m *SelectCharacter) error {
@@ -183,24 +159,12 @@ func (c LoginClient) StartCharacterList(m *StartCharacterList) error {
 	return c.c.WriteMessage(7, 12, m)
 }
 
-func (c LoginClient) UserAdmitInd(m *UserAdmitInd) error {
-	return c.c.WriteMessage(7, 20, m)
-}
-
 func (c LoginClient) UserAuthen(m *UserAuthen) error {
 	return c.c.WriteMessage(7, 13, m)
 }
 
 func (c LoginClient) UserAuthenRsp(m *UserAuthenRsp) error {
 	return c.c.WriteMessage(7, 14, m)
-}
-
-func (c LoginClient) UserAuthenV2(m *UserAuthenV2) error {
-	return c.c.WriteMessage(7, 22, m)
-}
-
-func (c LoginClient) UserAuthenV3(m *UserAuthenV3) error {
-	return c.c.WriteMessage(7, 27, m)
 }
 
 func (c LoginClient) UserValidate(m *UserValidate) error {
@@ -211,8 +175,32 @@ func (c LoginClient) UserValidateRsp(m *UserValidateRsp) error {
 	return c.c.WriteMessage(7, 16, m)
 }
 
+func (c LoginClient) DisconnectLoginAfk(m *DisconnectLoginAfk) error {
+	return c.c.WriteMessage(7, 17, m)
+}
+
+func (c LoginClient) LoginNotAfk(m *LoginNotAfk) error {
+	return c.c.WriteMessage(7, 18, m)
+}
+
+func (c LoginClient) ServerShutdown(m *ServerShutdown) error {
+	return c.c.WriteMessage(7, 19, m)
+}
+
+func (c LoginClient) UserAdmitInd(m *UserAdmitInd) error {
+	return c.c.WriteMessage(7, 20, m)
+}
+
 func (c LoginClient) WebCharacterInfo(m *WebCharacterInfo) error {
 	return c.c.WriteMessage(7, 21, m)
+}
+
+func (c LoginClient) UserAuthenV2(m *UserAuthenV2) error {
+	return c.c.WriteMessage(7, 22, m)
+}
+
+func (c LoginClient) SaveCharacter(m *SaveCharacter) error {
+	return c.c.WriteMessage(7, 23, m)
 }
 
 func (c LoginClient) WebAuthen(m *WebAuthen) error {
@@ -223,33 +211,16 @@ func (c LoginClient) WebValidate(m *WebValidate) error {
 	return c.c.WriteMessage(7, 25, m)
 }
 
-type ChangeCharacterName struct {
-	CharID     uint64
-	NewName    string
-	ServerName string
+func (c LoginClient) ChangeCharacterName(m *ChangeCharacterName) error {
+	return c.c.WriteMessage(7, 26, m)
 }
 
-func (s *ChangeCharacterName) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 12+len(s.NewName)+len(s.ServerName)))
-	binary.Write(b, binary.LittleEndian, s.CharID)
-	writeString_7(b, s.NewName)
-	writeString_7(b, s.ServerName)
-	return b.Bytes()
+func (c LoginClient) UserAuthenV3(m *UserAuthenV3) error {
+	return c.c.WriteMessage(7, 27, m)
 }
 
-func (s *ChangeCharacterName) Unmarshal(data []byte) error {
-	b := bytes.NewReader(data)
-	var err error
-	if err = binary.Read(b, binary.LittleEndian, &s.CharID); err != nil {
-		return err
-	}
-	if s.NewName, err = readString_7(b); err != nil {
-		return err
-	}
-	if s.ServerName, err = readString_7(b); err != nil {
-		return err
-	}
-	return nil
+func (c LoginClient) LoginLogCharacterCreation(m *LoginLogCharacterCreation) error {
+	return c.c.WriteMessage(7, 28, m)
 }
 
 type CharacterInfo struct {
@@ -445,87 +416,6 @@ func (s *DeleteCharacterResponse) Unmarshal(data []byte) error {
 	return nil
 }
 
-type DisconnectLoginAfk struct {
-	Warning int8
-}
-
-func (s *DisconnectLoginAfk) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.Warning)
-	return b.Bytes()
-}
-
-func (s *DisconnectLoginAfk) Unmarshal(data []byte) error {
-	b := bytes.NewReader(data)
-	var err error
-	if err = binary.Read(b, binary.LittleEndian, &s.Warning); err != nil {
-		return err
-	}
-	return nil
-}
-
-type LoginLogCharacterCreation struct {
-	Stage     uint32
-	Parameter uint32
-}
-
-func (s *LoginLogCharacterCreation) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.Stage)
-	binary.Write(b, binary.LittleEndian, s.Parameter)
-	return b.Bytes()
-}
-
-func (s *LoginLogCharacterCreation) Unmarshal(data []byte) error {
-	b := bytes.NewReader(data)
-	var err error
-	if err = binary.Read(b, binary.LittleEndian, &s.Stage); err != nil {
-		return err
-	}
-	if err = binary.Read(b, binary.LittleEndian, &s.Parameter); err != nil {
-		return err
-	}
-	return nil
-}
-
-type ServerShutdown struct {
-	Message uint32
-}
-
-func (s *ServerShutdown) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.Message)
-	return b.Bytes()
-}
-
-func (s *ServerShutdown) Unmarshal(data []byte) error {
-	b := bytes.NewReader(data)
-	var err error
-	if err = binary.Read(b, binary.LittleEndian, &s.Message); err != nil {
-		return err
-	}
-	return nil
-}
-
-type LoginNotAfk struct {
-	BadgeNameID uint32
-}
-
-func (s *LoginNotAfk) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.BadgeNameID)
-	return b.Bytes()
-}
-
-func (s *LoginNotAfk) Unmarshal(data []byte) error {
-	b := bytes.NewReader(data)
-	var err error
-	if err = binary.Read(b, binary.LittleEndian, &s.BadgeNameID); err != nil {
-		return err
-	}
-	return nil
-}
-
 type RequestCharacterList struct {
 }
 
@@ -545,30 +435,6 @@ func (s *RequestServerList) Marshal() []byte {
 }
 
 func (s *RequestServerList) Unmarshal(data []byte) error {
-	return nil
-}
-
-type SaveCharacter struct {
-	CharID  uint64
-	Success uint8
-}
-
-func (s *SaveCharacter) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 9))
-	binary.Write(b, binary.LittleEndian, s.CharID)
-	binary.Write(b, binary.LittleEndian, s.Success)
-	return b.Bytes()
-}
-
-func (s *SaveCharacter) Unmarshal(data []byte) error {
-	b := bytes.NewReader(data)
-	var err error
-	if err = binary.Read(b, binary.LittleEndian, &s.CharID); err != nil {
-		return err
-	}
-	if err = binary.Read(b, binary.LittleEndian, &s.Success); err != nil {
-		return err
-	}
 	return nil
 }
 
@@ -626,30 +492,6 @@ func (s *StartCharacterList) Unmarshal(data []byte) error {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PurchasedCharacterSlots); err != nil {
-		return err
-	}
-	return nil
-}
-
-type UserAdmitInd struct {
-	Status          int32
-	PositionInQueue uint32
-}
-
-func (s *UserAdmitInd) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.Status)
-	binary.Write(b, binary.LittleEndian, s.PositionInQueue)
-	return b.Bytes()
-}
-
-func (s *UserAdmitInd) Unmarshal(data []byte) error {
-	b := bytes.NewReader(data)
-	var err error
-	if err = binary.Read(b, binary.LittleEndian, &s.Status); err != nil {
-		return err
-	}
-	if err = binary.Read(b, binary.LittleEndian, &s.PositionInQueue); err != nil {
 		return err
 	}
 	return nil
@@ -753,124 +595,6 @@ func (s *UserAuthenRsp) Unmarshal(data []byte) error {
 	return nil
 }
 
-type UserAuthenV2 struct {
-	Rec1          string
-	Version       string
-	Revision      string
-	DataRevision  string
-	CRC           string
-	MachineID     uint64
-	Locale        string
-	PatchClientID string
-}
-
-func (s *UserAuthenV2) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 22+len(s.Rec1)+len(s.Version)+len(s.Revision)+len(s.DataRevision)+len(s.CRC)+len(s.Locale)+len(s.PatchClientID)))
-	writeString_7(b, s.Rec1)
-	writeString_7(b, s.Version)
-	writeString_7(b, s.Revision)
-	writeString_7(b, s.DataRevision)
-	writeString_7(b, s.CRC)
-	binary.Write(b, binary.LittleEndian, s.MachineID)
-	writeString_7(b, s.Locale)
-	writeString_7(b, s.PatchClientID)
-	return b.Bytes()
-}
-
-func (s *UserAuthenV2) Unmarshal(data []byte) error {
-	b := bytes.NewReader(data)
-	var err error
-	if s.Rec1, err = readString_7(b); err != nil {
-		return err
-	}
-	if s.Version, err = readString_7(b); err != nil {
-		return err
-	}
-	if s.Revision, err = readString_7(b); err != nil {
-		return err
-	}
-	if s.DataRevision, err = readString_7(b); err != nil {
-		return err
-	}
-	if s.CRC, err = readString_7(b); err != nil {
-		return err
-	}
-	if err = binary.Read(b, binary.LittleEndian, &s.MachineID); err != nil {
-		return err
-	}
-	if s.Locale, err = readString_7(b); err != nil {
-		return err
-	}
-	if s.PatchClientID, err = readString_7(b); err != nil {
-		return err
-	}
-	return nil
-}
-
-type UserAuthenV3 struct {
-	Rec1           string
-	Version        string
-	Revision       string
-	DataRevision   string
-	CRC            string
-	MachineID      uint64
-	Locale         string
-	PatchClientID  string
-	IsSteamPatcher uint32
-	ConsoleType    uint8
-}
-
-func (s *UserAuthenV3) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 27+len(s.Rec1)+len(s.Version)+len(s.Revision)+len(s.DataRevision)+len(s.CRC)+len(s.Locale)+len(s.PatchClientID)))
-	writeString_7(b, s.Rec1)
-	writeString_7(b, s.Version)
-	writeString_7(b, s.Revision)
-	writeString_7(b, s.DataRevision)
-	writeString_7(b, s.CRC)
-	binary.Write(b, binary.LittleEndian, s.MachineID)
-	writeString_7(b, s.Locale)
-	writeString_7(b, s.PatchClientID)
-	binary.Write(b, binary.LittleEndian, s.IsSteamPatcher)
-	binary.Write(b, binary.LittleEndian, s.ConsoleType)
-	return b.Bytes()
-}
-
-func (s *UserAuthenV3) Unmarshal(data []byte) error {
-	b := bytes.NewReader(data)
-	var err error
-	if s.Rec1, err = readString_7(b); err != nil {
-		return err
-	}
-	if s.Version, err = readString_7(b); err != nil {
-		return err
-	}
-	if s.Revision, err = readString_7(b); err != nil {
-		return err
-	}
-	if s.DataRevision, err = readString_7(b); err != nil {
-		return err
-	}
-	if s.CRC, err = readString_7(b); err != nil {
-		return err
-	}
-	if err = binary.Read(b, binary.LittleEndian, &s.MachineID); err != nil {
-		return err
-	}
-	if s.Locale, err = readString_7(b); err != nil {
-		return err
-	}
-	if s.PatchClientID, err = readString_7(b); err != nil {
-		return err
-	}
-	if err = binary.Read(b, binary.LittleEndian, &s.IsSteamPatcher); err != nil {
-		return err
-	}
-	if err = binary.Read(b, binary.LittleEndian, &s.ConsoleType); err != nil {
-		return err
-	}
-	return nil
-}
-
 type UserValidate struct {
 	UserID        uint64
 	PassKey3      string
@@ -954,6 +678,87 @@ func (s *UserValidateRsp) Unmarshal(data []byte) error {
 	return nil
 }
 
+type DisconnectLoginAfk struct {
+	Warning int8
+}
+
+func (s *DisconnectLoginAfk) Marshal() []byte {
+	b := bytes.NewBuffer(make([]byte, 0, 1))
+	binary.Write(b, binary.LittleEndian, s.Warning)
+	return b.Bytes()
+}
+
+func (s *DisconnectLoginAfk) Unmarshal(data []byte) error {
+	b := bytes.NewReader(data)
+	var err error
+	if err = binary.Read(b, binary.LittleEndian, &s.Warning); err != nil {
+		return err
+	}
+	return nil
+}
+
+type LoginNotAfk struct {
+	BadgeNameID uint32
+}
+
+func (s *LoginNotAfk) Marshal() []byte {
+	b := bytes.NewBuffer(make([]byte, 0, 4))
+	binary.Write(b, binary.LittleEndian, s.BadgeNameID)
+	return b.Bytes()
+}
+
+func (s *LoginNotAfk) Unmarshal(data []byte) error {
+	b := bytes.NewReader(data)
+	var err error
+	if err = binary.Read(b, binary.LittleEndian, &s.BadgeNameID); err != nil {
+		return err
+	}
+	return nil
+}
+
+type ServerShutdown struct {
+	Message uint32
+}
+
+func (s *ServerShutdown) Marshal() []byte {
+	b := bytes.NewBuffer(make([]byte, 0, 4))
+	binary.Write(b, binary.LittleEndian, s.Message)
+	return b.Bytes()
+}
+
+func (s *ServerShutdown) Unmarshal(data []byte) error {
+	b := bytes.NewReader(data)
+	var err error
+	if err = binary.Read(b, binary.LittleEndian, &s.Message); err != nil {
+		return err
+	}
+	return nil
+}
+
+type UserAdmitInd struct {
+	Status          int32
+	PositionInQueue uint32
+}
+
+func (s *UserAdmitInd) Marshal() []byte {
+	b := bytes.NewBuffer(make([]byte, 0, 8))
+	binary.Write(b, binary.LittleEndian, s.Status)
+	binary.Write(b, binary.LittleEndian, s.PositionInQueue)
+	return b.Bytes()
+}
+
+func (s *UserAdmitInd) Unmarshal(data []byte) error {
+	b := bytes.NewReader(data)
+	var err error
+	if err = binary.Read(b, binary.LittleEndian, &s.Status); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.PositionInQueue); err != nil {
+		return err
+	}
+	return nil
+}
+
 type WebCharacterInfo struct {
 	Name   int32
 	Gender int32
@@ -978,6 +783,84 @@ func (s *WebCharacterInfo) Unmarshal(data []byte) error {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.School); err != nil {
+		return err
+	}
+	return nil
+}
+
+type UserAuthenV2 struct {
+	Rec1          string
+	Version       string
+	Revision      string
+	DataRevision  string
+	CRC           string
+	MachineID     uint64
+	Locale        string
+	PatchClientID string
+}
+
+func (s *UserAuthenV2) Marshal() []byte {
+	b := bytes.NewBuffer(make([]byte, 0, 22+len(s.Rec1)+len(s.Version)+len(s.Revision)+len(s.DataRevision)+len(s.CRC)+len(s.Locale)+len(s.PatchClientID)))
+	writeString_7(b, s.Rec1)
+	writeString_7(b, s.Version)
+	writeString_7(b, s.Revision)
+	writeString_7(b, s.DataRevision)
+	writeString_7(b, s.CRC)
+	binary.Write(b, binary.LittleEndian, s.MachineID)
+	writeString_7(b, s.Locale)
+	writeString_7(b, s.PatchClientID)
+	return b.Bytes()
+}
+
+func (s *UserAuthenV2) Unmarshal(data []byte) error {
+	b := bytes.NewReader(data)
+	var err error
+	if s.Rec1, err = readString_7(b); err != nil {
+		return err
+	}
+	if s.Version, err = readString_7(b); err != nil {
+		return err
+	}
+	if s.Revision, err = readString_7(b); err != nil {
+		return err
+	}
+	if s.DataRevision, err = readString_7(b); err != nil {
+		return err
+	}
+	if s.CRC, err = readString_7(b); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.MachineID); err != nil {
+		return err
+	}
+	if s.Locale, err = readString_7(b); err != nil {
+		return err
+	}
+	if s.PatchClientID, err = readString_7(b); err != nil {
+		return err
+	}
+	return nil
+}
+
+type SaveCharacter struct {
+	CharID  uint64
+	Success uint8
+}
+
+func (s *SaveCharacter) Marshal() []byte {
+	b := bytes.NewBuffer(make([]byte, 0, 9))
+	binary.Write(b, binary.LittleEndian, s.CharID)
+	binary.Write(b, binary.LittleEndian, s.Success)
+	return b.Bytes()
+}
+
+func (s *SaveCharacter) Unmarshal(data []byte) error {
+	b := bytes.NewReader(data)
+	var err error
+	if err = binary.Read(b, binary.LittleEndian, &s.CharID); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.Success); err != nil {
 		return err
 	}
 	return nil
@@ -1056,6 +939,123 @@ func (s *WebValidate) Unmarshal(data []byte) error {
 		return err
 	}
 	if s.Locale, err = readString_7(b); err != nil {
+		return err
+	}
+	return nil
+}
+
+type ChangeCharacterName struct {
+	CharID     uint64
+	NewName    string
+	ServerName string
+}
+
+func (s *ChangeCharacterName) Marshal() []byte {
+	b := bytes.NewBuffer(make([]byte, 0, 12+len(s.NewName)+len(s.ServerName)))
+	binary.Write(b, binary.LittleEndian, s.CharID)
+	writeString_7(b, s.NewName)
+	writeString_7(b, s.ServerName)
+	return b.Bytes()
+}
+
+func (s *ChangeCharacterName) Unmarshal(data []byte) error {
+	b := bytes.NewReader(data)
+	var err error
+	if err = binary.Read(b, binary.LittleEndian, &s.CharID); err != nil {
+		return err
+	}
+	if s.NewName, err = readString_7(b); err != nil {
+		return err
+	}
+	if s.ServerName, err = readString_7(b); err != nil {
+		return err
+	}
+	return nil
+}
+
+type UserAuthenV3 struct {
+	Rec1           string
+	Version        string
+	Revision       string
+	DataRevision   string
+	CRC            string
+	MachineID      uint64
+	Locale         string
+	PatchClientID  string
+	IsSteamPatcher uint32
+	ConsoleType    uint8
+}
+
+func (s *UserAuthenV3) Marshal() []byte {
+	b := bytes.NewBuffer(make([]byte, 0, 27+len(s.Rec1)+len(s.Version)+len(s.Revision)+len(s.DataRevision)+len(s.CRC)+len(s.Locale)+len(s.PatchClientID)))
+	writeString_7(b, s.Rec1)
+	writeString_7(b, s.Version)
+	writeString_7(b, s.Revision)
+	writeString_7(b, s.DataRevision)
+	writeString_7(b, s.CRC)
+	binary.Write(b, binary.LittleEndian, s.MachineID)
+	writeString_7(b, s.Locale)
+	writeString_7(b, s.PatchClientID)
+	binary.Write(b, binary.LittleEndian, s.IsSteamPatcher)
+	binary.Write(b, binary.LittleEndian, s.ConsoleType)
+	return b.Bytes()
+}
+
+func (s *UserAuthenV3) Unmarshal(data []byte) error {
+	b := bytes.NewReader(data)
+	var err error
+	if s.Rec1, err = readString_7(b); err != nil {
+		return err
+	}
+	if s.Version, err = readString_7(b); err != nil {
+		return err
+	}
+	if s.Revision, err = readString_7(b); err != nil {
+		return err
+	}
+	if s.DataRevision, err = readString_7(b); err != nil {
+		return err
+	}
+	if s.CRC, err = readString_7(b); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.MachineID); err != nil {
+		return err
+	}
+	if s.Locale, err = readString_7(b); err != nil {
+		return err
+	}
+	if s.PatchClientID, err = readString_7(b); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.IsSteamPatcher); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.ConsoleType); err != nil {
+		return err
+	}
+	return nil
+}
+
+type LoginLogCharacterCreation struct {
+	Stage     uint32
+	Parameter uint32
+}
+
+func (s *LoginLogCharacterCreation) Marshal() []byte {
+	b := bytes.NewBuffer(make([]byte, 0, 8))
+	binary.Write(b, binary.LittleEndian, s.Stage)
+	binary.Write(b, binary.LittleEndian, s.Parameter)
+	return b.Bytes()
+}
+
+func (s *LoginLogCharacterCreation) Unmarshal(data []byte) error {
+	b := bytes.NewReader(data)
+	var err error
+	if err = binary.Read(b, binary.LittleEndian, &s.Stage); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.Parameter); err != nil {
 		return err
 	}
 	return nil
