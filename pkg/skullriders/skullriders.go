@@ -71,8 +71,8 @@ func (s *SkullRidersMoved) Unmarshal(data []byte) error {
 }
 
 type SkullRidersRewards struct {
-	Score    int32
 	GameName string
+	Score    int32
 }
 
 func (s *SkullRidersRewards) Marshal() []byte {

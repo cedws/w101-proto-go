@@ -161,8 +161,8 @@ func (c QuestClient) UpdateUserHiddenQuests(m *UpdateUserHiddenQuests) error {
 }
 
 type AcceptQuest struct {
-	MobileID  uint64
 	QuestName string
+	MobileID  uint64
 }
 
 func (s *AcceptQuest) Marshal() []byte {
@@ -209,9 +209,9 @@ func (s *CanAcquireWorldElixir) Unmarshal(data []byte) error {
 }
 
 type CompleteGoal struct {
+	CompleteText string
 	QuestID      uint64
 	GoalID       uint64
-	CompleteText string
 }
 
 func (s *CompleteGoal) Marshal() []byte {
@@ -267,8 +267,8 @@ func (s *CompletePersonaGoal) Unmarshal(data []byte) error {
 }
 
 type CompleteQuest struct {
-	QuestID      uint64
 	CompleteText string
+	QuestID      uint64
 }
 
 func (s *CompleteQuest) Marshal() []byte {
@@ -291,10 +291,10 @@ func (s *CompleteQuest) Unmarshal(data []byte) error {
 }
 
 type DebugQuestData struct {
+	GoalName  string
+	QuestName string
 	QuestID   uint64
 	GoalID    uint32
-	QuestName string
-	GoalName  string
 }
 
 func (s *DebugQuestData) Marshal() []byte {
@@ -363,8 +363,8 @@ func (s *GetNextWorld) Unmarshal(data []byte) error {
 }
 
 type InteractNPC struct {
-	GlobalID           uint64
 	ServiceName        string
+	GlobalID           uint64
 	Reinteract         int32
 	ServiceIndex       uint32
 	RequestedSigilMode uint32
@@ -402,10 +402,10 @@ func (s *InteractNPC) Unmarshal(data []byte) error {
 }
 
 type NPCInfo struct {
-	MobileID       uint64
-	Name           string
-	Greeting       string
 	PersonaMadlibs string
+	Greeting       string
+	Name           string
+	MobileID       uint64
 }
 
 func (s *NPCInfo) Marshal() []byte {
@@ -436,10 +436,10 @@ func (s *NPCInfo) Unmarshal(data []byte) error {
 }
 
 type PersonaComplete struct {
+	GoalHyperlink string
 	MobileID      uint64
 	QuestID       uint64
 	GoalID        uint64
-	GoalHyperlink string
 }
 
 func (s *PersonaComplete) Marshal() []byte {
@@ -470,13 +470,13 @@ func (s *PersonaComplete) Unmarshal(data []byte) error {
 }
 
 type QuestOffer struct {
-	MobileID   uint64
-	QuestName  string
-	QuestTitle string
-	QuestInfo  string
-	Level      int32
-	Rewards    string
 	GoalData   string
+	Rewards    string
+	QuestInfo  string
+	QuestTitle string
+	QuestName  string
+	MobileID   uint64
+	Level      int32
 	Mainline   uint8
 }
 
@@ -591,26 +591,26 @@ func (s *RemoveQuest) Unmarshal(data []byte) error {
 }
 
 type SendGoal struct {
-	QuestID             uint64
-	GoalID              uint64
-	GoalNameID          uint32
-	GoalTitle           string
-	GoalLocation        string
-	GoalDestinationZone string
-	GoalImage1          string
-	GoalImage2          string
 	PersonaName         string
-	GoalType            uint8
-	GoalStatus          uint8
-	GoalCount           int32
-	GoalTotal           int32
-	SubscriberGoalTotal int32
-	UseTally            uint8
-	TallyText           string
-	SendType            int32
+	GoalImage2          string
 	GoalMadlibs         string
+	GoalDestinationZone string
+	GoalLocation        string
+	GoalTitle           string
 	ClientTags          string
 	PatronIcon          string
+	TallyText           string
+	GoalImage1          string
+	QuestID             uint64
+	GoalID              uint64
+	SubscriberGoalTotal int32
+	SendType            int32
+	GoalTotal           int32
+	GoalNameID          uint32
+	GoalCount           int32
+	GoalStatus          uint8
+	UseTally            uint8
+	GoalType            uint8
 	NoQuestHelper       uint8
 	PetOnlyQuest        uint8
 	HasActiveResults    uint8
@@ -725,8 +725,8 @@ func (s *SendGoal) Unmarshal(data []byte) error {
 }
 
 type SendNPCOptions struct {
-	MobileID   uint64
 	Options    string
+	MobileID   uint64
 	Reinteract int32
 }
 
@@ -754,18 +754,18 @@ func (s *SendNPCOptions) Unmarshal(data []byte) error {
 }
 
 type SendQuest struct {
-	QuestID          uint64
-	QuestNameID      uint32
-	QuestType        uint32
-	QuestLevel       int32
-	QuestTitle       string
 	QuestInfo        string
-	New              uint8
-	QuestMadlibs     string
-	GoalData         string
+	QuestTitle       string
 	Rewards          string
 	ClientTags       string
 	AssociatedWorlds string
+	QuestMadlibs     string
+	GoalData         string
+	QuestID          uint64
+	QuestLevel       int32
+	QuestType        uint32
+	QuestNameID      uint32
+	New              uint8
 	NoQuestHelper    uint8
 	Mainline         uint8
 	ReadyToTurnIn    uint8

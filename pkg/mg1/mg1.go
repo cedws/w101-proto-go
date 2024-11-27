@@ -71,8 +71,8 @@ func (s *MG1Moved) Unmarshal(data []byte) error {
 }
 
 type MG1Rewards struct {
-	Score    int32
 	GameName string
+	Score    int32
 }
 
 func (s *MG1Rewards) Marshal() []byte {

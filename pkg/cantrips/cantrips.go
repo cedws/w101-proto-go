@@ -413,10 +413,10 @@ func (s *CantripTutorialEffect) Unmarshal(data []byte) error {
 }
 
 type CastEffect struct {
+	AnimationName   string
+	AnimationKFM    string
 	GameObjectID    uint64
 	SpellTemplateID int32
-	AnimationKFM    string
-	AnimationName   string
 }
 
 func (s *CastEffect) Marshal() []byte {
@@ -448,8 +448,8 @@ func (s *CastEffect) Unmarshal(data []byte) error {
 
 type CastRitual struct {
 	CasterGID       uint64
-	SpellTemplateID int32
 	TargetObjectID  uint64
+	SpellTemplateID int32
 	TargetX         float32
 	TargetY         float32
 	TargetZ         float32

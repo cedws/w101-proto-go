@@ -291,8 +291,8 @@ func (s *AllowLeavePvP) Unmarshal(data []byte) error {
 }
 
 type CombatActions struct {
-	DuelID     uint64
 	ActionData string
+	DuelID     uint64
 }
 
 func (s *CombatActions) Marshal() []byte {
@@ -315,8 +315,8 @@ func (s *CombatActions) Unmarshal(data []byte) error {
 }
 
 type CombatAdd struct {
-	DuelID          uint64
 	ParticipantData string
+	DuelID          uint64
 }
 
 func (s *CombatAdd) Marshal() []byte {
@@ -417,11 +417,11 @@ func (s *CombatFlee) Unmarshal(data []byte) error {
 }
 
 type CombatHand struct {
+	HandData          string
+	ParticipantID     uint64
 	DeckCount         uint16
 	TotalDeckCount    uint16
 	TreasureCardCount uint16
-	ParticipantID     uint64
-	HandData          string
 }
 
 func (s *CombatHand) Marshal() []byte {
@@ -456,8 +456,8 @@ func (s *CombatHand) Unmarshal(data []byte) error {
 }
 
 type CombatHealth struct {
-	DuelID     uint64
 	HealthData string
+	DuelID     uint64
 }
 
 func (s *CombatHealth) Marshal() []byte {
@@ -480,10 +480,10 @@ func (s *CombatHealth) Unmarshal(data []byte) error {
 }
 
 type CombatLoaded struct {
+	ParticipantList string
 	DuelID          uint64
 	RoundNum        int32
 	FirstTeamToAct  int32
-	ParticipantList string
 }
 
 func (s *CombatLoaded) Marshal() []byte {
@@ -538,10 +538,10 @@ func (s *CombatMatchResult) Unmarshal(data []byte) error {
 }
 
 type CombatMove struct {
-	MoveType       uint8
-	SpellSelection uint8
 	SpellTarget    uint32
 	TimeLeft       int32
+	MoveType       uint8
+	SpellSelection uint8
 }
 
 func (s *CombatMove) Marshal() []byte {
@@ -574,10 +574,10 @@ func (s *CombatMove) Unmarshal(data []byte) error {
 type CombatMoveSelection struct {
 	DuelID           uint64
 	ParticipantID    uint64
-	MoveType         uint8
 	SpellID          int32
 	SpellTargetIndex uint32
 	EnchantmentID    int32
+	MoveType         uint8
 	IsItemCard       uint8
 	IsTreasureCard   uint8
 	IsBattleCard     uint8
@@ -650,10 +650,10 @@ func (s *CombatPaused) Unmarshal(data []byte) error {
 }
 
 type CombatPhase struct {
-	DuelID   uint64
-	NewPhase uint8
 	Data     string
+	DuelID   uint64
 	PlayerID uint64
+	NewPhase uint8
 }
 
 func (s *CombatPhase) Marshal() []byte {
@@ -684,20 +684,20 @@ func (s *CombatPhase) Unmarshal(data []byte) error {
 }
 
 type CombatPhaseForSpectators struct {
-	DuelID           uint64
-	NewPhase         uint8
-	Time             uint8
-	ParticipantName1 string
-	ParticipantName2 string
-	ParticipantName3 string
-	ParticipantName4 string
-	ParticipantName5 string
 	ParticipantName6 string
+	ParticipantName3 string
+	ParticipantName2 string
+	ParticipantName1 string
 	ParticipantName7 string
 	ParticipantName8 string
+	ParticipantName5 string
+	ParticipantName4 string
+	DuelID           uint64
 	Subcircles       uint32
 	TeamName0        uint32
 	TeamName1        uint32
+	Time             uint8
+	NewPhase         uint8
 }
 
 func (s *CombatPhaseForSpectators) Marshal() []byte {
@@ -768,8 +768,8 @@ func (s *CombatPhaseForSpectators) Unmarshal(data []byte) error {
 }
 
 type CombatPips struct {
-	DuelID  uint64
 	PipData string
+	DuelID  uint64
 }
 
 func (s *CombatPips) Marshal() []byte {
@@ -865,9 +865,9 @@ func (s *CombatRevealHanging) Unmarshal(data []byte) error {
 }
 
 type CombatStats struct {
+	StatsData string
 	DuelID    uint64
 	PartID    uint64
-	StatsData string
 }
 
 func (s *CombatStats) Marshal() []byte {
@@ -895,10 +895,10 @@ func (s *CombatStats) Unmarshal(data []byte) error {
 
 type CombatUpFirst struct {
 	DuelID         uint64
-	UpFirst        uint8
-	RoundNum       uint16
 	PlayerID       uint64
 	FirstTeamToAct int32
+	RoundNum       uint16
+	UpFirst        uint8
 }
 
 func (s *CombatUpFirst) Marshal() []byte {
@@ -1064,9 +1064,9 @@ func (s *SetDuelTimer) Unmarshal(data []byte) error {
 }
 
 type SetPlanningPhaseTimer struct {
+	TimeData string
 	DuelID   uint64
 	Time     int32
-	TimeData string
 }
 
 func (s *SetPlanningPhaseTimer) Marshal() []byte {

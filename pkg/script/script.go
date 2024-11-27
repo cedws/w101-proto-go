@@ -211,11 +211,11 @@ func (s *ADDMESSAGE) Unmarshal(data []byte) error {
 }
 
 type ADDPROCESS struct {
-	PID    uint32
-	Root   string
-	Zone   string
-	Name   string
 	Status string
+	Name   string
+	Zone   string
+	Root   string
+	PID    uint32
 }
 
 func (s *ADDPROCESS) Marshal() []byte {
@@ -391,8 +391,8 @@ func (s *KILLPROCESS) Unmarshal(data []byte) error {
 }
 
 type PROCESSSTATE struct {
-	PID   uint32
 	State string
+	PID   uint32
 }
 
 func (s *PROCESSSTATE) Marshal() []byte {
@@ -415,8 +415,8 @@ func (s *PROCESSSTATE) Unmarshal(data []byte) error {
 }
 
 type PROCESSSTATUS struct {
-	PID    uint32
 	Status string
+	PID    uint32
 }
 
 func (s *PROCESSSTATUS) Marshal() []byte {
@@ -439,9 +439,9 @@ func (s *PROCESSSTATUS) Unmarshal(data []byte) error {
 }
 
 type REMOVEPROCESS struct {
-	PID    uint32
-	Name   string
 	Status string
+	Name   string
+	PID    uint32
 }
 
 func (s *REMOVEPROCESS) Marshal() []byte {
@@ -490,8 +490,8 @@ func (s *SENDSTATE) Unmarshal(data []byte) error {
 }
 
 type SETVARIABLE struct {
-	Variable string
 	Value    string
+	Variable string
 }
 
 func (s *SETVARIABLE) Marshal() []byte {
@@ -514,9 +514,9 @@ func (s *SETVARIABLE) Unmarshal(data []byte) error {
 }
 
 type STARTPROCESS struct {
-	DataRoot      string
-	Zone          string
 	Script        string
+	Zone          string
+	DataRoot      string
 	StartAttached int32
 	StartRunning  int32
 }

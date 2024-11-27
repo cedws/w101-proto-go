@@ -42,40 +42,24 @@ func (c SystemClient) PingRsp(m *PingRsp) error {
 }
 
 type Ping struct {
-	_MsgType uint8
 }
 
 func (s *Ping) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s._MsgType)
-	return b.Bytes()
+	return []byte{}
 }
 
 func (s *Ping) Unmarshal(data []byte) error {
-	b := bytes.NewReader(data)
-	var err error
-	if err = binary.Read(b, binary.LittleEndian, &s._MsgType); err != nil {
-		return err
-	}
 	return nil
 }
 
 type PingRsp struct {
-	_MsgType uint8
 }
 
 func (s *PingRsp) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s._MsgType)
-	return b.Bytes()
+	return []byte{}
 }
 
 func (s *PingRsp) Unmarshal(data []byte) error {
-	b := bytes.NewReader(data)
-	var err error
-	if err = binary.Read(b, binary.LittleEndian, &s._MsgType); err != nil {
-		return err
-	}
 	return nil
 }
 

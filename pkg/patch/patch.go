@@ -49,15 +49,15 @@ func (c PatchClient) NextVersion(m *NextVersion) error {
 }
 
 type LatestFileList struct {
-	LatestVersion uint32
+	URLSuffix     string
+	URLPrefix     string
+	ListFileURL   string
 	ListFileName  string
+	LatestVersion uint32
 	ListFileType  uint32
 	ListFileTime  uint32
 	ListFileSize  uint32
 	ListFileCRC   uint32
-	ListFileURL   string
-	URLPrefix     string
-	URLSuffix     string
 }
 
 func (s *LatestFileList) Marshal() []byte {
@@ -108,16 +108,16 @@ func (s *LatestFileList) Unmarshal(data []byte) error {
 }
 
 type LatestFileListV2 struct {
-	LatestVersion uint32
+	Locale        string
+	URLSuffix     string
+	URLPrefix     string
+	ListFileURL   string
 	ListFileName  string
+	LatestVersion uint32
 	ListFileType  uint32
 	ListFileTime  uint32
 	ListFileSize  uint32
 	ListFileCRC   uint32
-	ListFileURL   string
-	URLPrefix     string
-	URLSuffix     string
-	Locale        string
 }
 
 func (s *LatestFileListV2) Marshal() []byte {
@@ -172,10 +172,10 @@ func (s *LatestFileListV2) Unmarshal(data []byte) error {
 }
 
 type NextVersion struct {
+	FileName  string
+	URLPrefix string
 	PkgName   string
 	Version   int32
-	URLPrefix string
-	FileName  string
 	FileType  int32
 }
 

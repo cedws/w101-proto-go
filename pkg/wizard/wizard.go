@@ -1801,8 +1801,8 @@ func (c WizardClient) WorldTeleportRequest(m *WorldTeleportRequest) error {
 }
 
 type AcceptQuestBogus struct {
-	MobileID  uint64
 	QuestName string
+	MobileID  uint64
 	QuestID   uint64
 	GoalID    uint64
 }
@@ -1835,9 +1835,9 @@ func (s *AcceptQuestBogus) Unmarshal(data []byte) error {
 }
 
 type AccessPassBuyConfirm struct {
+	Credits    int32
 	Failure    int8
 	WebFailure int8
-	Credits    int32
 }
 
 func (s *AccessPassBuyConfirm) Marshal() []byte {
@@ -1912,12 +1912,12 @@ func (s *AccessPassDeclined) Unmarshal(data []byte) error {
 }
 
 type AccessPassInfoRequest struct {
-	AccessPass  string
-	TargetLoc   string
-	ZoneID      uint64
-	ZoneName    string
-	ClusterID   uint64
 	ClusterName string
+	ZoneName    string
+	TargetLoc   string
+	AccessPass  string
+	ZoneID      uint64
+	ClusterID   uint64
 }
 
 func (s *AccessPassInfoRequest) Marshal() []byte {
@@ -1956,8 +1956,8 @@ func (s *AccessPassInfoRequest) Unmarshal(data []byte) error {
 }
 
 type AccessPassOffer struct {
-	Data          string
 	Sample        string
+	Data          string
 	TransactionID uint64
 	TotalCrowns   int32
 	WebFailure    int8
@@ -2000,14 +2000,14 @@ func (s *AccessPassOffer) Unmarshal(data []byte) error {
 }
 
 type AccessPassRejected struct {
-	AccessPass               string
-	RequestedZoneDisplayName string
-	PayToPlayStyle           string
-	TargetLoc                string
-	ZoneID                   uint64
-	ZoneName                 string
-	ClusterID                uint64
 	ClusterName              string
+	ZoneName                 string
+	TargetLoc                string
+	PayToPlayStyle           string
+	RequestedZoneDisplayName string
+	AccessPass               string
+	ZoneID                   uint64
+	ClusterID                uint64
 }
 
 func (s *AccessPassRejected) Marshal() []byte {
@@ -2054,17 +2054,17 @@ func (s *AccessPassRejected) Unmarshal(data []byte) error {
 }
 
 type ActorDialog struct {
+	DefaultDialogAnimation string
+	PersonaIcon            string
+	PersonaName            string
+	Persona                string
+	ActorDialog            string
+	CompletionType         string
 	MobileID               uint64
 	QuestID                uint64
 	GoalID                 uint64
-	CompletionType         string
-	ActorDialog            string
-	Persona                string
-	PersonaName            string
-	PersonaIcon            string
 	RangeCheck             uint8
 	IsEncounter            uint8
-	DefaultDialogAnimation string
 	IsYesNo                uint8
 }
 
@@ -2128,9 +2128,9 @@ func (s *ActorDialog) Unmarshal(data []byte) error {
 }
 
 type AddQuestFinder struct {
+	NPCList string
 	QuestID uint64
 	GoalID  uint64
-	NPCList string
 }
 
 func (s *AddQuestFinder) Marshal() []byte {
@@ -2176,8 +2176,8 @@ func (s *AddSpellToBook) Unmarshal(data []byte) error {
 }
 
 type AddSpellToDeck struct {
-	SpellID int32
 	DeckID  uint64
+	SpellID int32
 	Success uint8
 }
 
@@ -2229,9 +2229,9 @@ func (s *AddTreasureSpellToBook) Unmarshal(data []byte) error {
 }
 
 type AddTreasureSpellToDeck struct {
+	DeckID        uint64
 	SpellID       int32
 	EnchantmentID int32
-	DeckID        uint64
 	NewSpell      uint8
 	Success       uint8
 }
@@ -2268,10 +2268,10 @@ func (s *AddTreasureSpellToDeck) Unmarshal(data []byte) error {
 }
 
 type AdventurePartyMessage struct {
+	PlayerName      string
 	PlayerGID       uint64
 	PartyGID        uint64
 	Status          int32
-	PlayerName      string
 	PartyName       uint32
 	PartyNameLocale uint32
 	Guild           uint8
@@ -2318,11 +2318,11 @@ func (s *AdventurePartyMessage) Unmarshal(data []byte) error {
 
 type Aggro struct {
 	GlobalID uint64
+	SigilGID uint64
 	LocX     float32
 	LocY     float32
 	LocZ     float32
 	Yaw      float32
-	SigilGID uint64
 }
 
 func (s *Aggro) Marshal() []byte {
@@ -2399,8 +2399,8 @@ func (s *ArenaError) Unmarshal(data []byte) error {
 }
 
 type AuctionHouseContents struct {
-	GlobalID uint64
 	Contents string
+	GlobalID uint64
 }
 
 func (s *AuctionHouseContents) Marshal() []byte {
@@ -2424,9 +2424,9 @@ func (s *AuctionHouseContents) Unmarshal(data []byte) error {
 
 type AuctionHouseMoreAcknowledgement struct {
 	ItemTemplateID    uint64
-	IsSell            int8
 	TotalPrice        int32
 	QuantityPurchased int32
+	IsSell            int8
 }
 
 func (s *AuctionHouseMoreAcknowledgement) Marshal() []byte {
@@ -2457,18 +2457,18 @@ func (s *AuctionHouseMoreAcknowledgement) Unmarshal(data []byte) error {
 }
 
 type AuctionHouseRequest struct {
-	Command        int8
+	ItemGlobalID   uint64
 	NpcGlobalID    uint64
 	ItemTemplateID uint64
-	ItemGlobalID   uint64
+	Decal2         int32
 	Texture        int32
 	Decal          int32
-	Decal2         int32
 	PetName        uint32
-	ItemType       int8
 	Category       uint32
 	Quantity       uint32
 	Key            uint32
+	Command        int8
+	ItemType       int8
 	BackpackBuddy  int8
 }
 
@@ -2547,9 +2547,9 @@ func (s *AuctionRequestBank) Unmarshal(data []byte) error {
 }
 
 type AuctionResponse struct {
-	Command        int8
 	ItemTemplateID uint64
 	Cost           int32
+	Command        int8
 	ReturnCode     int8
 }
 
@@ -2581,8 +2581,8 @@ func (s *AuctionResponse) Unmarshal(data []byte) error {
 }
 
 type BankDelete struct {
-	ClientRequestID int32
 	GlobalID        uint64
+	ClientRequestID int32
 	UseShared       int8
 	FromInventory   int8
 }
@@ -2615,8 +2615,8 @@ func (s *BankDelete) Unmarshal(data []byte) error {
 }
 
 type BankDeleteConfirm struct {
-	ClientRequestID int32
 	GlobalID        uint64
+	ClientRequestID int32
 	UseShared       int8
 	Failure         int8
 }
@@ -2649,11 +2649,11 @@ func (s *BankDeleteConfirm) Unmarshal(data []byte) error {
 }
 
 type BankToBankConfirm struct {
-	ClientRequestID  int32
 	OriginalGlobalID uint64
 	GlobalID         uint64
-	UseShared        int8
+	ClientRequestID  int32
 	Error            uint32
+	UseShared        int8
 }
 
 func (s *BankToBankConfirm) Marshal() []byte {
@@ -2688,9 +2688,9 @@ func (s *BankToBankConfirm) Unmarshal(data []byte) error {
 }
 
 type BankToInvConfirm struct {
-	ClientRequestID  int32
 	OriginalGlobalID uint64
 	GlobalID         uint64
+	ClientRequestID  int32
 	Failure          int8
 }
 
@@ -2722,8 +2722,8 @@ func (s *BankToInvConfirm) Unmarshal(data []byte) error {
 }
 
 type BoosterDistributionResults struct {
-	LootList string
 	Error    string
+	LootList string
 }
 
 func (s *BoosterDistributionResults) Marshal() []byte {
@@ -2765,9 +2765,9 @@ func (s *BracketReport) Unmarshal(data []byte) error {
 }
 
 type BuyEnergyConfirm struct {
+	Credits    int32
 	Failure    int8
 	WebFailure int8
-	Credits    int32
 }
 
 func (s *BuyEnergyConfirm) Marshal() []byte {
@@ -2794,8 +2794,8 @@ func (s *BuyEnergyConfirm) Unmarshal(data []byte) error {
 }
 
 type ChatFilterBlack struct {
-	GlobalID  uint64
 	Blacklist string
+	GlobalID  uint64
 }
 
 func (s *ChatFilterBlack) Marshal() []byte {
@@ -2818,8 +2818,8 @@ func (s *ChatFilterBlack) Unmarshal(data []byte) error {
 }
 
 type ChatFilterWhite struct {
-	GlobalID  uint64
 	Whitelist string
+	GlobalID  uint64
 }
 
 func (s *ChatFilterWhite) Marshal() []byte {
@@ -2896,9 +2896,9 @@ func (s *ClearEquippedDeck) Unmarshal(data []byte) error {
 }
 
 type CompleteDialog struct {
-	MobileID       uint64
-	CompletionType string
 	EntryEvent     string
+	CompletionType string
+	MobileID       uint64
 }
 
 func (s *CompleteDialog) Marshal() []byte {
@@ -2949,8 +2949,8 @@ func (s *ControlMusic) Unmarshal(data []byte) error {
 }
 
 type CraftingSlotAdd struct {
-	GlobalID uint64
 	Data     string
+	GlobalID uint64
 }
 
 func (s *CraftingSlotAdd) Marshal() []byte {
@@ -3021,11 +3021,11 @@ func (s *CraftingSlotRemove) Unmarshal(data []byte) error {
 }
 
 type CreateBoosterDistribution struct {
-	BoosterTemplateID uint32
-	LootTableName     string
-	PlayerLevel       uint32
-	PlayerSchool      string
 	PlayerGender      string
+	PlayerSchool      string
+	LootTableName     string
+	BoosterTemplateID uint32
+	PlayerLevel       uint32
 	Samples           uint32
 }
 
@@ -3065,9 +3065,9 @@ func (s *CreateBoosterDistribution) Unmarshal(data []byte) error {
 }
 
 type CrownBalance struct {
-	Failure                       uint8
-	TotalCrowns                   int32
 	CharacterID                   uint64
+	TotalCrowns                   int32
+	Failure                       uint8
 	CacheBalanceForCSSegmentation uint8
 }
 
@@ -3099,11 +3099,11 @@ func (s *CrownBalance) Unmarshal(data []byte) error {
 }
 
 type CrownsBuyConfirm struct {
-	Failure    int8
-	WebFailure int8
-	Credits    int32
 	Data       string
 	TemplateID uint64
+	Credits    int32
+	Failure    int8
+	WebFailure int8
 }
 
 func (s *CrownsBuyConfirm) Marshal() []byte {
@@ -3167,11 +3167,11 @@ func (s *CrownsBuyRequest) Unmarshal(data []byte) error {
 }
 
 type CrownServicesOpen struct {
-	GlobalID   uint64
+	Data       string
 	ShopTitle  string
+	GlobalID   uint64
 	Credits    int32
 	WebFailure int8
-	Data       string
 }
 
 func (s *CrownServicesOpen) Marshal() []byte {
@@ -3206,9 +3206,9 @@ func (s *CrownServicesOpen) Unmarshal(data []byte) error {
 }
 
 type CSRCrownBalance struct {
-	Success     uint8
-	Balance     int32
 	CharacterID uint64
+	Balance     int32
+	Success     uint8
 }
 
 func (s *CSRCrownBalance) Marshal() []byte {
@@ -3235,8 +3235,8 @@ func (s *CSRCrownBalance) Unmarshal(data []byte) error {
 }
 
 type CSRRequestBlobs struct {
-	ContainerGID uint64
 	Data         string
+	ContainerGID uint64
 }
 
 func (s *CSRRequestBlobs) Marshal() []byte {
@@ -3363,11 +3363,11 @@ func (s *DuelSimResult) Unmarshal(data []byte) error {
 }
 
 type DyeConfirm struct {
-	Failure     int8
 	ItemGID     uint64
 	FirstLayer  int32
 	SecondLayer int32
 	ThirdLayer  int32
+	Failure     int8
 }
 
 func (s *DyeConfirm) Marshal() []byte {
@@ -3403,10 +3403,10 @@ func (s *DyeConfirm) Unmarshal(data []byte) error {
 
 type DyeRequest struct {
 	ItemGlobalID uint64
+	NpcGlobalID  uint64
 	Texture      int32
 	Decal        int32
 	Decal2       int32
-	NpcGlobalID  uint64
 }
 
 func (s *DyeRequest) Marshal() []byte {
@@ -3441,8 +3441,8 @@ func (s *DyeRequest) Unmarshal(data []byte) error {
 }
 
 type DyeShopOpen struct {
-	GlobalID uint64
 	Title    string
+	GlobalID uint64
 }
 
 func (s *DyeShopOpen) Marshal() []byte {
@@ -3489,14 +3489,14 @@ func (s *ElixirStateChange) Unmarshal(data []byte) error {
 }
 
 type EncounterDialog struct {
+	PersonaIcon    string
+	PersonaName    string
+	Persona        string
+	ActorDialog    string
+	CompletionType string
 	MobileID       uint64
 	QuestID        uint64
 	GoalID         uint64
-	CompletionType string
-	ActorDialog    string
-	Persona        string
-	PersonaName    string
-	PersonaIcon    string
 }
 
 func (s *EncounterDialog) Marshal() []byte {
@@ -3544,8 +3544,8 @@ func (s *EncounterDialog) Unmarshal(data []byte) error {
 
 type EnergyBuyRequest struct {
 	GlobalID   uint64
-	WebFailure int8
 	Credits    int32
+	WebFailure int8
 }
 
 func (s *EnergyBuyRequest) Marshal() []byte {
@@ -3573,8 +3573,8 @@ func (s *EnergyBuyRequest) Unmarshal(data []byte) error {
 
 type EnergyShopOpen struct {
 	GlobalID   uint64
-	WebFailure int8
 	Credits    int32
+	WebFailure int8
 }
 
 func (s *EnergyShopOpen) Marshal() []byte {
@@ -3620,8 +3620,8 @@ func (s *EnterMinigame) Unmarshal(data []byte) error {
 }
 
 type ExitConfirmTeleport struct {
-	ZoneCRC   uint32
 	PromptKey string
+	ZoneCRC   uint32
 }
 
 func (s *ExitConfirmTeleport) Marshal() []byte {
@@ -3644,9 +3644,9 @@ func (s *ExitConfirmTeleport) Unmarshal(data []byte) error {
 }
 
 type ExpandPvPSearch struct {
+	TournamentNameID     uint32
 	ExpandTeammateSearch uint8
 	ExpandMatchSearch    uint8
-	TournamentNameID     uint32
 }
 
 func (s *ExpandPvPSearch) Marshal() []byte {
@@ -3785,8 +3785,8 @@ func (s *GroupQuestCredit) Unmarshal(data []byte) error {
 }
 
 type InteractAvailableQuest struct {
-	MobileID  uint64
 	QuestName string
+	MobileID  uint64
 }
 
 func (s *InteractAvailableQuest) Marshal() []byte {
@@ -3862,9 +3862,9 @@ func (s *InteractUnderwayQuest) Unmarshal(data []byte) error {
 }
 
 type InvToBankConfirm struct {
-	ClientRequestID  int32
 	OriginalGlobalID uint64
 	GlobalID         uint64
+	ClientRequestID  int32
 	UseShared        int8
 	Failure          int8
 }
@@ -3968,10 +3968,10 @@ func (s *ItemOverflowToBank) Unmarshal(data []byte) error {
 }
 
 type LeaderboardFriendRequest struct {
-	LeaderboardType uint32
-	Page            int8
-	SortType        uint32
 	Contents        string
+	LeaderboardType uint32
+	SortType        uint32
+	Page            int8
 }
 
 func (s *LeaderboardFriendRequest) Marshal() []byte {
@@ -4003,8 +4003,8 @@ func (s *LeaderboardFriendRequest) Unmarshal(data []byte) error {
 
 type LeaderboardRequest struct {
 	LeaderboardType uint32
-	Page            int8
 	SortType        uint32
+	Page            int8
 	ShowMe          uint8
 }
 
@@ -4123,8 +4123,8 @@ func (s *LeashOffset) Unmarshal(data []byte) error {
 }
 
 type LeaveAdventureParty struct {
-	PlayerGID       uint64
 	PlayerName      string
+	PlayerGID       uint64
 	PartyName       uint32
 	PartyNameLocale uint32
 	Status          int32
@@ -4224,8 +4224,8 @@ func (s *LemuriaStatus) Unmarshal(data []byte) error {
 }
 
 type LevelUp struct {
-	GlobalID       uint64
 	Data           string
+	GlobalID       uint64
 	NewLevel       int32
 	XP             int32
 	TrainingPoints int32
@@ -4297,8 +4297,8 @@ func (s *LogClientResolution) Unmarshal(data []byte) error {
 }
 
 type LogOffer struct {
-	OfferType     int32
 	Description   string
+	OfferType     int32
 	Cost          int32
 	TotalCurrency int32
 	Action        int32
@@ -4355,8 +4355,8 @@ func (s *LogPatchClientPatchTime) Unmarshal(data []byte) error {
 }
 
 type Loot struct {
-	GlobalID uint64
 	LootList string
+	GlobalID uint64
 }
 
 func (s *Loot) Marshal() []byte {
@@ -4398,8 +4398,8 @@ func (s *MinigameKiosk) Unmarshal(data []byte) error {
 }
 
 type MinigameRewards struct {
-	Data          string
 	Scores        string
+	Data          string
 	MinigameIndex int32
 	FinalPhase    int32
 	Score         int32
@@ -4442,8 +4442,8 @@ func (s *MinigameRewards) Unmarshal(data []byte) error {
 }
 
 type MinigameSelect struct {
-	Index       int32
 	NpcGlobalID uint64
+	Index       int32
 }
 
 func (s *MinigameSelect) Marshal() []byte {
@@ -4485,8 +4485,8 @@ func (s *MinigameTimerEnd) Unmarshal(data []byte) error {
 }
 
 type MinigameTimerStart struct {
-	Time     float32
 	SigilGID uint64
+	Time     float32
 	Teleport int8
 }
 
@@ -4514,9 +4514,9 @@ func (s *MinigameTimerStart) Unmarshal(data []byte) error {
 }
 
 type MoveBankToBank struct {
-	ClientRequestID int32
 	BankID          uint64
 	BankSharedID    uint64
+	ClientRequestID int32
 	Error           uint32
 }
 
@@ -4548,10 +4548,10 @@ func (s *MoveBankToBank) Unmarshal(data []byte) error {
 }
 
 type MoveBankToInv struct {
-	ClientRequestID int32
 	GlobalID        uint64
-	UseShared       int8
+	ClientRequestID int32
 	Quantity        int32
+	UseShared       int8
 }
 
 func (s *MoveBankToInv) Marshal() []byte {
@@ -4582,11 +4582,11 @@ func (s *MoveBankToInv) Unmarshal(data []byte) error {
 }
 
 type MoveInvToBank struct {
-	ClientRequestID int32
 	GlobalID        uint64
-	UseShared       int8
+	ClientRequestID int32
 	Quantity        int32
 	Debug           int32
+	UseShared       int8
 }
 
 func (s *MoveInvToBank) Marshal() []byte {
@@ -4621,9 +4621,9 @@ func (s *MoveInvToBank) Unmarshal(data []byte) error {
 }
 
 type NewTitle struct {
+	Title     string
 	GlobalID  uint64
 	PvPIconID uint32
-	Title     string
 }
 
 func (s *NewTitle) Marshal() []byte {
@@ -4781,11 +4781,11 @@ func (s *PaidLootRollResponse) Unmarshal(data []byte) error {
 }
 
 type PaidLootRollResult struct {
+	Loot    string
 	Id      uint64
 	Cost    int32
 	Balance int32
 	Uses    int32
-	Loot    string
 }
 
 func (s *PaidLootRollResult) Marshal() []byte {
@@ -4820,8 +4820,8 @@ func (s *PaidLootRollResult) Unmarshal(data []byte) error {
 }
 
 type PatchingBlocked struct {
-	PackageName string
 	ZoneName    string
+	PackageName string
 }
 
 func (s *PatchingBlocked) Marshal() []byte {
@@ -4892,8 +4892,8 @@ func (s *PCSListRequest) Unmarshal(data []byte) error {
 }
 
 type PCSListResponse struct {
-	Data     string
 	Updates  string
+	Data     string
 	UpdateID uint32
 	Error    int32
 }
@@ -5018,21 +5018,21 @@ func (s *PCSPriceLockResponse) Unmarshal(data []byte) error {
 }
 
 type PCSPurchaseRequest struct {
+	ActiveTabName          string
+	ActiveCatName          string
+	RecipientName          string
 	Item                   uint64
 	Recipient              uint64
-	RecipientName          string
-	Type                   int32
-	Cost                   int32
-	Count                  int32
 	Texture                int32
+	Count                  int32
 	Decal                  int32
 	PetName                uint32
 	SaleID                 uint32
 	Reco                   uint32
 	ItemLocator            uint32
 	PurchaseElixirEquipNow uint32
-	ActiveTabName          string
-	ActiveCatName          string
+	Cost                   int32
+	Type                   int32
 }
 
 func (s *PCSPurchaseRequest) Marshal() []byte {
@@ -5111,8 +5111,8 @@ type PCSPurchaseResponse struct {
 	Type   int32
 	Cost   int32
 	Count  int32
-	Gifted uint8
 	Error  int32
+	Gifted uint8
 }
 
 func (s *PCSPurchaseResponse) Marshal() []byte {
@@ -5162,8 +5162,8 @@ func (s *PCSSegDataRequest) Unmarshal(data []byte) error {
 }
 
 type PCSSegDataResponse struct {
-	Success uint8
 	Data    string
+	Success uint8
 }
 
 func (s *PCSSegDataResponse) Marshal() []byte {
@@ -5186,9 +5186,9 @@ func (s *PCSSegDataResponse) Unmarshal(data []byte) error {
 }
 
 type PCSUpdateUserWishlist struct {
-	GlobalID         uint64
-	Data             string
 	WLItemsRemAftPur string
+	Data             string
+	GlobalID         uint64
 }
 
 func (s *PCSUpdateUserWishlist) Marshal() []byte {
@@ -5215,8 +5215,8 @@ func (s *PCSUpdateUserWishlist) Unmarshal(data []byte) error {
 }
 
 type PetGameKiosk struct {
-	GlobalID uint64
 	GameInfo string
+	GlobalID uint64
 	GamesWon uint32
 }
 
@@ -5384,8 +5384,8 @@ func (s *PetRenameConfirm) Unmarshal(data []byte) error {
 
 type PetRenameRequest struct {
 	ItemGlobalID uint64
-	PetName      uint32
 	NpcGlobalID  uint64
+	PetName      uint32
 }
 
 func (s *PetRenameRequest) Marshal() []byte {
@@ -5455,11 +5455,11 @@ func (s *PlayerWizbang) Unmarshal(data []byte) error {
 }
 
 type PlayMusic struct {
+	SoundFilename string
 	SoundID       uint64
 	FadeTime      float32
-	Flags         int8
-	SoundFilename string
 	StartDelay    float32
+	Flags         int8
 }
 
 func (s *PlayMusic) Marshal() []byte {
@@ -5513,8 +5513,8 @@ func (s *PotionBuyConfirm) Unmarshal(data []byte) error {
 }
 
 type PotionBuyRequest struct {
-	AmountEnum  int32
 	NpcGlobalID uint64
+	AmountEnum  int32
 }
 
 func (s *PotionBuyRequest) Marshal() []byte {
@@ -5537,8 +5537,8 @@ func (s *PotionBuyRequest) Unmarshal(data []byte) error {
 }
 
 type PotionShopOpen struct {
-	GlobalID  uint64
 	ShopTitle string
+	GlobalID  uint64
 }
 
 func (s *PotionShopOpen) Marshal() []byte {
@@ -5580,16 +5580,16 @@ func (s *PreLeaderboard) Unmarshal(data []byte) error {
 }
 
 type PremiumContent struct {
+	PurchaseList  string
+	SubscribeText string
+	TitleText     string
+	ScrollTitle   string
 	MobileID      uint64
 	TransactionID uint64
-	Failure       int8
 	TotalCrowns   int32
-	CanPurchase   int8
-	ScrollTitle   string
-	TitleText     string
-	SubscribeText string
 	Tournament    uint32
-	PurchaseList  string
+	Failure       int8
+	CanPurchase   int8
 }
 
 func (s *PremiumContent) Marshal() []byte {
@@ -5644,11 +5644,11 @@ func (s *PremiumContent) Unmarshal(data []byte) error {
 }
 
 type PrePvPKiosk struct {
-	TournamentNameID uint32
 	MobileID         uint64
+	TransactionID    uint64
+	TournamentNameID uint32
 	LeagueID         uint32
 	SeasonID         uint32
-	TransactionID    uint64
 	Patching         uint8
 }
 
@@ -5688,9 +5688,9 @@ func (s *PrePvPKiosk) Unmarshal(data []byte) error {
 }
 
 type PvPConfirm struct {
+	MatchActor       string
 	TournamentNameID uint32
 	Confirm          uint8
-	MatchActor       string
 }
 
 func (s *PvPConfirm) Marshal() []byte {
@@ -5761,9 +5761,9 @@ func (s *PvPConfirmTourney) Unmarshal(data []byte) error {
 }
 
 type PvPConsumePvPTourneyCurrency struct {
+	Bracket                    string
 	CharacterID                uint64
 	BracketID                  uint64
-	Bracket                    string
 	GroupJoinTeamID            uint64
 	PricePvPTourneyCurrency    uint32
 	SubPricePvPTourneyCurrency uint32
@@ -5805,13 +5805,13 @@ func (s *PvPConsumePvPTourneyCurrency) Unmarshal(data []byte) error {
 }
 
 type PvPIntent struct {
-	Command             int8
-	TargetObject        uint64
 	TargetData          string
+	TargetObject        uint64
+	MatchID             uint64
 	TournamentNameID    uint32
 	MatchNameID         uint32
-	MatchID             uint64
 	AllowExtMatchSearch uint32
+	Command             int8
 }
 
 func (s *PvPIntent) Marshal() []byte {
@@ -5854,8 +5854,8 @@ func (s *PvPIntent) Unmarshal(data []byte) error {
 }
 
 type PvpMatchRequest struct {
-	TournamentNameID uint32
 	MobileID         uint64
+	TournamentNameID uint32
 	Failure          uint8
 }
 
@@ -5883,8 +5883,8 @@ func (s *PvpMatchRequest) Unmarshal(data []byte) error {
 }
 
 type PvPQueue struct {
-	CharacterID uint64
 	PvPQueue    string
+	CharacterID uint64
 	Clear       uint8
 }
 
@@ -5942,8 +5942,8 @@ func (s *PvPUpdateRequest) Unmarshal(data []byte) error {
 }
 
 type QuestDialog struct {
-	QuestNameID uint32
 	ActorDialog string
+	QuestNameID uint32
 }
 
 func (s *QuestDialog) Marshal() []byte {
@@ -5985,8 +5985,8 @@ func (s *QuestFinderOption) Unmarshal(data []byte) error {
 }
 
 type QuestRewards struct {
-	QuestID  uint64
 	LootList string
+	QuestID  uint64
 }
 
 func (s *QuestRewards) Marshal() []byte {
@@ -6020,8 +6020,8 @@ func (s *QuickSellRequestBank) Unmarshal(data []byte) error {
 }
 
 type ReagentAdd struct {
-	GlobalID uint64
 	Data     string
+	GlobalID uint64
 }
 
 func (s *ReagentAdd) Marshal() []byte {
@@ -6116,8 +6116,8 @@ func (s *ReagentUpdate) Unmarshal(data []byte) error {
 }
 
 type RecipeAdd struct {
-	GlobalID uint64
 	Data     string
+	GlobalID uint64
 }
 
 func (s *RecipeAdd) Marshal() []byte {
@@ -6164,8 +6164,8 @@ func (s *RecipeRemove) Unmarshal(data []byte) error {
 }
 
 type Registrar struct {
-	MobileID uint64
 	Data     string
+	MobileID uint64
 }
 
 func (s *Registrar) Marshal() []byte {
@@ -6207,8 +6207,8 @@ func (s *RemoveSpellFromBook) Unmarshal(data []byte) error {
 }
 
 type RemoveSpellFromDeck struct {
-	SpellID int32
 	DeckID  uint64
+	SpellID int32
 	Success uint8
 }
 
@@ -6265,9 +6265,9 @@ func (s *RemoveTreasureSpellFromBook) Unmarshal(data []byte) error {
 }
 
 type RemoveTreasureSpellFromDeck struct {
+	DeckID        uint64
 	SpellID       int32
 	EnchantmentID int32
-	DeckID        uint64
 	Success       uint8
 	Destroy       uint8
 }
@@ -6376,8 +6376,8 @@ func (s *RequestActiveMapQuests) Unmarshal(data []byte) error {
 }
 
 type RequestAdventureParty struct {
-	PlayerGID    uint64
 	Buffer       string
+	PlayerGID    uint64
 	JoinCooldown uint32
 }
 
@@ -6424,12 +6424,12 @@ func (s *RequestCombatSigils) Unmarshal(data []byte) error {
 }
 
 type RequestCreateAdventureParty struct {
+	OwnerName       string
 	PlayerGID       uint64
 	OwnerGID        uint64
 	Status          int32
 	PartyName       uint32
 	PartyNameLocale uint32
-	OwnerName       string
 }
 
 func (s *RequestCreateAdventureParty) Marshal() []byte {
@@ -6471,8 +6471,8 @@ type RequestFriendFinderCode struct {
 	Account1     uint64
 	Account2     uint64
 	BuddyID      uint64
-	Forwarded    uint8
 	ListOwnerGID uint64
+	Forwarded    uint8
 }
 
 func (s *RequestFriendFinderCode) Marshal() []byte {
@@ -6507,8 +6507,8 @@ func (s *RequestFriendFinderCode) Unmarshal(data []byte) error {
 }
 
 type RequestFriendlyPlayerQuest struct {
-	PlayerGID uint64
 	Data      string
+	PlayerGID uint64
 }
 
 func (s *RequestFriendlyPlayerQuest) Marshal() []byte {
@@ -6531,9 +6531,9 @@ func (s *RequestFriendlyPlayerQuest) Unmarshal(data []byte) error {
 }
 
 type RequestFriendlyPlayerQuest2 struct {
+	QuestName           string
 	RequestingPlayerGID uint64
 	PlayerGID           uint64
-	QuestName           string
 }
 
 func (s *RequestFriendlyPlayerQuest2) Marshal() []byte {
@@ -6560,8 +6560,8 @@ func (s *RequestFriendlyPlayerQuest2) Unmarshal(data []byte) error {
 }
 
 type RequestFriendlyPlayers struct {
-	PlayerGID uint64
 	Data      string
+	PlayerGID uint64
 }
 
 func (s *RequestFriendlyPlayers) Marshal() []byte {
@@ -6584,11 +6584,11 @@ func (s *RequestFriendlyPlayers) Unmarshal(data []byte) error {
 }
 
 type RequestHouseTeleport struct {
-	DestinationZone string
-	DestinationLoc  string
 	Position        string
-	TransitionID    uint32
+	DestinationLoc  string
+	DestinationZone string
 	ObjectGID       uint64
+	TransitionID    uint32
 }
 
 func (s *RequestHouseTeleport) Marshal() []byte {
@@ -6623,11 +6623,11 @@ func (s *RequestHouseTeleport) Unmarshal(data []byte) error {
 }
 
 type RequestJoinAdventureParty struct {
+	PlayerName          string
 	PlayerGID           uint64
 	PartyGID            uint64
-	Status              int32
 	RequestingPlayerGID uint64
-	PlayerName          string
+	Status              int32
 	PartyName           uint32
 	PartyNameLocale     uint32
 	Guild               uint8
@@ -6747,9 +6747,9 @@ func (s *RequestPrivacyOptions) Unmarshal(data []byte) error {
 
 type RequestPvPActor struct {
 	CharacterID      uint64
+	RequestID        uint64
 	TournamentNameID uint32
 	MatchNameID      uint32
-	RequestID        uint64
 }
 
 func (s *RequestPvPActor) Marshal() []byte {
@@ -6781,8 +6781,8 @@ func (s *RequestPvPActor) Unmarshal(data []byte) error {
 
 type RequestPvPKiosk struct {
 	MobileID         uint64
-	TournamentNameID uint32
 	TransactionID    uint64
+	TournamentNameID uint32
 }
 
 func (s *RequestPvPKiosk) Marshal() []byte {
@@ -6829,8 +6829,8 @@ func (s *RequestQuestDialog) Unmarshal(data []byte) error {
 
 type RequestQuickSell struct {
 	SellModifier   float32
-	Section        uint8
 	FromTemplateID uint32
+	Section        uint8
 }
 
 func (s *RequestQuickSell) Marshal() []byte {
@@ -6925,8 +6925,8 @@ func (s *RequestToggleLockItem) Unmarshal(data []byte) error {
 }
 
 type RequestVolunteerInfo struct {
-	CharacterID uint64
 	WorldInfo   string
+	CharacterID uint64
 	IsVolunteer uint8
 }
 
@@ -6954,9 +6954,9 @@ func (s *RequestVolunteerInfo) Unmarshal(data []byte) error {
 }
 
 type RespecConfirm struct {
+	Credits    int32
 	Failure    int8
 	WebFailure int8
-	Credits    int32
 }
 
 func (s *RespecConfirm) Marshal() []byte {
@@ -7034,10 +7034,10 @@ func (s *ResponsePrivacyOptions) Unmarshal(data []byte) error {
 type RideMount struct {
 	GlobalID  uint64
 	DriverID  uint64
-	Riding    uint8
 	LocationX uint16
 	LocationY uint16
 	LocationZ uint16
+	Riding    uint8
 }
 
 func (s *RideMount) Marshal() []byte {
@@ -7076,8 +7076,8 @@ func (s *RideMount) Unmarshal(data []byte) error {
 }
 
 type SeamstressOpen struct {
-	GlobalID   uint64
 	ShopTitle  string
+	GlobalID   uint64
 	Credits    int32
 	MergeCost  int32
 	WebFailure int8
@@ -7115,11 +7115,11 @@ func (s *SeamstressOpen) Unmarshal(data []byte) error {
 }
 
 type SendFriendFinderCode struct {
-	Code         string
-	Error        uint32
 	PackedName   string
-	IsRequester  uint32
+	Code         string
 	ListOwnerGID uint64
+	Error        uint32
+	IsRequester  uint32
 }
 
 func (s *SendFriendFinderCode) Marshal() []byte {
@@ -7221,8 +7221,8 @@ func (s *DontAllowFriendFinderCodes) Unmarshal(data []byte) error {
 }
 
 type SetFriendlyPlayer struct {
-	FriendlyPlayer uint8
 	PlayerGID      uint64
+	FriendlyPlayer uint8
 }
 
 func (s *SetFriendlyPlayer) Marshal() []byte {
@@ -7269,8 +7269,8 @@ func (s *SetRentalTimer) Unmarshal(data []byte) error {
 }
 
 type SetVolunteerFlag struct {
-	VolunteerPlayer uint8
 	PlayerGID       uint64
+	VolunteerPlayer uint8
 }
 
 func (s *SetVolunteerFlag) Marshal() []byte {
@@ -7293,8 +7293,8 @@ func (s *SetVolunteerFlag) Unmarshal(data []byte) error {
 }
 
 type SharedBankDeleteReagentOrPetSnack struct {
-	ClientRequestID int32
 	GlobalID        uint64
+	ClientRequestID int32
 	Quantity        int32
 }
 
@@ -7322,8 +7322,8 @@ func (s *SharedBankDeleteReagentOrPetSnack) Unmarshal(data []byte) error {
 }
 
 type SharedBankDeleteReagentOrPetSnackConfirm struct {
-	ClientRequestID int32
 	GlobalID        uint64
+	ClientRequestID int32
 	Failure         int8
 }
 
@@ -7351,9 +7351,9 @@ func (s *SharedBankDeleteReagentOrPetSnackConfirm) Unmarshal(data []byte) error 
 }
 
 type ShopBuyConfirm struct {
+	Credits    int32
 	Failure    int8
 	WebFailure int8
-	Credits    int32
 }
 
 func (s *ShopBuyConfirm) Marshal() []byte {
@@ -7381,13 +7381,13 @@ func (s *ShopBuyConfirm) Unmarshal(data []byte) error {
 
 type ShopBuyRequest struct {
 	ShopID       uint64
-	CurrencyType uint8
+	NpcGlobalID  uint64
 	Texture      int32
 	Decal        int32
 	Decal2       int32
 	PetName      uint32
-	NpcGlobalID  uint64
 	Quantity     uint32
+	CurrencyType uint8
 }
 
 func (s *ShopBuyRequest) Marshal() []byte {
@@ -7434,8 +7434,8 @@ func (s *ShopBuyRequest) Unmarshal(data []byte) error {
 }
 
 type ShopList struct {
-	GlobalID   uint64
 	Data       string
+	GlobalID   uint64
 	Credits    int32
 	WebFailure int8
 }
@@ -7468,8 +7468,8 @@ func (s *ShopList) Unmarshal(data []byte) error {
 }
 
 type ShopSellConfirm struct {
-	ClientRequestID int32
 	GlobalID        uint64
+	ClientRequestID int32
 	Failure         int8
 }
 
@@ -7497,10 +7497,10 @@ func (s *ShopSellConfirm) Unmarshal(data []byte) error {
 }
 
 type ShopSellRequest struct {
-	Quantity    uint32
 	GlobalID    uint64
-	IsQuickSell int8
 	NpcGlobalID uint64
+	Quantity    uint32
+	IsQuickSell int8
 }
 
 func (s *ShopSellRequest) Marshal() []byte {
@@ -7531,8 +7531,8 @@ func (s *ShopSellRequest) Unmarshal(data []byte) error {
 }
 
 type ShowcasedStoreItemInfo struct {
-	StoreTemplateIDsCSV string
 	Data                string
+	StoreTemplateIDsCSV string
 }
 
 func (s *ShowcasedStoreItemInfo) Marshal() []byte {
@@ -7608,8 +7608,8 @@ func (s *ShowGUI) Unmarshal(data []byte) error {
 }
 
 type SnackList struct {
-	InvisibleToFriends uint8
 	Data               string
+	InvisibleToFriends uint8
 }
 
 func (s *SnackList) Marshal() []byte {
@@ -7651,8 +7651,8 @@ func (s *SpellList) Unmarshal(data []byte) error {
 }
 
 type SpellTrainComplete struct {
-	SpellID     uint64
 	DisplayText string
+	SpellID     uint64
 	Success     uint8
 }
 
@@ -7734,8 +7734,8 @@ func (s *StitchItems) Unmarshal(data []byte) error {
 
 type StitchItemsConfirm struct {
 	Failure    int32
-	WebFailure int8
 	Credits    int32
+	WebFailure int8
 }
 
 func (s *StitchItemsConfirm) Marshal() []byte {
@@ -7762,8 +7762,8 @@ func (s *StitchItemsConfirm) Unmarshal(data []byte) error {
 }
 
 type StorageClientAdd struct {
-	GlobalID       uint64
 	SerializedItem string
+	GlobalID       uint64
 	SharedBank     int8
 }
 
@@ -7792,8 +7792,8 @@ func (s *StorageClientAdd) Unmarshal(data []byte) error {
 
 type StorageClientRemove struct {
 	GlobalID   uint64
-	SharedBank int8
 	ItemID     uint64
+	SharedBank int8
 }
 
 func (s *StorageClientRemove) Marshal() []byte {
@@ -8105,8 +8105,8 @@ func (s *Train) Unmarshal(data []byte) error {
 
 type TreasureBuy struct {
 	GlobalID       uint64
-	TreasureCardID uint32
 	NpcGlobalID    uint64
+	TreasureCardID uint32
 	Quantity       int32
 }
 
@@ -8138,9 +8138,9 @@ func (s *TreasureBuy) Unmarshal(data []byte) error {
 }
 
 type TreasureBuyConfirm struct {
+	Credits    int32
 	Failure    int8
 	WebFailure int8
-	Credits    int32
 }
 
 func (s *TreasureBuyConfirm) Marshal() []byte {
@@ -8167,8 +8167,8 @@ func (s *TreasureBuyConfirm) Unmarshal(data []byte) error {
 }
 
 type TreasureShopList struct {
-	GlobalID         uint64
 	Data             string
+	GlobalID         uint64
 	Credits          int32
 	WebFailure       int8
 	ShowAuctionHouse int8
@@ -8259,8 +8259,8 @@ func (s *UnstitchItems) Unmarshal(data []byte) error {
 }
 
 type UnstitchOpen struct {
-	GlobalID   uint64
 	ShopTitle  string
+	GlobalID   uint64
 	Credits    int32
 	MergeCost  int32
 	WebFailure int8
@@ -8355,8 +8355,8 @@ func (s *UpdateFriendlyWorld) Unmarshal(data []byte) error {
 }
 
 type UpdateGender struct {
-	GlobalID  uint64
 	NewGender string
+	GlobalID  uint64
 }
 
 func (s *UpdateGender) Marshal() []byte {
@@ -8620,8 +8620,8 @@ func (s *UpdateTraining) Unmarshal(data []byte) error {
 }
 
 type UpdateVolunteerInfo struct {
-	CharacterID uint64
 	Data        string
+	CharacterID uint64
 }
 
 func (s *UpdateVolunteerInfo) Marshal() []byte {
@@ -8673,10 +8673,10 @@ func (s *UpdateXP) Unmarshal(data []byte) error {
 }
 
 type UseFriendFinderCode struct {
-	AccountID    uint64
 	Code         string
-	Forwarded    uint8
+	AccountID    uint64
 	ListOwnerGID uint64
+	Forwarded    uint8
 }
 
 func (s *UseFriendFinderCode) Marshal() []byte {
@@ -8707,11 +8707,11 @@ func (s *UseFriendFinderCode) Unmarshal(data []byte) error {
 }
 
 type UseFriendFinderCodeResponse struct {
-	BuddyName    string
-	Code         string
 	Error        string
-	Forwarded    uint8
+	Code         string
+	BuddyName    string
 	ListOwnerGID uint64
+	Forwarded    uint8
 }
 
 func (s *UseFriendFinderCodeResponse) Marshal() []byte {
@@ -8791,10 +8791,10 @@ func (s *UseRecipe) Unmarshal(data []byte) error {
 }
 
 type VolunteerRequest struct {
+	SigilInfo       string
 	PlayerGID       uint64
 	TeamUpPlayerGID uint64
 	SigilID         uint32
-	SigilInfo       string
 	Status          uint8
 }
 
@@ -8854,8 +8854,8 @@ func (s *VolunteerTeamHelpComplete) Unmarshal(data []byte) error {
 }
 
 type VolunteerTeamHelpJoin struct {
-	SigilID   uint32
 	PlayerGID uint64
+	SigilID   uint32
 	WorldID   uint32
 }
 
@@ -8883,8 +8883,8 @@ func (s *VolunteerTeamHelpJoin) Unmarshal(data []byte) error {
 }
 
 type WizGameStats struct {
-	GlobalID uint64
 	Data     string
+	GlobalID uint64
 }
 
 func (s *WizGameStats) Marshal() []byte {
@@ -8907,8 +8907,8 @@ func (s *WizGameStats) Unmarshal(data []byte) error {
 }
 
 type WizInventoryClientAdd struct {
-	GlobalID       uint64
 	SerializedItem string
+	GlobalID       uint64
 }
 
 func (s *WizInventoryClientAdd) Marshal() []byte {
@@ -8955,8 +8955,8 @@ func (s *WizInventoryClientRemove) Unmarshal(data []byte) error {
 }
 
 type WorldTeleportList struct {
-	GlobalID uint64
 	Data     string
+	GlobalID uint64
 }
 
 func (s *WorldTeleportList) Marshal() []byte {
@@ -8979,8 +8979,8 @@ func (s *WorldTeleportList) Unmarshal(data []byte) error {
 }
 
 type WorldTeleportRequest struct {
-	TeleportID uint64
 	World      string
+	TeleportID uint64
 }
 
 func (s *WorldTeleportRequest) Marshal() []byte {

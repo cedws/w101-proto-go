@@ -92,9 +92,9 @@ func (s *CustomRecord) Unmarshal(data []byte) error {
 }
 
 type ForceDisconnect struct {
-	Type      uint32
-	TimeStamp string
 	Message   string
+	TimeStamp string
+	Type      uint32
 }
 
 func (s *ForceDisconnect) Marshal() []byte {
@@ -151,8 +151,8 @@ func (s *RawText) Unmarshal(data []byte) error {
 }
 
 type ServerMessage struct {
-	Modal   uint8
 	Message string
+	Modal   uint8
 }
 
 func (s *ServerMessage) Marshal() []byte {

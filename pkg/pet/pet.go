@@ -432,8 +432,8 @@ func (s *CheerCostMapUpdate) Unmarshal(data []byte) error {
 }
 
 type DerbyEffectApply struct {
-	Game string
 	Data string
+	Game string
 }
 
 func (s *DerbyEffectApply) Marshal() []byte {
@@ -538,10 +538,10 @@ func (s *DerbyLocation) Unmarshal(data []byte) error {
 }
 
 type DerbyPetEnergyInfo struct {
+	GID     uint64
 	Cost    int32
 	Current int32
 	Maximum int32
-	GID     uint64
 }
 
 func (s *DerbyPetEnergyInfo) Marshal() []byte {
@@ -665,9 +665,9 @@ func (s *LentPet) Unmarshal(data []byte) error {
 }
 
 type PetDerbyBuff struct {
-	Add   uint8
-	Type  int32
 	PetID uint64
+	Type  int32
+	Add   uint8
 }
 
 func (s *PetDerbyBuff) Marshal() []byte {
@@ -732,8 +732,8 @@ func (s *PetDerbyJumpDuck) Unmarshal(data []byte) error {
 }
 
 type PetDerbyLap struct {
-	PetIndex uint8
 	Count    int32
+	PetIndex uint8
 }
 
 func (s *PetDerbyLap) Marshal() []byte {
@@ -756,8 +756,8 @@ func (s *PetDerbyLap) Unmarshal(data []byte) error {
 }
 
 type PetDerbyModifyStat struct {
-	Name  uint8
 	Value int32
+	Name  uint8
 	Type  uint8
 }
 
@@ -785,8 +785,8 @@ func (s *PetDerbyModifyStat) Unmarshal(data []byte) error {
 }
 
 type PetDerbyMorale struct {
-	PetIndex uint8
 	Morale   int32
+	PetIndex uint8
 }
 
 func (s *PetDerbyMorale) Marshal() []byte {
@@ -871,8 +871,8 @@ func (s *PetDerbySlow) Unmarshal(data []byte) error {
 }
 
 type PetDerbySpeed struct {
-	PetIndex uint8
 	Speed    int32
+	PetIndex uint8
 }
 
 func (s *PetDerbySpeed) Marshal() []byte {
@@ -914,9 +914,9 @@ func (s *PetDerbyStart) Unmarshal(data []byte) error {
 }
 
 type PetDerbySwitchLane struct {
+	MsgID    int32
 	PetIndex uint8
 	Lane     uint8
-	MsgID    int32
 }
 
 func (s *PetDerbySwitchLane) Marshal() []byte {
@@ -1084,8 +1084,8 @@ func (s *PetGameDance) Unmarshal(data []byte) error {
 }
 
 type PetGameData struct {
-	Game string
 	Data string
+	Game string
 }
 
 func (s *PetGameData) Marshal() []byte {
@@ -1127,8 +1127,8 @@ func (s *PetGameDerbyResults) Unmarshal(data []byte) error {
 }
 
 type PetGameDropBonus struct {
-	GameCommand uint8
 	Bonus       int32
+	GameCommand uint8
 }
 
 func (s *PetGameDropBonus) Marshal() []byte {
@@ -1151,8 +1151,8 @@ func (s *PetGameDropBonus) Unmarshal(data []byte) error {
 }
 
 type PetGameDropObject struct {
-	GameCommand uint8
 	GID         uint64
+	GameCommand uint8
 }
 
 func (s *PetGameDropObject) Marshal() []byte {
@@ -1175,8 +1175,8 @@ func (s *PetGameDropObject) Unmarshal(data []byte) error {
 }
 
 type PetGameEnd struct {
-	Game string
 	Data string
+	Game string
 }
 
 func (s *PetGameEnd) Marshal() []byte {
@@ -1242,8 +1242,8 @@ func (s *PetGameIndividualResults) Unmarshal(data []byte) error {
 }
 
 type PetGameInit struct {
-	Game     string
 	Data     string
+	Game     string
 	MinLevel uint8
 	Track    uint8
 }
@@ -1276,8 +1276,8 @@ func (s *PetGameInit) Unmarshal(data []byte) error {
 }
 
 type PetGameJoin struct {
-	Game  string
 	Track string
+	Game  string
 }
 
 func (s *PetGameJoin) Marshal() []byte {
@@ -1335,9 +1335,9 @@ func (s *PetGameJump) Unmarshal(data []byte) error {
 }
 
 type PetGameMaze struct {
+	ObjectID    uint64
 	GameCommand uint8
 	GameData    uint8
-	ObjectID    uint64
 }
 
 func (s *PetGameMaze) Marshal() []byte {
@@ -1405,8 +1405,8 @@ func (s *PetGameSnackFeedSuccess) Unmarshal(data []byte) error {
 }
 
 type PetGameStart struct {
-	Game string
 	Data string
+	Game string
 }
 
 func (s *PetGameStart) Marshal() []byte {
@@ -1454,12 +1454,12 @@ func (s *PetHatched) Unmarshal(data []byte) error {
 
 type PetLevelUp struct {
 	GlobalID      uint64
-	OverallRating uint8
-	ActiveRating  uint8
-	PetLevel      uint8
 	NewTalent     uint32
 	NewDerbyPower uint32
 	NewJewel      uint32
+	OverallRating uint8
+	ActiveRating  uint8
+	PetLevel      uint8
 	Display       uint8
 }
 
@@ -1527,8 +1527,8 @@ func (s *PetMorphCanAfford) Unmarshal(data []byte) error {
 
 type PetMorphingSlot struct {
 	GlobalID        uint64
-	Removed         uint8
 	ExpireTimeCount uint32
+	Removed         uint8
 }
 
 func (s *PetMorphingSlot) Marshal() []byte {
@@ -1593,8 +1593,8 @@ func (s *PetMorphSet) Unmarshal(data []byte) error {
 }
 
 type PetSnackAdd struct {
-	GlobalID uint64
 	Data     string
+	GlobalID uint64
 }
 
 func (s *PetSnackAdd) Marshal() []byte {
@@ -1689,8 +1689,8 @@ func (s *PetSnackUpdate) Unmarshal(data []byte) error {
 }
 
 type PetUpdateBehavior struct {
-	GlobalID uint64
 	Data     string
+	GlobalID uint64
 }
 
 func (s *PetUpdateBehavior) Marshal() []byte {

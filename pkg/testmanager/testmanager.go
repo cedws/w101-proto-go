@@ -42,14 +42,12 @@ func (c TestmanagerClient) LoginResponse(m *LoginResponse) error {
 }
 
 type Login struct {
-	_MsgType uint8
-	Username string
 	Password string
+	Username string
 }
 
 func (s *Login) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 5+len(s.Username)+len(s.Password)))
-	binary.Write(b, binary.LittleEndian, s._MsgType)
+	b := bytes.NewBuffer(make([]byte, 0, 4+len(s.Username)+len(s.Password)))
 	writeString_11(b, s.Username)
 	writeString_11(b, s.Password)
 	return b.Bytes()
@@ -58,9 +56,6 @@ func (s *Login) Marshal() []byte {
 func (s *Login) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if err = binary.Read(b, binary.LittleEndian, &s._MsgType); err != nil {
-		return err
-	}
 	if s.Username, err = readString_11(b); err != nil {
 		return err
 	}
@@ -71,13 +66,11 @@ func (s *Login) Unmarshal(data []byte) error {
 }
 
 type LoginResponse struct {
-	_MsgType uint8
-	Success  int32
+	Success int32
 }
 
 func (s *LoginResponse) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 5))
-	binary.Write(b, binary.LittleEndian, s._MsgType)
+	b := bytes.NewBuffer(make([]byte, 0, 4))
 	binary.Write(b, binary.LittleEndian, s.Success)
 	return b.Bytes()
 }
@@ -85,9 +78,6 @@ func (s *LoginResponse) Marshal() []byte {
 func (s *LoginResponse) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if err = binary.Read(b, binary.LittleEndian, &s._MsgType); err != nil {
-		return err
-	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Success); err != nil {
 		return err
 	}

@@ -262,19 +262,19 @@ func (s *CharacterList) Unmarshal(data []byte) error {
 }
 
 type CharacterSelected struct {
-	IP          string
-	TCPPort     int32
-	UDPPort     int32
-	Key         string
-	UserID      uint64
-	CharID      uint64
-	ZoneID      uint64
 	ZoneName    string
+	Key         string
 	Location    string
+	LoginServer string
+	IP          string
+	ZoneID      uint64
+	CharID      uint64
+	UserID      uint64
+	UDPPort     int32
 	Slot        int32
 	PrepPhase   int32
 	Error       int32
-	LoginServer string
+	TCPPort     int32
 }
 
 func (s *CharacterSelected) Marshal() []byte {
@@ -439,8 +439,8 @@ func (s *RequestServerList) Unmarshal(data []byte) error {
 }
 
 type SelectCharacter struct {
-	CharID     uint64
 	ServerName string
+	CharID     uint64
 }
 
 func (s *SelectCharacter) Marshal() []byte {
@@ -498,13 +498,13 @@ func (s *StartCharacterList) Unmarshal(data []byte) error {
 }
 
 type UserAuthen struct {
-	Rec1          string
-	Version       string
-	Revision      string
-	DataRevision  string
-	CRC           string
-	MachineID     uint64
 	PatchClientID string
+	CRC           string
+	DataRevision  string
+	Revision      string
+	Version       string
+	Rec1          string
+	MachineID     uint64
 }
 
 func (s *UserAuthen) Marshal() []byte {
@@ -547,11 +547,11 @@ func (s *UserAuthen) Unmarshal(data []byte) error {
 }
 
 type UserAuthenRsp struct {
-	Error      int32
-	UserID     uint64
-	Rec1       string
-	Reason     string
 	TimeStamp  string
+	Reason     string
+	Rec1       string
+	UserID     uint64
+	Error      int32
 	PayingUser int32
 	Flags      int32
 }
@@ -596,11 +596,11 @@ func (s *UserAuthenRsp) Unmarshal(data []byte) error {
 }
 
 type UserValidate struct {
-	UserID        uint64
-	PassKey3      string
-	MachineID     uint64
-	Locale        string
 	PatchClientID string
+	Locale        string
+	PassKey3      string
+	UserID        uint64
+	MachineID     uint64
 }
 
 func (s *UserValidate) Marshal() []byte {
@@ -635,10 +635,10 @@ func (s *UserValidate) Unmarshal(data []byte) error {
 }
 
 type UserValidateRsp struct {
-	Error      int32
+	TimeStamp  string
 	Reason     string
 	UserID     uint64
-	TimeStamp  string
+	Error      int32
 	PayingUser int32
 	Flags      int32
 }
@@ -789,14 +789,14 @@ func (s *WebCharacterInfo) Unmarshal(data []byte) error {
 }
 
 type UserAuthenV2 struct {
-	Rec1          string
-	Version       string
-	Revision      string
-	DataRevision  string
-	CRC           string
-	MachineID     uint64
-	Locale        string
 	PatchClientID string
+	Locale        string
+	CRC           string
+	DataRevision  string
+	Revision      string
+	Version       string
+	Rec1          string
+	MachineID     uint64
 }
 
 func (s *UserAuthenV2) Marshal() []byte {
@@ -867,11 +867,11 @@ func (s *SaveCharacter) Unmarshal(data []byte) error {
 }
 
 type WebAuthen struct {
-	Rec1         string
-	Version      string
-	Revision     string
-	DataRevision string
 	CRC          string
+	DataRevision string
+	Revision     string
+	Version      string
+	Rec1         string
 	MachineID    uint64
 }
 
@@ -911,10 +911,10 @@ func (s *WebAuthen) Unmarshal(data []byte) error {
 }
 
 type WebValidate struct {
-	UserID    uint64
-	PassKey3  string
-	MachineID uint64
 	Locale    string
+	PassKey3  string
+	UserID    uint64
+	MachineID uint64
 }
 
 func (s *WebValidate) Marshal() []byte {
@@ -945,9 +945,9 @@ func (s *WebValidate) Unmarshal(data []byte) error {
 }
 
 type ChangeCharacterName struct {
-	CharID     uint64
-	NewName    string
 	ServerName string
+	NewName    string
+	CharID     uint64
 }
 
 func (s *ChangeCharacterName) Marshal() []byte {
@@ -974,14 +974,14 @@ func (s *ChangeCharacterName) Unmarshal(data []byte) error {
 }
 
 type UserAuthenV3 struct {
-	Rec1           string
-	Version        string
-	Revision       string
-	DataRevision   string
-	CRC            string
-	MachineID      uint64
-	Locale         string
 	PatchClientID  string
+	Locale         string
+	CRC            string
+	DataRevision   string
+	Revision       string
+	Version        string
+	Rec1           string
+	MachineID      uint64
 	IsSteamPatcher uint32
 	ConsoleType    uint8
 }

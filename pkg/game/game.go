@@ -1799,8 +1799,8 @@ func (c GameClient) ZoneTransferRequest(m *ZoneTransferRequest) error {
 }
 
 type ADCLICKTHROUGH struct {
-	Partner string
 	URL     string
+	Partner string
 }
 
 func (s *ADCLICKTHROUGH) Marshal() []byte {
@@ -1823,8 +1823,8 @@ func (s *ADCLICKTHROUGH) Unmarshal(data []byte) error {
 }
 
 type AddEffect struct {
-	GameObjectID uint64
 	EffectData   string
+	GameObjectID uint64
 }
 
 func (s *AddEffect) Marshal() []byte {
@@ -1876,13 +1876,13 @@ func (s *AddItemRequest) Unmarshal(data []byte) error {
 }
 
 type AddObject struct {
+	Name         string
 	GameObjectID uint64
+	TemplateID   uint64
 	LocationX    float32
 	LocationY    float32
 	LocationZ    float32
 	Direction    float32
-	Name         string
-	TemplateID   uint64
 }
 
 func (s *AddObject) Marshal() []byte {
@@ -1925,15 +1925,15 @@ func (s *AddObject) Unmarshal(data []byte) error {
 }
 
 type AddParticle struct {
-	Asset     string
-	NewName   string
-	AttachTo  string
-	Loop      uint8
-	FloatText string
-	ChatText  string
-	ChatArgs  string
 	Sound     string
+	ChatArgs  string
+	ChatText  string
+	FloatText string
+	AttachTo  string
+	NewName   string
+	Asset     string
 	ParentID  uint64
+	Loop      uint8
 }
 
 func (s *AddParticle) Marshal() []byte {
@@ -1984,9 +1984,9 @@ func (s *AddParticle) Unmarshal(data []byte) error {
 }
 
 type AddZoneTimer struct {
-	TimerID       int32
-	Title         string
 	TimerUI       string
+	Title         string
+	TimerID       int32
 	CountdownTime float32
 }
 
@@ -2018,22 +2018,22 @@ func (s *AddZoneTimer) Unmarshal(data []byte) error {
 }
 
 type Attach struct {
-	GameObjectID   uint64
+	PassKey        string
+	Location       string
+	ZoneName       string
 	LoginKey       string
+	Locale         string
 	UserID         uint64
 	CharID         uint64
-	ZoneName       string
-	Location       string
 	TargetPlayerID uint64
 	ZoneID         uint64
-	Slot           int32
+	GameObjectID   uint64
 	SessionID      uint64
-	SessionSlot    int32
-	PassKey        string
-	Reattach       uint8
-	Retry          uint8
-	Locale         string
 	MachineID      uint64
+	Slot           int32
+	SessionSlot    int32
+	Retry          uint8
+	Reattach       uint8
 }
 
 func (s *Attach) Marshal() []byte {
@@ -2165,15 +2165,15 @@ func (s *AuctionHouseUpdate) Unmarshal(data []byte) error {
 }
 
 type Badges struct {
+	BadgeFilterInfo string
+	BadgeInfo       string
+	BadgeName       string
 	CurrentBadge    uint32
-	UpdateAll       int8
 	TotalBadges     uint32
+	BadgeNameID     uint32
+	UpdateAll       int8
 	Add             int8
 	Remove          int8
-	BadgeName       string
-	BadgeInfo       string
-	BadgeNameID     uint32
-	BadgeFilterInfo string
 	Display         uint8
 }
 
@@ -2229,9 +2229,9 @@ func (s *Badges) Unmarshal(data []byte) error {
 }
 
 type BanRsp struct {
-	BannedID string
-	BanTime  string
 	BanType  string
+	BanTime  string
+	BannedID string
 	Success  uint8
 }
 
@@ -2297,9 +2297,9 @@ func (s *BestFriend) Unmarshal(data []byte) error {
 }
 
 type Blackball struct {
-	TargetObjID    uint64
-	HarassmentType string
 	ChatLog        string
+	HarassmentType string
+	TargetObjID    uint64
 	IsMute         int8
 	IsCharacterID  int8
 }
@@ -2360,20 +2360,20 @@ func (s *BuddyDrop) Unmarshal(data []byte) error {
 }
 
 type BuddyEntry struct {
-	ListOwnerGID     uint64
-	EntryGID         uint64
-	GameObjectID     uint64
-	Name             string
-	Status           uint8
-	FriendInfo       uint32
-	PasswordChat     uint8
-	Permissions      uint32
-	ZoneName         string
 	RealmName        string
+	PreviousName     string
+	ZoneName         string
+	Name             string
+	ListOwnerGID     uint64
+	GameObjectID     uint64
+	EntryGID         uint64
+	FriendInfo       uint32
+	Permissions      uint32
 	Locale           uint32
 	FriendDate       uint32
 	FriendStatusDate uint32
-	PreviousName     string
+	Status           uint8
+	PasswordChat     uint8
 }
 
 func (s *BuddyEntry) Marshal() []byte {
@@ -2463,20 +2463,20 @@ func (s *BuddyListComplete) Unmarshal(data []byte) error {
 }
 
 type BuddyRequestAccept struct {
-	ListOwnerGID     uint64
-	EntryGID         uint64
-	OwnerName        string
 	EntryName        string
+	OwnerName        string
+	PreviousName     string
+	EntryGID         uint64
 	SourceObjectID   uint64
 	DestObjectID     uint64
+	ListOwnerGID     uint64
 	Error            uint32
-	Permissions      uint32
-	Forwarded        uint8
 	EntryLocale      uint32
 	FriendInfo       uint32
 	FriendDate       uint32
 	FriendStatusDate uint32
-	PreviousName     string
+	Permissions      uint32
+	Forwarded        uint8
 }
 
 func (s *BuddyRequestAccept) Marshal() []byte {
@@ -2547,10 +2547,11 @@ func (s *BuddyRequestAccept) Unmarshal(data []byte) error {
 }
 
 type BuddyRequestAcceptFwd struct {
+	PreviousName     string
+	EntryName        string
+	OwnerName        string
 	ListOwnerGID     uint64
 	EntryGID         uint64
-	OwnerName        string
-	EntryName        string
 	SourceObjectID   uint64
 	DestObjectID     uint64
 	Permissions      uint32
@@ -2558,7 +2559,6 @@ type BuddyRequestAcceptFwd struct {
 	FriendInfo       uint32
 	FriendDate       uint32
 	FriendStatusDate uint32
-	PreviousName     string
 }
 
 func (s *BuddyRequestAcceptFwd) Marshal() []byte {
@@ -2621,11 +2621,11 @@ func (s *BuddyRequestAcceptFwd) Unmarshal(data []byte) error {
 }
 
 type BuddyRequestAdd struct {
+	OwnerSchool  string
+	OwnerName    string
 	ListOwnerGID uint64
 	EntryGID     uint64
-	OwnerName    string
 	OwnerLevel   uint8
-	OwnerSchool  string
 	Remove       uint8
 }
 
@@ -2665,11 +2665,11 @@ func (s *BuddyRequestAdd) Unmarshal(data []byte) error {
 }
 
 type BuddyRequestAddFwd struct {
+	OwnerSchool  string
+	OwnerName    string
 	ListOwnerGID uint64
 	EntryGID     uint64
-	OwnerName    string
 	OwnerLevel   uint8
-	OwnerSchool  string
 	Remove       uint8
 }
 
@@ -2839,26 +2839,26 @@ func (s *BuddyRequestList) Unmarshal(data []byte) error {
 }
 
 type BuddyStats struct {
-	BuddyID            uint64
-	StatBlock          string
-	PetStatBlock       string
-	CharBlock          string
-	EquipBlock         string
-	EffectBlock        string
 	WishlistBlock      string
-	Level              uint32
-	School             uint32
-	ShowPVPOption      uint32
-	Gender             int8
+	EffectBlock        string
+	EquipBlock         string
+	CharBlock          string
+	PetStatBlock       string
+	StatBlock          string
+	BuddyID            uint64
+	TargetCharacterGID uint64
+	SourceCharacterGID uint64
+	EffectBlockCRC     uint32
 	StatBlockCRC       uint32
 	PetStatBlockCRC    uint32
 	CharBlockCRC       uint32
 	EquipBlockCRC      uint32
-	EffectBlockCRC     uint32
+	ShowPVPOption      uint32
 	WishlistBlockCRC   uint32
-	SourceCharacterGID uint64
-	TargetCharacterGID uint64
+	School             uint32
+	Level              uint32
 	PetJewelID         uint32
+	Gender             int8
 }
 
 func (s *BuddyStats) Marshal() []byte {
@@ -2953,17 +2953,17 @@ func (s *BuddyStats) Unmarshal(data []byte) error {
 }
 
 type BuddyStatusUpdate struct {
+	PreviousName     string
+	RealmName        string
+	ZoneName         string
 	ListOwnerGID     uint64
 	EntryGID         uint64
-	Status           uint8
 	Permissions      uint32
-	ZoneName         string
 	Locale           uint32
-	RealmName        string
 	FriendInfo       uint32
 	FriendDate       uint32
 	FriendStatusDate uint32
-	PreviousName     string
+	Status           uint8
 }
 
 func (s *BuddyStatusUpdate) Marshal() []byte {
@@ -3065,12 +3065,12 @@ func (s *BugSubmitResponse) Unmarshal(data []byte) error {
 }
 
 type ChannelChat struct {
+	Message    string
 	SourceName string
 	SourceID   uint64
-	Message    string
 	TargetID   uint64
-	Filter     uint8
 	Flags      uint32
+	Filter     uint8
 }
 
 func (s *ChannelChat) Marshal() []byte {
@@ -3109,10 +3109,10 @@ func (s *ChannelChat) Unmarshal(data []byte) error {
 }
 
 type ChannelSubscription struct {
+	ChannelName string
 	RecipientID uint64
 	ChannelID   uint64
 	ParentID    uint64
-	ChannelName string
 	ChannelType uint8
 }
 
@@ -3148,8 +3148,8 @@ func (s *ChannelSubscription) Unmarshal(data []byte) error {
 }
 
 type ChatDiagnostics struct {
-	CharacterID uint64
 	Data        string
+	CharacterID uint64
 }
 
 func (s *ChatDiagnostics) Marshal() []byte {
@@ -3297,9 +3297,9 @@ func (s *ClientMoveState) Unmarshal(data []byte) error {
 }
 
 type ClientNotifyText struct {
+	Madlibs    string
 	NotifyText string
 	Type       int32
-	Madlibs    string
 	AddToChat  uint8
 }
 
@@ -3428,8 +3428,8 @@ func (s *CombineInventoryItems) Unmarshal(data []byte) error {
 }
 
 type Command struct {
-	Command     string
 	ResultEvent string
+	Command     string
 	TimeLeft    int32
 }
 
@@ -3457,9 +3457,9 @@ func (s *Command) Unmarshal(data []byte) error {
 }
 
 type CommandResult struct {
-	Command     string
-	ResultEvent string
 	Results     string
+	ResultEvent string
+	Command     string
 }
 
 func (s *CommandResult) Marshal() []byte {
@@ -3486,8 +3486,8 @@ func (s *CommandResult) Unmarshal(data []byte) error {
 }
 
 type CompanionEffects struct {
-	NPC            uint32
 	EffectInfoList string
+	NPC            uint32
 	Add            uint8
 }
 
@@ -3516,8 +3516,8 @@ func (s *CompanionEffects) Unmarshal(data []byte) error {
 
 type CoreEmote struct {
 	Name              string
-	ExcludeOriginator uint8
 	PhraseID          uint32
+	ExcludeOriginator uint8
 }
 
 func (s *CoreEmote) Marshal() []byte {
@@ -3544,9 +3544,9 @@ func (s *CoreEmote) Unmarshal(data []byte) error {
 }
 
 type CreateChannelResponse struct {
+	ChannelName string
 	SourceID    uint64
 	ChannelID   uint64
-	ChannelName string
 	ErrorCode   uint8
 }
 
@@ -3589,9 +3589,9 @@ func (s *CREATESESSION) Unmarshal(data []byte) error {
 }
 
 type CSRBankItems struct {
+	SerializedItem string
 	GlobalID       uint64
 	SharedBank     uint8
-	SerializedItem string
 }
 
 func (s *CSRBankItems) Marshal() []byte {
@@ -3619,8 +3619,8 @@ func (s *CSRBankItems) Unmarshal(data []byte) error {
 
 type CSRBankItemsDone struct {
 	GlobalID   uint64
-	SharedBank uint8
 	Limit      int32
+	SharedBank uint8
 }
 
 func (s *CSRBankItemsDone) Marshal() []byte {
@@ -3647,22 +3647,22 @@ func (s *CSRBankItemsDone) Unmarshal(data []byte) error {
 }
 
 type CSREditCharacter struct {
-	ChunkNum         uint32
-	CharacterID      uint64
-	UserID           uint64
-	UserName         string
-	CurrentBan       string
-	CurrentMute      string
-	AcctAssoc        uint8
 	Object           string
-	CurrentQuests    string
-	Registry         string
 	AccessPasses     string
+	CurrentMute      string
+	CurrentBan       string
+	UserName         string
 	BadgeList        string
+	DynaMods         string
+	Registry         string
+	CurrentQuests    string
+	UserID           uint64
+	CharacterID      uint64
+	ChunkNum         uint32
+	CharacterSlots   int32
+	AcctAssoc        uint8
 	Edit             uint8
 	AllowedToReport  uint8
-	DynaMods         string
-	CharacterSlots   int32
 	SegmentedMessage uint8
 	LastSegment      uint8
 }
@@ -3804,8 +3804,8 @@ func (s *CSRFinishedHouse) Unmarshal(data []byte) error {
 }
 
 type CSRSearchList struct {
-	StartEnd uint8
 	Data     string
+	StartEnd uint8
 }
 
 func (s *CSRSearchList) Marshal() []byte {
@@ -3847,8 +3847,8 @@ func (s *CSRMailData) Unmarshal(data []byte) error {
 }
 
 type CSRReceiveGifts struct {
-	Success int32
 	Data    string
+	Success int32
 }
 
 func (s *CSRReceiveGifts) Marshal() []byte {
@@ -3882,8 +3882,8 @@ func (s *DEBUGDELETEALLOBJECTS) Unmarshal(data []byte) error {
 }
 
 type DeleteObject struct {
-	GameObjectID uint64
 	Data         string
+	GameObjectID uint64
 }
 
 func (s *DeleteObject) Marshal() []byte {
@@ -3935,9 +3935,9 @@ func (s *DeleteGift) Unmarshal(data []byte) error {
 }
 
 type DirectedChat struct {
+	Message    string
 	SourceName string
 	SourceID   uint64
-	Message    string
 	TargetID   uint64
 	Filter     uint8
 }
@@ -3974,8 +3974,8 @@ func (s *DirectedChat) Unmarshal(data []byte) error {
 }
 
 type DirectedChatByNameResponse struct {
-	TargetID   uint64
 	TargetName string
+	TargetID   uint64
 }
 
 func (s *DirectedChatByNameResponse) Marshal() []byte {
@@ -4012,8 +4012,8 @@ type DirectedQuickChat struct {
 	SourceName string
 	SourceID   uint64
 	MessageID  uint32
-	Filter     uint8
 	Flags      uint32
+	Filter     uint8
 }
 
 func (s *DirectedQuickChat) Marshal() []byte {
@@ -4048,11 +4048,11 @@ func (s *DirectedQuickChat) Unmarshal(data []byte) error {
 }
 
 type DirectedQuickChatExt struct {
+	Message    string
 	SourceName string
 	SourceID   uint64
-	Message    string
-	Filter     uint8
 	Flags      uint32
+	Filter     uint8
 }
 
 func (s *DirectedQuickChatExt) Marshal() []byte {
@@ -4155,13 +4155,13 @@ func (s *DownloadPackageElement) Unmarshal(data []byte) error {
 }
 
 type DynaModBehaviorUpdateMods struct {
+	NewMod    string
+	AllMods   string
 	GlobalID  uint64
+	Index     int32
 	UpdateAll int8
 	Add       int8
 	Remove    int8
-	AllMods   string
-	NewMod    string
-	Index     int32
 }
 
 func (s *DynaModBehaviorUpdateMods) Marshal() []byte {
@@ -4204,8 +4204,8 @@ func (s *DynaModBehaviorUpdateMods) Unmarshal(data []byte) error {
 }
 
 type DynaModDump struct {
-	Data     string
 	Filename string
+	Data     string
 }
 
 func (s *DynaModDump) Marshal() []byte {
@@ -4228,9 +4228,9 @@ func (s *DynaModDump) Unmarshal(data []byte) error {
 }
 
 type EnterState struct {
+	Data                      string
 	GameObjectID              uint64
 	State                     uint32
-	Data                      string
 	IgnoreIfCurrentStateIsOff uint8
 }
 
@@ -4262,9 +4262,9 @@ func (s *EnterState) Unmarshal(data []byte) error {
 }
 
 type EquipItem struct {
-	IsEquip  int32
-	ItemID   uint64
 	SlotName string
+	ItemID   uint64
+	IsEquip  int32
 }
 
 func (s *EquipItem) Marshal() []byte {
@@ -4291,10 +4291,10 @@ func (s *EquipItem) Unmarshal(data []byte) error {
 }
 
 type EquipmentBehaviorEquipItem struct {
-	GlobalID       uint64
-	SlotName       string
-	IsValid        int32
 	SerializedItem string
+	SlotName       string
+	GlobalID       uint64
+	IsValid        int32
 }
 
 func (s *EquipmentBehaviorEquipItem) Marshal() []byte {
@@ -4325,8 +4325,8 @@ func (s *EquipmentBehaviorEquipItem) Unmarshal(data []byte) error {
 }
 
 type EquipmentBehaviorPublicEquipItem struct {
-	GlobalID       uint64
 	SerializedInfo string
+	GlobalID       uint64
 }
 
 func (s *EquipmentBehaviorPublicEquipItem) Marshal() []byte {
@@ -4456,13 +4456,13 @@ func (s *FINDSESSIONPLAYERS) Unmarshal(data []byte) error {
 }
 
 type GenericGame struct {
+	Message string
 	A       int32
 	B       int32
 	X       int32
 	Y       int32
 	Z       int32
 	W       int32
-	Message string
 }
 
 func (s *GenericGame) Marshal() []byte {
@@ -4535,9 +4535,9 @@ func (s *GetLadder) Unmarshal(data []byte) error {
 
 type GETRANKINGS struct {
 	Game         string
+	GroupID      uint64
 	RankingCount int32
 	Time         uint32
-	GroupID      uint64
 }
 
 func (s *GETRANKINGS) Marshal() []byte {
@@ -4568,11 +4568,11 @@ func (s *GETRANKINGS) Unmarshal(data []byte) error {
 }
 
 type GiftRedeemed struct {
-	Success              int32
+	Data                 string
 	GiftID               string
 	GID                  uint64
-	Data                 string
 	TemplateID           uint64
+	Success              int32
 	ErrorCode            int32
 	Quantity             int32
 	HasMorePromoGifts    int8
@@ -4661,8 +4661,8 @@ func (s *GotoPlayer) Unmarshal(data []byte) error {
 }
 
 type GotoPlayerResponse struct {
-	TargetCharacterID uint64
 	ZoneName          string
+	TargetCharacterID uint64
 	ZoneID            uint64
 	OriginatorID      uint64
 	Error             uint32
@@ -4724,10 +4724,10 @@ func (s *HarassmentReport) Unmarshal(data []byte) error {
 }
 
 type IgnoreAdd struct {
+	CharacterName string
 	ListOwnerGID  uint64
 	CharacterGID  uint64
 	GameObjectGID uint64
-	CharacterName string
 	Forwarded     uint8
 }
 
@@ -4797,8 +4797,8 @@ func (s *IgnoreDrop) Unmarshal(data []byte) error {
 }
 
 type IgnoreList struct {
-	ListOwnerGID uint64
 	ListData     string
+	ListOwnerGID uint64
 	Add          uint8
 }
 
@@ -4874,8 +4874,8 @@ func (s *InteractOption) Unmarshal(data []byte) error {
 }
 
 type INVENTORYBEHAVIORADDITEM struct {
-	GlobalID       uint64
 	SerializedItem string
+	GlobalID       uint64
 }
 
 func (s *INVENTORYBEHAVIORADDITEM) Marshal() []byte {
@@ -4951,11 +4951,11 @@ func (s *INVENTORYBEHAVIORTRADEITEM) Unmarshal(data []byte) error {
 }
 
 type InviteFriend struct {
-	PromoID       string
-	YourName      string
-	FriendName    string
-	FriendEmail   string
 	Locale        string
+	FriendEmail   string
+	FriendName    string
+	YourName      string
+	PromoID       string
 	SendInEnglish uint8
 }
 
@@ -4995,8 +4995,8 @@ func (s *InviteFriend) Unmarshal(data []byte) error {
 }
 
 type InviteResponse struct {
-	Success   int32
 	ErrorDesc string
+	Success   int32
 }
 
 func (s *InviteResponse) Marshal() []byte {
@@ -5019,13 +5019,13 @@ func (s *InviteResponse) Unmarshal(data []byte) error {
 }
 
 type JoinChannelResponse struct {
+	ChannelName string
 	SourceID    uint64
 	ParentID    uint64
 	ChannelID   uint64
-	ChannelName string
+	RecipientID uint64
 	ErrorCode   uint8
 	ChannelType uint8
-	RecipientID uint64
 }
 
 func (s *JoinChannelResponse) Marshal() []byte {
@@ -5130,8 +5130,8 @@ func (s *KILLCLIENTPROCESS) Unmarshal(data []byte) error {
 }
 
 type LADDER struct {
-	CharacterID    uint64
 	LadderData     string
+	CharacterID    uint64
 	TourneyCredits uint32
 }
 
@@ -5159,13 +5159,13 @@ func (s *LADDER) Unmarshal(data []byte) error {
 }
 
 type LeaveChannelResponse struct {
+	ChannelName string
 	SourceID    uint64
 	ParentID    uint64
 	ChannelID   uint64
-	ChannelName string
+	RecipientID uint64
 	ChannelType uint8
 	ErrorCode   uint8
-	RecipientID uint64
 }
 
 func (s *LeaveChannelResponse) Marshal() []byte {
@@ -5287,25 +5287,25 @@ func (s *LOADSAVEOBJECTS) Unmarshal(data []byte) error {
 
 type LoginComplete struct {
 	ZoneName                     string
+	RealmName                    string
+	CriticalObjects              string
 	Data                         string
-	ServerTime                   uint32
-	ZoneID                       uint64
-	DynamicZoneID                uint32
-	DynamicServerProcID          uint32
-	Permissions                  uint32
-	IsCSR                        int32
 	ZoneServer                   string
-	TestServer                   uint8
+	ZoneID                       uint64
 	AltMusicFile                 uint32
-	ShowSubscriberIcon           uint8
+	ServerTime                   uint32
+	Permissions                  uint32
+	DisableBeastmoonGroups       uint32
+	DynamicServerProcID          uint32
+	IsCSR                        int32
 	SubscriberCrownsPricePercent int32
 	UseFriendFinder              int32
-	RealmName                    string
-	IsBossMarkZone               uint8
-	CriticalObjects              string
-	ZoneHasFriendlyPlayers       uint8
+	DynamicZoneID                uint32
 	HourOffset                   uint32
-	DisableBeastmoonGroups       uint32
+	ShowSubscriberIcon           uint8
+	ZoneHasFriendlyPlayers       uint8
+	IsBossMarkZone               uint8
+	TestServer                   uint8
 	PickUpAllEnabled             uint8
 	SegmentedMessage             uint8
 	LastSegment                  uint8
@@ -5445,17 +5445,17 @@ func (s *MarkLocation) Unmarshal(data []byte) error {
 }
 
 type MarkLocationResponse struct {
-	Result            int8
-	ZoneName          string
+	MarkType          string
+	CommonsZoneId     string
 	ZoneDisplayNameId string
-	ZoneType          int8
+	ZoneName          string
 	InstanceId        uint64
 	LocationX         float32
 	LocationY         float32
 	LocationZ         float32
 	Direction         float32
-	CommonsZoneId     string
-	MarkType          string
+	Result            int8
+	ZoneType          int8
 }
 
 func (s *MarkLocationResponse) Marshal() []byte {
@@ -5514,8 +5514,8 @@ func (s *MarkLocationResponse) Unmarshal(data []byte) error {
 }
 
 type MatchAward struct {
-	CharacterID uint64
 	AwardData   string
+	CharacterID uint64
 }
 
 func (s *MatchAward) Marshal() []byte {
@@ -5538,9 +5538,9 @@ func (s *MatchAward) Unmarshal(data []byte) error {
 }
 
 type MatchInvite struct {
+	MatchActor       string
 	CharacterID      uint64
 	TournamentNameID uint32
-	MatchActor       string
 }
 
 func (s *MatchInvite) Marshal() []byte {
@@ -5567,12 +5567,12 @@ func (s *MatchInvite) Unmarshal(data []byte) error {
 }
 
 type MatchMakerUpdate struct {
-	CharacterID      uint64
-	MatchTeam        string
-	MatchActor       string
-	BracketInfo      string
-	RegistrationInfo string
 	UpdateMessage    string
+	RegistrationInfo string
+	BracketInfo      string
+	MatchActor       string
+	MatchTeam        string
+	CharacterID      uint64
 	Status           uint8
 }
 
@@ -5616,11 +5616,11 @@ func (s *MatchMakerUpdate) Unmarshal(data []byte) error {
 }
 
 type MatchReady struct {
+	MatchActor       string
+	ZoneName         string
 	CharacterID      uint64
 	ZoneID           uint64
-	ZoneName         string
 	TournamentNameID uint32
-	MatchActor       string
 }
 
 func (s *MatchReady) Marshal() []byte {
@@ -5655,9 +5655,9 @@ func (s *MatchReady) Unmarshal(data []byte) error {
 }
 
 type MatchResult struct {
-	CharacterID uint64
-	ResultData  string
 	AwardData   string
+	ResultData  string
+	CharacterID uint64
 }
 
 func (s *MatchResult) Marshal() []byte {
@@ -5684,8 +5684,8 @@ func (s *MatchResult) Unmarshal(data []byte) error {
 }
 
 type MESSAGEPROCESS struct {
-	JobID   uint32
 	Message string
+	JobID   uint32
 }
 
 func (s *MESSAGEPROCESS) Marshal() []byte {
@@ -5790,9 +5790,9 @@ func (s *Mute) Unmarshal(data []byte) error {
 }
 
 type MuteRsp struct {
-	MutedID  string
-	MuteTime string
 	MuteType string
+	MuteTime string
+	MutedID  string
 	Success  uint8
 }
 
@@ -5891,9 +5891,9 @@ func (s *NewTickCnt) Unmarshal(data []byte) error {
 }
 
 type NewTourneyRewards struct {
+	TourneyNameSTKey string
 	Data             string
 	BracketID        uint64
-	TourneyNameSTKey string
 }
 
 func (s *NewTourneyRewards) Marshal() []byte {
@@ -5949,10 +5949,10 @@ func (s *NewMail) Unmarshal(data []byte) error {
 }
 
 type NotifyChannelInstance struct {
+	Name        string
 	RecipientID uint64
 	ParentID    uint64
 	ID          uint64
-	Name        string
 	Create      uint8
 }
 
@@ -6039,12 +6039,12 @@ func (s *NotAfk) Unmarshal(data []byte) error {
 }
 
 type NPCSpeech struct {
+	Sound         string
+	Talk          string
+	TargetName    string
 	SourceName    string
 	SourceID      uint64
-	TargetName    string
 	TargetID      uint64
-	Talk          string
-	Sound         string
 	WidthOverride int32
 }
 
@@ -6513,10 +6513,10 @@ func (s *PartyRequestInvite) Unmarshal(data []byte) error {
 }
 
 type PartyRequestJoin struct {
+	PlayerNameBlob         string
 	DestinationCharacterID uint64
 	CharacterID            uint64
 	GlobalID               uint64
-	PlayerNameBlob         string
 	PartyID                uint64
 	FriendsOnly            int32
 }
@@ -6581,11 +6581,11 @@ func (s *PartyRequestMemberZones) Unmarshal(data []byte) error {
 }
 
 type PartyRequestResponse struct {
+	PlayerNameBlob         string
 	DestinationCharacterID uint64
 	TargetCharacterID      uint64
 	TargetGlobalID         uint64
 	ErrorCode              int32
-	PlayerNameBlob         string
 }
 
 func (s *PartyRequestResponse) Marshal() []byte {
@@ -6663,20 +6663,20 @@ func (s *PartySubmitMemberZones) Unmarshal(data []byte) error {
 }
 
 type PartyUpdate struct {
-	DestinationCharacterID uint64
 	PlayerNameBlob         string
-	CharacterID            uint64
-	GlobalID               uint64
-	SchoolID               uint32
-	Level                  uint32
 	ZoneDisplayName        string
-	HasFilteredChat        uint8
-	PartyTotalSize         uint32
-	FromAdventureParty     uint8
-	SigilSlot              uint32
+	GlobalID               uint64
+	DestinationCharacterID uint64
+	CharacterID            uint64
 	LeaderGID              uint64
 	QuestGID               uint64
 	GoalGID                uint64
+	SchoolID               uint32
+	Level                  uint32
+	PartyTotalSize         uint32
+	SigilSlot              uint32
+	HasFilteredChat        uint8
+	FromAdventureParty     uint8
 }
 
 func (s *PartyUpdate) Marshal() []byte {
@@ -6843,6 +6843,7 @@ func (s *PlaceObject) Unmarshal(data []byte) error {
 }
 
 type PlayCinematic struct {
+	Asset              string
 	CinematicID        uint64
 	TargetID           uint64
 	Start_X            float32
@@ -6851,7 +6852,6 @@ type PlayCinematic struct {
 	End_X              float32
 	End_Y              float32
 	End_Z              float32
-	Asset              string
 	DisableInteraction uint8
 }
 
@@ -6932,9 +6932,9 @@ func (s *PlayerBlackballedAlert) Unmarshal(data []byte) error {
 
 type PlayerReadyAck struct {
 	CharacterID      uint64
+	BracketID        uint64
 	TournamentNameID uint32
 	MatchNameID      uint32
-	BracketID        uint64
 	Online           uint8
 }
 
@@ -6970,9 +6970,9 @@ func (s *PlayerReadyAck) Unmarshal(data []byte) error {
 }
 
 type PlaySound struct {
+	SoundFilename     string
 	SoundID           uint64
 	ReinteractTime    float32
-	SoundFilename     string
 	StartDelay        float32
 	PlayAtMusicVolume uint8
 }
@@ -7049,8 +7049,8 @@ func (s *PreviewIsland) Unmarshal(data []byte) error {
 type PvPUpdateInfo struct {
 	TournamentInfo string
 	CharacterID    uint64
-	PromptMsg      uint8
 	DiffType       uint32
+	PromptMsg      uint8
 	IsPvPQueue     uint8
 }
 
@@ -7105,9 +7105,9 @@ func (s *QueryLogout) Unmarshal(data []byte) error {
 }
 
 type RadialChat struct {
+	Message    string
 	SourceName string
 	SourceID   uint64
-	Message    string
 	Filter     uint8
 }
 
@@ -7173,9 +7173,9 @@ func (s *RadialQuickChat) Unmarshal(data []byte) error {
 }
 
 type RadialQuickChatExt struct {
+	Message    string
 	SourceName string
 	SourceID   uint64
-	Message    string
 	Filter     uint8
 }
 
@@ -7246,9 +7246,9 @@ func (s *RadialZoneClusterQuickChat) Unmarshal(data []byte) error {
 }
 
 type RANKING struct {
-	GameID      uint32
 	Name        string
 	CharacterID uint64
+	GameID      uint32
 	Score       int32
 	Rank        int32
 }
@@ -7285,10 +7285,10 @@ func (s *RANKING) Unmarshal(data []byte) error {
 }
 
 type RealmInfoQuery struct {
-	RealmInfoList    string
-	CurrentRealm     string
-	InstanceInfoList string
 	CurrentZone      string
+	InstanceInfoList string
+	CurrentRealm     string
+	RealmInfoList    string
 }
 
 func (s *RealmInfoQuery) Marshal() []byte {
@@ -7330,8 +7330,8 @@ func (s *RecallLocation) Unmarshal(data []byte) error {
 }
 
 type ReceiveGifts struct {
-	Success       int32
 	Data          string
+	Success       int32
 	CrownsRewards int32
 	PeriodicItems int32
 }
@@ -7364,8 +7364,8 @@ func (s *ReceiveGifts) Unmarshal(data []byte) error {
 }
 
 type ReceivePromotions struct {
-	Success int32
 	Data    string
+	Success int32
 }
 
 func (s *ReceivePromotions) Marshal() []byte {
@@ -7391,8 +7391,8 @@ type RedeemGift struct {
 	GiftID               string
 	BundleChoiceID       uint64
 	PrimaryColorIndex    int32
-	IsPeriodicItem       uint8
 	RedeemElixirEquipNow uint32
+	IsPeriodicItem       uint8
 }
 
 func (s *RedeemGift) Marshal() []byte {
@@ -7452,8 +7452,8 @@ func (s *RedeemMailGift) Unmarshal(data []byte) error {
 
 type RedeemMailGiftResponse struct {
 	MailId     uint64
-	ErrorCode  int32
 	TemplateId uint64
+	ErrorCode  int32
 }
 
 func (s *RedeemMailGiftResponse) Marshal() []byte {
@@ -7611,8 +7611,8 @@ func (s *RemoveObject) Unmarshal(data []byte) error {
 }
 
 type RemoveParticle struct {
-	NewName  string
 	AttachTo string
+	NewName  string
 	ParentID uint64
 }
 
@@ -7659,8 +7659,8 @@ func (s *RemoveZoneTimer) Unmarshal(data []byte) error {
 }
 
 type ReportAdTakeover struct {
-	PARTNER string
 	URL     string
+	PARTNER string
 }
 
 func (s *ReportAdTakeover) Marshal() []byte {
@@ -7683,8 +7683,8 @@ func (s *ReportAdTakeover) Unmarshal(data []byte) error {
 }
 
 type ReqAskServer struct {
-	RequestID   uint32
 	Requirement string
+	RequestID   uint32
 	Response    uint32
 }
 
@@ -7712,8 +7712,8 @@ func (s *ReqAskServer) Unmarshal(data []byte) error {
 }
 
 type ReqChatDiagnostics struct {
-	CharacterID uint64
 	Data        string
+	CharacterID uint64
 }
 
 func (s *ReqChatDiagnostics) Marshal() []byte {
@@ -7760,12 +7760,12 @@ func (s *RequestAdvanceChannelInstance) Unmarshal(data []byte) error {
 }
 
 type RequestChatCode struct {
-	ListOwnerGID uint64
+	NameBlob     string
 	Code         string
+	ListOwnerGID uint64
 	CodeTime     int32
 	SpecialCode  int32
 	Forwarded    uint8
-	NameBlob     string
 }
 
 func (s *RequestChatCode) Marshal() []byte {
@@ -7804,9 +7804,9 @@ func (s *RequestChatCode) Unmarshal(data []byte) error {
 }
 
 type RequestCreateChannel struct {
-	SourceID      uint64
-	Name          string
 	Password      string
+	Name          string
+	SourceID      uint64
 	Flags         uint32
 	ChatInfoFlags uint32
 	UserLimit     int32
@@ -7872,8 +7872,8 @@ func (s *RequestDirectedChat) Unmarshal(data []byte) error {
 }
 
 type RequestDirectedChatByName struct {
-	Message    string
 	TargetName string
+	Message    string
 }
 
 func (s *RequestDirectedChatByName) Marshal() []byte {
@@ -7920,8 +7920,8 @@ func (s *RequestDirectedQuickChat) Unmarshal(data []byte) error {
 }
 
 type RequestDirectedQuickChatExt struct {
-	TargetID uint64
 	Message  string
+	TargetID uint64
 }
 
 func (s *RequestDirectedQuickChatExt) Marshal() []byte {
@@ -7944,9 +7944,9 @@ func (s *RequestDirectedQuickChatExt) Unmarshal(data []byte) error {
 }
 
 type RequestJoinChannel struct {
+	Password  string
 	SourceID  uint64
 	ChannelID uint64
-	Password  string
 }
 
 func (s *RequestJoinChannel) Marshal() []byte {
@@ -7973,9 +7973,9 @@ func (s *RequestJoinChannel) Unmarshal(data []byte) error {
 }
 
 type RequestJoinChannelByName struct {
-	SourceID    uint64
-	ChannelName string
 	Password    string
+	ChannelName string
+	SourceID    uint64
 }
 
 func (s *RequestJoinChannelByName) Marshal() []byte {
@@ -8026,8 +8026,8 @@ func (s *RequestLeaveChannel) Unmarshal(data []byte) error {
 }
 
 type RequestLeaveChannelByName struct {
-	SourceID    uint64
 	ChannelName string
+	SourceID    uint64
 }
 
 func (s *RequestLeaveChannelByName) Marshal() []byte {
@@ -8098,11 +8098,11 @@ func (s *RequestRadialChat) Unmarshal(data []byte) error {
 }
 
 type RequestRadialFriendChat struct {
-	PlayerGID  uint64
+	SourceName string
 	Message    string
+	PlayerGID  uint64
 	SourceID   uint64
 	Filter     uint8
-	SourceName string
 }
 
 func (s *RequestRadialFriendChat) Marshal() []byte {
@@ -8137,11 +8137,11 @@ func (s *RequestRadialFriendChat) Unmarshal(data []byte) error {
 }
 
 type RequestRadialFriendQuickChat struct {
-	PlayerGID  uint64
-	MessageID  uint32
-	SourceID   uint64
-	Filter     uint8
 	SourceName string
+	PlayerGID  uint64
+	SourceID   uint64
+	MessageID  uint32
+	Filter     uint8
 }
 
 func (s *RequestRadialFriendQuickChat) Marshal() []byte {
@@ -8176,10 +8176,10 @@ func (s *RequestRadialFriendQuickChat) Unmarshal(data []byte) error {
 }
 
 type RequestRadialOwnerChat struct {
+	SourceName string
 	Message    string
 	SourceID   uint64
 	Filter     uint8
-	SourceName string
 	IsOwner    uint8
 }
 
@@ -8253,13 +8253,13 @@ func (s *RequestRadialQuickChatExt) Unmarshal(data []byte) error {
 }
 
 type RequestSession struct {
+	Whitelist string
+	STEAMID   string
 	Session   string
-	Valid     uint8
 	ID        int32
 	CRC       uint32
-	STEAMID   string
-	Whitelist string
 	Threshold uint32
+	Valid     uint8
 }
 
 func (s *RequestSession) Marshal() []byte {
@@ -8405,8 +8405,8 @@ func (s *RetryTeleport) Unmarshal(data []byte) error {
 }
 
 type Script struct {
-	ProcessID int32
 	Message   string
+	ProcessID int32
 }
 
 func (s *Script) Marshal() []byte {
@@ -8453,11 +8453,11 @@ func (s *SelectBadge) Unmarshal(data []byte) error {
 }
 
 type SendChatCode struct {
-	ListOwnerGID uint64
-	Code         string
-	Error        uint32
-	UseSuccess   uint64
 	CreatorName  string
+	Code         string
+	ListOwnerGID uint64
+	UseSuccess   uint64
+	Error        uint32
 }
 
 func (s *SendChatCode) Marshal() []byte {
@@ -8492,8 +8492,8 @@ func (s *SendChatCode) Unmarshal(data []byte) error {
 }
 
 type SendInteractOptions struct {
-	MobileID uint64
 	Options  string
+	MobileID uint64
 }
 
 func (s *SendInteractOptions) Marshal() []byte {
@@ -8516,8 +8516,8 @@ func (s *SendInteractOptions) Unmarshal(data []byte) error {
 }
 
 type SendText struct {
-	CharacterID uint64
 	Message     string
+	CharacterID uint64
 }
 
 func (s *SendText) Marshal() []byte {
@@ -8543,8 +8543,8 @@ type ServerMove struct {
 	LocationX uint16
 	LocationY uint16
 	LocationZ uint16
-	Direction uint8
 	MobileID  uint16
+	Direction uint8
 }
 
 func (s *ServerMove) Marshal() []byte {
@@ -8601,8 +8601,8 @@ type ServerTeleport struct {
 	LocationX uint16
 	LocationY uint16
 	LocationZ uint16
-	Direction uint8
 	MobileID  uint16
+	Direction uint8
 }
 
 func (s *ServerTeleport) Marshal() []byte {
@@ -8637,25 +8637,25 @@ func (s *ServerTeleport) Unmarshal(data []byte) error {
 }
 
 type ServerTransfer struct {
+	Location        string
 	IP              string
-	TCPPort         int32
-	UDPPort         int32
-	Key             int32
+	FallbackIP      string
+	FallbackZone    string
+	ZoneName        string
+	SessionID       uint64
+	TargetPlayerID  uint64
+	ZoneID          uint64
 	UserID          uint64
 	CharID          uint64
-	ZoneName        string
-	ZoneID          uint64
-	Location        string
+	FallbackZoneID  uint64
 	Slot            int32
-	SessionID       uint64
 	SessionSlot     int32
-	TargetPlayerID  uint64
-	FallbackIP      string
+	UDPPort         int32
 	FallbackTCPPort int32
 	FallbackUDPPort int32
 	FallbackKey     int32
-	FallbackZone    string
-	FallbackZoneID  uint64
+	TCPPort         int32
+	Key             int32
 	TransitionID    uint32
 }
 
@@ -8751,11 +8751,11 @@ func (s *ServerTransfer) Unmarshal(data []byte) error {
 }
 
 type ServerTutorialCommand struct {
-	QuestToAdd     string
-	QuestToRemove  string
-	GoalToComplete string
-	EventToPost    string
 	Action         string
+	EventToPost    string
+	GoalToComplete string
+	QuestToRemove  string
+	QuestToAdd     string
 	Value          int32
 }
 
@@ -8838,13 +8838,13 @@ func (s *SERVERPROCESSRUNNING) Unmarshal(data []byte) error {
 }
 
 type SESSION struct {
+	Rules       string
+	Zone        string
+	Name        string
 	ZoneID      uint64
 	SessionID   uint64
-	Name        string
 	Slots       int32
 	ActiveSlots int32
-	Zone        string
-	Rules       string
 }
 
 func (s *SESSION) Marshal() []byte {
@@ -8906,10 +8906,10 @@ func (s *SESSIONERROR) Unmarshal(data []byte) error {
 }
 
 type SESSIONPLAYER struct {
-	Slot     int32
-	CharID   uint64
-	Name     string
 	Ranking  string
+	Name     string
+	CharID   uint64
+	Slot     int32
 	IsFriend int32
 }
 
@@ -8945,9 +8945,9 @@ func (s *SESSIONPLAYER) Unmarshal(data []byte) error {
 }
 
 type SETHOUSECUSTOMIZATION struct {
-	GameObjectID    uint64
-	TagName         string
 	TextureFilename string
+	TagName         string
+	GameObjectID    uint64
 }
 
 func (s *SETHOUSECUSTOMIZATION) Marshal() []byte {
@@ -9003,13 +9003,13 @@ func (s *SplitQuantity) Unmarshal(data []byte) error {
 }
 
 type StartStagedCinematic struct {
-	CinematicName    string
 	InitialStageName string
+	CinematicName    string
+	DuelID           uint64
 	Start_X          float32
 	Start_Y          float32
 	Start_Z          float32
 	Yaw              float32
-	DuelID           uint64
 	WinningTeamID    int8
 }
 
@@ -9057,9 +9057,9 @@ func (s *StartStagedCinematic) Unmarshal(data []byte) error {
 }
 
 type STARTCLIENTPROCESS struct {
-	JobID      uint32
 	ScriptName string
 	OwnerGID   uint64
+	JobID      uint32
 }
 
 func (s *STARTCLIENTPROCESS) Marshal() []byte {
@@ -9086,9 +9086,9 @@ func (s *STARTCLIENTPROCESS) Unmarshal(data []byte) error {
 }
 
 type STARTSERVERPROCESS struct {
-	PID        uint32
 	ScriptName string
 	OwnerGID   uint64
+	PID        uint32
 }
 
 func (s *STARTSERVERPROCESS) Marshal() []byte {
@@ -9134,9 +9134,9 @@ func (s *SuboptimalBracketResponse) Unmarshal(data []byte) error {
 }
 
 type TeleportToGameZone struct {
-	CharacterID    uint64
-	Game           string
 	Track          string
+	Game           string
+	CharacterID    uint64
 	ZoneInstanceID uint64
 }
 
@@ -9283,9 +9283,9 @@ func (s *TrashInventoryItem) Unmarshal(data []byte) error {
 }
 
 type Tutorials struct {
+	TutorialInfo string
 	GlobalID     uint64
 	Remove       int32
-	TutorialInfo string
 }
 
 func (s *Tutorials) Marshal() []byte {
@@ -9312,13 +9312,13 @@ func (s *Tutorials) Unmarshal(data []byte) error {
 }
 
 type UpdateObject struct {
+	Name          string
 	GameObjectID  uint64
+	TemplateID    uint64
 	LocationX     float32
 	LocationY     float32
 	LocationZ     float32
 	Direction     float32
-	Name          string
-	TemplateID    uint64
 	StartDragging int32
 }
 
@@ -9409,9 +9409,9 @@ func (s *UpdateZoneCounter) Unmarshal(data []byte) error {
 }
 
 type UpdateZoneTimer struct {
-	TimerID       int32
-	Title         string
 	TimerUI       string
+	Title         string
+	TimerID       int32
 	CountdownTime float32
 }
 
@@ -9443,9 +9443,9 @@ func (s *UpdateZoneTimer) Unmarshal(data []byte) error {
 }
 
 type UseChatCode struct {
+	Code         string
 	ListOwnerGID uint64
 	BuddyID      uint64
-	Code         string
 	Forwarded    uint8
 }
 
@@ -9569,8 +9569,8 @@ func (s *ZombiePlayer) Unmarshal(data []byte) error {
 }
 
 type ZONEEVENTTIMEREXPIRED struct {
-	TimerName string
 	EventName string
+	TimerName string
 }
 
 func (s *ZONEEVENTTIMEREXPIRED) Marshal() []byte {
@@ -9595,13 +9595,13 @@ func (s *ZONEEVENTTIMEREXPIRED) Unmarshal(data []byte) error {
 type ZoneTransfer struct {
 	ZoneName            string
 	ZoneID              uint64
+	SessionID           uint64
 	Slot                int32
 	DynamicZoneID       uint32
 	DynamicServerProcID uint32
-	ZoneCounter         uint8
 	TransitionID        uint32
-	SessionID           uint64
 	SessionSlot         int32
+	ZoneCounter         uint8
 }
 
 func (s *ZoneTransfer) Marshal() []byte {

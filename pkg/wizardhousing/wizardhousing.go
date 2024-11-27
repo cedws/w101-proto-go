@@ -1663,9 +1663,9 @@ func (s *BlockPetSpawn) Unmarshal(data []byte) error {
 }
 
 type BuyIslandSpaceConfirm struct {
+	Credits    int32
 	Failure    int8
 	WebFailure int8
-	Credits    int32
 }
 
 func (s *BuyIslandSpaceConfirm) Marshal() []byte {
@@ -1711,9 +1711,9 @@ func (s *CastleGamesRequest) Unmarshal(data []byte) error {
 }
 
 type CastleGamesRequestGameData struct {
+	Data       string
 	GlobalID   uint64
 	PageNumber uint32
-	Data       string
 }
 
 func (s *CastleGamesRequestGameData) Marshal() []byte {
@@ -1830,8 +1830,8 @@ func (s *CastleMagicClear) Unmarshal(data []byte) error {
 }
 
 type CastleMagicCurrentState struct {
-	TargetPlayer uint64
 	ChangeBuffer string
+	TargetPlayer uint64
 	ZoneTime     float32
 	OrbFlags     int8
 }
@@ -2160,12 +2160,12 @@ func (s *CastleToursDeleteCharacter) Unmarshal(data []byte) error {
 }
 
 type CastleToursEnableRatingDisplay struct {
+	LotGID       uint64
+	StructureGID uint64
+	TemplateID   uint32
 	CastleType   int8
 	Rating       int8
 	FirstDisplay int8
-	TemplateID   uint32
-	LotGID       uint64
-	StructureGID uint64
 }
 
 func (s *CastleToursEnableRatingDisplay) Marshal() []byte {
@@ -2204,8 +2204,8 @@ func (s *CastleToursEnableRatingDisplay) Unmarshal(data []byte) error {
 }
 
 type CastleToursFavoriteInfo struct {
-	CharacterID  uint64
 	FavoriteData string
+	CharacterID  uint64
 }
 
 func (s *CastleToursFavoriteInfo) Marshal() []byte {
@@ -2228,8 +2228,8 @@ func (s *CastleToursFavoriteInfo) Unmarshal(data []byte) error {
 }
 
 type CastleToursFavoriteInfo2 struct {
-	CharacterID  uint64
 	FavoriteData string
+	CharacterID  uint64
 }
 
 func (s *CastleToursFavoriteInfo2) Marshal() []byte {
@@ -2252,11 +2252,11 @@ func (s *CastleToursFavoriteInfo2) Unmarshal(data []byte) error {
 }
 
 type CastleToursLeaderboardResponse struct {
+	LeaderboardData string
 	CharacterID     uint64
+	PageNumber      uint32
 	LeaderboardType int8
 	SortType        int8
-	PageNumber      uint32
-	LeaderboardData string
 }
 
 func (s *CastleToursLeaderboardResponse) Marshal() []byte {
@@ -2470,8 +2470,8 @@ func (s *CastleToursRequest) Unmarshal(data []byte) error {
 }
 
 type CastleToursRequestFriends struct {
-	CharacterID uint64
 	Data        string
+	CharacterID uint64
 }
 
 func (s *CastleToursRequestFriends) Marshal() []byte {
@@ -2494,10 +2494,10 @@ func (s *CastleToursRequestFriends) Unmarshal(data []byte) error {
 }
 
 type CastleToursRequestLeaderboard struct {
+	LeaderboardData string
+	PageNumber      uint32
 	LeaderboardType int8
 	SortType        int8
-	PageNumber      uint32
-	LeaderboardData string
 }
 
 func (s *CastleToursRequestLeaderboard) Marshal() []byte {
@@ -2528,8 +2528,8 @@ func (s *CastleToursRequestLeaderboard) Unmarshal(data []byte) error {
 }
 
 type CastleToursRequestMyCastleData struct {
-	GlobalID uint64
 	Data     string
+	GlobalID uint64
 }
 
 func (s *CastleToursRequestMyCastleData) Marshal() []byte {
@@ -2552,8 +2552,8 @@ func (s *CastleToursRequestMyCastleData) Unmarshal(data []byte) error {
 }
 
 type CastleToursRequestMyCastles struct {
-	GlobalID uint64
 	Data     string
+	GlobalID uint64
 	Days     int8
 }
 
@@ -2600,8 +2600,8 @@ func (s *CastleToursSendRating) Unmarshal(data []byte) error {
 }
 
 type CastleToursTeleportPlayer struct {
-	CharacterID         uint64
 	TeleportData        string
+	CharacterID         uint64
 	Source              int8
 	LeaderboardTeleport int8
 }
@@ -2670,9 +2670,9 @@ func (s *CastleToursVisitCastle) Unmarshal(data []byte) error {
 
 type CatchFish struct {
 	SpellTemplateID uint32
-	IsTreasureCard  uint8
 	FishingPassport uint32
 	FishID          uint32
+	IsTreasureCard  uint8
 }
 
 func (s *CatchFish) Marshal() []byte {
@@ -2831,10 +2831,10 @@ func (s *DailyPvPOpen) Unmarshal(data []byte) error {
 
 type DailyQuestCompleted struct {
 	QuestIndex      uint32
+	ItemTemplateID  uint32
 	CurrentCircle   uint8
 	ConsecutiveDays uint8
 	Flags           uint8
-	ItemTemplateID  uint32
 }
 
 func (s *DailyQuestCompleted) Marshal() []byte {
@@ -2933,9 +2933,9 @@ func (s *DailyQuestOpen) Unmarshal(data []byte) error {
 }
 
 type DeleteEquippedHousingItem struct {
+	SlotName  string
 	ObjectGID uint64
 	ItemGID   uint64
-	SlotName  string
 }
 
 func (s *DeleteEquippedHousingItem) Marshal() []byte {
@@ -3073,15 +3073,15 @@ func (s *DisplayCatchFish) Unmarshal(data []byte) error {
 }
 
 type DisplayCaughtFish struct {
+	LootData           string
 	ObjectGID          uint64
 	FishTemplateID     uint32
 	Length             float32
+	CatchOfTheDayBonus uint32
 	IsSmallFry         uint8
 	IsWopper           uint8
-	LootData           string
 	Energy             uint8
 	IsTournamentFish   uint8
-	CatchOfTheDayBonus uint32
 }
 
 func (s *DisplayCaughtFish) Marshal() []byte {
@@ -3143,9 +3143,9 @@ func (s *DisposableDungeonNoOwner) Unmarshal(data []byte) error {
 }
 
 type DailyPvPUpdate struct {
+	TimeLeft        uint32
 	ConsecutiveDays uint8
 	Flags           uint8
-	TimeLeft        uint32
 }
 
 func (s *DailyPvPUpdate) Marshal() []byte {
@@ -3173,10 +3173,10 @@ func (s *DailyPvPUpdate) Unmarshal(data []byte) error {
 
 type DailyQuestUpdate struct {
 	QuestIndex      uint32
+	TimeLeft        uint32
 	CurrentCircle   uint8
 	ConsecutiveDays uint8
 	Flags           uint8
-	TimeLeft        uint32
 }
 
 func (s *DailyQuestUpdate) Marshal() []byte {
@@ -3316,10 +3316,10 @@ func (s *EquipHouseMusic) Unmarshal(data []byte) error {
 }
 
 type EquipMannequinItem struct {
-	MannequinGID uint64
-	IsEquip      int32
-	ItemID       uint64
 	SlotName     string
+	MannequinGID uint64
+	ItemID       uint64
+	IsEquip      int32
 }
 
 func (s *EquipMannequinItem) Marshal() []byte {
@@ -3389,8 +3389,8 @@ func (s *FishingCSRResults) Unmarshal(data []byte) error {
 
 type FishingSpellCast struct {
 	SpellTemplateID uint32
-	IsTreasureCard  uint8
 	FishingPassport uint32
+	IsTreasureCard  uint8
 	IsRecast        uint8
 }
 
@@ -3446,9 +3446,9 @@ func (s *FishTournamentLeaderBoardOpen) Unmarshal(data []byte) error {
 }
 
 type FishTournamentLeaderBoardRequest struct {
+	Data       string
 	ExpireTime uint32
 	PageNumber uint32
-	Data       string
 }
 
 func (s *FishTournamentLeaderBoardRequest) Marshal() []byte {
@@ -3504,8 +3504,8 @@ func (s *FishTournamentOpen) Unmarshal(data []byte) error {
 }
 
 type GardeningCastSpell struct {
-	SpellTemplateID uint32
 	PlayerGID       uint64
+	SpellTemplateID uint32
 	PositionX       float32
 	PositionY       float32
 	PositionZ       float32
@@ -3543,13 +3543,13 @@ func (s *GardeningCastSpell) Unmarshal(data []byte) error {
 }
 
 type GardeningCommand struct {
-	Command    uint8
+	ObjectGID  uint64
+	ZoneGID    uint64
 	PositionX  float32
 	PositionY  float32
 	PositionZ  float32
 	TemplateID uint32
-	ObjectGID  uint64
-	ZoneGID    uint64
+	Command    uint8
 }
 
 func (s *GardeningCommand) Marshal() []byte {
@@ -3786,8 +3786,8 @@ func (s *HideHousingObject) Unmarshal(data []byte) error {
 }
 
 type HousingGameRequestPoweruplocations struct {
-	ZoneGID uint64
 	Data    string
+	ZoneGID uint64
 }
 
 func (s *HousingGameRequestPoweruplocations) Marshal() []byte {
@@ -3996,8 +3996,8 @@ func (s *InteractiveMusicInUse2) Unmarshal(data []byte) error {
 
 type IslandSpaceBuyRequest struct {
 	GlobalID   uint64
-	WebFailure int8
 	Credits    int32
+	WebFailure int8
 }
 
 func (s *IslandSpaceBuyRequest) Marshal() []byte {
@@ -4025,8 +4025,8 @@ func (s *IslandSpaceBuyRequest) Unmarshal(data []byte) error {
 
 type IslandSpaceShopOpen struct {
 	GlobalID   uint64
-	WebFailure int8
 	Credits    int32
+	WebFailure int8
 }
 
 func (s *IslandSpaceShopOpen) Marshal() []byte {
@@ -4149,8 +4149,8 @@ func (s *MoveFromAttic) Unmarshal(data []byte) error {
 }
 
 type MoveGearFromGearVault struct {
-	GearVaultGID uint64
 	GearData     string
+	GearVaultGID uint64
 }
 
 func (s *MoveGearFromGearVault) Marshal() []byte {
@@ -4424,13 +4424,13 @@ func (s *NoFishSpace) Unmarshal(data []byte) error {
 }
 
 type PatchAddAttic struct {
+	Data              string
+	SubType           string
 	BlobGID           uint64
 	ObjectID          uint64
-	SubType           string
 	PackageNumber     uint32
 	VersionNumber     uint32
 	GIDID             uint32
-	Data              string
 	PrimaryColorIndex int8
 }
 
@@ -4478,16 +4478,16 @@ func (s *PatchAddAttic) Unmarshal(data []byte) error {
 }
 
 type PatchAddHousingObject struct {
+	Data          string
+	SubType       string
 	ObjectID      uint64
 	LocX          float32
 	LocY          float32
 	LocZ          float32
 	Yaw           float32
-	SubType       string
 	PackageNumber uint32
 	VersionNumber uint32
 	GIDID         uint32
-	Data          string
 	ColorBits     int8
 }
 
@@ -4547,8 +4547,8 @@ func (s *PatchAddHousingObject) Unmarshal(data []byte) error {
 }
 
 type PatchAquarium struct {
-	Data          string
 	SubType       string
+	Data          string
 	PackageNumber uint32
 	VersionNumber uint32
 	GIDID         uint32
@@ -4586,8 +4586,8 @@ func (s *PatchAquarium) Unmarshal(data []byte) error {
 }
 
 type PatchCastleMagic struct {
-	Data          string
 	SubType       string
+	Data          string
 	PackageNumber uint32
 	VersionNumber uint32
 	GIDID         uint32
@@ -4625,9 +4625,9 @@ func (s *PatchCastleMagic) Unmarshal(data []byte) error {
 }
 
 type PatchDeleteAttic struct {
+	SubType       string
 	BlobGID       uint64
 	ObjectID      uint64
-	SubType       string
 	PackageNumber uint32
 	VersionNumber uint32
 	GIDID         uint32
@@ -4703,8 +4703,8 @@ func (s *PatchDeleteHousingObject) Unmarshal(data []byte) error {
 }
 
 type PatchEquipHousingObject struct {
-	Data          string
 	SubType       string
+	Data          string
 	PackageNumber uint32
 	VersionNumber uint32
 	GIDID         uint32
@@ -4742,7 +4742,6 @@ func (s *PatchEquipHousingObject) Unmarshal(data []byte) error {
 }
 
 type PatchGardening struct {
-	Command       uint8
 	PositionX     float32
 	PositionY     float32
 	PositionZ     float32
@@ -4751,6 +4750,7 @@ type PatchGardening struct {
 	GIDID         uint32
 	TemplateID    uint32
 	Time          uint32
+	Command       uint8
 }
 
 func (s *PatchGardening) Marshal() []byte {
@@ -4820,8 +4820,8 @@ func (s *PatchHouse) Unmarshal(data []byte) error {
 }
 
 type PatchHousingBreadCrumb struct {
-	Data          string
 	SubType       string
+	Data          string
 	PackageNumber uint32
 	VersionNumber uint32
 	GIDID         uint32
@@ -4859,8 +4859,8 @@ func (s *PatchHousingBreadCrumb) Unmarshal(data []byte) error {
 }
 
 type PatchHousingGardeningShed struct {
-	Data          string
 	SubType       string
+	Data          string
 	PackageNumber uint32
 	VersionNumber uint32
 	GIDID         uint32
@@ -4898,8 +4898,8 @@ func (s *PatchHousingGardeningShed) Unmarshal(data []byte) error {
 }
 
 type PatchHousingGearVault struct {
-	Data          string
 	SubType       string
+	Data          string
 	PackageNumber uint32
 	VersionNumber uint32
 	GIDID         uint32
@@ -4937,8 +4937,8 @@ func (s *PatchHousingGearVault) Unmarshal(data []byte) error {
 }
 
 type PatchHousingJewelVault struct {
-	Data          string
 	SubType       string
+	Data          string
 	PackageNumber uint32
 	VersionNumber uint32
 	GIDID         uint32
@@ -4976,8 +4976,8 @@ func (s *PatchHousingJewelVault) Unmarshal(data []byte) error {
 }
 
 type PatchHousingMusicObject struct {
-	Data          string
 	SubType       string
+	Data          string
 	PackageNumber uint32
 	VersionNumber uint32
 	GIDID         uint32
@@ -5015,8 +5015,8 @@ func (s *PatchHousingMusicObject) Unmarshal(data []byte) error {
 }
 
 type PatchHousingSignObject struct {
-	Data          string
 	SubType       string
+	Data          string
 	PackageNumber uint32
 	VersionNumber uint32
 	GIDID         uint32
@@ -5054,8 +5054,8 @@ func (s *PatchHousingSignObject) Unmarshal(data []byte) error {
 }
 
 type PatchHousingTeleporterObject struct {
-	Data          string
 	SubType       string
+	Data          string
 	PackageNumber uint32
 	VersionNumber uint32
 	GIDID         uint32
@@ -5093,8 +5093,8 @@ func (s *PatchHousingTeleporterObject) Unmarshal(data []byte) error {
 }
 
 type PatchHousingTrain struct {
-	Data          string
 	SubType       string
+	Data          string
 	PackageNumber uint32
 	VersionNumber uint32
 	GIDID         uint32
@@ -5132,8 +5132,8 @@ func (s *PatchHousingTrain) Unmarshal(data []byte) error {
 }
 
 type PatchMonsterArena struct {
-	Data          string
 	SubType       string
+	Data          string
 	PackageNumber uint32
 	VersionNumber uint32
 	GIDID         uint32
@@ -5171,12 +5171,12 @@ func (s *PatchMonsterArena) Unmarshal(data []byte) error {
 }
 
 type PatchMusicLoop struct {
-	SubType       string
 	MusicData     string
+	SubType       string
+	ObjectID      uint64
 	PackageNumber uint32
 	VersionNumber uint32
 	GIDID         uint32
-	ObjectID      uint64
 }
 
 func (s *PatchMusicLoop) Marshal() []byte {
@@ -5215,8 +5215,8 @@ func (s *PatchMusicLoop) Unmarshal(data []byte) error {
 }
 
 type PatchRemoveTextureRemap struct {
-	Data          string
 	SubType       string
+	Data          string
 	PackageNumber uint32
 	VersionNumber uint32
 	GIDID         uint32
@@ -5264,8 +5264,8 @@ func (s *PatchRemoveTextureRemap) Unmarshal(data []byte) error {
 }
 
 type PatchTextureRemap struct {
-	Data          string
 	SubType       string
+	Data          string
 	PackageNumber uint32
 	VersionNumber uint32
 	GIDID         uint32
@@ -5304,11 +5304,11 @@ func (s *PatchTextureRemap) Unmarshal(data []byte) error {
 
 type PatchTintHousingObject struct {
 	SubType       string
-	ColorBits     int8
+	ObjectID      uint64
 	PackageNumber uint32
 	VersionNumber uint32
 	GIDID         uint32
-	ObjectID      uint64
+	ColorBits     int8
 }
 
 func (s *PatchTintHousingObject) Marshal() []byte {
@@ -5347,8 +5347,8 @@ func (s *PatchTintHousingObject) Unmarshal(data []byte) error {
 }
 
 type PatchTreasureCardPoster struct {
-	Data          string
 	SubType       string
+	Data          string
 	PackageNumber uint32
 	VersionNumber uint32
 	GIDID         uint32
@@ -5386,8 +5386,8 @@ func (s *PatchTreasureCardPoster) Unmarshal(data []byte) error {
 }
 
 type PatchTreasureCardVault struct {
-	Data          string
 	SubType       string
+	Data          string
 	PackageNumber uint32
 	VersionNumber uint32
 	GIDID         uint32
@@ -5425,18 +5425,18 @@ func (s *PatchTreasureCardVault) Unmarshal(data []byte) error {
 }
 
 type PatchUpdateHousingObject struct {
+	SubType          string
+	ObjectID         uint64
 	LocX             float32
 	LocY             float32
 	LocZ             float32
 	Yaw              float32
-	SubType          string
 	PackageNumber    uint32
 	VersionNumber    uint32
 	GIDID            uint32
-	ObjectID         uint64
+	Scale            float32
 	SwitchTemplateID int8
 	UseExtendedYaw   int8
-	Scale            float32
 }
 
 func (s *PatchUpdateHousingObject) Marshal() []byte {
@@ -5500,12 +5500,12 @@ func (s *PatchUpdateHousingObject) Unmarshal(data []byte) error {
 
 type PatchExtendedTile struct {
 	SubType       string
+	ObjectID      uint64
 	PackageNumber uint32
 	VersionNumber uint32
 	GIDID         uint32
 	RemapIndex    int8
 	IsWallpaper   int8
-	ObjectID      uint64
 }
 
 func (s *PatchExtendedTile) Marshal() []byte {
@@ -5567,9 +5567,9 @@ func (s *PetTomeScanAttic) Unmarshal(data []byte) error {
 }
 
 type PickUpAll struct {
+	Exceptions string
 	ItemCount  uint32
 	ErrorCode  int8
-	Exceptions string
 }
 
 func (s *PickUpAll) Marshal() []byte {
@@ -5770,12 +5770,12 @@ func (s *PlayInteractiveMusic2) Unmarshal(data []byte) error {
 }
 
 type PlayInteractiveMusicLoop struct {
-	PlayerGID     uint64
-	TemplateID    uint32
-	LoopIndex     int8
-	ObjectGID     uint64
 	TargetPlayers string
+	PlayerGID     uint64
+	ObjectGID     uint64
+	TemplateID    uint32
 	LoopOffset    float32
+	LoopIndex     int8
 }
 
 func (s *PlayInteractiveMusicLoop) Marshal() []byte {
@@ -5814,8 +5814,8 @@ func (s *PlayInteractiveMusicLoop) Unmarshal(data []byte) error {
 }
 
 type PlayInteractiveMusicLooping struct {
-	InstrumentNote uint32
 	ObjectGID      uint64
+	InstrumentNote uint32
 	LoopOffset     float32
 }
 
@@ -5872,9 +5872,9 @@ func (s *PlayInteractiveMusicLooping2) Unmarshal(data []byte) error {
 }
 
 type PlayTrainSound struct {
+	SoundName string
 	ZoneID    uint64
 	TrainID   uint64
-	SoundName string
 }
 
 func (s *PlayTrainSound) Marshal() []byte {
@@ -5954,9 +5954,9 @@ func (s *RemoveHouseMusic) Unmarshal(data []byte) error {
 }
 
 type ReportHouse struct {
+	Message        string
 	CharacterID    uint64
 	DeedTemplateID uint32
-	Message        string
 }
 
 func (s *ReportHouse) Marshal() []byte {
@@ -5983,8 +5983,8 @@ func (s *ReportHouse) Unmarshal(data []byte) error {
 }
 
 type AddRequestAllFish struct {
-	GlobalID uint64
 	FishData string
+	GlobalID uint64
 }
 
 func (s *AddRequestAllFish) Marshal() []byte {
@@ -6055,10 +6055,10 @@ func (s *RequestCatchSuccess) Unmarshal(data []byte) error {
 }
 
 type RequestDeedZone struct {
+	Arguments string
 	GlobalID  uint64
 	Status    int32
 	Teleport  int32
-	Arguments string
 }
 
 func (s *RequestDeedZone) Marshal() []byte {
@@ -6089,8 +6089,8 @@ func (s *RequestDeedZone) Unmarshal(data []byte) error {
 }
 
 type AddRequestFishHistory struct {
-	GlobalID uint64
 	FishData string
+	GlobalID uint64
 }
 
 func (s *AddRequestFishHistory) Marshal() []byte {
@@ -6157,8 +6157,8 @@ func (s *RequestHouseTransferList) Unmarshal(data []byte) error {
 
 type RequestHousingZone struct {
 	GlobalID    uint64
-	Status      int32
 	TemplateGID uint64
+	Status      int32
 }
 
 func (s *RequestHousingZone) Marshal() []byte {
@@ -6185,8 +6185,8 @@ func (s *RequestHousingZone) Unmarshal(data []byte) error {
 }
 
 type RequestHousingZoneTeleport struct {
-	TemplateGID uint64
 	Location    string
+	TemplateGID uint64
 }
 
 func (s *RequestHousingZoneTeleport) Marshal() []byte {
@@ -6209,9 +6209,9 @@ func (s *RequestHousingZoneTeleport) Unmarshal(data []byte) error {
 }
 
 type RequestInteractiveMusic struct {
+	PlayerName string
 	ObjectGID  uint64
 	InUse      uint32
-	PlayerName string
 }
 
 func (s *RequestInteractiveMusic) Marshal() []byte {
@@ -6262,9 +6262,9 @@ func (s *RequestIslandSwitch) Unmarshal(data []byte) error {
 }
 
 type RequestRestoreState struct {
+	Data     string
 	GlobalID uint64
 	State    uint32
-	Data     string
 }
 
 func (s *RequestRestoreState) Marshal() []byte {
@@ -6335,9 +6335,9 @@ func (s *RequestTeleporterHousingConfirm) Unmarshal(data []byte) error {
 
 type RequestTeleporterHousingZone struct {
 	GlobalID     uint64
-	Status       int32
 	TemplateGID  uint64
 	StructureGID uint64
+	Status       int32
 }
 
 func (s *RequestTeleporterHousingZone) Marshal() []byte {
@@ -6368,8 +6368,8 @@ func (s *RequestTeleporterHousingZone) Unmarshal(data []byte) error {
 }
 
 type RequestTransition struct {
-	GlobalID uint64
 	ZoneName string
+	GlobalID uint64
 }
 
 func (s *RequestTransition) Marshal() []byte {
@@ -6411,14 +6411,14 @@ func (s *RequestBlobs) Unmarshal(data []byte) error {
 }
 
 type Respec struct {
+	Buffer                       string
 	GlobalID                     uint64
 	Points                       int32
-	WebFailure                   int8
 	Credits                      int32
+	Cost                         int32
+	WebFailure                   int8
 	LevelIsLow                   int8
 	EncounteredUpgradedTierSpell int8
-	Cost                         int32
-	Buffer                       string
 }
 
 func (s *Respec) Marshal() []byte {
@@ -6652,8 +6652,8 @@ func (s *SetAtticID) Unmarshal(data []byte) error {
 }
 
 type SetFishingPlayers struct {
-	ZoneNameID uint32
 	Data       string
+	ZoneNameID uint32
 }
 
 func (s *SetFishingPlayers) Marshal() []byte {
@@ -6676,9 +6676,9 @@ func (s *SetFishingPlayers) Unmarshal(data []byte) error {
 }
 
 type SetHouseSign struct {
-	ObjectID uint64
-	SignText string
 	NameText string
+	SignText string
+	ObjectID uint64
 }
 
 func (s *SetHouseSign) Marshal() []byte {
@@ -6744,10 +6744,10 @@ func (s *SetHouseTeleporter) Unmarshal(data []byte) error {
 }
 
 type SetHousingGameState struct {
-	PlayerName string
-	GameState  uint32
-	ObjectGID  uint64
 	Score      string
+	PlayerName string
+	ObjectGID  uint64
+	GameState  uint32
 }
 
 func (s *SetHousingGameState) Marshal() []byte {
@@ -6802,8 +6802,8 @@ func (s *SetHousingPalette) Unmarshal(data []byte) error {
 }
 
 type SetInstanceFish struct {
-	ZoneNameID uint32
 	Data       string
+	ZoneNameID uint32
 }
 
 func (s *SetInstanceFish) Marshal() []byte {
@@ -6845,8 +6845,8 @@ func (s *InvisibleToFriends) Unmarshal(data []byte) error {
 }
 
 type SetMusicLoop struct {
-	ObjectGID uint64
 	Data      string
+	ObjectGID uint64
 }
 
 func (s *SetMusicLoop) Marshal() []byte {
@@ -6971,9 +6971,9 @@ func (s *ShowFishingCast) Unmarshal(data []byte) error {
 }
 
 type StartHousingGame struct {
+	Data           string
 	GameType       string
 	GameInProgress uint32
-	Data           string
 	IsPublic       int8
 }
 
@@ -7166,8 +7166,8 @@ type UpdateHousingObject struct {
 	LocZ              float32
 	Yaw               float32
 	SwitchCastleBlock uint32
-	UseExtendedYaw    int8
 	Scale             float32
+	UseExtendedYaw    int8
 }
 
 func (s *UpdateHousingObject) Marshal() []byte {
