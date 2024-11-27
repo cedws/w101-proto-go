@@ -169,9 +169,9 @@ func latestRootWAD(ctx context.Context) (io.ReadCloser, error) {
 	fileListCh := make(chan patch.LatestFileListV2)
 
 	r := proto.NewMessageRouter()
-	patch.RegisterPatchService(r, &patchHandler{fileListCh: fileListCh})
+	patch.RegisterPatchService(&r, &patchHandler{fileListCh: fileListCh})
 
-	client, err := proto.Dial(ctx, patchServer, r)
+	client, err := proto.Dial(ctx, patchServer, &r)
 	if err != nil {
 		return nil, err
 	}

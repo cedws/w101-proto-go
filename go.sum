@@ -1,6 +1,6 @@
 github.com/beevik/etree v1.4.1 h1:PmQJDDYahBGNKDcpdX8uPy1xRCwoCGVUiW669MEirVI=
 github.com/beevik/etree v1.4.1/go.mod h1:gPNJNaBGVZ9AwsidazFZyygnd+0pAU38N4D+WemwKNs=
-github.com/cedws/w101-client-go v0.0.0-20241123173053-55f04ec15974 h1:Fx2aXEem14v++PJENRDHS1ab1C8rgSxNXT7RF2gQL7Y=
-github.com/cedws/w101-client-go v0.0.0-20241123173053-55f04ec15974/go.mod h1:LEEZPLzH2mdzndxQPSwg+7ho+Q1U+raLB6802UUvLzQ=
+github.com/cedws/w101-client-go v0.0.0-20241127004722-2215aeac22b2 h1:hGKZRBQmWN9+sYDEuiO816BHQwVsceA6DxlpdJaj/P4=
+github.com/cedws/w101-client-go v0.0.0-20241127004722-2215aeac22b2/go.mod h1:LEEZPLzH2mdzndxQPSwg+7ho+Q1U+raLB6802UUvLzQ=
 golang.org/x/text v0.20.0 h1:gK/Kv2otX8gz+wn7Rmb3vT96ZwuoxnQlY+HlJVj7Qug=
 golang.org/x/text v0.20.0/go.mod h1:D4IsuqiFMhST5bX19pQ9ikHC2GsaKyk/oF+pn3ducp4=
