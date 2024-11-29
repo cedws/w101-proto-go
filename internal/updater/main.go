@@ -22,6 +22,8 @@ import (
 
 const patchServer = "patch.us.wizard101.com:12500"
 
+var errTimeoutFileList = fmt.Errorf("timed out waiting for latest file list")
+
 var protocolFiles = []string{
 	"AISClientMessages.xml",
 	"BaseMessages.xml",
@@ -61,10 +63,7 @@ func (p patchHandler) LatestFileListV2(m patch.LatestFileListV2) {
 }
 
 func main() {
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancel()
-
-	if err := generateProtocolFiles(ctx); err != nil {
+	if err := generateProtocolFiles(context.Background()); err != nil {
 		log.Fatal(err)
 	}
 
@@ -171,7 +170,10 @@ func latestRootWAD(ctx context.Context) (io.ReadCloser, error) {
 	r := proto.NewMessageRouter()
 	patch.RegisterPatchService(&r, &patchHandler{fileListCh: fileListCh})
 
-	client, err := proto.Dial(ctx, patchServer, &r)
+	dialCtx, cancel := context.WithTimeoutCause(ctx, 10*time.Second, errTimeoutFileList)
+	defer cancel()
+
+	client, err := proto.Dial(dialCtx, patchServer, &r)
 	if err != nil {
 		return nil, err
 	}
@@ -199,7 +201,7 @@ func requestRootWAD(ctx context.Context, fileList patch.LatestFileListV2) (io.Re
 		return nil, err
 	}
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, wadURL, nil)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, wadURL, http.NoBody)
 	if err != nil {
 		return nil, err
 	}
