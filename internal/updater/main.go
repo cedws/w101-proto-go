@@ -54,7 +54,7 @@ var protocolFiles = []string{
 }
 
 type patchHandler struct {
-	patch.PatchService
+	patch.Service
 	fileListCh chan patch.LatestFileListV2
 }
 
@@ -168,7 +168,7 @@ func latestRootWAD(ctx context.Context) (io.ReadCloser, error) {
 	fileListCh := make(chan patch.LatestFileListV2)
 
 	r := proto.NewMessageRouter()
-	patch.RegisterPatchService(&r, &patchHandler{fileListCh: fileListCh})
+	patch.RegisterService(&r, &patchHandler{fileListCh: fileListCh})
 
 	dialCtx, cancel := context.WithTimeoutCause(ctx, 10*time.Second, errTimeoutFileList)
 	defer cancel()
@@ -181,7 +181,7 @@ func latestRootWAD(ctx context.Context) (io.ReadCloser, error) {
 
 	slog.Info("Connected to patch server", "server", patchServer)
 
-	c := patch.NewPatchClient(client)
+	c := patch.NewClient(client)
 	if err := c.LatestFileListV2(&patch.LatestFileListV2{}); err != nil {
 		return nil, err
 	}
