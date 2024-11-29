@@ -4,11 +4,11 @@ package quest
 import (
 	"bytes"
 	"encoding/binary"
+	"github.com/cedws/w101-client-go/codegen"
 	"github.com/cedws/w101-client-go/proto"
-	"unsafe"
 )
 
-type questService interface {
+type service interface {
 	AcceptQuest(AcceptQuest)
 	CanAcquireWorldElixir(CanAcquireWorldElixir)
 	CompleteGoal(CompleteGoal)
@@ -30,35 +30,27 @@ type questService interface {
 	UpdateUserHiddenQuests(UpdateUserHiddenQuests)
 }
 
-type QuestService struct {
-	questService
-}
+func (Service) AcceptQuest(AcceptQuest)                       {}
+func (Service) CanAcquireWorldElixir(CanAcquireWorldElixir)   {}
+func (Service) CompleteGoal(CompleteGoal)                     {}
+func (Service) CompletePersonaGoal(CompletePersonaGoal)       {}
+func (Service) CompleteQuest(CompleteQuest)                   {}
+func (Service) DebugQuestData(DebugQuestData)                 {}
+func (Service) DeclineQuest(DeclineQuest)                     {}
+func (Service) GetNextWorld(GetNextWorld)                     {}
+func (Service) InteractNPC(InteractNPC)                       {}
+func (Service) NPCInfo(NPCInfo)                               {}
+func (Service) PersonaComplete(PersonaComplete)               {}
+func (Service) QuestOffer(QuestOffer)                         {}
+func (Service) QuestReadyToTurnIn(QuestReadyToTurnIn)         {}
+func (Service) RemoveGoal(RemoveGoal)                         {}
+func (Service) RemoveQuest(RemoveQuest)                       {}
+func (Service) SendGoal(SendGoal)                             {}
+func (Service) SendNPCOptions(SendNPCOptions)                 {}
+func (Service) SendQuest(SendQuest)                           {}
+func (Service) UpdateUserHiddenQuests(UpdateUserHiddenQuests) {}
 
-type QuestClient struct {
-	c *proto.Client
-}
-
-func (l *QuestService) AcceptQuest(_ AcceptQuest)                       {}
-func (l *QuestService) CanAcquireWorldElixir(_ CanAcquireWorldElixir)   {}
-func (l *QuestService) CompleteGoal(_ CompleteGoal)                     {}
-func (l *QuestService) CompletePersonaGoal(_ CompletePersonaGoal)       {}
-func (l *QuestService) CompleteQuest(_ CompleteQuest)                   {}
-func (l *QuestService) DebugQuestData(_ DebugQuestData)                 {}
-func (l *QuestService) DeclineQuest(_ DeclineQuest)                     {}
-func (l *QuestService) GetNextWorld(_ GetNextWorld)                     {}
-func (l *QuestService) InteractNPC(_ InteractNPC)                       {}
-func (l *QuestService) NPCInfo(_ NPCInfo)                               {}
-func (l *QuestService) PersonaComplete(_ PersonaComplete)               {}
-func (l *QuestService) QuestOffer(_ QuestOffer)                         {}
-func (l *QuestService) QuestReadyToTurnIn(_ QuestReadyToTurnIn)         {}
-func (l *QuestService) RemoveGoal(_ RemoveGoal)                         {}
-func (l *QuestService) RemoveQuest(_ RemoveQuest)                       {}
-func (l *QuestService) SendGoal(_ SendGoal)                             {}
-func (l *QuestService) SendNPCOptions(_ SendNPCOptions)                 {}
-func (l *QuestService) SendQuest(_ SendQuest)                           {}
-func (l *QuestService) UpdateUserHiddenQuests(_ UpdateUserHiddenQuests) {}
-
-func RegisterQuestService(r *proto.MessageRouter, s questService) {
+func RegisterService(r *proto.MessageRouter, s service) {
 	proto.RegisterMessageHandler(r, 52, 1, s.AcceptQuest)
 	proto.RegisterMessageHandler(r, 52, 2, s.CanAcquireWorldElixir)
 	proto.RegisterMessageHandler(r, 52, 3, s.CompleteGoal)
@@ -80,86 +72,93 @@ func RegisterQuestService(r *proto.MessageRouter, s questService) {
 	proto.RegisterMessageHandler(r, 52, 19, s.UpdateUserHiddenQuests)
 }
 
-func NewQuestClient(c *proto.Client) QuestClient {
-	return QuestClient{c}
+func NewClient(c *proto.Client) Client {
+	return Client{c}
 }
 
-func (c QuestClient) AcceptQuest(m *AcceptQuest) error {
+func (c Client) AcceptQuest(m *AcceptQuest) error {
 	return c.c.WriteMessage(52, 1, m)
 }
 
-func (c QuestClient) CanAcquireWorldElixir(m *CanAcquireWorldElixir) error {
+func (c Client) CanAcquireWorldElixir(m *CanAcquireWorldElixir) error {
 	return c.c.WriteMessage(52, 2, m)
 }
 
-func (c QuestClient) CompleteGoal(m *CompleteGoal) error {
+func (c Client) CompleteGoal(m *CompleteGoal) error {
 	return c.c.WriteMessage(52, 3, m)
 }
 
-func (c QuestClient) CompletePersonaGoal(m *CompletePersonaGoal) error {
+func (c Client) CompletePersonaGoal(m *CompletePersonaGoal) error {
 	return c.c.WriteMessage(52, 4, m)
 }
 
-func (c QuestClient) CompleteQuest(m *CompleteQuest) error {
+func (c Client) CompleteQuest(m *CompleteQuest) error {
 	return c.c.WriteMessage(52, 5, m)
 }
 
-func (c QuestClient) DebugQuestData(m *DebugQuestData) error {
+func (c Client) DebugQuestData(m *DebugQuestData) error {
 	return c.c.WriteMessage(52, 6, m)
 }
 
-func (c QuestClient) DeclineQuest(m *DeclineQuest) error {
+func (c Client) DeclineQuest(m *DeclineQuest) error {
 	return c.c.WriteMessage(52, 7, m)
 }
 
-func (c QuestClient) GetNextWorld(m *GetNextWorld) error {
+func (c Client) GetNextWorld(m *GetNextWorld) error {
 	return c.c.WriteMessage(52, 8, m)
 }
 
-func (c QuestClient) InteractNPC(m *InteractNPC) error {
+func (c Client) InteractNPC(m *InteractNPC) error {
 	return c.c.WriteMessage(52, 9, m)
 }
 
-func (c QuestClient) NPCInfo(m *NPCInfo) error {
+func (c Client) NPCInfo(m *NPCInfo) error {
 	return c.c.WriteMessage(52, 10, m)
 }
 
-func (c QuestClient) PersonaComplete(m *PersonaComplete) error {
+func (c Client) PersonaComplete(m *PersonaComplete) error {
 	return c.c.WriteMessage(52, 11, m)
 }
 
-func (c QuestClient) QuestOffer(m *QuestOffer) error {
+func (c Client) QuestOffer(m *QuestOffer) error {
 	return c.c.WriteMessage(52, 12, m)
 }
 
-func (c QuestClient) QuestReadyToTurnIn(m *QuestReadyToTurnIn) error {
+func (c Client) QuestReadyToTurnIn(m *QuestReadyToTurnIn) error {
 	return c.c.WriteMessage(52, 13, m)
 }
 
-func (c QuestClient) RemoveGoal(m *RemoveGoal) error {
+func (c Client) RemoveGoal(m *RemoveGoal) error {
 	return c.c.WriteMessage(52, 14, m)
 }
 
-func (c QuestClient) RemoveQuest(m *RemoveQuest) error {
+func (c Client) RemoveQuest(m *RemoveQuest) error {
 	return c.c.WriteMessage(52, 15, m)
 }
 
-func (c QuestClient) SendGoal(m *SendGoal) error {
+func (c Client) SendGoal(m *SendGoal) error {
 	return c.c.WriteMessage(52, 16, m)
 }
 
-func (c QuestClient) SendNPCOptions(m *SendNPCOptions) error {
+func (c Client) SendNPCOptions(m *SendNPCOptions) error {
 	return c.c.WriteMessage(52, 17, m)
 }
 
-func (c QuestClient) SendQuest(m *SendQuest) error {
+func (c Client) SendQuest(m *SendQuest) error {
 	return c.c.WriteMessage(52, 18, m)
 }
 
-func (c QuestClient) UpdateUserHiddenQuests(m *UpdateUserHiddenQuests) error {
+func (c Client) UpdateUserHiddenQuests(m *UpdateUserHiddenQuests) error {
 	return c.c.WriteMessage(52, 19, m)
 }
 
+type Service struct {
+	service
+}
+
+type Client struct {
+	c *proto.Client
+}
 type AcceptQuest struct {
 	QuestName string
 	MobileID  uint64
@@ -167,8 +166,7 @@ type AcceptQuest struct {
 
 func (s *AcceptQuest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.QuestName)))
-	binary.Write(b, binary.LittleEndian, s.MobileID)
-	writeString_52(b, s.QuestName)
+	binary.Write(b, binary.LittleEndian, s.QuestName)
 	return b.Bytes()
 }
 
@@ -178,7 +176,7 @@ func (s *AcceptQuest) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.MobileID); err != nil {
 		return err
 	}
-	if s.QuestName, err = readString_52(b); err != nil {
+	if s.QuestName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -191,8 +189,6 @@ type CanAcquireWorldElixir struct {
 
 func (s *CanAcquireWorldElixir) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.ElixirTemplateGID)
-	binary.Write(b, binary.LittleEndian, s.Result)
 	return b.Bytes()
 }
 
@@ -216,9 +212,7 @@ type CompleteGoal struct {
 
 func (s *CompleteGoal) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 18+len(s.CompleteText)))
-	binary.Write(b, binary.LittleEndian, s.QuestID)
-	binary.Write(b, binary.LittleEndian, s.GoalID)
-	writeString_52(b, s.CompleteText)
+	binary.Write(b, binary.LittleEndian, s.CompleteText)
 	return b.Bytes()
 }
 
@@ -231,7 +225,7 @@ func (s *CompleteGoal) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GoalID); err != nil {
 		return err
 	}
-	if s.CompleteText, err = readString_52(b); err != nil {
+	if s.CompleteText, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -245,9 +239,6 @@ type CompletePersonaGoal struct {
 
 func (s *CompletePersonaGoal) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24))
-	binary.Write(b, binary.LittleEndian, s.MobileID)
-	binary.Write(b, binary.LittleEndian, s.QuestID)
-	binary.Write(b, binary.LittleEndian, s.GoalID)
 	return b.Bytes()
 }
 
@@ -273,8 +264,7 @@ type CompleteQuest struct {
 
 func (s *CompleteQuest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.CompleteText)))
-	binary.Write(b, binary.LittleEndian, s.QuestID)
-	writeString_52(b, s.CompleteText)
+	binary.Write(b, binary.LittleEndian, s.CompleteText)
 	return b.Bytes()
 }
 
@@ -284,7 +274,7 @@ func (s *CompleteQuest) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.QuestID); err != nil {
 		return err
 	}
-	if s.CompleteText, err = readString_52(b); err != nil {
+	if s.CompleteText, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -299,10 +289,8 @@ type DebugQuestData struct {
 
 func (s *DebugQuestData) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.QuestName)+len(s.GoalName)))
-	binary.Write(b, binary.LittleEndian, s.QuestID)
-	binary.Write(b, binary.LittleEndian, s.GoalID)
-	writeString_52(b, s.QuestName)
-	writeString_52(b, s.GoalName)
+	binary.Write(b, binary.LittleEndian, s.QuestName)
+	binary.Write(b, binary.LittleEndian, s.GoalName)
 	return b.Bytes()
 }
 
@@ -315,10 +303,10 @@ func (s *DebugQuestData) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GoalID); err != nil {
 		return err
 	}
-	if s.QuestName, err = readString_52(b); err != nil {
+	if s.QuestName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.GoalName, err = readString_52(b); err != nil {
+	if s.GoalName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -330,14 +318,14 @@ type DeclineQuest struct {
 
 func (s *DeclineQuest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.QuestName)))
-	writeString_52(b, s.QuestName)
+	binary.Write(b, binary.LittleEndian, s.QuestName)
 	return b.Bytes()
 }
 
 func (s *DeclineQuest) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.QuestName, err = readString_52(b); err != nil {
+	if s.QuestName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -349,14 +337,14 @@ type GetNextWorld struct {
 
 func (s *GetNextWorld) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.World)))
-	writeString_52(b, s.World)
+	binary.Write(b, binary.LittleEndian, s.World)
 	return b.Bytes()
 }
 
 func (s *GetNextWorld) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.World, err = readString_52(b); err != nil {
+	if s.World, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -372,11 +360,7 @@ type InteractNPC struct {
 
 func (s *InteractNPC) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 22+len(s.ServiceName)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_52(b, s.ServiceName)
-	binary.Write(b, binary.LittleEndian, s.Reinteract)
-	binary.Write(b, binary.LittleEndian, s.ServiceIndex)
-	binary.Write(b, binary.LittleEndian, s.RequestedSigilMode)
+	binary.Write(b, binary.LittleEndian, s.ServiceName)
 	return b.Bytes()
 }
 
@@ -386,7 +370,7 @@ func (s *InteractNPC) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.ServiceName, err = readString_52(b); err != nil {
+	if s.ServiceName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Reinteract); err != nil {
@@ -410,10 +394,9 @@ type NPCInfo struct {
 
 func (s *NPCInfo) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.Name)+len(s.Greeting)+len(s.PersonaMadlibs)))
-	binary.Write(b, binary.LittleEndian, s.MobileID)
-	writeString_52(b, s.Name)
-	writeString_52(b, s.Greeting)
-	writeString_52(b, s.PersonaMadlibs)
+	binary.Write(b, binary.LittleEndian, s.Name)
+	binary.Write(b, binary.LittleEndian, s.Greeting)
+	binary.Write(b, binary.LittleEndian, s.PersonaMadlibs)
 	return b.Bytes()
 }
 
@@ -423,13 +406,13 @@ func (s *NPCInfo) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.MobileID); err != nil {
 		return err
 	}
-	if s.Name, err = readString_52(b); err != nil {
+	if s.Name, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Greeting, err = readString_52(b); err != nil {
+	if s.Greeting, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.PersonaMadlibs, err = readString_52(b); err != nil {
+	if s.PersonaMadlibs, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -444,10 +427,7 @@ type PersonaComplete struct {
 
 func (s *PersonaComplete) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 26+len(s.GoalHyperlink)))
-	binary.Write(b, binary.LittleEndian, s.MobileID)
-	binary.Write(b, binary.LittleEndian, s.QuestID)
-	binary.Write(b, binary.LittleEndian, s.GoalID)
-	writeString_52(b, s.GoalHyperlink)
+	binary.Write(b, binary.LittleEndian, s.GoalHyperlink)
 	return b.Bytes()
 }
 
@@ -463,7 +443,7 @@ func (s *PersonaComplete) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GoalID); err != nil {
 		return err
 	}
-	if s.GoalHyperlink, err = readString_52(b); err != nil {
+	if s.GoalHyperlink, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -482,14 +462,11 @@ type QuestOffer struct {
 
 func (s *QuestOffer) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 23+len(s.QuestName)+len(s.QuestTitle)+len(s.QuestInfo)+len(s.Rewards)+len(s.GoalData)))
-	binary.Write(b, binary.LittleEndian, s.MobileID)
-	writeString_52(b, s.QuestName)
-	writeString_52(b, s.QuestTitle)
-	writeString_52(b, s.QuestInfo)
-	binary.Write(b, binary.LittleEndian, s.Level)
-	writeString_52(b, s.Rewards)
-	writeString_52(b, s.GoalData)
-	binary.Write(b, binary.LittleEndian, s.Mainline)
+	binary.Write(b, binary.LittleEndian, s.QuestName)
+	binary.Write(b, binary.LittleEndian, s.QuestTitle)
+	binary.Write(b, binary.LittleEndian, s.QuestInfo)
+	binary.Write(b, binary.LittleEndian, s.Rewards)
+	binary.Write(b, binary.LittleEndian, s.GoalData)
 	return b.Bytes()
 }
 
@@ -499,22 +476,22 @@ func (s *QuestOffer) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.MobileID); err != nil {
 		return err
 	}
-	if s.QuestName, err = readString_52(b); err != nil {
+	if s.QuestName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.QuestTitle, err = readString_52(b); err != nil {
+	if s.QuestTitle, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.QuestInfo, err = readString_52(b); err != nil {
+	if s.QuestInfo, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Level); err != nil {
 		return err
 	}
-	if s.Rewards, err = readString_52(b); err != nil {
+	if s.Rewards, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.GoalData, err = readString_52(b); err != nil {
+	if s.GoalData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Mainline); err != nil {
@@ -529,7 +506,6 @@ type QuestReadyToTurnIn struct {
 
 func (s *QuestReadyToTurnIn) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.QuestID)
 	return b.Bytes()
 }
 
@@ -549,8 +525,6 @@ type RemoveGoal struct {
 
 func (s *RemoveGoal) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.QuestID)
-	binary.Write(b, binary.LittleEndian, s.GoalID)
 	return b.Bytes()
 }
 
@@ -573,8 +547,6 @@ type RemoveQuest struct {
 
 func (s *RemoveQuest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.QuestID)
-	binary.Write(b, binary.LittleEndian, s.NpcID)
 	return b.Bytes()
 }
 
@@ -619,30 +591,16 @@ type SendGoal struct {
 
 func (s *SendGoal) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 63+len(s.GoalTitle)+len(s.GoalLocation)+len(s.GoalDestinationZone)+len(s.GoalImage1)+len(s.GoalImage2)+len(s.PersonaName)+len(s.TallyText)+len(s.GoalMadlibs)+len(s.ClientTags)+len(s.PatronIcon)))
-	binary.Write(b, binary.LittleEndian, s.QuestID)
-	binary.Write(b, binary.LittleEndian, s.GoalID)
-	binary.Write(b, binary.LittleEndian, s.GoalNameID)
-	writeString_52(b, s.GoalTitle)
-	writeString_52(b, s.GoalLocation)
-	writeString_52(b, s.GoalDestinationZone)
-	writeString_52(b, s.GoalImage1)
-	writeString_52(b, s.GoalImage2)
-	writeString_52(b, s.PersonaName)
-	binary.Write(b, binary.LittleEndian, s.GoalType)
-	binary.Write(b, binary.LittleEndian, s.GoalStatus)
-	binary.Write(b, binary.LittleEndian, s.GoalCount)
-	binary.Write(b, binary.LittleEndian, s.GoalTotal)
-	binary.Write(b, binary.LittleEndian, s.SubscriberGoalTotal)
-	binary.Write(b, binary.LittleEndian, s.UseTally)
-	writeString_52(b, s.TallyText)
-	binary.Write(b, binary.LittleEndian, s.SendType)
-	writeString_52(b, s.GoalMadlibs)
-	writeString_52(b, s.ClientTags)
-	writeString_52(b, s.PatronIcon)
-	binary.Write(b, binary.LittleEndian, s.NoQuestHelper)
-	binary.Write(b, binary.LittleEndian, s.PetOnlyQuest)
-	binary.Write(b, binary.LittleEndian, s.HasActiveResults)
-	binary.Write(b, binary.LittleEndian, s.HideGoalFloatyText)
+	binary.Write(b, binary.LittleEndian, s.GoalTitle)
+	binary.Write(b, binary.LittleEndian, s.GoalLocation)
+	binary.Write(b, binary.LittleEndian, s.GoalDestinationZone)
+	binary.Write(b, binary.LittleEndian, s.GoalImage1)
+	binary.Write(b, binary.LittleEndian, s.GoalImage2)
+	binary.Write(b, binary.LittleEndian, s.PersonaName)
+	binary.Write(b, binary.LittleEndian, s.TallyText)
+	binary.Write(b, binary.LittleEndian, s.GoalMadlibs)
+	binary.Write(b, binary.LittleEndian, s.ClientTags)
+	binary.Write(b, binary.LittleEndian, s.PatronIcon)
 	return b.Bytes()
 }
 
@@ -658,22 +616,22 @@ func (s *SendGoal) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GoalNameID); err != nil {
 		return err
 	}
-	if s.GoalTitle, err = readString_52(b); err != nil {
+	if s.GoalTitle, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.GoalLocation, err = readString_52(b); err != nil {
+	if s.GoalLocation, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.GoalDestinationZone, err = readString_52(b); err != nil {
+	if s.GoalDestinationZone, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.GoalImage1, err = readString_52(b); err != nil {
+	if s.GoalImage1, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.GoalImage2, err = readString_52(b); err != nil {
+	if s.GoalImage2, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.PersonaName, err = readString_52(b); err != nil {
+	if s.PersonaName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.GoalType); err != nil {
@@ -694,19 +652,19 @@ func (s *SendGoal) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.UseTally); err != nil {
 		return err
 	}
-	if s.TallyText, err = readString_52(b); err != nil {
+	if s.TallyText, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.SendType); err != nil {
 		return err
 	}
-	if s.GoalMadlibs, err = readString_52(b); err != nil {
+	if s.GoalMadlibs, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.ClientTags, err = readString_52(b); err != nil {
+	if s.ClientTags, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.PatronIcon, err = readString_52(b); err != nil {
+	if s.PatronIcon, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.NoQuestHelper); err != nil {
@@ -732,9 +690,7 @@ type SendNPCOptions struct {
 
 func (s *SendNPCOptions) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.Options)))
-	binary.Write(b, binary.LittleEndian, s.MobileID)
-	writeString_52(b, s.Options)
-	binary.Write(b, binary.LittleEndian, s.Reinteract)
+	binary.Write(b, binary.LittleEndian, s.Options)
 	return b.Bytes()
 }
 
@@ -744,7 +700,7 @@ func (s *SendNPCOptions) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.MobileID); err != nil {
 		return err
 	}
-	if s.Options, err = readString_52(b); err != nil {
+	if s.Options, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Reinteract); err != nil {
@@ -776,24 +732,13 @@ type SendQuest struct {
 
 func (s *SendQuest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 41+len(s.QuestTitle)+len(s.QuestInfo)+len(s.QuestMadlibs)+len(s.GoalData)+len(s.Rewards)+len(s.ClientTags)+len(s.AssociatedWorlds)))
-	binary.Write(b, binary.LittleEndian, s.QuestID)
-	binary.Write(b, binary.LittleEndian, s.QuestNameID)
-	binary.Write(b, binary.LittleEndian, s.QuestType)
-	binary.Write(b, binary.LittleEndian, s.QuestLevel)
-	writeString_52(b, s.QuestTitle)
-	writeString_52(b, s.QuestInfo)
-	binary.Write(b, binary.LittleEndian, s.New)
-	writeString_52(b, s.QuestMadlibs)
-	writeString_52(b, s.GoalData)
-	writeString_52(b, s.Rewards)
-	writeString_52(b, s.ClientTags)
-	writeString_52(b, s.AssociatedWorlds)
-	binary.Write(b, binary.LittleEndian, s.NoQuestHelper)
-	binary.Write(b, binary.LittleEndian, s.Mainline)
-	binary.Write(b, binary.LittleEndian, s.ReadyToTurnIn)
-	binary.Write(b, binary.LittleEndian, s.SkipQHAutoSelect)
-	binary.Write(b, binary.LittleEndian, s.PetOnlyQuest)
-	binary.Write(b, binary.LittleEndian, s.ActivityType)
+	binary.Write(b, binary.LittleEndian, s.QuestTitle)
+	binary.Write(b, binary.LittleEndian, s.QuestInfo)
+	binary.Write(b, binary.LittleEndian, s.QuestMadlibs)
+	binary.Write(b, binary.LittleEndian, s.GoalData)
+	binary.Write(b, binary.LittleEndian, s.Rewards)
+	binary.Write(b, binary.LittleEndian, s.ClientTags)
+	binary.Write(b, binary.LittleEndian, s.AssociatedWorlds)
 	return b.Bytes()
 }
 
@@ -812,28 +757,28 @@ func (s *SendQuest) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.QuestLevel); err != nil {
 		return err
 	}
-	if s.QuestTitle, err = readString_52(b); err != nil {
+	if s.QuestTitle, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.QuestInfo, err = readString_52(b); err != nil {
+	if s.QuestInfo, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.New); err != nil {
 		return err
 	}
-	if s.QuestMadlibs, err = readString_52(b); err != nil {
+	if s.QuestMadlibs, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.GoalData, err = readString_52(b); err != nil {
+	if s.GoalData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Rewards, err = readString_52(b); err != nil {
+	if s.Rewards, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.ClientTags, err = readString_52(b); err != nil {
+	if s.ClientTags, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.AssociatedWorlds, err = readString_52(b); err != nil {
+	if s.AssociatedWorlds, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.NoQuestHelper); err != nil {
@@ -863,32 +808,15 @@ type UpdateUserHiddenQuests struct {
 
 func (s *UpdateUserHiddenQuests) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Data)))
-	writeString_52(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
 func (s *UpdateUserHiddenQuests) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_52(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
-}
-
-func writeString_52(b *bytes.Buffer, v string) {
-	binary.Write(b, binary.LittleEndian, uint16(len(v)))
-	b.WriteString(v)
-}
-
-func readString_52(buf *bytes.Reader) (string, error) {
-	var length uint16
-	if err := binary.Read(buf, binary.LittleEndian, &length); err != nil {
-		return "", err
-	}
-	data := make([]byte, length)
-	if _, err := buf.Read(data); err != nil {
-		return "", err
-	}
-	return *(*string)(unsafe.Pointer(&data)), nil
 }

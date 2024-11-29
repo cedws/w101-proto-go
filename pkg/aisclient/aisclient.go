@@ -4,36 +4,35 @@ package aisclient
 import (
 	"bytes"
 	"encoding/binary"
+	"github.com/cedws/w101-client-go/codegen"
 	"github.com/cedws/w101-client-go/proto"
-	"unsafe"
 )
 
-type aisclientService interface {
+type service interface {
 	AISMessage(AISMessage)
 }
 
-type AisclientService struct {
-	aisclientService
-}
+func (Service) AISMessage(AISMessage) {}
 
-type AisclientClient struct {
-	c *proto.Client
-}
-
-func (l *AisclientService) AISMessage(_ AISMessage) {}
-
-func RegisterAisclientService(r *proto.MessageRouter, s aisclientService) {
+func RegisterService(r *proto.MessageRouter, s service) {
 	proto.RegisterMessageHandler(r, 19, 1, s.AISMessage)
 }
 
-func NewAisclientClient(c *proto.Client) AisclientClient {
-	return AisclientClient{c}
+func NewClient(c *proto.Client) Client {
+	return Client{c}
 }
 
-func (c AisclientClient) AISMessage(m *AISMessage) error {
+func (c Client) AISMessage(m *AISMessage) error {
 	return c.c.WriteMessage(19, 1, m)
 }
 
+type Service struct {
+	service
+}
+
+type Client struct {
+	c *proto.Client
+}
 type AISMessage struct {
 	Message string
 	Modal   uint8
@@ -41,36 +40,18 @@ type AISMessage struct {
 
 func (s *AISMessage) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 3+len(s.Message)))
-	writeString_19(b, s.Message)
-	binary.Write(b, binary.LittleEndian, s.Modal)
+	binary.Write(b, binary.LittleEndian, s.Message)
 	return b.Bytes()
 }
 
 func (s *AISMessage) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Message, err = readString_19(b); err != nil {
+	if s.Message, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Modal); err != nil {
 		return err
 	}
 	return nil
-}
-
-func writeString_19(b *bytes.Buffer, v string) {
-	binary.Write(b, binary.LittleEndian, uint16(len(v)))
-	b.WriteString(v)
-}
-
-func readString_19(buf *bytes.Reader) (string, error) {
-	var length uint16
-	if err := binary.Read(buf, binary.LittleEndian, &length); err != nil {
-		return "", err
-	}
-	data := make([]byte, length)
-	if _, err := buf.Read(data); err != nil {
-		return "", err
-	}
-	return *(*string)(unsafe.Pointer(&data)), nil
 }

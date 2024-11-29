@@ -4,50 +4,49 @@ package skullriders
 import (
 	"bytes"
 	"encoding/binary"
+	"github.com/cedws/w101-client-go/codegen"
 	"github.com/cedws/w101-client-go/proto"
-	"unsafe"
 )
 
-type skullridersService interface {
+type service interface {
 	SkullRidersConnect(SkullRidersConnect)
 	SkullRidersMoved(SkullRidersMoved)
 	SkullRidersRewards(SkullRidersRewards)
 }
 
-type SkullridersService struct {
-	skullridersService
-}
+func (Service) SkullRidersConnect(SkullRidersConnect) {}
+func (Service) SkullRidersMoved(SkullRidersMoved)     {}
+func (Service) SkullRidersRewards(SkullRidersRewards) {}
 
-type SkullridersClient struct {
-	c *proto.Client
-}
-
-func (l *SkullridersService) SkullRidersConnect(_ SkullRidersConnect) {}
-func (l *SkullridersService) SkullRidersMoved(_ SkullRidersMoved)     {}
-func (l *SkullridersService) SkullRidersRewards(_ SkullRidersRewards) {}
-
-func RegisterSkullridersService(r *proto.MessageRouter, s skullridersService) {
+func RegisterService(r *proto.MessageRouter, s service) {
 	proto.RegisterMessageHandler(r, 40, 1, s.SkullRidersConnect)
 	proto.RegisterMessageHandler(r, 40, 2, s.SkullRidersMoved)
 	proto.RegisterMessageHandler(r, 40, 3, s.SkullRidersRewards)
 }
 
-func NewSkullridersClient(c *proto.Client) SkullridersClient {
-	return SkullridersClient{c}
+func NewClient(c *proto.Client) Client {
+	return Client{c}
 }
 
-func (c SkullridersClient) SkullRidersConnect(m *SkullRidersConnect) error {
+func (c Client) SkullRidersConnect(m *SkullRidersConnect) error {
 	return c.c.WriteMessage(40, 1, m)
 }
 
-func (c SkullridersClient) SkullRidersMoved(m *SkullRidersMoved) error {
+func (c Client) SkullRidersMoved(m *SkullRidersMoved) error {
 	return c.c.WriteMessage(40, 2, m)
 }
 
-func (c SkullridersClient) SkullRidersRewards(m *SkullRidersRewards) error {
+func (c Client) SkullRidersRewards(m *SkullRidersRewards) error {
 	return c.c.WriteMessage(40, 3, m)
 }
 
+type Service struct {
+	service
+}
+
+type Client struct {
+	c *proto.Client
+}
 type SkullRidersConnect struct {
 }
 
@@ -77,8 +76,7 @@ type SkullRidersRewards struct {
 
 func (s *SkullRidersRewards) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.GameName)))
-	binary.Write(b, binary.LittleEndian, s.Score)
-	writeString_40(b, s.GameName)
+	binary.Write(b, binary.LittleEndian, s.GameName)
 	return b.Bytes()
 }
 
@@ -88,25 +86,8 @@ func (s *SkullRidersRewards) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Score); err != nil {
 		return err
 	}
-	if s.GameName, err = readString_40(b); err != nil {
+	if s.GameName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
-}
-
-func writeString_40(b *bytes.Buffer, v string) {
-	binary.Write(b, binary.LittleEndian, uint16(len(v)))
-	b.WriteString(v)
-}
-
-func readString_40(buf *bytes.Reader) (string, error) {
-	var length uint16
-	if err := binary.Read(buf, binary.LittleEndian, &length); err != nil {
-		return "", err
-	}
-	data := make([]byte, length)
-	if _, err := buf.Read(data); err != nil {
-		return "", err
-	}
-	return *(*string)(unsafe.Pointer(&data)), nil
 }

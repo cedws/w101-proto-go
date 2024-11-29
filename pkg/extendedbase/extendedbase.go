@@ -4,11 +4,11 @@ package extendedbase
 import (
 	"bytes"
 	"encoding/binary"
+	"github.com/cedws/w101-client-go/codegen"
 	"github.com/cedws/w101-client-go/proto"
-	"unsafe"
 )
 
-type extendedbaseService interface {
+type service interface {
 	CustomDict(CustomDict)
 	CustomRecord(CustomRecord)
 	ForceDisconnect(ForceDisconnect)
@@ -17,22 +17,14 @@ type extendedbaseService interface {
 	ServerMessage(ServerMessage)
 }
 
-type ExtendedbaseService struct {
-	extendedbaseService
-}
+func (Service) CustomDict(CustomDict)           {}
+func (Service) CustomRecord(CustomRecord)       {}
+func (Service) ForceDisconnect(ForceDisconnect) {}
+func (Service) RawRecord(RawRecord)             {}
+func (Service) RawText(RawText)                 {}
+func (Service) ServerMessage(ServerMessage)     {}
 
-type ExtendedbaseClient struct {
-	c *proto.Client
-}
-
-func (l *ExtendedbaseService) CustomDict(_ CustomDict)           {}
-func (l *ExtendedbaseService) CustomRecord(_ CustomRecord)       {}
-func (l *ExtendedbaseService) ForceDisconnect(_ ForceDisconnect) {}
-func (l *ExtendedbaseService) RawRecord(_ RawRecord)             {}
-func (l *ExtendedbaseService) RawText(_ RawText)                 {}
-func (l *ExtendedbaseService) ServerMessage(_ ServerMessage)     {}
-
-func RegisterExtendedbaseService(r *proto.MessageRouter, s extendedbaseService) {
+func RegisterService(r *proto.MessageRouter, s service) {
 	proto.RegisterMessageHandler(r, 2, 1, s.CustomDict)
 	proto.RegisterMessageHandler(r, 2, 2, s.CustomRecord)
 	proto.RegisterMessageHandler(r, 2, 3, s.ForceDisconnect)
@@ -41,34 +33,41 @@ func RegisterExtendedbaseService(r *proto.MessageRouter, s extendedbaseService) 
 	proto.RegisterMessageHandler(r, 2, 6, s.ServerMessage)
 }
 
-func NewExtendedbaseClient(c *proto.Client) ExtendedbaseClient {
-	return ExtendedbaseClient{c}
+func NewClient(c *proto.Client) Client {
+	return Client{c}
 }
 
-func (c ExtendedbaseClient) CustomDict(m *CustomDict) error {
+func (c Client) CustomDict(m *CustomDict) error {
 	return c.c.WriteMessage(2, 1, m)
 }
 
-func (c ExtendedbaseClient) CustomRecord(m *CustomRecord) error {
+func (c Client) CustomRecord(m *CustomRecord) error {
 	return c.c.WriteMessage(2, 2, m)
 }
 
-func (c ExtendedbaseClient) ForceDisconnect(m *ForceDisconnect) error {
+func (c Client) ForceDisconnect(m *ForceDisconnect) error {
 	return c.c.WriteMessage(2, 3, m)
 }
 
-func (c ExtendedbaseClient) RawRecord(m *RawRecord) error {
+func (c Client) RawRecord(m *RawRecord) error {
 	return c.c.WriteMessage(2, 4, m)
 }
 
-func (c ExtendedbaseClient) RawText(m *RawText) error {
+func (c Client) RawText(m *RawText) error {
 	return c.c.WriteMessage(2, 5, m)
 }
 
-func (c ExtendedbaseClient) ServerMessage(m *ServerMessage) error {
+func (c Client) ServerMessage(m *ServerMessage) error {
 	return c.c.WriteMessage(2, 6, m)
 }
 
+type Service struct {
+	service
+}
+
+type Client struct {
+	c *proto.Client
+}
 type CustomDict struct {
 }
 
@@ -99,9 +98,8 @@ type ForceDisconnect struct {
 
 func (s *ForceDisconnect) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8+len(s.TimeStamp)+len(s.Message)))
-	binary.Write(b, binary.LittleEndian, s.Type)
-	writeString_2(b, s.TimeStamp)
-	writeString_2(b, s.Message)
+	binary.Write(b, binary.LittleEndian, s.TimeStamp)
+	binary.Write(b, binary.LittleEndian, s.Message)
 	return b.Bytes()
 }
 
@@ -111,10 +109,10 @@ func (s *ForceDisconnect) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Type); err != nil {
 		return err
 	}
-	if s.TimeStamp, err = readString_2(b); err != nil {
+	if s.TimeStamp, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Message, err = readString_2(b); err != nil {
+	if s.Message, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -137,14 +135,14 @@ type RawText struct {
 
 func (s *RawText) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Message)))
-	writeString_2(b, s.Message)
+	binary.Write(b, binary.LittleEndian, s.Message)
 	return b.Bytes()
 }
 
 func (s *RawText) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Message, err = readString_2(b); err != nil {
+	if s.Message, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -157,8 +155,7 @@ type ServerMessage struct {
 
 func (s *ServerMessage) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 3+len(s.Message)))
-	binary.Write(b, binary.LittleEndian, s.Modal)
-	writeString_2(b, s.Message)
+	binary.Write(b, binary.LittleEndian, s.Message)
 	return b.Bytes()
 }
 
@@ -168,25 +165,8 @@ func (s *ServerMessage) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Modal); err != nil {
 		return err
 	}
-	if s.Message, err = readString_2(b); err != nil {
+	if s.Message, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
-}
-
-func writeString_2(b *bytes.Buffer, v string) {
-	binary.Write(b, binary.LittleEndian, uint16(len(v)))
-	b.WriteString(v)
-}
-
-func readString_2(buf *bytes.Reader) (string, error) {
-	var length uint16
-	if err := binary.Read(buf, binary.LittleEndian, &length); err != nil {
-		return "", err
-	}
-	data := make([]byte, length)
-	if _, err := buf.Read(data); err != nil {
-		return "", err
-	}
-	return *(*string)(unsafe.Pointer(&data)), nil
 }

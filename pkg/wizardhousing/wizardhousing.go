@@ -4,11 +4,11 @@ package wizardhousing
 import (
 	"bytes"
 	"encoding/binary"
+	"github.com/cedws/w101-client-go/codegen"
 	"github.com/cedws/w101-client-go/proto"
-	"unsafe"
 )
 
-type wizardhousingService interface {
+type service interface {
 	AddFishToAquarium(AddFishToAquarium)
 	AddInstanceFish(AddInstanceFish)
 	AddToTreasureCardPoster(AddToTreasureCardPoster)
@@ -217,224 +217,214 @@ type wizardhousingService interface {
 	UpdateTrain(UpdateTrain)
 }
 
-type WizardhousingService struct {
-	wizardhousingService
-}
+func (Service) AddFishToAquarium(AddFishToAquarium)                                   {}
+func (Service) AddInstanceFish(AddInstanceFish)                                       {}
+func (Service) AddToTreasureCardPoster(AddToTreasureCardPoster)                       {}
+func (Service) AuditAtticResults(AuditAtticResults)                                   {}
+func (Service) BeginFishingCast(BeginFishingCast)                                     {}
+func (Service) BlockPetSpawn(BlockPetSpawn)                                           {}
+func (Service) BuyIslandSpaceConfirm(BuyIslandSpaceConfirm)                           {}
+func (Service) CastleGamesRequest(CastleGamesRequest)                                 {}
+func (Service) CastleGamesRequestGameData(CastleGamesRequestGameData)                 {}
+func (Service) CastleGamesTeleportRejected(CastleGamesTeleportRejected)               {}
+func (Service) CastleMagicCantrip(CastleMagicCantrip)                                 {}
+func (Service) CastleMagicChangeAction(CastleMagicChangeAction)                       {}
+func (Service) CastleMagicClear(CastleMagicClear)                                     {}
+func (Service) CastleMagicCurrentState(CastleMagicCurrentState)                       {}
+func (Service) CastleMagicOrb(CastleMagicOrb)                                         {}
+func (Service) CastleMagicRequestAllowMounts(CastleMagicRequestAllowMounts)           {}
+func (Service) CastleMagicRequestAllowPVP(CastleMagicRequestAllowPVP)                 {}
+func (Service) CastleMagicRequestPlayerTeleport(CastleMagicRequestPlayerTeleport)     {}
+func (Service) CastleMagicRequestPVPState(CastleMagicRequestPVPState)                 {}
+func (Service) CastleMagicRequestRandom(CastleMagicRequestRandom)                     {}
+func (Service) CastleMagicRequestUse(CastleMagicRequestUse)                           {}
+func (Service) CastleMagicTutorial(CastleMagicTutorial)                               {}
+func (Service) CastleMagicUpdateState(CastleMagicUpdateState)                         {}
+func (Service) CastleToursAdd(CastleToursAdd)                                         {}
+func (Service) CastleToursAddFavorite(CastleToursAddFavorite)                         {}
+func (Service) CastleToursAddResult(CastleToursAddResult)                             {}
+func (Service) CastleToursCSRResults(CastleToursCSRResults)                           {}
+func (Service) CastleToursDeleteCharacter(CastleToursDeleteCharacter)                 {}
+func (Service) CastleToursEnableRatingDisplay(CastleToursEnableRatingDisplay)         {}
+func (Service) CastleToursFavoriteInfo(CastleToursFavoriteInfo)                       {}
+func (Service) CastleToursFavoriteInfo2(CastleToursFavoriteInfo2)                     {}
+func (Service) CastleToursLeaderboardResponse(CastleToursLeaderboardResponse)         {}
+func (Service) CastleToursPlayerBanned(CastleToursPlayerBanned)                       {}
+func (Service) CastleToursPostRateHouse(CastleToursPostRateHouse)                     {}
+func (Service) CastleToursPreAdd(CastleToursPreAdd)                                   {}
+func (Service) CastleToursRatingDisplay(CastleToursRatingDisplay)                     {}
+func (Service) CastleToursRemove(CastleToursRemove)                                   {}
+func (Service) CastleToursRemoveFavorite(CastleToursRemoveFavorite)                   {}
+func (Service) CastleToursRemoveResult(CastleToursRemoveResult)                       {}
+func (Service) CastleToursRequest(CastleToursRequest)                                 {}
+func (Service) CastleToursRequestFriends(CastleToursRequestFriends)                   {}
+func (Service) CastleToursRequestLeaderboard(CastleToursRequestLeaderboard)           {}
+func (Service) CastleToursRequestMyCastleData(CastleToursRequestMyCastleData)         {}
+func (Service) CastleToursRequestMyCastles(CastleToursRequestMyCastles)               {}
+func (Service) CastleToursSendRating(CastleToursSendRating)                           {}
+func (Service) CastleToursTeleportPlayer(CastleToursTeleportPlayer)                   {}
+func (Service) CastleToursTeleportRejected(CastleToursTeleportRejected)               {}
+func (Service) CastleToursVisitCastle(CastleToursVisitCastle)                         {}
+func (Service) CatchFish(CatchFish)                                                   {}
+func (Service) CatchOfTheDayOpen(CatchOfTheDayOpen)                                   {}
+func (Service) CatchSuccess(CatchSuccess)                                             {}
+func (Service) ChangeBreadCrumbRequest(ChangeBreadCrumbRequest)                       {}
+func (Service) CreateTestIsland(CreateTestIsland)                                     {}
+func (Service) DailyPvPOpen(DailyPvPOpen)                                             {}
+func (Service) DailyQuestCompleted(DailyQuestCompleted)                               {}
+func (Service) DailyQuestCSRData(DailyQuestCSRData)                                   {}
+func (Service) DailyQuestExplore(DailyQuestExplore)                                   {}
+func (Service) DailyQuestOpen(DailyQuestOpen)                                         {}
+func (Service) DeleteEquippedHousingItem(DeleteEquippedHousingItem)                   {}
+func (Service) DeleteFish(DeleteFish)                                                 {}
+func (Service) DeleteFromAttic(DeleteFromAttic)                                       {}
+func (Service) DeleteMusicLoop(DeleteMusicLoop)                                       {}
+func (Service) DisplayCatchFish(DisplayCatchFish)                                     {}
+func (Service) DisplayCaughtFish(DisplayCaughtFish)                                   {}
+func (Service) DisposableDungeonNoOwner(DisposableDungeonNoOwner)                     {}
+func (Service) DailyPvPUpdate(DailyPvPUpdate)                                         {}
+func (Service) DailyQuestUpdate(DailyQuestUpdate)                                     {}
+func (Service) EmptyLotCheck(EmptyLotCheck)                                           {}
+func (Service) EndFishingCast(EndFishingCast)                                         {}
+func (Service) EnterTournamentFish(EnterTournamentFish)                               {}
+func (Service) EnterTournamentFishResult(EnterTournamentFishResult)                   {}
+func (Service) EquipHouseMusic(EquipHouseMusic)                                       {}
+func (Service) EquipMannequinItem(EquipMannequinItem)                                 {}
+func (Service) FishEscaped(FishEscaped)                                               {}
+func (Service) FishingCSRResults(FishingCSRResults)                                   {}
+func (Service) FishingSpellCast(FishingSpellCast)                                     {}
+func (Service) FishTournamentLeaderBoardOpen(FishTournamentLeaderBoardOpen)           {}
+func (Service) FishTournamentLeaderBoardRequest(FishTournamentLeaderBoardRequest)     {}
+func (Service) FishTournamentOpen(FishTournamentOpen)                                 {}
+func (Service) GardeningCastSpell(GardeningCastSpell)                                 {}
+func (Service) GardeningCommand(GardeningCommand)                                     {}
+func (Service) GardeningCommandResponse(GardeningCommandResponse)                     {}
+func (Service) GardeningCSRResults(GardeningCSRResults)                               {}
+func (Service) GardeningHarvestPlant(GardeningHarvestPlant)                           {}
+func (Service) GardeningHarvestPlantSecondSpring(GardeningHarvestPlantSecondSpring)   {}
+func (Service) GardeningSpellFizzle(GardeningSpellFizzle)                             {}
+func (Service) GardeningSpellInspect(GardeningSpellInspect)                           {}
+func (Service) GardenLevelUp(GardenLevelUp)                                           {}
+func (Service) HideHousingObject(HideHousingObject)                                   {}
+func (Service) HousingGameRequestPoweruplocations(HousingGameRequestPoweruplocations) {}
+func (Service) HousingGameStatusUpdate(HousingGameStatusUpdate)                       {}
+func (Service) HousingGameUsePowerup(HousingGameUsePowerup)                           {}
+func (Service) HousingObjectNoPickup(HousingObjectNoPickup)                           {}
+func (Service) HousingObjectProximity(HousingObjectProximity)                         {}
+func (Service) HousingZonePlayer(HousingZonePlayer)                                   {}
+func (Service) HousingZonePlayerList(HousingZonePlayerList)                           {}
+func (Service) InteractiveMusicError(InteractiveMusicError)                           {}
+func (Service) InteractiveMusicInUse(InteractiveMusicInUse)                           {}
+func (Service) InteractiveMusicInUse2(InteractiveMusicInUse2)                         {}
+func (Service) IslandSpaceBuyRequest(IslandSpaceBuyRequest)                           {}
+func (Service) IslandSpaceShopOpen(IslandSpaceShopOpen)                               {}
+func (Service) MissFish(MissFish)                                                     {}
+func (Service) MonsterMagicAddMonster(MonsterMagicAddMonster)                         {}
+func (Service) MonsterMagicEraseMonster(MonsterMagicEraseMonster)                     {}
+func (Service) MoveFromAttic(MoveFromAttic)                                           {}
+func (Service) MoveGearFromGearVault(MoveGearFromGearVault)                           {}
+func (Service) MoveGearToGearVault(MoveGearToGearVault)                               {}
+func (Service) MoveJewelFromJewelVault(MoveJewelFromJewelVault)                       {}
+func (Service) MoveJewelToJewelVault(MoveJewelToJewelVault)                           {}
+func (Service) MoveSeedFromGardeningShed(MoveSeedFromGardeningShed)                   {}
+func (Service) MoveSeedToGardeningShed(MoveSeedToGardeningShed)                       {}
+func (Service) MoveTCFromTCVault(MoveTCFromTCVault)                                   {}
+func (Service) MoveTCToTCVault(MoveTCToTCVault)                                       {}
+func (Service) MoveToAttic(MoveToAttic)                                               {}
+func (Service) NoFishSpace(NoFishSpace)                                               {}
+func (Service) PatchAddAttic(PatchAddAttic)                                           {}
+func (Service) PatchAddHousingObject(PatchAddHousingObject)                           {}
+func (Service) PatchAquarium(PatchAquarium)                                           {}
+func (Service) PatchCastleMagic(PatchCastleMagic)                                     {}
+func (Service) PatchDeleteAttic(PatchDeleteAttic)                                     {}
+func (Service) PatchDeleteHousingObject(PatchDeleteHousingObject)                     {}
+func (Service) PatchEquipHousingObject(PatchEquipHousingObject)                       {}
+func (Service) PatchGardening(PatchGardening)                                         {}
+func (Service) PatchHouse(PatchHouse)                                                 {}
+func (Service) PatchHousingBreadCrumb(PatchHousingBreadCrumb)                         {}
+func (Service) PatchHousingGardeningShed(PatchHousingGardeningShed)                   {}
+func (Service) PatchHousingGearVault(PatchHousingGearVault)                           {}
+func (Service) PatchHousingJewelVault(PatchHousingJewelVault)                         {}
+func (Service) PatchHousingMusicObject(PatchHousingMusicObject)                       {}
+func (Service) PatchHousingSignObject(PatchHousingSignObject)                         {}
+func (Service) PatchHousingTeleporterObject(PatchHousingTeleporterObject)             {}
+func (Service) PatchHousingTrain(PatchHousingTrain)                                   {}
+func (Service) PatchMonsterArena(PatchMonsterArena)                                   {}
+func (Service) PatchMusicLoop(PatchMusicLoop)                                         {}
+func (Service) PatchRemoveTextureRemap(PatchRemoveTextureRemap)                       {}
+func (Service) PatchTextureRemap(PatchTextureRemap)                                   {}
+func (Service) PatchTintHousingObject(PatchTintHousingObject)                         {}
+func (Service) PatchTreasureCardPoster(PatchTreasureCardPoster)                       {}
+func (Service) PatchTreasureCardVault(PatchTreasureCardVault)                         {}
+func (Service) PatchUpdateHousingObject(PatchUpdateHousingObject)                     {}
+func (Service) PatchExtendedTile(PatchExtendedTile)                                   {}
+func (Service) PetTomeScanAttic(PetTomeScanAttic)                                     {}
+func (Service) PickUpAll(PickUpAll)                                                   {}
+func (Service) PickUpHousingTexture(PickUpHousingTexture)                             {}
+func (Service) PlaceHousingFish(PlaceHousingFish)                                     {}
+func (Service) PlaceHousingObject(PlaceHousingObject)                                 {}
+func (Service) PlayerTeleportingToFriend(PlayerTeleportingToFriend)                   {}
+func (Service) PlayInteractiveMusic(PlayInteractiveMusic)                             {}
+func (Service) PlayInteractiveMusic2(PlayInteractiveMusic2)                           {}
+func (Service) PlayInteractiveMusicLoop(PlayInteractiveMusicLoop)                     {}
+func (Service) PlayInteractiveMusicLooping(PlayInteractiveMusicLooping)               {}
+func (Service) PlayInteractiveMusicLooping2(PlayInteractiveMusicLooping2)             {}
+func (Service) PlayTrainSound(PlayTrainSound)                                         {}
+func (Service) RemoveFishFromAquarium(RemoveFishFromAquarium)                         {}
+func (Service) RemoveHouseMusic(RemoveHouseMusic)                                     {}
+func (Service) ReportHouse(ReportHouse)                                               {}
+func (Service) AddRequestAllFish(AddRequestAllFish)                                   {}
+func (Service) RequestAttic(RequestAttic)                                             {}
+func (Service) RequestCatchSuccess(RequestCatchSuccess)                               {}
+func (Service) RequestDeedZone(RequestDeedZone)                                       {}
+func (Service) AddRequestFishHistory(AddRequestFishHistory)                           {}
+func (Service) RequestHouseOwnerCharacterID(RequestHouseOwnerCharacterID)             {}
+func (Service) RequestHouseTransferList(RequestHouseTransferList)                     {}
+func (Service) RequestHousingZone(RequestHousingZone)                                 {}
+func (Service) RequestHousingZoneTeleport(RequestHousingZoneTeleport)                 {}
+func (Service) RequestInteractiveMusic(RequestInteractiveMusic)                       {}
+func (Service) RequestIslandSwitch(RequestIslandSwitch)                               {}
+func (Service) RequestRestoreState(RequestRestoreState)                               {}
+func (Service) RequestSendAway(RequestSendAway)                                       {}
+func (Service) RequestTeleporterHousingConfirm(RequestTeleporterHousingConfirm)       {}
+func (Service) RequestTeleporterHousingZone(RequestTeleporterHousingZone)             {}
+func (Service) RequestTransition(RequestTransition)                                   {}
+func (Service) RequestBlobs(RequestBlobs)                                             {}
+func (Service) Respec(Respec)                                                         {}
+func (Service) SelectHouseMusic(SelectHouseMusic)                                     {}
+func (Service) SelectMusicStyle(SelectMusicStyle)                                     {}
+func (Service) SellFishOpen(SellFishOpen)                                             {}
+func (Service) SellFishRequest(SellFishRequest)                                       {}
+func (Service) SendHousingObjectStates(SendHousingObjectStates)                       {}
+func (Service) SendHousingTextureInfo(SendHousingTextureInfo)                         {}
+func (Service) SendBlob(SendBlob)                                                     {}
+func (Service) SetAtticID(SetAtticID)                                                 {}
+func (Service) SetFishingPlayers(SetFishingPlayers)                                   {}
+func (Service) SetHouseSign(SetHouseSign)                                             {}
+func (Service) SetHouseTeleporter(SetHouseTeleporter)                                 {}
+func (Service) SetHousingGameState(SetHousingGameState)                               {}
+func (Service) SetHousingPalette(SetHousingPalette)                                   {}
+func (Service) SetInstanceFish(SetInstanceFish)                                       {}
+func (Service) InvisibleToFriends(InvisibleToFriends)                                 {}
+func (Service) SetMusicLoop(SetMusicLoop)                                             {}
+func (Service) SetNextTrain(SetNextTrain)                                             {}
+func (Service) SetTileWallpaper(SetTileWallpaper)                                     {}
+func (Service) ShowFishingCast(ShowFishingCast)                                       {}
+func (Service) StartHousingGame(StartHousingGame)                                     {}
+func (Service) StartTrain(StartTrain)                                                 {}
+func (Service) StopInteractiveMusicLoop(StopInteractiveMusicLoop)                     {}
+func (Service) SwitchGotoCommons(SwitchGotoCommons)                                   {}
+func (Service) TeleportedToDeletedLot(TeleportedToDeletedLot)                         {}
+func (Service) TeleportToStart(TeleportToStart)                                       {}
+func (Service) UpdateAtticCount(UpdateAtticCount)                                     {}
+func (Service) UpdateGardeningXP(UpdateGardeningXP)                                   {}
+func (Service) UpdateHousingObject(UpdateHousingObject)                               {}
+func (Service) UpdateHousingPet(UpdateHousingPet)                                     {}
+func (Service) UpdateIslandSpace(UpdateIslandSpace)                                   {}
+func (Service) UpdateMaximumHousingItems(UpdateMaximumHousingItems)                   {}
+func (Service) UpdateTrain(UpdateTrain)                                               {}
 
-type WizardhousingClient struct {
-	c *proto.Client
-}
-
-func (l *WizardhousingService) AddFishToAquarium(_ AddFishToAquarium)                               {}
-func (l *WizardhousingService) AddInstanceFish(_ AddInstanceFish)                                   {}
-func (l *WizardhousingService) AddToTreasureCardPoster(_ AddToTreasureCardPoster)                   {}
-func (l *WizardhousingService) AuditAtticResults(_ AuditAtticResults)                               {}
-func (l *WizardhousingService) BeginFishingCast(_ BeginFishingCast)                                 {}
-func (l *WizardhousingService) BlockPetSpawn(_ BlockPetSpawn)                                       {}
-func (l *WizardhousingService) BuyIslandSpaceConfirm(_ BuyIslandSpaceConfirm)                       {}
-func (l *WizardhousingService) CastleGamesRequest(_ CastleGamesRequest)                             {}
-func (l *WizardhousingService) CastleGamesRequestGameData(_ CastleGamesRequestGameData)             {}
-func (l *WizardhousingService) CastleGamesTeleportRejected(_ CastleGamesTeleportRejected)           {}
-func (l *WizardhousingService) CastleMagicCantrip(_ CastleMagicCantrip)                             {}
-func (l *WizardhousingService) CastleMagicChangeAction(_ CastleMagicChangeAction)                   {}
-func (l *WizardhousingService) CastleMagicClear(_ CastleMagicClear)                                 {}
-func (l *WizardhousingService) CastleMagicCurrentState(_ CastleMagicCurrentState)                   {}
-func (l *WizardhousingService) CastleMagicOrb(_ CastleMagicOrb)                                     {}
-func (l *WizardhousingService) CastleMagicRequestAllowMounts(_ CastleMagicRequestAllowMounts)       {}
-func (l *WizardhousingService) CastleMagicRequestAllowPVP(_ CastleMagicRequestAllowPVP)             {}
-func (l *WizardhousingService) CastleMagicRequestPlayerTeleport(_ CastleMagicRequestPlayerTeleport) {}
-func (l *WizardhousingService) CastleMagicRequestPVPState(_ CastleMagicRequestPVPState)             {}
-func (l *WizardhousingService) CastleMagicRequestRandom(_ CastleMagicRequestRandom)                 {}
-func (l *WizardhousingService) CastleMagicRequestUse(_ CastleMagicRequestUse)                       {}
-func (l *WizardhousingService) CastleMagicTutorial(_ CastleMagicTutorial)                           {}
-func (l *WizardhousingService) CastleMagicUpdateState(_ CastleMagicUpdateState)                     {}
-func (l *WizardhousingService) CastleToursAdd(_ CastleToursAdd)                                     {}
-func (l *WizardhousingService) CastleToursAddFavorite(_ CastleToursAddFavorite)                     {}
-func (l *WizardhousingService) CastleToursAddResult(_ CastleToursAddResult)                         {}
-func (l *WizardhousingService) CastleToursCSRResults(_ CastleToursCSRResults)                       {}
-func (l *WizardhousingService) CastleToursDeleteCharacter(_ CastleToursDeleteCharacter)             {}
-func (l *WizardhousingService) CastleToursEnableRatingDisplay(_ CastleToursEnableRatingDisplay)     {}
-func (l *WizardhousingService) CastleToursFavoriteInfo(_ CastleToursFavoriteInfo)                   {}
-func (l *WizardhousingService) CastleToursFavoriteInfo2(_ CastleToursFavoriteInfo2)                 {}
-func (l *WizardhousingService) CastleToursLeaderboardResponse(_ CastleToursLeaderboardResponse)     {}
-func (l *WizardhousingService) CastleToursPlayerBanned(_ CastleToursPlayerBanned)                   {}
-func (l *WizardhousingService) CastleToursPostRateHouse(_ CastleToursPostRateHouse)                 {}
-func (l *WizardhousingService) CastleToursPreAdd(_ CastleToursPreAdd)                               {}
-func (l *WizardhousingService) CastleToursRatingDisplay(_ CastleToursRatingDisplay)                 {}
-func (l *WizardhousingService) CastleToursRemove(_ CastleToursRemove)                               {}
-func (l *WizardhousingService) CastleToursRemoveFavorite(_ CastleToursRemoveFavorite)               {}
-func (l *WizardhousingService) CastleToursRemoveResult(_ CastleToursRemoveResult)                   {}
-func (l *WizardhousingService) CastleToursRequest(_ CastleToursRequest)                             {}
-func (l *WizardhousingService) CastleToursRequestFriends(_ CastleToursRequestFriends)               {}
-func (l *WizardhousingService) CastleToursRequestLeaderboard(_ CastleToursRequestLeaderboard)       {}
-func (l *WizardhousingService) CastleToursRequestMyCastleData(_ CastleToursRequestMyCastleData)     {}
-func (l *WizardhousingService) CastleToursRequestMyCastles(_ CastleToursRequestMyCastles)           {}
-func (l *WizardhousingService) CastleToursSendRating(_ CastleToursSendRating)                       {}
-func (l *WizardhousingService) CastleToursTeleportPlayer(_ CastleToursTeleportPlayer)               {}
-func (l *WizardhousingService) CastleToursTeleportRejected(_ CastleToursTeleportRejected)           {}
-func (l *WizardhousingService) CastleToursVisitCastle(_ CastleToursVisitCastle)                     {}
-func (l *WizardhousingService) CatchFish(_ CatchFish)                                               {}
-func (l *WizardhousingService) CatchOfTheDayOpen(_ CatchOfTheDayOpen)                               {}
-func (l *WizardhousingService) CatchSuccess(_ CatchSuccess)                                         {}
-func (l *WizardhousingService) ChangeBreadCrumbRequest(_ ChangeBreadCrumbRequest)                   {}
-func (l *WizardhousingService) CreateTestIsland(_ CreateTestIsland)                                 {}
-func (l *WizardhousingService) DailyPvPOpen(_ DailyPvPOpen)                                         {}
-func (l *WizardhousingService) DailyQuestCompleted(_ DailyQuestCompleted)                           {}
-func (l *WizardhousingService) DailyQuestCSRData(_ DailyQuestCSRData)                               {}
-func (l *WizardhousingService) DailyQuestExplore(_ DailyQuestExplore)                               {}
-func (l *WizardhousingService) DailyQuestOpen(_ DailyQuestOpen)                                     {}
-func (l *WizardhousingService) DeleteEquippedHousingItem(_ DeleteEquippedHousingItem)               {}
-func (l *WizardhousingService) DeleteFish(_ DeleteFish)                                             {}
-func (l *WizardhousingService) DeleteFromAttic(_ DeleteFromAttic)                                   {}
-func (l *WizardhousingService) DeleteMusicLoop(_ DeleteMusicLoop)                                   {}
-func (l *WizardhousingService) DisplayCatchFish(_ DisplayCatchFish)                                 {}
-func (l *WizardhousingService) DisplayCaughtFish(_ DisplayCaughtFish)                               {}
-func (l *WizardhousingService) DisposableDungeonNoOwner(_ DisposableDungeonNoOwner)                 {}
-func (l *WizardhousingService) DailyPvPUpdate(_ DailyPvPUpdate)                                     {}
-func (l *WizardhousingService) DailyQuestUpdate(_ DailyQuestUpdate)                                 {}
-func (l *WizardhousingService) EmptyLotCheck(_ EmptyLotCheck)                                       {}
-func (l *WizardhousingService) EndFishingCast(_ EndFishingCast)                                     {}
-func (l *WizardhousingService) EnterTournamentFish(_ EnterTournamentFish)                           {}
-func (l *WizardhousingService) EnterTournamentFishResult(_ EnterTournamentFishResult)               {}
-func (l *WizardhousingService) EquipHouseMusic(_ EquipHouseMusic)                                   {}
-func (l *WizardhousingService) EquipMannequinItem(_ EquipMannequinItem)                             {}
-func (l *WizardhousingService) FishEscaped(_ FishEscaped)                                           {}
-func (l *WizardhousingService) FishingCSRResults(_ FishingCSRResults)                               {}
-func (l *WizardhousingService) FishingSpellCast(_ FishingSpellCast)                                 {}
-func (l *WizardhousingService) FishTournamentLeaderBoardOpen(_ FishTournamentLeaderBoardOpen)       {}
-func (l *WizardhousingService) FishTournamentLeaderBoardRequest(_ FishTournamentLeaderBoardRequest) {}
-func (l *WizardhousingService) FishTournamentOpen(_ FishTournamentOpen)                             {}
-func (l *WizardhousingService) GardeningCastSpell(_ GardeningCastSpell)                             {}
-func (l *WizardhousingService) GardeningCommand(_ GardeningCommand)                                 {}
-func (l *WizardhousingService) GardeningCommandResponse(_ GardeningCommandResponse)                 {}
-func (l *WizardhousingService) GardeningCSRResults(_ GardeningCSRResults)                           {}
-func (l *WizardhousingService) GardeningHarvestPlant(_ GardeningHarvestPlant)                       {}
-func (l *WizardhousingService) GardeningHarvestPlantSecondSpring(_ GardeningHarvestPlantSecondSpring) {
-}
-func (l *WizardhousingService) GardeningSpellFizzle(_ GardeningSpellFizzle)   {}
-func (l *WizardhousingService) GardeningSpellInspect(_ GardeningSpellInspect) {}
-func (l *WizardhousingService) GardenLevelUp(_ GardenLevelUp)                 {}
-func (l *WizardhousingService) HideHousingObject(_ HideHousingObject)         {}
-func (l *WizardhousingService) HousingGameRequestPoweruplocations(_ HousingGameRequestPoweruplocations) {
-}
-func (l *WizardhousingService) HousingGameStatusUpdate(_ HousingGameStatusUpdate)                 {}
-func (l *WizardhousingService) HousingGameUsePowerup(_ HousingGameUsePowerup)                     {}
-func (l *WizardhousingService) HousingObjectNoPickup(_ HousingObjectNoPickup)                     {}
-func (l *WizardhousingService) HousingObjectProximity(_ HousingObjectProximity)                   {}
-func (l *WizardhousingService) HousingZonePlayer(_ HousingZonePlayer)                             {}
-func (l *WizardhousingService) HousingZonePlayerList(_ HousingZonePlayerList)                     {}
-func (l *WizardhousingService) InteractiveMusicError(_ InteractiveMusicError)                     {}
-func (l *WizardhousingService) InteractiveMusicInUse(_ InteractiveMusicInUse)                     {}
-func (l *WizardhousingService) InteractiveMusicInUse2(_ InteractiveMusicInUse2)                   {}
-func (l *WizardhousingService) IslandSpaceBuyRequest(_ IslandSpaceBuyRequest)                     {}
-func (l *WizardhousingService) IslandSpaceShopOpen(_ IslandSpaceShopOpen)                         {}
-func (l *WizardhousingService) MissFish(_ MissFish)                                               {}
-func (l *WizardhousingService) MonsterMagicAddMonster(_ MonsterMagicAddMonster)                   {}
-func (l *WizardhousingService) MonsterMagicEraseMonster(_ MonsterMagicEraseMonster)               {}
-func (l *WizardhousingService) MoveFromAttic(_ MoveFromAttic)                                     {}
-func (l *WizardhousingService) MoveGearFromGearVault(_ MoveGearFromGearVault)                     {}
-func (l *WizardhousingService) MoveGearToGearVault(_ MoveGearToGearVault)                         {}
-func (l *WizardhousingService) MoveJewelFromJewelVault(_ MoveJewelFromJewelVault)                 {}
-func (l *WizardhousingService) MoveJewelToJewelVault(_ MoveJewelToJewelVault)                     {}
-func (l *WizardhousingService) MoveSeedFromGardeningShed(_ MoveSeedFromGardeningShed)             {}
-func (l *WizardhousingService) MoveSeedToGardeningShed(_ MoveSeedToGardeningShed)                 {}
-func (l *WizardhousingService) MoveTCFromTCVault(_ MoveTCFromTCVault)                             {}
-func (l *WizardhousingService) MoveTCToTCVault(_ MoveTCToTCVault)                                 {}
-func (l *WizardhousingService) MoveToAttic(_ MoveToAttic)                                         {}
-func (l *WizardhousingService) NoFishSpace(_ NoFishSpace)                                         {}
-func (l *WizardhousingService) PatchAddAttic(_ PatchAddAttic)                                     {}
-func (l *WizardhousingService) PatchAddHousingObject(_ PatchAddHousingObject)                     {}
-func (l *WizardhousingService) PatchAquarium(_ PatchAquarium)                                     {}
-func (l *WizardhousingService) PatchCastleMagic(_ PatchCastleMagic)                               {}
-func (l *WizardhousingService) PatchDeleteAttic(_ PatchDeleteAttic)                               {}
-func (l *WizardhousingService) PatchDeleteHousingObject(_ PatchDeleteHousingObject)               {}
-func (l *WizardhousingService) PatchEquipHousingObject(_ PatchEquipHousingObject)                 {}
-func (l *WizardhousingService) PatchGardening(_ PatchGardening)                                   {}
-func (l *WizardhousingService) PatchHouse(_ PatchHouse)                                           {}
-func (l *WizardhousingService) PatchHousingBreadCrumb(_ PatchHousingBreadCrumb)                   {}
-func (l *WizardhousingService) PatchHousingGardeningShed(_ PatchHousingGardeningShed)             {}
-func (l *WizardhousingService) PatchHousingGearVault(_ PatchHousingGearVault)                     {}
-func (l *WizardhousingService) PatchHousingJewelVault(_ PatchHousingJewelVault)                   {}
-func (l *WizardhousingService) PatchHousingMusicObject(_ PatchHousingMusicObject)                 {}
-func (l *WizardhousingService) PatchHousingSignObject(_ PatchHousingSignObject)                   {}
-func (l *WizardhousingService) PatchHousingTeleporterObject(_ PatchHousingTeleporterObject)       {}
-func (l *WizardhousingService) PatchHousingTrain(_ PatchHousingTrain)                             {}
-func (l *WizardhousingService) PatchMonsterArena(_ PatchMonsterArena)                             {}
-func (l *WizardhousingService) PatchMusicLoop(_ PatchMusicLoop)                                   {}
-func (l *WizardhousingService) PatchRemoveTextureRemap(_ PatchRemoveTextureRemap)                 {}
-func (l *WizardhousingService) PatchTextureRemap(_ PatchTextureRemap)                             {}
-func (l *WizardhousingService) PatchTintHousingObject(_ PatchTintHousingObject)                   {}
-func (l *WizardhousingService) PatchTreasureCardPoster(_ PatchTreasureCardPoster)                 {}
-func (l *WizardhousingService) PatchTreasureCardVault(_ PatchTreasureCardVault)                   {}
-func (l *WizardhousingService) PatchUpdateHousingObject(_ PatchUpdateHousingObject)               {}
-func (l *WizardhousingService) PatchExtendedTile(_ PatchExtendedTile)                             {}
-func (l *WizardhousingService) PetTomeScanAttic(_ PetTomeScanAttic)                               {}
-func (l *WizardhousingService) PickUpAll(_ PickUpAll)                                             {}
-func (l *WizardhousingService) PickUpHousingTexture(_ PickUpHousingTexture)                       {}
-func (l *WizardhousingService) PlaceHousingFish(_ PlaceHousingFish)                               {}
-func (l *WizardhousingService) PlaceHousingObject(_ PlaceHousingObject)                           {}
-func (l *WizardhousingService) PlayerTeleportingToFriend(_ PlayerTeleportingToFriend)             {}
-func (l *WizardhousingService) PlayInteractiveMusic(_ PlayInteractiveMusic)                       {}
-func (l *WizardhousingService) PlayInteractiveMusic2(_ PlayInteractiveMusic2)                     {}
-func (l *WizardhousingService) PlayInteractiveMusicLoop(_ PlayInteractiveMusicLoop)               {}
-func (l *WizardhousingService) PlayInteractiveMusicLooping(_ PlayInteractiveMusicLooping)         {}
-func (l *WizardhousingService) PlayInteractiveMusicLooping2(_ PlayInteractiveMusicLooping2)       {}
-func (l *WizardhousingService) PlayTrainSound(_ PlayTrainSound)                                   {}
-func (l *WizardhousingService) RemoveFishFromAquarium(_ RemoveFishFromAquarium)                   {}
-func (l *WizardhousingService) RemoveHouseMusic(_ RemoveHouseMusic)                               {}
-func (l *WizardhousingService) ReportHouse(_ ReportHouse)                                         {}
-func (l *WizardhousingService) AddRequestAllFish(_ AddRequestAllFish)                             {}
-func (l *WizardhousingService) RequestAttic(_ RequestAttic)                                       {}
-func (l *WizardhousingService) RequestCatchSuccess(_ RequestCatchSuccess)                         {}
-func (l *WizardhousingService) RequestDeedZone(_ RequestDeedZone)                                 {}
-func (l *WizardhousingService) AddRequestFishHistory(_ AddRequestFishHistory)                     {}
-func (l *WizardhousingService) RequestHouseOwnerCharacterID(_ RequestHouseOwnerCharacterID)       {}
-func (l *WizardhousingService) RequestHouseTransferList(_ RequestHouseTransferList)               {}
-func (l *WizardhousingService) RequestHousingZone(_ RequestHousingZone)                           {}
-func (l *WizardhousingService) RequestHousingZoneTeleport(_ RequestHousingZoneTeleport)           {}
-func (l *WizardhousingService) RequestInteractiveMusic(_ RequestInteractiveMusic)                 {}
-func (l *WizardhousingService) RequestIslandSwitch(_ RequestIslandSwitch)                         {}
-func (l *WizardhousingService) RequestRestoreState(_ RequestRestoreState)                         {}
-func (l *WizardhousingService) RequestSendAway(_ RequestSendAway)                                 {}
-func (l *WizardhousingService) RequestTeleporterHousingConfirm(_ RequestTeleporterHousingConfirm) {}
-func (l *WizardhousingService) RequestTeleporterHousingZone(_ RequestTeleporterHousingZone)       {}
-func (l *WizardhousingService) RequestTransition(_ RequestTransition)                             {}
-func (l *WizardhousingService) RequestBlobs(_ RequestBlobs)                                       {}
-func (l *WizardhousingService) Respec(_ Respec)                                                   {}
-func (l *WizardhousingService) SelectHouseMusic(_ SelectHouseMusic)                               {}
-func (l *WizardhousingService) SelectMusicStyle(_ SelectMusicStyle)                               {}
-func (l *WizardhousingService) SellFishOpen(_ SellFishOpen)                                       {}
-func (l *WizardhousingService) SellFishRequest(_ SellFishRequest)                                 {}
-func (l *WizardhousingService) SendHousingObjectStates(_ SendHousingObjectStates)                 {}
-func (l *WizardhousingService) SendHousingTextureInfo(_ SendHousingTextureInfo)                   {}
-func (l *WizardhousingService) SendBlob(_ SendBlob)                                               {}
-func (l *WizardhousingService) SetAtticID(_ SetAtticID)                                           {}
-func (l *WizardhousingService) SetFishingPlayers(_ SetFishingPlayers)                             {}
-func (l *WizardhousingService) SetHouseSign(_ SetHouseSign)                                       {}
-func (l *WizardhousingService) SetHouseTeleporter(_ SetHouseTeleporter)                           {}
-func (l *WizardhousingService) SetHousingGameState(_ SetHousingGameState)                         {}
-func (l *WizardhousingService) SetHousingPalette(_ SetHousingPalette)                             {}
-func (l *WizardhousingService) SetInstanceFish(_ SetInstanceFish)                                 {}
-func (l *WizardhousingService) InvisibleToFriends(_ InvisibleToFriends)                           {}
-func (l *WizardhousingService) SetMusicLoop(_ SetMusicLoop)                                       {}
-func (l *WizardhousingService) SetNextTrain(_ SetNextTrain)                                       {}
-func (l *WizardhousingService) SetTileWallpaper(_ SetTileWallpaper)                               {}
-func (l *WizardhousingService) ShowFishingCast(_ ShowFishingCast)                                 {}
-func (l *WizardhousingService) StartHousingGame(_ StartHousingGame)                               {}
-func (l *WizardhousingService) StartTrain(_ StartTrain)                                           {}
-func (l *WizardhousingService) StopInteractiveMusicLoop(_ StopInteractiveMusicLoop)               {}
-func (l *WizardhousingService) SwitchGotoCommons(_ SwitchGotoCommons)                             {}
-func (l *WizardhousingService) TeleportedToDeletedLot(_ TeleportedToDeletedLot)                   {}
-func (l *WizardhousingService) TeleportToStart(_ TeleportToStart)                                 {}
-func (l *WizardhousingService) UpdateAtticCount(_ UpdateAtticCount)                               {}
-func (l *WizardhousingService) UpdateGardeningXP(_ UpdateGardeningXP)                             {}
-func (l *WizardhousingService) UpdateHousingObject(_ UpdateHousingObject)                         {}
-func (l *WizardhousingService) UpdateHousingPet(_ UpdateHousingPet)                               {}
-func (l *WizardhousingService) UpdateIslandSpace(_ UpdateIslandSpace)                             {}
-func (l *WizardhousingService) UpdateMaximumHousingItems(_ UpdateMaximumHousingItems)             {}
-func (l *WizardhousingService) UpdateTrain(_ UpdateTrain)                                         {}
-
-func RegisterWizardhousingService(r *proto.MessageRouter, s wizardhousingService) {
+func RegisterService(r *proto.MessageRouter, s service) {
 	proto.RegisterMessageHandler(r, 50, 1, s.AddFishToAquarium)
 	proto.RegisterMessageHandler(r, 50, 2, s.AddInstanceFish)
 	proto.RegisterMessageHandler(r, 50, 3, s.AddToTreasureCardPoster)
@@ -643,834 +633,841 @@ func RegisterWizardhousingService(r *proto.MessageRouter, s wizardhousingService
 	proto.RegisterMessageHandler(r, 50, 206, s.UpdateTrain)
 }
 
-func NewWizardhousingClient(c *proto.Client) WizardhousingClient {
-	return WizardhousingClient{c}
+func NewClient(c *proto.Client) Client {
+	return Client{c}
 }
 
-func (c WizardhousingClient) AddFishToAquarium(m *AddFishToAquarium) error {
+func (c Client) AddFishToAquarium(m *AddFishToAquarium) error {
 	return c.c.WriteMessage(50, 1, m)
 }
 
-func (c WizardhousingClient) AddInstanceFish(m *AddInstanceFish) error {
+func (c Client) AddInstanceFish(m *AddInstanceFish) error {
 	return c.c.WriteMessage(50, 2, m)
 }
 
-func (c WizardhousingClient) AddToTreasureCardPoster(m *AddToTreasureCardPoster) error {
+func (c Client) AddToTreasureCardPoster(m *AddToTreasureCardPoster) error {
 	return c.c.WriteMessage(50, 3, m)
 }
 
-func (c WizardhousingClient) AuditAtticResults(m *AuditAtticResults) error {
+func (c Client) AuditAtticResults(m *AuditAtticResults) error {
 	return c.c.WriteMessage(50, 4, m)
 }
 
-func (c WizardhousingClient) BeginFishingCast(m *BeginFishingCast) error {
+func (c Client) BeginFishingCast(m *BeginFishingCast) error {
 	return c.c.WriteMessage(50, 5, m)
 }
 
-func (c WizardhousingClient) BlockPetSpawn(m *BlockPetSpawn) error {
+func (c Client) BlockPetSpawn(m *BlockPetSpawn) error {
 	return c.c.WriteMessage(50, 6, m)
 }
 
-func (c WizardhousingClient) BuyIslandSpaceConfirm(m *BuyIslandSpaceConfirm) error {
+func (c Client) BuyIslandSpaceConfirm(m *BuyIslandSpaceConfirm) error {
 	return c.c.WriteMessage(50, 7, m)
 }
 
-func (c WizardhousingClient) CastleGamesRequest(m *CastleGamesRequest) error {
+func (c Client) CastleGamesRequest(m *CastleGamesRequest) error {
 	return c.c.WriteMessage(50, 8, m)
 }
 
-func (c WizardhousingClient) CastleGamesRequestGameData(m *CastleGamesRequestGameData) error {
+func (c Client) CastleGamesRequestGameData(m *CastleGamesRequestGameData) error {
 	return c.c.WriteMessage(50, 9, m)
 }
 
-func (c WizardhousingClient) CastleGamesTeleportRejected(m *CastleGamesTeleportRejected) error {
+func (c Client) CastleGamesTeleportRejected(m *CastleGamesTeleportRejected) error {
 	return c.c.WriteMessage(50, 10, m)
 }
 
-func (c WizardhousingClient) CastleMagicCantrip(m *CastleMagicCantrip) error {
+func (c Client) CastleMagicCantrip(m *CastleMagicCantrip) error {
 	return c.c.WriteMessage(50, 11, m)
 }
 
-func (c WizardhousingClient) CastleMagicChangeAction(m *CastleMagicChangeAction) error {
+func (c Client) CastleMagicChangeAction(m *CastleMagicChangeAction) error {
 	return c.c.WriteMessage(50, 12, m)
 }
 
-func (c WizardhousingClient) CastleMagicClear(m *CastleMagicClear) error {
+func (c Client) CastleMagicClear(m *CastleMagicClear) error {
 	return c.c.WriteMessage(50, 13, m)
 }
 
-func (c WizardhousingClient) CastleMagicCurrentState(m *CastleMagicCurrentState) error {
+func (c Client) CastleMagicCurrentState(m *CastleMagicCurrentState) error {
 	return c.c.WriteMessage(50, 14, m)
 }
 
-func (c WizardhousingClient) CastleMagicOrb(m *CastleMagicOrb) error {
+func (c Client) CastleMagicOrb(m *CastleMagicOrb) error {
 	return c.c.WriteMessage(50, 15, m)
 }
 
-func (c WizardhousingClient) CastleMagicRequestAllowMounts(m *CastleMagicRequestAllowMounts) error {
+func (c Client) CastleMagicRequestAllowMounts(m *CastleMagicRequestAllowMounts) error {
 	return c.c.WriteMessage(50, 16, m)
 }
 
-func (c WizardhousingClient) CastleMagicRequestAllowPVP(m *CastleMagicRequestAllowPVP) error {
+func (c Client) CastleMagicRequestAllowPVP(m *CastleMagicRequestAllowPVP) error {
 	return c.c.WriteMessage(50, 17, m)
 }
 
-func (c WizardhousingClient) CastleMagicRequestPlayerTeleport(m *CastleMagicRequestPlayerTeleport) error {
+func (c Client) CastleMagicRequestPlayerTeleport(m *CastleMagicRequestPlayerTeleport) error {
 	return c.c.WriteMessage(50, 18, m)
 }
 
-func (c WizardhousingClient) CastleMagicRequestPVPState(m *CastleMagicRequestPVPState) error {
+func (c Client) CastleMagicRequestPVPState(m *CastleMagicRequestPVPState) error {
 	return c.c.WriteMessage(50, 19, m)
 }
 
-func (c WizardhousingClient) CastleMagicRequestRandom(m *CastleMagicRequestRandom) error {
+func (c Client) CastleMagicRequestRandom(m *CastleMagicRequestRandom) error {
 	return c.c.WriteMessage(50, 20, m)
 }
 
-func (c WizardhousingClient) CastleMagicRequestUse(m *CastleMagicRequestUse) error {
+func (c Client) CastleMagicRequestUse(m *CastleMagicRequestUse) error {
 	return c.c.WriteMessage(50, 21, m)
 }
 
-func (c WizardhousingClient) CastleMagicTutorial(m *CastleMagicTutorial) error {
+func (c Client) CastleMagicTutorial(m *CastleMagicTutorial) error {
 	return c.c.WriteMessage(50, 22, m)
 }
 
-func (c WizardhousingClient) CastleMagicUpdateState(m *CastleMagicUpdateState) error {
+func (c Client) CastleMagicUpdateState(m *CastleMagicUpdateState) error {
 	return c.c.WriteMessage(50, 23, m)
 }
 
-func (c WizardhousingClient) CastleToursAdd(m *CastleToursAdd) error {
+func (c Client) CastleToursAdd(m *CastleToursAdd) error {
 	return c.c.WriteMessage(50, 24, m)
 }
 
-func (c WizardhousingClient) CastleToursAddFavorite(m *CastleToursAddFavorite) error {
+func (c Client) CastleToursAddFavorite(m *CastleToursAddFavorite) error {
 	return c.c.WriteMessage(50, 25, m)
 }
 
-func (c WizardhousingClient) CastleToursAddResult(m *CastleToursAddResult) error {
+func (c Client) CastleToursAddResult(m *CastleToursAddResult) error {
 	return c.c.WriteMessage(50, 26, m)
 }
 
-func (c WizardhousingClient) CastleToursCSRResults(m *CastleToursCSRResults) error {
+func (c Client) CastleToursCSRResults(m *CastleToursCSRResults) error {
 	return c.c.WriteMessage(50, 27, m)
 }
 
-func (c WizardhousingClient) CastleToursDeleteCharacter(m *CastleToursDeleteCharacter) error {
+func (c Client) CastleToursDeleteCharacter(m *CastleToursDeleteCharacter) error {
 	return c.c.WriteMessage(50, 28, m)
 }
 
-func (c WizardhousingClient) CastleToursEnableRatingDisplay(m *CastleToursEnableRatingDisplay) error {
+func (c Client) CastleToursEnableRatingDisplay(m *CastleToursEnableRatingDisplay) error {
 	return c.c.WriteMessage(50, 29, m)
 }
 
-func (c WizardhousingClient) CastleToursFavoriteInfo(m *CastleToursFavoriteInfo) error {
+func (c Client) CastleToursFavoriteInfo(m *CastleToursFavoriteInfo) error {
 	return c.c.WriteMessage(50, 30, m)
 }
 
-func (c WizardhousingClient) CastleToursFavoriteInfo2(m *CastleToursFavoriteInfo2) error {
+func (c Client) CastleToursFavoriteInfo2(m *CastleToursFavoriteInfo2) error {
 	return c.c.WriteMessage(50, 31, m)
 }
 
-func (c WizardhousingClient) CastleToursLeaderboardResponse(m *CastleToursLeaderboardResponse) error {
+func (c Client) CastleToursLeaderboardResponse(m *CastleToursLeaderboardResponse) error {
 	return c.c.WriteMessage(50, 32, m)
 }
 
-func (c WizardhousingClient) CastleToursPlayerBanned(m *CastleToursPlayerBanned) error {
+func (c Client) CastleToursPlayerBanned(m *CastleToursPlayerBanned) error {
 	return c.c.WriteMessage(50, 33, m)
 }
 
-func (c WizardhousingClient) CastleToursPostRateHouse(m *CastleToursPostRateHouse) error {
+func (c Client) CastleToursPostRateHouse(m *CastleToursPostRateHouse) error {
 	return c.c.WriteMessage(50, 34, m)
 }
 
-func (c WizardhousingClient) CastleToursPreAdd(m *CastleToursPreAdd) error {
+func (c Client) CastleToursPreAdd(m *CastleToursPreAdd) error {
 	return c.c.WriteMessage(50, 35, m)
 }
 
-func (c WizardhousingClient) CastleToursRatingDisplay(m *CastleToursRatingDisplay) error {
+func (c Client) CastleToursRatingDisplay(m *CastleToursRatingDisplay) error {
 	return c.c.WriteMessage(50, 36, m)
 }
 
-func (c WizardhousingClient) CastleToursRemove(m *CastleToursRemove) error {
+func (c Client) CastleToursRemove(m *CastleToursRemove) error {
 	return c.c.WriteMessage(50, 37, m)
 }
 
-func (c WizardhousingClient) CastleToursRemoveFavorite(m *CastleToursRemoveFavorite) error {
+func (c Client) CastleToursRemoveFavorite(m *CastleToursRemoveFavorite) error {
 	return c.c.WriteMessage(50, 38, m)
 }
 
-func (c WizardhousingClient) CastleToursRemoveResult(m *CastleToursRemoveResult) error {
+func (c Client) CastleToursRemoveResult(m *CastleToursRemoveResult) error {
 	return c.c.WriteMessage(50, 39, m)
 }
 
-func (c WizardhousingClient) CastleToursRequest(m *CastleToursRequest) error {
+func (c Client) CastleToursRequest(m *CastleToursRequest) error {
 	return c.c.WriteMessage(50, 40, m)
 }
 
-func (c WizardhousingClient) CastleToursRequestFriends(m *CastleToursRequestFriends) error {
+func (c Client) CastleToursRequestFriends(m *CastleToursRequestFriends) error {
 	return c.c.WriteMessage(50, 41, m)
 }
 
-func (c WizardhousingClient) CastleToursRequestLeaderboard(m *CastleToursRequestLeaderboard) error {
+func (c Client) CastleToursRequestLeaderboard(m *CastleToursRequestLeaderboard) error {
 	return c.c.WriteMessage(50, 42, m)
 }
 
-func (c WizardhousingClient) CastleToursRequestMyCastleData(m *CastleToursRequestMyCastleData) error {
+func (c Client) CastleToursRequestMyCastleData(m *CastleToursRequestMyCastleData) error {
 	return c.c.WriteMessage(50, 43, m)
 }
 
-func (c WizardhousingClient) CastleToursRequestMyCastles(m *CastleToursRequestMyCastles) error {
+func (c Client) CastleToursRequestMyCastles(m *CastleToursRequestMyCastles) error {
 	return c.c.WriteMessage(50, 44, m)
 }
 
-func (c WizardhousingClient) CastleToursSendRating(m *CastleToursSendRating) error {
+func (c Client) CastleToursSendRating(m *CastleToursSendRating) error {
 	return c.c.WriteMessage(50, 45, m)
 }
 
-func (c WizardhousingClient) CastleToursTeleportPlayer(m *CastleToursTeleportPlayer) error {
+func (c Client) CastleToursTeleportPlayer(m *CastleToursTeleportPlayer) error {
 	return c.c.WriteMessage(50, 46, m)
 }
 
-func (c WizardhousingClient) CastleToursTeleportRejected(m *CastleToursTeleportRejected) error {
+func (c Client) CastleToursTeleportRejected(m *CastleToursTeleportRejected) error {
 	return c.c.WriteMessage(50, 47, m)
 }
 
-func (c WizardhousingClient) CastleToursVisitCastle(m *CastleToursVisitCastle) error {
+func (c Client) CastleToursVisitCastle(m *CastleToursVisitCastle) error {
 	return c.c.WriteMessage(50, 48, m)
 }
 
-func (c WizardhousingClient) CatchFish(m *CatchFish) error {
+func (c Client) CatchFish(m *CatchFish) error {
 	return c.c.WriteMessage(50, 49, m)
 }
 
-func (c WizardhousingClient) CatchOfTheDayOpen(m *CatchOfTheDayOpen) error {
+func (c Client) CatchOfTheDayOpen(m *CatchOfTheDayOpen) error {
 	return c.c.WriteMessage(50, 50, m)
 }
 
-func (c WizardhousingClient) CatchSuccess(m *CatchSuccess) error {
+func (c Client) CatchSuccess(m *CatchSuccess) error {
 	return c.c.WriteMessage(50, 51, m)
 }
 
-func (c WizardhousingClient) ChangeBreadCrumbRequest(m *ChangeBreadCrumbRequest) error {
+func (c Client) ChangeBreadCrumbRequest(m *ChangeBreadCrumbRequest) error {
 	return c.c.WriteMessage(50, 52, m)
 }
 
-func (c WizardhousingClient) CreateTestIsland(m *CreateTestIsland) error {
+func (c Client) CreateTestIsland(m *CreateTestIsland) error {
 	return c.c.WriteMessage(50, 53, m)
 }
 
-func (c WizardhousingClient) DailyPvPOpen(m *DailyPvPOpen) error {
+func (c Client) DailyPvPOpen(m *DailyPvPOpen) error {
 	return c.c.WriteMessage(50, 54, m)
 }
 
-func (c WizardhousingClient) DailyQuestCompleted(m *DailyQuestCompleted) error {
+func (c Client) DailyQuestCompleted(m *DailyQuestCompleted) error {
 	return c.c.WriteMessage(50, 55, m)
 }
 
-func (c WizardhousingClient) DailyQuestCSRData(m *DailyQuestCSRData) error {
+func (c Client) DailyQuestCSRData(m *DailyQuestCSRData) error {
 	return c.c.WriteMessage(50, 56, m)
 }
 
-func (c WizardhousingClient) DailyQuestExplore(m *DailyQuestExplore) error {
+func (c Client) DailyQuestExplore(m *DailyQuestExplore) error {
 	return c.c.WriteMessage(50, 57, m)
 }
 
-func (c WizardhousingClient) DailyQuestOpen(m *DailyQuestOpen) error {
+func (c Client) DailyQuestOpen(m *DailyQuestOpen) error {
 	return c.c.WriteMessage(50, 58, m)
 }
 
-func (c WizardhousingClient) DeleteEquippedHousingItem(m *DeleteEquippedHousingItem) error {
+func (c Client) DeleteEquippedHousingItem(m *DeleteEquippedHousingItem) error {
 	return c.c.WriteMessage(50, 59, m)
 }
 
-func (c WizardhousingClient) DeleteFish(m *DeleteFish) error {
+func (c Client) DeleteFish(m *DeleteFish) error {
 	return c.c.WriteMessage(50, 60, m)
 }
 
-func (c WizardhousingClient) DeleteFromAttic(m *DeleteFromAttic) error {
+func (c Client) DeleteFromAttic(m *DeleteFromAttic) error {
 	return c.c.WriteMessage(50, 61, m)
 }
 
-func (c WizardhousingClient) DeleteMusicLoop(m *DeleteMusicLoop) error {
+func (c Client) DeleteMusicLoop(m *DeleteMusicLoop) error {
 	return c.c.WriteMessage(50, 62, m)
 }
 
-func (c WizardhousingClient) DisplayCatchFish(m *DisplayCatchFish) error {
+func (c Client) DisplayCatchFish(m *DisplayCatchFish) error {
 	return c.c.WriteMessage(50, 63, m)
 }
 
-func (c WizardhousingClient) DisplayCaughtFish(m *DisplayCaughtFish) error {
+func (c Client) DisplayCaughtFish(m *DisplayCaughtFish) error {
 	return c.c.WriteMessage(50, 64, m)
 }
 
-func (c WizardhousingClient) DisposableDungeonNoOwner(m *DisposableDungeonNoOwner) error {
+func (c Client) DisposableDungeonNoOwner(m *DisposableDungeonNoOwner) error {
 	return c.c.WriteMessage(50, 65, m)
 }
 
-func (c WizardhousingClient) DailyPvPUpdate(m *DailyPvPUpdate) error {
+func (c Client) DailyPvPUpdate(m *DailyPvPUpdate) error {
 	return c.c.WriteMessage(50, 66, m)
 }
 
-func (c WizardhousingClient) DailyQuestUpdate(m *DailyQuestUpdate) error {
+func (c Client) DailyQuestUpdate(m *DailyQuestUpdate) error {
 	return c.c.WriteMessage(50, 67, m)
 }
 
-func (c WizardhousingClient) EmptyLotCheck(m *EmptyLotCheck) error {
+func (c Client) EmptyLotCheck(m *EmptyLotCheck) error {
 	return c.c.WriteMessage(50, 68, m)
 }
 
-func (c WizardhousingClient) EndFishingCast(m *EndFishingCast) error {
+func (c Client) EndFishingCast(m *EndFishingCast) error {
 	return c.c.WriteMessage(50, 69, m)
 }
 
-func (c WizardhousingClient) EnterTournamentFish(m *EnterTournamentFish) error {
+func (c Client) EnterTournamentFish(m *EnterTournamentFish) error {
 	return c.c.WriteMessage(50, 70, m)
 }
 
-func (c WizardhousingClient) EnterTournamentFishResult(m *EnterTournamentFishResult) error {
+func (c Client) EnterTournamentFishResult(m *EnterTournamentFishResult) error {
 	return c.c.WriteMessage(50, 71, m)
 }
 
-func (c WizardhousingClient) EquipHouseMusic(m *EquipHouseMusic) error {
+func (c Client) EquipHouseMusic(m *EquipHouseMusic) error {
 	return c.c.WriteMessage(50, 72, m)
 }
 
-func (c WizardhousingClient) EquipMannequinItem(m *EquipMannequinItem) error {
+func (c Client) EquipMannequinItem(m *EquipMannequinItem) error {
 	return c.c.WriteMessage(50, 73, m)
 }
 
-func (c WizardhousingClient) FishEscaped(m *FishEscaped) error {
+func (c Client) FishEscaped(m *FishEscaped) error {
 	return c.c.WriteMessage(50, 74, m)
 }
 
-func (c WizardhousingClient) FishingCSRResults(m *FishingCSRResults) error {
+func (c Client) FishingCSRResults(m *FishingCSRResults) error {
 	return c.c.WriteMessage(50, 75, m)
 }
 
-func (c WizardhousingClient) FishingSpellCast(m *FishingSpellCast) error {
+func (c Client) FishingSpellCast(m *FishingSpellCast) error {
 	return c.c.WriteMessage(50, 76, m)
 }
 
-func (c WizardhousingClient) FishTournamentLeaderBoardOpen(m *FishTournamentLeaderBoardOpen) error {
+func (c Client) FishTournamentLeaderBoardOpen(m *FishTournamentLeaderBoardOpen) error {
 	return c.c.WriteMessage(50, 77, m)
 }
 
-func (c WizardhousingClient) FishTournamentLeaderBoardRequest(m *FishTournamentLeaderBoardRequest) error {
+func (c Client) FishTournamentLeaderBoardRequest(m *FishTournamentLeaderBoardRequest) error {
 	return c.c.WriteMessage(50, 78, m)
 }
 
-func (c WizardhousingClient) FishTournamentOpen(m *FishTournamentOpen) error {
+func (c Client) FishTournamentOpen(m *FishTournamentOpen) error {
 	return c.c.WriteMessage(50, 79, m)
 }
 
-func (c WizardhousingClient) GardeningCastSpell(m *GardeningCastSpell) error {
+func (c Client) GardeningCastSpell(m *GardeningCastSpell) error {
 	return c.c.WriteMessage(50, 80, m)
 }
 
-func (c WizardhousingClient) GardeningCommand(m *GardeningCommand) error {
+func (c Client) GardeningCommand(m *GardeningCommand) error {
 	return c.c.WriteMessage(50, 81, m)
 }
 
-func (c WizardhousingClient) GardeningCommandResponse(m *GardeningCommandResponse) error {
+func (c Client) GardeningCommandResponse(m *GardeningCommandResponse) error {
 	return c.c.WriteMessage(50, 82, m)
 }
 
-func (c WizardhousingClient) GardeningCSRResults(m *GardeningCSRResults) error {
+func (c Client) GardeningCSRResults(m *GardeningCSRResults) error {
 	return c.c.WriteMessage(50, 83, m)
 }
 
-func (c WizardhousingClient) GardeningHarvestPlant(m *GardeningHarvestPlant) error {
+func (c Client) GardeningHarvestPlant(m *GardeningHarvestPlant) error {
 	return c.c.WriteMessage(50, 84, m)
 }
 
-func (c WizardhousingClient) GardeningHarvestPlantSecondSpring(m *GardeningHarvestPlantSecondSpring) error {
+func (c Client) GardeningHarvestPlantSecondSpring(m *GardeningHarvestPlantSecondSpring) error {
 	return c.c.WriteMessage(50, 85, m)
 }
 
-func (c WizardhousingClient) GardeningSpellFizzle(m *GardeningSpellFizzle) error {
+func (c Client) GardeningSpellFizzle(m *GardeningSpellFizzle) error {
 	return c.c.WriteMessage(50, 86, m)
 }
 
-func (c WizardhousingClient) GardeningSpellInspect(m *GardeningSpellInspect) error {
+func (c Client) GardeningSpellInspect(m *GardeningSpellInspect) error {
 	return c.c.WriteMessage(50, 87, m)
 }
 
-func (c WizardhousingClient) GardenLevelUp(m *GardenLevelUp) error {
+func (c Client) GardenLevelUp(m *GardenLevelUp) error {
 	return c.c.WriteMessage(50, 88, m)
 }
 
-func (c WizardhousingClient) HideHousingObject(m *HideHousingObject) error {
+func (c Client) HideHousingObject(m *HideHousingObject) error {
 	return c.c.WriteMessage(50, 89, m)
 }
 
-func (c WizardhousingClient) HousingGameRequestPoweruplocations(m *HousingGameRequestPoweruplocations) error {
+func (c Client) HousingGameRequestPoweruplocations(m *HousingGameRequestPoweruplocations) error {
 	return c.c.WriteMessage(50, 90, m)
 }
 
-func (c WizardhousingClient) HousingGameStatusUpdate(m *HousingGameStatusUpdate) error {
+func (c Client) HousingGameStatusUpdate(m *HousingGameStatusUpdate) error {
 	return c.c.WriteMessage(50, 91, m)
 }
 
-func (c WizardhousingClient) HousingGameUsePowerup(m *HousingGameUsePowerup) error {
+func (c Client) HousingGameUsePowerup(m *HousingGameUsePowerup) error {
 	return c.c.WriteMessage(50, 92, m)
 }
 
-func (c WizardhousingClient) HousingObjectNoPickup(m *HousingObjectNoPickup) error {
+func (c Client) HousingObjectNoPickup(m *HousingObjectNoPickup) error {
 	return c.c.WriteMessage(50, 93, m)
 }
 
-func (c WizardhousingClient) HousingObjectProximity(m *HousingObjectProximity) error {
+func (c Client) HousingObjectProximity(m *HousingObjectProximity) error {
 	return c.c.WriteMessage(50, 94, m)
 }
 
-func (c WizardhousingClient) HousingZonePlayer(m *HousingZonePlayer) error {
+func (c Client) HousingZonePlayer(m *HousingZonePlayer) error {
 	return c.c.WriteMessage(50, 95, m)
 }
 
-func (c WizardhousingClient) HousingZonePlayerList(m *HousingZonePlayerList) error {
+func (c Client) HousingZonePlayerList(m *HousingZonePlayerList) error {
 	return c.c.WriteMessage(50, 96, m)
 }
 
-func (c WizardhousingClient) InteractiveMusicError(m *InteractiveMusicError) error {
+func (c Client) InteractiveMusicError(m *InteractiveMusicError) error {
 	return c.c.WriteMessage(50, 97, m)
 }
 
-func (c WizardhousingClient) InteractiveMusicInUse(m *InteractiveMusicInUse) error {
+func (c Client) InteractiveMusicInUse(m *InteractiveMusicInUse) error {
 	return c.c.WriteMessage(50, 98, m)
 }
 
-func (c WizardhousingClient) InteractiveMusicInUse2(m *InteractiveMusicInUse2) error {
+func (c Client) InteractiveMusicInUse2(m *InteractiveMusicInUse2) error {
 	return c.c.WriteMessage(50, 99, m)
 }
 
-func (c WizardhousingClient) IslandSpaceBuyRequest(m *IslandSpaceBuyRequest) error {
+func (c Client) IslandSpaceBuyRequest(m *IslandSpaceBuyRequest) error {
 	return c.c.WriteMessage(50, 100, m)
 }
 
-func (c WizardhousingClient) IslandSpaceShopOpen(m *IslandSpaceShopOpen) error {
+func (c Client) IslandSpaceShopOpen(m *IslandSpaceShopOpen) error {
 	return c.c.WriteMessage(50, 101, m)
 }
 
-func (c WizardhousingClient) MissFish(m *MissFish) error {
+func (c Client) MissFish(m *MissFish) error {
 	return c.c.WriteMessage(50, 102, m)
 }
 
-func (c WizardhousingClient) MonsterMagicAddMonster(m *MonsterMagicAddMonster) error {
+func (c Client) MonsterMagicAddMonster(m *MonsterMagicAddMonster) error {
 	return c.c.WriteMessage(50, 103, m)
 }
 
-func (c WizardhousingClient) MonsterMagicEraseMonster(m *MonsterMagicEraseMonster) error {
+func (c Client) MonsterMagicEraseMonster(m *MonsterMagicEraseMonster) error {
 	return c.c.WriteMessage(50, 104, m)
 }
 
-func (c WizardhousingClient) MoveFromAttic(m *MoveFromAttic) error {
+func (c Client) MoveFromAttic(m *MoveFromAttic) error {
 	return c.c.WriteMessage(50, 105, m)
 }
 
-func (c WizardhousingClient) MoveGearFromGearVault(m *MoveGearFromGearVault) error {
+func (c Client) MoveGearFromGearVault(m *MoveGearFromGearVault) error {
 	return c.c.WriteMessage(50, 106, m)
 }
 
-func (c WizardhousingClient) MoveGearToGearVault(m *MoveGearToGearVault) error {
+func (c Client) MoveGearToGearVault(m *MoveGearToGearVault) error {
 	return c.c.WriteMessage(50, 107, m)
 }
 
-func (c WizardhousingClient) MoveJewelFromJewelVault(m *MoveJewelFromJewelVault) error {
+func (c Client) MoveJewelFromJewelVault(m *MoveJewelFromJewelVault) error {
 	return c.c.WriteMessage(50, 108, m)
 }
 
-func (c WizardhousingClient) MoveJewelToJewelVault(m *MoveJewelToJewelVault) error {
+func (c Client) MoveJewelToJewelVault(m *MoveJewelToJewelVault) error {
 	return c.c.WriteMessage(50, 109, m)
 }
 
-func (c WizardhousingClient) MoveSeedFromGardeningShed(m *MoveSeedFromGardeningShed) error {
+func (c Client) MoveSeedFromGardeningShed(m *MoveSeedFromGardeningShed) error {
 	return c.c.WriteMessage(50, 110, m)
 }
 
-func (c WizardhousingClient) MoveSeedToGardeningShed(m *MoveSeedToGardeningShed) error {
+func (c Client) MoveSeedToGardeningShed(m *MoveSeedToGardeningShed) error {
 	return c.c.WriteMessage(50, 111, m)
 }
 
-func (c WizardhousingClient) MoveTCFromTCVault(m *MoveTCFromTCVault) error {
+func (c Client) MoveTCFromTCVault(m *MoveTCFromTCVault) error {
 	return c.c.WriteMessage(50, 112, m)
 }
 
-func (c WizardhousingClient) MoveTCToTCVault(m *MoveTCToTCVault) error {
+func (c Client) MoveTCToTCVault(m *MoveTCToTCVault) error {
 	return c.c.WriteMessage(50, 113, m)
 }
 
-func (c WizardhousingClient) MoveToAttic(m *MoveToAttic) error {
+func (c Client) MoveToAttic(m *MoveToAttic) error {
 	return c.c.WriteMessage(50, 114, m)
 }
 
-func (c WizardhousingClient) NoFishSpace(m *NoFishSpace) error {
+func (c Client) NoFishSpace(m *NoFishSpace) error {
 	return c.c.WriteMessage(50, 115, m)
 }
 
-func (c WizardhousingClient) PatchAddAttic(m *PatchAddAttic) error {
+func (c Client) PatchAddAttic(m *PatchAddAttic) error {
 	return c.c.WriteMessage(50, 116, m)
 }
 
-func (c WizardhousingClient) PatchAddHousingObject(m *PatchAddHousingObject) error {
+func (c Client) PatchAddHousingObject(m *PatchAddHousingObject) error {
 	return c.c.WriteMessage(50, 117, m)
 }
 
-func (c WizardhousingClient) PatchAquarium(m *PatchAquarium) error {
+func (c Client) PatchAquarium(m *PatchAquarium) error {
 	return c.c.WriteMessage(50, 118, m)
 }
 
-func (c WizardhousingClient) PatchCastleMagic(m *PatchCastleMagic) error {
+func (c Client) PatchCastleMagic(m *PatchCastleMagic) error {
 	return c.c.WriteMessage(50, 119, m)
 }
 
-func (c WizardhousingClient) PatchDeleteAttic(m *PatchDeleteAttic) error {
+func (c Client) PatchDeleteAttic(m *PatchDeleteAttic) error {
 	return c.c.WriteMessage(50, 120, m)
 }
 
-func (c WizardhousingClient) PatchDeleteHousingObject(m *PatchDeleteHousingObject) error {
+func (c Client) PatchDeleteHousingObject(m *PatchDeleteHousingObject) error {
 	return c.c.WriteMessage(50, 121, m)
 }
 
-func (c WizardhousingClient) PatchEquipHousingObject(m *PatchEquipHousingObject) error {
+func (c Client) PatchEquipHousingObject(m *PatchEquipHousingObject) error {
 	return c.c.WriteMessage(50, 122, m)
 }
 
-func (c WizardhousingClient) PatchGardening(m *PatchGardening) error {
+func (c Client) PatchGardening(m *PatchGardening) error {
 	return c.c.WriteMessage(50, 123, m)
 }
 
-func (c WizardhousingClient) PatchHouse(m *PatchHouse) error {
+func (c Client) PatchHouse(m *PatchHouse) error {
 	return c.c.WriteMessage(50, 124, m)
 }
 
-func (c WizardhousingClient) PatchHousingBreadCrumb(m *PatchHousingBreadCrumb) error {
+func (c Client) PatchHousingBreadCrumb(m *PatchHousingBreadCrumb) error {
 	return c.c.WriteMessage(50, 125, m)
 }
 
-func (c WizardhousingClient) PatchHousingGardeningShed(m *PatchHousingGardeningShed) error {
+func (c Client) PatchHousingGardeningShed(m *PatchHousingGardeningShed) error {
 	return c.c.WriteMessage(50, 126, m)
 }
 
-func (c WizardhousingClient) PatchHousingGearVault(m *PatchHousingGearVault) error {
+func (c Client) PatchHousingGearVault(m *PatchHousingGearVault) error {
 	return c.c.WriteMessage(50, 127, m)
 }
 
-func (c WizardhousingClient) PatchHousingJewelVault(m *PatchHousingJewelVault) error {
+func (c Client) PatchHousingJewelVault(m *PatchHousingJewelVault) error {
 	return c.c.WriteMessage(50, 128, m)
 }
 
-func (c WizardhousingClient) PatchHousingMusicObject(m *PatchHousingMusicObject) error {
+func (c Client) PatchHousingMusicObject(m *PatchHousingMusicObject) error {
 	return c.c.WriteMessage(50, 129, m)
 }
 
-func (c WizardhousingClient) PatchHousingSignObject(m *PatchHousingSignObject) error {
+func (c Client) PatchHousingSignObject(m *PatchHousingSignObject) error {
 	return c.c.WriteMessage(50, 130, m)
 }
 
-func (c WizardhousingClient) PatchHousingTeleporterObject(m *PatchHousingTeleporterObject) error {
+func (c Client) PatchHousingTeleporterObject(m *PatchHousingTeleporterObject) error {
 	return c.c.WriteMessage(50, 131, m)
 }
 
-func (c WizardhousingClient) PatchHousingTrain(m *PatchHousingTrain) error {
+func (c Client) PatchHousingTrain(m *PatchHousingTrain) error {
 	return c.c.WriteMessage(50, 132, m)
 }
 
-func (c WizardhousingClient) PatchMonsterArena(m *PatchMonsterArena) error {
+func (c Client) PatchMonsterArena(m *PatchMonsterArena) error {
 	return c.c.WriteMessage(50, 133, m)
 }
 
-func (c WizardhousingClient) PatchMusicLoop(m *PatchMusicLoop) error {
+func (c Client) PatchMusicLoop(m *PatchMusicLoop) error {
 	return c.c.WriteMessage(50, 134, m)
 }
 
-func (c WizardhousingClient) PatchRemoveTextureRemap(m *PatchRemoveTextureRemap) error {
+func (c Client) PatchRemoveTextureRemap(m *PatchRemoveTextureRemap) error {
 	return c.c.WriteMessage(50, 135, m)
 }
 
-func (c WizardhousingClient) PatchTextureRemap(m *PatchTextureRemap) error {
+func (c Client) PatchTextureRemap(m *PatchTextureRemap) error {
 	return c.c.WriteMessage(50, 136, m)
 }
 
-func (c WizardhousingClient) PatchTintHousingObject(m *PatchTintHousingObject) error {
+func (c Client) PatchTintHousingObject(m *PatchTintHousingObject) error {
 	return c.c.WriteMessage(50, 137, m)
 }
 
-func (c WizardhousingClient) PatchTreasureCardPoster(m *PatchTreasureCardPoster) error {
+func (c Client) PatchTreasureCardPoster(m *PatchTreasureCardPoster) error {
 	return c.c.WriteMessage(50, 138, m)
 }
 
-func (c WizardhousingClient) PatchTreasureCardVault(m *PatchTreasureCardVault) error {
+func (c Client) PatchTreasureCardVault(m *PatchTreasureCardVault) error {
 	return c.c.WriteMessage(50, 139, m)
 }
 
-func (c WizardhousingClient) PatchUpdateHousingObject(m *PatchUpdateHousingObject) error {
+func (c Client) PatchUpdateHousingObject(m *PatchUpdateHousingObject) error {
 	return c.c.WriteMessage(50, 140, m)
 }
 
-func (c WizardhousingClient) PatchExtendedTile(m *PatchExtendedTile) error {
+func (c Client) PatchExtendedTile(m *PatchExtendedTile) error {
 	return c.c.WriteMessage(50, 141, m)
 }
 
-func (c WizardhousingClient) PetTomeScanAttic(m *PetTomeScanAttic) error {
+func (c Client) PetTomeScanAttic(m *PetTomeScanAttic) error {
 	return c.c.WriteMessage(50, 142, m)
 }
 
-func (c WizardhousingClient) PickUpAll(m *PickUpAll) error {
+func (c Client) PickUpAll(m *PickUpAll) error {
 	return c.c.WriteMessage(50, 143, m)
 }
 
-func (c WizardhousingClient) PickUpHousingTexture(m *PickUpHousingTexture) error {
+func (c Client) PickUpHousingTexture(m *PickUpHousingTexture) error {
 	return c.c.WriteMessage(50, 144, m)
 }
 
-func (c WizardhousingClient) PlaceHousingFish(m *PlaceHousingFish) error {
+func (c Client) PlaceHousingFish(m *PlaceHousingFish) error {
 	return c.c.WriteMessage(50, 145, m)
 }
 
-func (c WizardhousingClient) PlaceHousingObject(m *PlaceHousingObject) error {
+func (c Client) PlaceHousingObject(m *PlaceHousingObject) error {
 	return c.c.WriteMessage(50, 146, m)
 }
 
-func (c WizardhousingClient) PlayerTeleportingToFriend(m *PlayerTeleportingToFriend) error {
+func (c Client) PlayerTeleportingToFriend(m *PlayerTeleportingToFriend) error {
 	return c.c.WriteMessage(50, 147, m)
 }
 
-func (c WizardhousingClient) PlayInteractiveMusic(m *PlayInteractiveMusic) error {
+func (c Client) PlayInteractiveMusic(m *PlayInteractiveMusic) error {
 	return c.c.WriteMessage(50, 148, m)
 }
 
-func (c WizardhousingClient) PlayInteractiveMusic2(m *PlayInteractiveMusic2) error {
+func (c Client) PlayInteractiveMusic2(m *PlayInteractiveMusic2) error {
 	return c.c.WriteMessage(50, 149, m)
 }
 
-func (c WizardhousingClient) PlayInteractiveMusicLoop(m *PlayInteractiveMusicLoop) error {
+func (c Client) PlayInteractiveMusicLoop(m *PlayInteractiveMusicLoop) error {
 	return c.c.WriteMessage(50, 150, m)
 }
 
-func (c WizardhousingClient) PlayInteractiveMusicLooping(m *PlayInteractiveMusicLooping) error {
+func (c Client) PlayInteractiveMusicLooping(m *PlayInteractiveMusicLooping) error {
 	return c.c.WriteMessage(50, 151, m)
 }
 
-func (c WizardhousingClient) PlayInteractiveMusicLooping2(m *PlayInteractiveMusicLooping2) error {
+func (c Client) PlayInteractiveMusicLooping2(m *PlayInteractiveMusicLooping2) error {
 	return c.c.WriteMessage(50, 152, m)
 }
 
-func (c WizardhousingClient) PlayTrainSound(m *PlayTrainSound) error {
+func (c Client) PlayTrainSound(m *PlayTrainSound) error {
 	return c.c.WriteMessage(50, 153, m)
 }
 
-func (c WizardhousingClient) RemoveFishFromAquarium(m *RemoveFishFromAquarium) error {
+func (c Client) RemoveFishFromAquarium(m *RemoveFishFromAquarium) error {
 	return c.c.WriteMessage(50, 154, m)
 }
 
-func (c WizardhousingClient) RemoveHouseMusic(m *RemoveHouseMusic) error {
+func (c Client) RemoveHouseMusic(m *RemoveHouseMusic) error {
 	return c.c.WriteMessage(50, 155, m)
 }
 
-func (c WizardhousingClient) ReportHouse(m *ReportHouse) error {
+func (c Client) ReportHouse(m *ReportHouse) error {
 	return c.c.WriteMessage(50, 156, m)
 }
 
-func (c WizardhousingClient) AddRequestAllFish(m *AddRequestAllFish) error {
+func (c Client) AddRequestAllFish(m *AddRequestAllFish) error {
 	return c.c.WriteMessage(50, 157, m)
 }
 
-func (c WizardhousingClient) RequestAttic(m *RequestAttic) error {
+func (c Client) RequestAttic(m *RequestAttic) error {
 	return c.c.WriteMessage(50, 158, m)
 }
 
-func (c WizardhousingClient) RequestCatchSuccess(m *RequestCatchSuccess) error {
+func (c Client) RequestCatchSuccess(m *RequestCatchSuccess) error {
 	return c.c.WriteMessage(50, 159, m)
 }
 
-func (c WizardhousingClient) RequestDeedZone(m *RequestDeedZone) error {
+func (c Client) RequestDeedZone(m *RequestDeedZone) error {
 	return c.c.WriteMessage(50, 160, m)
 }
 
-func (c WizardhousingClient) AddRequestFishHistory(m *AddRequestFishHistory) error {
+func (c Client) AddRequestFishHistory(m *AddRequestFishHistory) error {
 	return c.c.WriteMessage(50, 161, m)
 }
 
-func (c WizardhousingClient) RequestHouseOwnerCharacterID(m *RequestHouseOwnerCharacterID) error {
+func (c Client) RequestHouseOwnerCharacterID(m *RequestHouseOwnerCharacterID) error {
 	return c.c.WriteMessage(50, 162, m)
 }
 
-func (c WizardhousingClient) RequestHouseTransferList(m *RequestHouseTransferList) error {
+func (c Client) RequestHouseTransferList(m *RequestHouseTransferList) error {
 	return c.c.WriteMessage(50, 163, m)
 }
 
-func (c WizardhousingClient) RequestHousingZone(m *RequestHousingZone) error {
+func (c Client) RequestHousingZone(m *RequestHousingZone) error {
 	return c.c.WriteMessage(50, 164, m)
 }
 
-func (c WizardhousingClient) RequestHousingZoneTeleport(m *RequestHousingZoneTeleport) error {
+func (c Client) RequestHousingZoneTeleport(m *RequestHousingZoneTeleport) error {
 	return c.c.WriteMessage(50, 165, m)
 }
 
-func (c WizardhousingClient) RequestInteractiveMusic(m *RequestInteractiveMusic) error {
+func (c Client) RequestInteractiveMusic(m *RequestInteractiveMusic) error {
 	return c.c.WriteMessage(50, 166, m)
 }
 
-func (c WizardhousingClient) RequestIslandSwitch(m *RequestIslandSwitch) error {
+func (c Client) RequestIslandSwitch(m *RequestIslandSwitch) error {
 	return c.c.WriteMessage(50, 167, m)
 }
 
-func (c WizardhousingClient) RequestRestoreState(m *RequestRestoreState) error {
+func (c Client) RequestRestoreState(m *RequestRestoreState) error {
 	return c.c.WriteMessage(50, 168, m)
 }
 
-func (c WizardhousingClient) RequestSendAway(m *RequestSendAway) error {
+func (c Client) RequestSendAway(m *RequestSendAway) error {
 	return c.c.WriteMessage(50, 169, m)
 }
 
-func (c WizardhousingClient) RequestTeleporterHousingConfirm(m *RequestTeleporterHousingConfirm) error {
+func (c Client) RequestTeleporterHousingConfirm(m *RequestTeleporterHousingConfirm) error {
 	return c.c.WriteMessage(50, 170, m)
 }
 
-func (c WizardhousingClient) RequestTeleporterHousingZone(m *RequestTeleporterHousingZone) error {
+func (c Client) RequestTeleporterHousingZone(m *RequestTeleporterHousingZone) error {
 	return c.c.WriteMessage(50, 171, m)
 }
 
-func (c WizardhousingClient) RequestTransition(m *RequestTransition) error {
+func (c Client) RequestTransition(m *RequestTransition) error {
 	return c.c.WriteMessage(50, 172, m)
 }
 
-func (c WizardhousingClient) RequestBlobs(m *RequestBlobs) error {
+func (c Client) RequestBlobs(m *RequestBlobs) error {
 	return c.c.WriteMessage(50, 173, m)
 }
 
-func (c WizardhousingClient) Respec(m *Respec) error {
+func (c Client) Respec(m *Respec) error {
 	return c.c.WriteMessage(50, 174, m)
 }
 
-func (c WizardhousingClient) SelectHouseMusic(m *SelectHouseMusic) error {
+func (c Client) SelectHouseMusic(m *SelectHouseMusic) error {
 	return c.c.WriteMessage(50, 175, m)
 }
 
-func (c WizardhousingClient) SelectMusicStyle(m *SelectMusicStyle) error {
+func (c Client) SelectMusicStyle(m *SelectMusicStyle) error {
 	return c.c.WriteMessage(50, 176, m)
 }
 
-func (c WizardhousingClient) SellFishOpen(m *SellFishOpen) error {
+func (c Client) SellFishOpen(m *SellFishOpen) error {
 	return c.c.WriteMessage(50, 177, m)
 }
 
-func (c WizardhousingClient) SellFishRequest(m *SellFishRequest) error {
+func (c Client) SellFishRequest(m *SellFishRequest) error {
 	return c.c.WriteMessage(50, 178, m)
 }
 
-func (c WizardhousingClient) SendHousingObjectStates(m *SendHousingObjectStates) error {
+func (c Client) SendHousingObjectStates(m *SendHousingObjectStates) error {
 	return c.c.WriteMessage(50, 179, m)
 }
 
-func (c WizardhousingClient) SendHousingTextureInfo(m *SendHousingTextureInfo) error {
+func (c Client) SendHousingTextureInfo(m *SendHousingTextureInfo) error {
 	return c.c.WriteMessage(50, 180, m)
 }
 
-func (c WizardhousingClient) SendBlob(m *SendBlob) error {
+func (c Client) SendBlob(m *SendBlob) error {
 	return c.c.WriteMessage(50, 181, m)
 }
 
-func (c WizardhousingClient) SetAtticID(m *SetAtticID) error {
+func (c Client) SetAtticID(m *SetAtticID) error {
 	return c.c.WriteMessage(50, 182, m)
 }
 
-func (c WizardhousingClient) SetFishingPlayers(m *SetFishingPlayers) error {
+func (c Client) SetFishingPlayers(m *SetFishingPlayers) error {
 	return c.c.WriteMessage(50, 183, m)
 }
 
-func (c WizardhousingClient) SetHouseSign(m *SetHouseSign) error {
+func (c Client) SetHouseSign(m *SetHouseSign) error {
 	return c.c.WriteMessage(50, 184, m)
 }
 
-func (c WizardhousingClient) SetHouseTeleporter(m *SetHouseTeleporter) error {
+func (c Client) SetHouseTeleporter(m *SetHouseTeleporter) error {
 	return c.c.WriteMessage(50, 185, m)
 }
 
-func (c WizardhousingClient) SetHousingGameState(m *SetHousingGameState) error {
+func (c Client) SetHousingGameState(m *SetHousingGameState) error {
 	return c.c.WriteMessage(50, 186, m)
 }
 
-func (c WizardhousingClient) SetHousingPalette(m *SetHousingPalette) error {
+func (c Client) SetHousingPalette(m *SetHousingPalette) error {
 	return c.c.WriteMessage(50, 187, m)
 }
 
-func (c WizardhousingClient) SetInstanceFish(m *SetInstanceFish) error {
+func (c Client) SetInstanceFish(m *SetInstanceFish) error {
 	return c.c.WriteMessage(50, 188, m)
 }
 
-func (c WizardhousingClient) InvisibleToFriends(m *InvisibleToFriends) error {
+func (c Client) InvisibleToFriends(m *InvisibleToFriends) error {
 	return c.c.WriteMessage(50, 189, m)
 }
 
-func (c WizardhousingClient) SetMusicLoop(m *SetMusicLoop) error {
+func (c Client) SetMusicLoop(m *SetMusicLoop) error {
 	return c.c.WriteMessage(50, 190, m)
 }
 
-func (c WizardhousingClient) SetNextTrain(m *SetNextTrain) error {
+func (c Client) SetNextTrain(m *SetNextTrain) error {
 	return c.c.WriteMessage(50, 191, m)
 }
 
-func (c WizardhousingClient) SetTileWallpaper(m *SetTileWallpaper) error {
+func (c Client) SetTileWallpaper(m *SetTileWallpaper) error {
 	return c.c.WriteMessage(50, 192, m)
 }
 
-func (c WizardhousingClient) ShowFishingCast(m *ShowFishingCast) error {
+func (c Client) ShowFishingCast(m *ShowFishingCast) error {
 	return c.c.WriteMessage(50, 193, m)
 }
 
-func (c WizardhousingClient) StartHousingGame(m *StartHousingGame) error {
+func (c Client) StartHousingGame(m *StartHousingGame) error {
 	return c.c.WriteMessage(50, 194, m)
 }
 
-func (c WizardhousingClient) StartTrain(m *StartTrain) error {
+func (c Client) StartTrain(m *StartTrain) error {
 	return c.c.WriteMessage(50, 195, m)
 }
 
-func (c WizardhousingClient) StopInteractiveMusicLoop(m *StopInteractiveMusicLoop) error {
+func (c Client) StopInteractiveMusicLoop(m *StopInteractiveMusicLoop) error {
 	return c.c.WriteMessage(50, 196, m)
 }
 
-func (c WizardhousingClient) SwitchGotoCommons(m *SwitchGotoCommons) error {
+func (c Client) SwitchGotoCommons(m *SwitchGotoCommons) error {
 	return c.c.WriteMessage(50, 197, m)
 }
 
-func (c WizardhousingClient) TeleportedToDeletedLot(m *TeleportedToDeletedLot) error {
+func (c Client) TeleportedToDeletedLot(m *TeleportedToDeletedLot) error {
 	return c.c.WriteMessage(50, 198, m)
 }
 
-func (c WizardhousingClient) TeleportToStart(m *TeleportToStart) error {
+func (c Client) TeleportToStart(m *TeleportToStart) error {
 	return c.c.WriteMessage(50, 199, m)
 }
 
-func (c WizardhousingClient) UpdateAtticCount(m *UpdateAtticCount) error {
+func (c Client) UpdateAtticCount(m *UpdateAtticCount) error {
 	return c.c.WriteMessage(50, 200, m)
 }
 
-func (c WizardhousingClient) UpdateGardeningXP(m *UpdateGardeningXP) error {
+func (c Client) UpdateGardeningXP(m *UpdateGardeningXP) error {
 	return c.c.WriteMessage(50, 201, m)
 }
 
-func (c WizardhousingClient) UpdateHousingObject(m *UpdateHousingObject) error {
+func (c Client) UpdateHousingObject(m *UpdateHousingObject) error {
 	return c.c.WriteMessage(50, 202, m)
 }
 
-func (c WizardhousingClient) UpdateHousingPet(m *UpdateHousingPet) error {
+func (c Client) UpdateHousingPet(m *UpdateHousingPet) error {
 	return c.c.WriteMessage(50, 203, m)
 }
 
-func (c WizardhousingClient) UpdateIslandSpace(m *UpdateIslandSpace) error {
+func (c Client) UpdateIslandSpace(m *UpdateIslandSpace) error {
 	return c.c.WriteMessage(50, 204, m)
 }
 
-func (c WizardhousingClient) UpdateMaximumHousingItems(m *UpdateMaximumHousingItems) error {
+func (c Client) UpdateMaximumHousingItems(m *UpdateMaximumHousingItems) error {
 	return c.c.WriteMessage(50, 205, m)
 }
 
-func (c WizardhousingClient) UpdateTrain(m *UpdateTrain) error {
+func (c Client) UpdateTrain(m *UpdateTrain) error {
 	return c.c.WriteMessage(50, 206, m)
 }
 
+type Service struct {
+	service
+}
+
+type Client struct {
+	c *proto.Client
+}
 type AddFishToAquarium struct {
 	GlobalID       uint64
 	FishTemplateID uint32
@@ -1479,9 +1476,6 @@ type AddFishToAquarium struct {
 
 func (s *AddFishToAquarium) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.FishTemplateID)
-	binary.Write(b, binary.LittleEndian, s.Size)
 	return b.Bytes()
 }
 
@@ -1509,10 +1503,6 @@ type AddInstanceFish struct {
 
 func (s *AddInstanceFish) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.ZoneNameID)
-	binary.Write(b, binary.LittleEndian, s.FishTemplateID)
-	binary.Write(b, binary.LittleEndian, s.Size)
-	binary.Write(b, binary.LittleEndian, s.FishID)
 	return b.Bytes()
 }
 
@@ -1543,10 +1533,6 @@ type AddToTreasureCardPoster struct {
 
 func (s *AddToTreasureCardPoster) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 17))
-	binary.Write(b, binary.LittleEndian, s.TreasureCardPosterID)
-	binary.Write(b, binary.LittleEndian, s.SpellTemplateID)
-	binary.Write(b, binary.LittleEndian, s.EnchantmentTemplateID)
-	binary.Write(b, binary.LittleEndian, s.Flags)
 	return b.Bytes()
 }
 
@@ -1575,8 +1561,6 @@ type AuditAtticResults struct {
 
 func (s *AuditAtticResults) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.ItemsAudited)
-	binary.Write(b, binary.LittleEndian, s.ItemsRemoved)
 	return b.Bytes()
 }
 
@@ -1606,15 +1590,6 @@ type BeginFishingCast struct {
 
 func (s *BeginFishingCast) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 33))
-	binary.Write(b, binary.LittleEndian, s.PositionX)
-	binary.Write(b, binary.LittleEndian, s.PositionY)
-	binary.Write(b, binary.LittleEndian, s.PositionZ)
-	binary.Write(b, binary.LittleEndian, s.EndX)
-	binary.Write(b, binary.LittleEndian, s.EndY)
-	binary.Write(b, binary.LittleEndian, s.EndZ)
-	binary.Write(b, binary.LittleEndian, s.Yaw)
-	binary.Write(b, binary.LittleEndian, s.SpellTemplateID)
-	binary.Write(b, binary.LittleEndian, s.IsRecast)
 	return b.Bytes()
 }
 
@@ -1670,9 +1645,6 @@ type BuyIslandSpaceConfirm struct {
 
 func (s *BuyIslandSpaceConfirm) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6))
-	binary.Write(b, binary.LittleEndian, s.Failure)
-	binary.Write(b, binary.LittleEndian, s.WebFailure)
-	binary.Write(b, binary.LittleEndian, s.Credits)
 	return b.Bytes()
 }
 
@@ -1697,7 +1669,6 @@ type CastleGamesRequest struct {
 
 func (s *CastleGamesRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
 	return b.Bytes()
 }
 
@@ -1718,9 +1689,7 @@ type CastleGamesRequestGameData struct {
 
 func (s *CastleGamesRequestGameData) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.PageNumber)
-	writeString_50(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -1733,7 +1702,7 @@ func (s *CastleGamesRequestGameData) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.PageNumber); err != nil {
 		return err
 	}
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -1756,7 +1725,6 @@ type CastleMagicCantrip struct {
 
 func (s *CastleMagicCantrip) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
 	return b.Bytes()
 }
 
@@ -1781,13 +1749,6 @@ type CastleMagicChangeAction struct {
 
 func (s *CastleMagicChangeAction) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 32))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.ActionNumber)
-	binary.Write(b, binary.LittleEndian, s.SpellTemplateID)
-	binary.Write(b, binary.LittleEndian, s.TargetTemplateID)
-	binary.Write(b, binary.LittleEndian, s.LocX)
-	binary.Write(b, binary.LittleEndian, s.LocY)
-	binary.Write(b, binary.LittleEndian, s.LocZ)
 	return b.Bytes()
 }
 
@@ -1838,10 +1799,7 @@ type CastleMagicCurrentState struct {
 
 func (s *CastleMagicCurrentState) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 15+len(s.ChangeBuffer)))
-	binary.Write(b, binary.LittleEndian, s.TargetPlayer)
-	writeString_50(b, s.ChangeBuffer)
-	binary.Write(b, binary.LittleEndian, s.ZoneTime)
-	binary.Write(b, binary.LittleEndian, s.OrbFlags)
+	binary.Write(b, binary.LittleEndian, s.ChangeBuffer)
 	return b.Bytes()
 }
 
@@ -1851,7 +1809,7 @@ func (s *CastleMagicCurrentState) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.TargetPlayer); err != nil {
 		return err
 	}
-	if s.ChangeBuffer, err = readString_50(b); err != nil {
+	if s.ChangeBuffer, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ZoneTime); err != nil {
@@ -1869,7 +1827,6 @@ type CastleMagicOrb struct {
 
 func (s *CastleMagicOrb) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.OrbFlags)
 	return b.Bytes()
 }
 
@@ -1888,7 +1845,6 @@ type CastleMagicRequestAllowMounts struct {
 
 func (s *CastleMagicRequestAllowMounts) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.State)
 	return b.Bytes()
 }
 
@@ -1907,7 +1863,6 @@ type CastleMagicRequestAllowPVP struct {
 
 func (s *CastleMagicRequestAllowPVP) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.State)
 	return b.Bytes()
 }
 
@@ -1927,8 +1882,6 @@ type CastleMagicRequestPlayerTeleport struct {
 
 func (s *CastleMagicRequestPlayerTeleport) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.TargetPlayerGID)
-	binary.Write(b, binary.LittleEndian, s.TargetGID)
 	return b.Bytes()
 }
 
@@ -1950,7 +1903,6 @@ type CastleMagicRequestPVPState struct {
 
 func (s *CastleMagicRequestPVPState) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.State)
 	return b.Bytes()
 }
 
@@ -1969,14 +1921,14 @@ type CastleMagicRequestRandom struct {
 
 func (s *CastleMagicRequestRandom) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Buffer)))
-	writeString_50(b, s.Buffer)
+	binary.Write(b, binary.LittleEndian, s.Buffer)
 	return b.Bytes()
 }
 
 func (s *CastleMagicRequestRandom) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Buffer, err = readString_50(b); err != nil {
+	if s.Buffer, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -1988,7 +1940,6 @@ type CastleMagicRequestUse struct {
 
 func (s *CastleMagicRequestUse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.ItemGID)
 	return b.Bytes()
 }
 
@@ -2007,7 +1958,6 @@ type CastleMagicTutorial struct {
 
 func (s *CastleMagicTutorial) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.State)
 	return b.Bytes()
 }
 
@@ -2028,9 +1978,6 @@ type CastleMagicUpdateState struct {
 
 func (s *CastleMagicUpdateState) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.State)
-	binary.Write(b, binary.LittleEndian, s.RandomNumbers)
 	return b.Bytes()
 }
 
@@ -2057,9 +2004,6 @@ type CastleToursAdd struct {
 
 func (s *CastleToursAdd) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 17))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.HouseGID)
-	binary.Write(b, binary.LittleEndian, s.HouseType)
 	return b.Bytes()
 }
 
@@ -2085,8 +2029,6 @@ type CastleToursAddFavorite struct {
 
 func (s *CastleToursAddFavorite) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.Success)
 	return b.Bytes()
 }
 
@@ -2108,7 +2050,6 @@ type CastleToursAddResult struct {
 
 func (s *CastleToursAddResult) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.Status)
 	return b.Bytes()
 }
 
@@ -2127,14 +2068,14 @@ type CastleToursCSRResults struct {
 
 func (s *CastleToursCSRResults) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Result)))
-	writeString_50(b, s.Result)
+	binary.Write(b, binary.LittleEndian, s.Result)
 	return b.Bytes()
 }
 
 func (s *CastleToursCSRResults) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Result, err = readString_50(b); err != nil {
+	if s.Result, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2146,7 +2087,6 @@ type CastleToursDeleteCharacter struct {
 
 func (s *CastleToursDeleteCharacter) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
 	return b.Bytes()
 }
 
@@ -2170,12 +2110,6 @@ type CastleToursEnableRatingDisplay struct {
 
 func (s *CastleToursEnableRatingDisplay) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 23))
-	binary.Write(b, binary.LittleEndian, s.CastleType)
-	binary.Write(b, binary.LittleEndian, s.Rating)
-	binary.Write(b, binary.LittleEndian, s.FirstDisplay)
-	binary.Write(b, binary.LittleEndian, s.TemplateID)
-	binary.Write(b, binary.LittleEndian, s.LotGID)
-	binary.Write(b, binary.LittleEndian, s.StructureGID)
 	return b.Bytes()
 }
 
@@ -2210,8 +2144,7 @@ type CastleToursFavoriteInfo struct {
 
 func (s *CastleToursFavoriteInfo) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.FavoriteData)))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	writeString_50(b, s.FavoriteData)
+	binary.Write(b, binary.LittleEndian, s.FavoriteData)
 	return b.Bytes()
 }
 
@@ -2221,7 +2154,7 @@ func (s *CastleToursFavoriteInfo) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.CharacterID); err != nil {
 		return err
 	}
-	if s.FavoriteData, err = readString_50(b); err != nil {
+	if s.FavoriteData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2234,8 +2167,7 @@ type CastleToursFavoriteInfo2 struct {
 
 func (s *CastleToursFavoriteInfo2) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.FavoriteData)))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	writeString_50(b, s.FavoriteData)
+	binary.Write(b, binary.LittleEndian, s.FavoriteData)
 	return b.Bytes()
 }
 
@@ -2245,7 +2177,7 @@ func (s *CastleToursFavoriteInfo2) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.CharacterID); err != nil {
 		return err
 	}
-	if s.FavoriteData, err = readString_50(b); err != nil {
+	if s.FavoriteData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2261,11 +2193,7 @@ type CastleToursLeaderboardResponse struct {
 
 func (s *CastleToursLeaderboardResponse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.LeaderboardData)))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.LeaderboardType)
-	binary.Write(b, binary.LittleEndian, s.SortType)
-	binary.Write(b, binary.LittleEndian, s.PageNumber)
-	writeString_50(b, s.LeaderboardData)
+	binary.Write(b, binary.LittleEndian, s.LeaderboardData)
 	return b.Bytes()
 }
 
@@ -2284,7 +2212,7 @@ func (s *CastleToursLeaderboardResponse) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.PageNumber); err != nil {
 		return err
 	}
-	if s.LeaderboardData, err = readString_50(b); err != nil {
+	if s.LeaderboardData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2296,7 +2224,6 @@ type CastleToursPlayerBanned struct {
 
 func (s *CastleToursPlayerBanned) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
 	return b.Bytes()
 }
 
@@ -2317,9 +2244,6 @@ type CastleToursPostRateHouse struct {
 
 func (s *CastleToursPostRateHouse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.BadgeCredit)
-	binary.Write(b, binary.LittleEndian, s.MaxBadgeCredit)
 	return b.Bytes()
 }
 
@@ -2346,9 +2270,6 @@ type CastleToursPreAdd struct {
 
 func (s *CastleToursPreAdd) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 17))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.HouseGID)
-	binary.Write(b, binary.LittleEndian, s.HouseType)
 	return b.Bytes()
 }
 
@@ -2385,8 +2306,6 @@ type CastleToursRemove struct {
 
 func (s *CastleToursRemove) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.HouseGID)
 	return b.Bytes()
 }
 
@@ -2410,9 +2329,6 @@ type CastleToursRemoveFavorite struct {
 
 func (s *CastleToursRemoveFavorite) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.OwningPlayerGID)
-	binary.Write(b, binary.LittleEndian, s.HouseTemplateID)
 	return b.Bytes()
 }
 
@@ -2437,7 +2353,6 @@ type CastleToursRemoveResult struct {
 
 func (s *CastleToursRemoveResult) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.Status)
 	return b.Bytes()
 }
 
@@ -2456,7 +2371,6 @@ type CastleToursRequest struct {
 
 func (s *CastleToursRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
 	return b.Bytes()
 }
 
@@ -2476,8 +2390,7 @@ type CastleToursRequestFriends struct {
 
 func (s *CastleToursRequestFriends) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	writeString_50(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -2487,7 +2400,7 @@ func (s *CastleToursRequestFriends) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.CharacterID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2502,10 +2415,7 @@ type CastleToursRequestLeaderboard struct {
 
 func (s *CastleToursRequestLeaderboard) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8+len(s.LeaderboardData)))
-	binary.Write(b, binary.LittleEndian, s.LeaderboardType)
-	binary.Write(b, binary.LittleEndian, s.SortType)
-	binary.Write(b, binary.LittleEndian, s.PageNumber)
-	writeString_50(b, s.LeaderboardData)
+	binary.Write(b, binary.LittleEndian, s.LeaderboardData)
 	return b.Bytes()
 }
 
@@ -2521,7 +2431,7 @@ func (s *CastleToursRequestLeaderboard) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.PageNumber); err != nil {
 		return err
 	}
-	if s.LeaderboardData, err = readString_50(b); err != nil {
+	if s.LeaderboardData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2534,8 +2444,7 @@ type CastleToursRequestMyCastleData struct {
 
 func (s *CastleToursRequestMyCastleData) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_50(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -2545,7 +2454,7 @@ func (s *CastleToursRequestMyCastleData) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2559,9 +2468,7 @@ type CastleToursRequestMyCastles struct {
 
 func (s *CastleToursRequestMyCastles) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 11+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_50(b, s.Data)
-	binary.Write(b, binary.LittleEndian, s.Days)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -2571,7 +2478,7 @@ func (s *CastleToursRequestMyCastles) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Days); err != nil {
@@ -2586,7 +2493,6 @@ type CastleToursSendRating struct {
 
 func (s *CastleToursSendRating) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.Rating)
 	return b.Bytes()
 }
 
@@ -2608,10 +2514,7 @@ type CastleToursTeleportPlayer struct {
 
 func (s *CastleToursTeleportPlayer) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12+len(s.TeleportData)))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	writeString_50(b, s.TeleportData)
-	binary.Write(b, binary.LittleEndian, s.Source)
-	binary.Write(b, binary.LittleEndian, s.LeaderboardTeleport)
+	binary.Write(b, binary.LittleEndian, s.TeleportData)
 	return b.Bytes()
 }
 
@@ -2621,7 +2524,7 @@ func (s *CastleToursTeleportPlayer) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.CharacterID); err != nil {
 		return err
 	}
-	if s.TeleportData, err = readString_50(b); err != nil {
+	if s.TeleportData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Source); err != nil {
@@ -2651,8 +2554,6 @@ type CastleToursVisitCastle struct {
 
 func (s *CastleToursVisitCastle) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2))
-	binary.Write(b, binary.LittleEndian, s.VisitType)
-	binary.Write(b, binary.LittleEndian, s.HouseType)
 	return b.Bytes()
 }
 
@@ -2677,10 +2578,6 @@ type CatchFish struct {
 
 func (s *CatchFish) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 13))
-	binary.Write(b, binary.LittleEndian, s.SpellTemplateID)
-	binary.Write(b, binary.LittleEndian, s.IsTreasureCard)
-	binary.Write(b, binary.LittleEndian, s.FishingPassport)
-	binary.Write(b, binary.LittleEndian, s.FishID)
 	return b.Bytes()
 }
 
@@ -2710,9 +2607,6 @@ type CatchOfTheDayOpen struct {
 
 func (s *CatchOfTheDayOpen) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.FishTemplateID)
-	binary.Write(b, binary.LittleEndian, s.CatchOfTheDayBonus)
 	return b.Bytes()
 }
 
@@ -2738,8 +2632,6 @@ type CatchSuccess struct {
 
 func (s *CatchSuccess) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 5))
-	binary.Write(b, binary.LittleEndian, s.FishID)
-	binary.Write(b, binary.LittleEndian, s.Assist)
 	return b.Bytes()
 }
 
@@ -2765,11 +2657,6 @@ type ChangeBreadCrumbRequest struct {
 
 func (s *ChangeBreadCrumbRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 19))
-	binary.Write(b, binary.LittleEndian, s.BreadCrumbGID)
-	binary.Write(b, binary.LittleEndian, s.OtherGID)
-	binary.Write(b, binary.LittleEndian, s.AddPet)
-	binary.Write(b, binary.LittleEndian, s.LinkBreadCrumb)
-	binary.Write(b, binary.LittleEndian, s.SetPetBehavior)
 	return b.Bytes()
 }
 
@@ -2801,8 +2688,6 @@ type CreateTestIsland struct {
 
 func (s *CreateTestIsland) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.DeedGID)
-	binary.Write(b, binary.LittleEndian, s.StructureGID)
 	return b.Bytes()
 }
 
@@ -2839,11 +2724,6 @@ type DailyQuestCompleted struct {
 
 func (s *DailyQuestCompleted) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 11))
-	binary.Write(b, binary.LittleEndian, s.QuestIndex)
-	binary.Write(b, binary.LittleEndian, s.CurrentCircle)
-	binary.Write(b, binary.LittleEndian, s.ConsecutiveDays)
-	binary.Write(b, binary.LittleEndian, s.Flags)
-	binary.Write(b, binary.LittleEndian, s.ItemTemplateID)
 	return b.Bytes()
 }
 
@@ -2874,14 +2754,14 @@ type DailyQuestCSRData struct {
 
 func (s *DailyQuestCSRData) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.QuestData)))
-	writeString_50(b, s.QuestData)
+	binary.Write(b, binary.LittleEndian, s.QuestData)
 	return b.Bytes()
 }
 
 func (s *DailyQuestCSRData) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.QuestData, err = readString_50(b); err != nil {
+	if s.QuestData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2896,10 +2776,6 @@ type DailyQuestExplore struct {
 
 func (s *DailyQuestExplore) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.LocX)
-	binary.Write(b, binary.LittleEndian, s.LocY)
-	binary.Write(b, binary.LittleEndian, s.LocZ)
-	binary.Write(b, binary.LittleEndian, s.Radius)
 	return b.Bytes()
 }
 
@@ -2940,9 +2816,7 @@ type DeleteEquippedHousingItem struct {
 
 func (s *DeleteEquippedHousingItem) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 18+len(s.SlotName)))
-	binary.Write(b, binary.LittleEndian, s.ObjectGID)
-	binary.Write(b, binary.LittleEndian, s.ItemGID)
-	writeString_50(b, s.SlotName)
+	binary.Write(b, binary.LittleEndian, s.SlotName)
 	return b.Bytes()
 }
 
@@ -2955,7 +2829,7 @@ func (s *DeleteEquippedHousingItem) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ItemGID); err != nil {
 		return err
 	}
-	if s.SlotName, err = readString_50(b); err != nil {
+	if s.SlotName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2969,9 +2843,6 @@ type DeleteFish struct {
 
 func (s *DeleteFish) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.FishTemplateID)
-	binary.Write(b, binary.LittleEndian, s.Size)
 	return b.Bytes()
 }
 
@@ -2997,8 +2868,6 @@ type DeleteFromAttic struct {
 
 func (s *DeleteFromAttic) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.ItemID)
 	return b.Bytes()
 }
 
@@ -3021,8 +2890,6 @@ type DeleteMusicLoop struct {
 
 func (s *DeleteMusicLoop) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.ObjectGID)
-	binary.Write(b, binary.LittleEndian, s.LoopNumber)
 	return b.Bytes()
 }
 
@@ -3047,10 +2914,6 @@ type DisplayCatchFish struct {
 
 func (s *DisplayCatchFish) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20))
-	binary.Write(b, binary.LittleEndian, s.ObjectGID)
-	binary.Write(b, binary.LittleEndian, s.FishTemplateID)
-	binary.Write(b, binary.LittleEndian, s.Size)
-	binary.Write(b, binary.LittleEndian, s.SpellTemplateID)
 	return b.Bytes()
 }
 
@@ -3086,15 +2949,7 @@ type DisplayCaughtFish struct {
 
 func (s *DisplayCaughtFish) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 26+len(s.LootData)))
-	binary.Write(b, binary.LittleEndian, s.ObjectGID)
-	binary.Write(b, binary.LittleEndian, s.FishTemplateID)
-	binary.Write(b, binary.LittleEndian, s.Length)
-	binary.Write(b, binary.LittleEndian, s.IsSmallFry)
-	binary.Write(b, binary.LittleEndian, s.IsWopper)
-	writeString_50(b, s.LootData)
-	binary.Write(b, binary.LittleEndian, s.Energy)
-	binary.Write(b, binary.LittleEndian, s.IsTournamentFish)
-	binary.Write(b, binary.LittleEndian, s.CatchOfTheDayBonus)
+	binary.Write(b, binary.LittleEndian, s.LootData)
 	return b.Bytes()
 }
 
@@ -3116,7 +2971,7 @@ func (s *DisplayCaughtFish) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.IsWopper); err != nil {
 		return err
 	}
-	if s.LootData, err = readString_50(b); err != nil {
+	if s.LootData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Energy); err != nil {
@@ -3150,9 +3005,6 @@ type DailyPvPUpdate struct {
 
 func (s *DailyPvPUpdate) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6))
-	binary.Write(b, binary.LittleEndian, s.ConsecutiveDays)
-	binary.Write(b, binary.LittleEndian, s.Flags)
-	binary.Write(b, binary.LittleEndian, s.TimeLeft)
 	return b.Bytes()
 }
 
@@ -3181,11 +3033,6 @@ type DailyQuestUpdate struct {
 
 func (s *DailyQuestUpdate) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 11))
-	binary.Write(b, binary.LittleEndian, s.QuestIndex)
-	binary.Write(b, binary.LittleEndian, s.CurrentCircle)
-	binary.Write(b, binary.LittleEndian, s.ConsecutiveDays)
-	binary.Write(b, binary.LittleEndian, s.Flags)
-	binary.Write(b, binary.LittleEndian, s.TimeLeft)
 	return b.Bytes()
 }
 
@@ -3216,7 +3063,6 @@ type EmptyLotCheck struct {
 
 func (s *EmptyLotCheck) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.EmptyLotGID)
 	return b.Bytes()
 }
 
@@ -3235,7 +3081,6 @@ type EndFishingCast struct {
 
 func (s *EndFishingCast) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.ObjectGID)
 	return b.Bytes()
 }
 
@@ -3255,8 +3100,6 @@ type EnterTournamentFish struct {
 
 func (s *EnterTournamentFish) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.FishTemplateID)
-	binary.Write(b, binary.LittleEndian, s.FishSize)
 	return b.Bytes()
 }
 
@@ -3278,7 +3121,6 @@ type EnterTournamentFishResult struct {
 
 func (s *EnterTournamentFishResult) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.Position)
 	return b.Bytes()
 }
 
@@ -3298,8 +3140,6 @@ type EquipHouseMusic struct {
 
 func (s *EquipHouseMusic) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.MusicPlayerGID)
-	binary.Write(b, binary.LittleEndian, s.MusicGID)
 	return b.Bytes()
 }
 
@@ -3324,10 +3164,7 @@ type EquipMannequinItem struct {
 
 func (s *EquipMannequinItem) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 22+len(s.SlotName)))
-	binary.Write(b, binary.LittleEndian, s.MannequinGID)
-	binary.Write(b, binary.LittleEndian, s.IsEquip)
-	binary.Write(b, binary.LittleEndian, s.ItemID)
-	writeString_50(b, s.SlotName)
+	binary.Write(b, binary.LittleEndian, s.SlotName)
 	return b.Bytes()
 }
 
@@ -3343,7 +3180,7 @@ func (s *EquipMannequinItem) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ItemID); err != nil {
 		return err
 	}
-	if s.SlotName, err = readString_50(b); err != nil {
+	if s.SlotName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -3355,7 +3192,6 @@ type FishEscaped struct {
 
 func (s *FishEscaped) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.FishID)
 	return b.Bytes()
 }
 
@@ -3374,14 +3210,14 @@ type FishingCSRResults struct {
 
 func (s *FishingCSRResults) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Result)))
-	writeString_50(b, s.Result)
+	binary.Write(b, binary.LittleEndian, s.Result)
 	return b.Bytes()
 }
 
 func (s *FishingCSRResults) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Result, err = readString_50(b); err != nil {
+	if s.Result, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -3396,10 +3232,6 @@ type FishingSpellCast struct {
 
 func (s *FishingSpellCast) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10))
-	binary.Write(b, binary.LittleEndian, s.SpellTemplateID)
-	binary.Write(b, binary.LittleEndian, s.IsTreasureCard)
-	binary.Write(b, binary.LittleEndian, s.FishingPassport)
-	binary.Write(b, binary.LittleEndian, s.IsRecast)
 	return b.Bytes()
 }
 
@@ -3428,8 +3260,6 @@ type FishTournamentLeaderBoardOpen struct {
 
 func (s *FishTournamentLeaderBoardOpen) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.ThisWeeksExpireTime)
-	binary.Write(b, binary.LittleEndian, s.LastWeeksExpireTime)
 	return b.Bytes()
 }
 
@@ -3453,9 +3283,7 @@ type FishTournamentLeaderBoardRequest struct {
 
 func (s *FishTournamentLeaderBoardRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.ExpireTime)
-	binary.Write(b, binary.LittleEndian, s.PageNumber)
-	writeString_50(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -3468,7 +3296,7 @@ func (s *FishTournamentLeaderBoardRequest) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.PageNumber); err != nil {
 		return err
 	}
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -3482,9 +3310,6 @@ type FishTournamentOpen struct {
 
 func (s *FishTournamentOpen) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.FishTemplateID)
-	binary.Write(b, binary.LittleEndian, s.FishSizeTarget)
 	return b.Bytes()
 }
 
@@ -3513,11 +3338,6 @@ type GardeningCastSpell struct {
 
 func (s *GardeningCastSpell) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24))
-	binary.Write(b, binary.LittleEndian, s.SpellTemplateID)
-	binary.Write(b, binary.LittleEndian, s.PlayerGID)
-	binary.Write(b, binary.LittleEndian, s.PositionX)
-	binary.Write(b, binary.LittleEndian, s.PositionY)
-	binary.Write(b, binary.LittleEndian, s.PositionZ)
 	return b.Bytes()
 }
 
@@ -3554,13 +3374,6 @@ type GardeningCommand struct {
 
 func (s *GardeningCommand) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 33))
-	binary.Write(b, binary.LittleEndian, s.Command)
-	binary.Write(b, binary.LittleEndian, s.PositionX)
-	binary.Write(b, binary.LittleEndian, s.PositionY)
-	binary.Write(b, binary.LittleEndian, s.PositionZ)
-	binary.Write(b, binary.LittleEndian, s.TemplateID)
-	binary.Write(b, binary.LittleEndian, s.ObjectGID)
-	binary.Write(b, binary.LittleEndian, s.ZoneGID)
 	return b.Bytes()
 }
 
@@ -3608,14 +3421,14 @@ type GardeningCSRResults struct {
 
 func (s *GardeningCSRResults) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Result)))
-	writeString_50(b, s.Result)
+	binary.Write(b, binary.LittleEndian, s.Result)
 	return b.Bytes()
 }
 
 func (s *GardeningCSRResults) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Result, err = readString_50(b); err != nil {
+	if s.Result, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -3630,10 +3443,6 @@ type GardeningHarvestPlant struct {
 
 func (s *GardeningHarvestPlant) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.PositionX)
-	binary.Write(b, binary.LittleEndian, s.PositionY)
-	binary.Write(b, binary.LittleEndian, s.PositionZ)
-	binary.Write(b, binary.LittleEndian, s.PlantTemplateID)
 	return b.Bytes()
 }
 
@@ -3663,9 +3472,6 @@ type GardeningHarvestPlantSecondSpring struct {
 
 func (s *GardeningHarvestPlantSecondSpring) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.PositionX)
-	binary.Write(b, binary.LittleEndian, s.PositionY)
-	binary.Write(b, binary.LittleEndian, s.PositionZ)
 	return b.Bytes()
 }
 
@@ -3690,7 +3496,6 @@ type GardeningSpellFizzle struct {
 
 func (s *GardeningSpellFizzle) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.FizzleType)
 	return b.Bytes()
 }
 
@@ -3712,10 +3517,6 @@ type GardeningSpellInspect struct {
 
 func (s *GardeningSpellInspect) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.PositionX)
-	binary.Write(b, binary.LittleEndian, s.PositionY)
-	binary.Write(b, binary.LittleEndian, s.PositionZ)
-	binary.Write(b, binary.LittleEndian, s.Progress)
 	return b.Bytes()
 }
 
@@ -3744,8 +3545,6 @@ type GardenLevelUp struct {
 
 func (s *GardenLevelUp) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.NewLevel)
 	return b.Bytes()
 }
 
@@ -3768,8 +3567,6 @@ type HideHousingObject struct {
 
 func (s *HideHousingObject) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.ObjectGID)
-	binary.Write(b, binary.LittleEndian, s.Hide)
 	return b.Bytes()
 }
 
@@ -3792,8 +3589,7 @@ type HousingGameRequestPoweruplocations struct {
 
 func (s *HousingGameRequestPoweruplocations) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.ZoneGID)
-	writeString_50(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -3803,7 +3599,7 @@ func (s *HousingGameRequestPoweruplocations) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ZoneGID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -3815,7 +3611,6 @@ type HousingGameStatusUpdate struct {
 
 func (s *HousingGameStatusUpdate) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.Flags)
 	return b.Bytes()
 }
 
@@ -3857,8 +3652,6 @@ type HousingObjectProximity struct {
 
 func (s *HousingObjectProximity) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.ObjectID)
-	binary.Write(b, binary.LittleEndian, s.Inside)
 	return b.Bytes()
 }
 
@@ -3881,8 +3674,6 @@ type HousingZonePlayer struct {
 
 func (s *HousingZonePlayer) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9))
-	binary.Write(b, binary.LittleEndian, s.HousingPlayer)
-	binary.Write(b, binary.LittleEndian, s.AddPlayer)
 	return b.Bytes()
 }
 
@@ -3906,16 +3697,14 @@ type HousingZonePlayerList struct {
 
 func (s *HousingZonePlayerList) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 11+len(s.PlayerListBuffer)))
-	writeString_50(b, s.PlayerListBuffer)
-	binary.Write(b, binary.LittleEndian, s.ZoneGID)
-	binary.Write(b, binary.LittleEndian, s.OrbFlags)
+	binary.Write(b, binary.LittleEndian, s.PlayerListBuffer)
 	return b.Bytes()
 }
 
 func (s *HousingZonePlayerList) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.PlayerListBuffer, err = readString_50(b); err != nil {
+	if s.PlayerListBuffer, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ZoneGID); err != nil {
@@ -3934,8 +3723,6 @@ type InteractiveMusicError struct {
 
 func (s *InteractiveMusicError) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9))
-	binary.Write(b, binary.LittleEndian, s.ObjectGID)
-	binary.Write(b, binary.LittleEndian, s.Error)
 	return b.Bytes()
 }
 
@@ -3958,8 +3745,6 @@ type InteractiveMusicInUse struct {
 
 func (s *InteractiveMusicInUse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9))
-	binary.Write(b, binary.LittleEndian, s.PlayerGID)
-	binary.Write(b, binary.LittleEndian, s.InUse)
 	return b.Bytes()
 }
 
@@ -3981,14 +3766,14 @@ type InteractiveMusicInUse2 struct {
 
 func (s *InteractiveMusicInUse2) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Data)))
-	writeString_50(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
 func (s *InteractiveMusicInUse2) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -4002,9 +3787,6 @@ type IslandSpaceBuyRequest struct {
 
 func (s *IslandSpaceBuyRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 13))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.WebFailure)
-	binary.Write(b, binary.LittleEndian, s.Credits)
 	return b.Bytes()
 }
 
@@ -4031,9 +3813,6 @@ type IslandSpaceShopOpen struct {
 
 func (s *IslandSpaceShopOpen) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 13))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.WebFailure)
-	binary.Write(b, binary.LittleEndian, s.Credits)
 	return b.Bytes()
 }
 
@@ -4059,8 +3838,6 @@ type MissFish struct {
 
 func (s *MissFish) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 5))
-	binary.Write(b, binary.LittleEndian, s.SpellTemplateID)
-	binary.Write(b, binary.LittleEndian, s.IsTreasureCard)
 	return b.Bytes()
 }
 
@@ -4083,8 +3860,6 @@ type MonsterMagicAddMonster struct {
 
 func (s *MonsterMagicAddMonster) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.SpellTemplateID)
 	return b.Bytes()
 }
 
@@ -4107,8 +3882,6 @@ type MonsterMagicEraseMonster struct {
 
 func (s *MonsterMagicEraseMonster) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.MobTemplateID)
 	return b.Bytes()
 }
 
@@ -4131,8 +3904,6 @@ type MoveFromAttic struct {
 
 func (s *MoveFromAttic) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.ItemID)
 	return b.Bytes()
 }
 
@@ -4155,8 +3926,7 @@ type MoveGearFromGearVault struct {
 
 func (s *MoveGearFromGearVault) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.GearData)))
-	binary.Write(b, binary.LittleEndian, s.GearVaultGID)
-	writeString_50(b, s.GearData)
+	binary.Write(b, binary.LittleEndian, s.GearData)
 	return b.Bytes()
 }
 
@@ -4166,7 +3936,7 @@ func (s *MoveGearFromGearVault) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GearVaultGID); err != nil {
 		return err
 	}
-	if s.GearData, err = readString_50(b); err != nil {
+	if s.GearData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -4179,8 +3949,6 @@ type MoveGearToGearVault struct {
 
 func (s *MoveGearToGearVault) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GearVaultGID)
-	binary.Write(b, binary.LittleEndian, s.GearGID)
 	return b.Bytes()
 }
 
@@ -4204,9 +3972,6 @@ type MoveJewelFromJewelVault struct {
 
 func (s *MoveJewelFromJewelVault) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.JewelVaultID)
-	binary.Write(b, binary.LittleEndian, s.JewelTemplateID)
-	binary.Write(b, binary.LittleEndian, s.Count)
 	return b.Bytes()
 }
 
@@ -4233,9 +3998,6 @@ type MoveJewelToJewelVault struct {
 
 func (s *MoveJewelToJewelVault) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.JewelVaultID)
-	binary.Write(b, binary.LittleEndian, s.JewelTemplateID)
-	binary.Write(b, binary.LittleEndian, s.Count)
 	return b.Bytes()
 }
 
@@ -4262,9 +4024,6 @@ type MoveSeedFromGardeningShed struct {
 
 func (s *MoveSeedFromGardeningShed) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GardeningShedID)
-	binary.Write(b, binary.LittleEndian, s.SeedTemplateID)
-	binary.Write(b, binary.LittleEndian, s.Count)
 	return b.Bytes()
 }
 
@@ -4291,9 +4050,6 @@ type MoveSeedToGardeningShed struct {
 
 func (s *MoveSeedToGardeningShed) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GardeningShedID)
-	binary.Write(b, binary.LittleEndian, s.SeedTemplateID)
-	binary.Write(b, binary.LittleEndian, s.Count)
 	return b.Bytes()
 }
 
@@ -4321,10 +4077,6 @@ type MoveTCFromTCVault struct {
 
 func (s *MoveTCFromTCVault) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20))
-	binary.Write(b, binary.LittleEndian, s.TCVaultID)
-	binary.Write(b, binary.LittleEndian, s.SpellTemplateID)
-	binary.Write(b, binary.LittleEndian, s.EnchantmentTemplateID)
-	binary.Write(b, binary.LittleEndian, s.Count)
 	return b.Bytes()
 }
 
@@ -4355,10 +4107,6 @@ type MoveTCToTCVault struct {
 
 func (s *MoveTCToTCVault) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20))
-	binary.Write(b, binary.LittleEndian, s.TCVaultID)
-	binary.Write(b, binary.LittleEndian, s.SpellTemplateID)
-	binary.Write(b, binary.LittleEndian, s.EnchantmentTemplateID)
-	binary.Write(b, binary.LittleEndian, s.Count)
 	return b.Bytes()
 }
 
@@ -4387,8 +4135,6 @@ type MoveToAttic struct {
 
 func (s *MoveToAttic) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.ItemID)
 	return b.Bytes()
 }
 
@@ -4410,7 +4156,6 @@ type NoFishSpace struct {
 
 func (s *NoFishSpace) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.GameObjectID)
 	return b.Bytes()
 }
 
@@ -4436,14 +4181,8 @@ type PatchAddAttic struct {
 
 func (s *PatchAddAttic) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 33+len(s.SubType)+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.BlobGID)
-	binary.Write(b, binary.LittleEndian, s.ObjectID)
-	writeString_50(b, s.SubType)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
-	writeString_50(b, s.Data)
-	binary.Write(b, binary.LittleEndian, s.PrimaryColorIndex)
+	binary.Write(b, binary.LittleEndian, s.SubType)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -4456,7 +4195,7 @@ func (s *PatchAddAttic) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ObjectID); err != nil {
 		return err
 	}
-	if s.SubType, err = readString_50(b); err != nil {
+	if s.SubType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PackageNumber); err != nil {
@@ -4468,7 +4207,7 @@ func (s *PatchAddAttic) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GIDID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PrimaryColorIndex); err != nil {
@@ -4493,17 +4232,8 @@ type PatchAddHousingObject struct {
 
 func (s *PatchAddHousingObject) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 41+len(s.SubType)+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.ObjectID)
-	binary.Write(b, binary.LittleEndian, s.LocX)
-	binary.Write(b, binary.LittleEndian, s.LocY)
-	binary.Write(b, binary.LittleEndian, s.LocZ)
-	binary.Write(b, binary.LittleEndian, s.Yaw)
-	writeString_50(b, s.SubType)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
-	writeString_50(b, s.Data)
-	binary.Write(b, binary.LittleEndian, s.ColorBits)
+	binary.Write(b, binary.LittleEndian, s.SubType)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -4525,7 +4255,7 @@ func (s *PatchAddHousingObject) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Yaw); err != nil {
 		return err
 	}
-	if s.SubType, err = readString_50(b); err != nil {
+	if s.SubType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PackageNumber); err != nil {
@@ -4537,7 +4267,7 @@ func (s *PatchAddHousingObject) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GIDID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ColorBits); err != nil {
@@ -4556,21 +4286,18 @@ type PatchAquarium struct {
 
 func (s *PatchAquarium) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.Data)+len(s.SubType)))
-	writeString_50(b, s.Data)
-	writeString_50(b, s.SubType)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
+	binary.Write(b, binary.LittleEndian, s.Data)
+	binary.Write(b, binary.LittleEndian, s.SubType)
 	return b.Bytes()
 }
 
 func (s *PatchAquarium) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.SubType, err = readString_50(b); err != nil {
+	if s.SubType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PackageNumber); err != nil {
@@ -4595,21 +4322,18 @@ type PatchCastleMagic struct {
 
 func (s *PatchCastleMagic) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.Data)+len(s.SubType)))
-	writeString_50(b, s.Data)
-	writeString_50(b, s.SubType)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
+	binary.Write(b, binary.LittleEndian, s.Data)
+	binary.Write(b, binary.LittleEndian, s.SubType)
 	return b.Bytes()
 }
 
 func (s *PatchCastleMagic) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.SubType, err = readString_50(b); err != nil {
+	if s.SubType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PackageNumber); err != nil {
@@ -4635,12 +4359,7 @@ type PatchDeleteAttic struct {
 
 func (s *PatchDeleteAttic) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 30+len(s.SubType)))
-	binary.Write(b, binary.LittleEndian, s.BlobGID)
-	binary.Write(b, binary.LittleEndian, s.ObjectID)
-	writeString_50(b, s.SubType)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
+	binary.Write(b, binary.LittleEndian, s.SubType)
 	return b.Bytes()
 }
 
@@ -4653,7 +4372,7 @@ func (s *PatchDeleteAttic) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ObjectID); err != nil {
 		return err
 	}
-	if s.SubType, err = readString_50(b); err != nil {
+	if s.SubType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PackageNumber); err != nil {
@@ -4677,17 +4396,14 @@ type PatchDeleteHousingObject struct {
 
 func (s *PatchDeleteHousingObject) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.SubType)))
-	writeString_50(b, s.SubType)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
+	binary.Write(b, binary.LittleEndian, s.SubType)
 	return b.Bytes()
 }
 
 func (s *PatchDeleteHousingObject) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.SubType, err = readString_50(b); err != nil {
+	if s.SubType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PackageNumber); err != nil {
@@ -4712,21 +4428,18 @@ type PatchEquipHousingObject struct {
 
 func (s *PatchEquipHousingObject) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.Data)+len(s.SubType)))
-	writeString_50(b, s.Data)
-	writeString_50(b, s.SubType)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
+	binary.Write(b, binary.LittleEndian, s.Data)
+	binary.Write(b, binary.LittleEndian, s.SubType)
 	return b.Bytes()
 }
 
 func (s *PatchEquipHousingObject) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.SubType, err = readString_50(b); err != nil {
+	if s.SubType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PackageNumber); err != nil {
@@ -4755,15 +4468,6 @@ type PatchGardening struct {
 
 func (s *PatchGardening) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 33))
-	binary.Write(b, binary.LittleEndian, s.Command)
-	binary.Write(b, binary.LittleEndian, s.PositionX)
-	binary.Write(b, binary.LittleEndian, s.PositionY)
-	binary.Write(b, binary.LittleEndian, s.PositionZ)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
-	binary.Write(b, binary.LittleEndian, s.TemplateID)
-	binary.Write(b, binary.LittleEndian, s.Time)
 	return b.Bytes()
 }
 
@@ -4806,7 +4510,6 @@ type PatchHouse struct {
 
 func (s *PatchHouse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.DeedTemplateID)
 	return b.Bytes()
 }
 
@@ -4829,21 +4532,18 @@ type PatchHousingBreadCrumb struct {
 
 func (s *PatchHousingBreadCrumb) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.Data)+len(s.SubType)))
-	writeString_50(b, s.Data)
-	writeString_50(b, s.SubType)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
+	binary.Write(b, binary.LittleEndian, s.Data)
+	binary.Write(b, binary.LittleEndian, s.SubType)
 	return b.Bytes()
 }
 
 func (s *PatchHousingBreadCrumb) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.SubType, err = readString_50(b); err != nil {
+	if s.SubType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PackageNumber); err != nil {
@@ -4868,21 +4568,18 @@ type PatchHousingGardeningShed struct {
 
 func (s *PatchHousingGardeningShed) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.Data)+len(s.SubType)))
-	writeString_50(b, s.Data)
-	writeString_50(b, s.SubType)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
+	binary.Write(b, binary.LittleEndian, s.Data)
+	binary.Write(b, binary.LittleEndian, s.SubType)
 	return b.Bytes()
 }
 
 func (s *PatchHousingGardeningShed) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.SubType, err = readString_50(b); err != nil {
+	if s.SubType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PackageNumber); err != nil {
@@ -4907,21 +4604,18 @@ type PatchHousingGearVault struct {
 
 func (s *PatchHousingGearVault) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.Data)+len(s.SubType)))
-	writeString_50(b, s.Data)
-	writeString_50(b, s.SubType)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
+	binary.Write(b, binary.LittleEndian, s.Data)
+	binary.Write(b, binary.LittleEndian, s.SubType)
 	return b.Bytes()
 }
 
 func (s *PatchHousingGearVault) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.SubType, err = readString_50(b); err != nil {
+	if s.SubType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PackageNumber); err != nil {
@@ -4946,21 +4640,18 @@ type PatchHousingJewelVault struct {
 
 func (s *PatchHousingJewelVault) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.Data)+len(s.SubType)))
-	writeString_50(b, s.Data)
-	writeString_50(b, s.SubType)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
+	binary.Write(b, binary.LittleEndian, s.Data)
+	binary.Write(b, binary.LittleEndian, s.SubType)
 	return b.Bytes()
 }
 
 func (s *PatchHousingJewelVault) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.SubType, err = readString_50(b); err != nil {
+	if s.SubType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PackageNumber); err != nil {
@@ -4985,21 +4676,18 @@ type PatchHousingMusicObject struct {
 
 func (s *PatchHousingMusicObject) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.Data)+len(s.SubType)))
-	writeString_50(b, s.Data)
-	writeString_50(b, s.SubType)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
+	binary.Write(b, binary.LittleEndian, s.Data)
+	binary.Write(b, binary.LittleEndian, s.SubType)
 	return b.Bytes()
 }
 
 func (s *PatchHousingMusicObject) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.SubType, err = readString_50(b); err != nil {
+	if s.SubType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PackageNumber); err != nil {
@@ -5024,21 +4712,18 @@ type PatchHousingSignObject struct {
 
 func (s *PatchHousingSignObject) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.Data)+len(s.SubType)))
-	writeString_50(b, s.Data)
-	writeString_50(b, s.SubType)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
+	binary.Write(b, binary.LittleEndian, s.Data)
+	binary.Write(b, binary.LittleEndian, s.SubType)
 	return b.Bytes()
 }
 
 func (s *PatchHousingSignObject) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.SubType, err = readString_50(b); err != nil {
+	if s.SubType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PackageNumber); err != nil {
@@ -5063,21 +4748,18 @@ type PatchHousingTeleporterObject struct {
 
 func (s *PatchHousingTeleporterObject) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.Data)+len(s.SubType)))
-	writeString_50(b, s.Data)
-	writeString_50(b, s.SubType)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
+	binary.Write(b, binary.LittleEndian, s.Data)
+	binary.Write(b, binary.LittleEndian, s.SubType)
 	return b.Bytes()
 }
 
 func (s *PatchHousingTeleporterObject) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.SubType, err = readString_50(b); err != nil {
+	if s.SubType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PackageNumber); err != nil {
@@ -5102,21 +4784,18 @@ type PatchHousingTrain struct {
 
 func (s *PatchHousingTrain) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.Data)+len(s.SubType)))
-	writeString_50(b, s.Data)
-	writeString_50(b, s.SubType)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
+	binary.Write(b, binary.LittleEndian, s.Data)
+	binary.Write(b, binary.LittleEndian, s.SubType)
 	return b.Bytes()
 }
 
 func (s *PatchHousingTrain) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.SubType, err = readString_50(b); err != nil {
+	if s.SubType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PackageNumber); err != nil {
@@ -5141,21 +4820,18 @@ type PatchMonsterArena struct {
 
 func (s *PatchMonsterArena) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.Data)+len(s.SubType)))
-	writeString_50(b, s.Data)
-	writeString_50(b, s.SubType)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
+	binary.Write(b, binary.LittleEndian, s.Data)
+	binary.Write(b, binary.LittleEndian, s.SubType)
 	return b.Bytes()
 }
 
 func (s *PatchMonsterArena) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.SubType, err = readString_50(b); err != nil {
+	if s.SubType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PackageNumber); err != nil {
@@ -5181,22 +4857,18 @@ type PatchMusicLoop struct {
 
 func (s *PatchMusicLoop) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24+len(s.SubType)+len(s.MusicData)))
-	writeString_50(b, s.SubType)
-	writeString_50(b, s.MusicData)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
-	binary.Write(b, binary.LittleEndian, s.ObjectID)
+	binary.Write(b, binary.LittleEndian, s.SubType)
+	binary.Write(b, binary.LittleEndian, s.MusicData)
 	return b.Bytes()
 }
 
 func (s *PatchMusicLoop) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.SubType, err = readString_50(b); err != nil {
+	if s.SubType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.MusicData, err = readString_50(b); err != nil {
+	if s.MusicData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PackageNumber); err != nil {
@@ -5226,23 +4898,18 @@ type PatchRemoveTextureRemap struct {
 
 func (s *PatchRemoveTextureRemap) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24+len(s.Data)+len(s.SubType)))
-	writeString_50(b, s.Data)
-	writeString_50(b, s.SubType)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
-	binary.Write(b, binary.LittleEndian, s.RemapIndex)
-	binary.Write(b, binary.LittleEndian, s.TextureType)
+	binary.Write(b, binary.LittleEndian, s.Data)
+	binary.Write(b, binary.LittleEndian, s.SubType)
 	return b.Bytes()
 }
 
 func (s *PatchRemoveTextureRemap) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.SubType, err = readString_50(b); err != nil {
+	if s.SubType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PackageNumber); err != nil {
@@ -5273,21 +4940,18 @@ type PatchTextureRemap struct {
 
 func (s *PatchTextureRemap) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.Data)+len(s.SubType)))
-	writeString_50(b, s.Data)
-	writeString_50(b, s.SubType)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
+	binary.Write(b, binary.LittleEndian, s.Data)
+	binary.Write(b, binary.LittleEndian, s.SubType)
 	return b.Bytes()
 }
 
 func (s *PatchTextureRemap) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.SubType, err = readString_50(b); err != nil {
+	if s.SubType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PackageNumber); err != nil {
@@ -5313,19 +4977,14 @@ type PatchTintHousingObject struct {
 
 func (s *PatchTintHousingObject) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 23+len(s.SubType)))
-	writeString_50(b, s.SubType)
-	binary.Write(b, binary.LittleEndian, s.ColorBits)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
-	binary.Write(b, binary.LittleEndian, s.ObjectID)
+	binary.Write(b, binary.LittleEndian, s.SubType)
 	return b.Bytes()
 }
 
 func (s *PatchTintHousingObject) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.SubType, err = readString_50(b); err != nil {
+	if s.SubType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ColorBits); err != nil {
@@ -5356,21 +5015,18 @@ type PatchTreasureCardPoster struct {
 
 func (s *PatchTreasureCardPoster) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.Data)+len(s.SubType)))
-	writeString_50(b, s.Data)
-	writeString_50(b, s.SubType)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
+	binary.Write(b, binary.LittleEndian, s.Data)
+	binary.Write(b, binary.LittleEndian, s.SubType)
 	return b.Bytes()
 }
 
 func (s *PatchTreasureCardPoster) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.SubType, err = readString_50(b); err != nil {
+	if s.SubType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PackageNumber); err != nil {
@@ -5395,21 +5051,18 @@ type PatchTreasureCardVault struct {
 
 func (s *PatchTreasureCardVault) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.Data)+len(s.SubType)))
-	writeString_50(b, s.Data)
-	writeString_50(b, s.SubType)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
+	binary.Write(b, binary.LittleEndian, s.Data)
+	binary.Write(b, binary.LittleEndian, s.SubType)
 	return b.Bytes()
 }
 
 func (s *PatchTreasureCardVault) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.SubType, err = readString_50(b); err != nil {
+	if s.SubType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PackageNumber); err != nil {
@@ -5441,18 +5094,7 @@ type PatchUpdateHousingObject struct {
 
 func (s *PatchUpdateHousingObject) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 44+len(s.SubType)))
-	binary.Write(b, binary.LittleEndian, s.LocX)
-	binary.Write(b, binary.LittleEndian, s.LocY)
-	binary.Write(b, binary.LittleEndian, s.LocZ)
-	binary.Write(b, binary.LittleEndian, s.Yaw)
-	writeString_50(b, s.SubType)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
-	binary.Write(b, binary.LittleEndian, s.ObjectID)
-	binary.Write(b, binary.LittleEndian, s.SwitchTemplateID)
-	binary.Write(b, binary.LittleEndian, s.UseExtendedYaw)
-	binary.Write(b, binary.LittleEndian, s.Scale)
+	binary.Write(b, binary.LittleEndian, s.SubType)
 	return b.Bytes()
 }
 
@@ -5471,7 +5113,7 @@ func (s *PatchUpdateHousingObject) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Yaw); err != nil {
 		return err
 	}
-	if s.SubType, err = readString_50(b); err != nil {
+	if s.SubType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PackageNumber); err != nil {
@@ -5510,20 +5152,14 @@ type PatchExtendedTile struct {
 
 func (s *PatchExtendedTile) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24+len(s.SubType)))
-	writeString_50(b, s.SubType)
-	binary.Write(b, binary.LittleEndian, s.PackageNumber)
-	binary.Write(b, binary.LittleEndian, s.VersionNumber)
-	binary.Write(b, binary.LittleEndian, s.GIDID)
-	binary.Write(b, binary.LittleEndian, s.RemapIndex)
-	binary.Write(b, binary.LittleEndian, s.IsWallpaper)
-	binary.Write(b, binary.LittleEndian, s.ObjectID)
+	binary.Write(b, binary.LittleEndian, s.SubType)
 	return b.Bytes()
 }
 
 func (s *PatchExtendedTile) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.SubType, err = readString_50(b); err != nil {
+	if s.SubType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PackageNumber); err != nil {
@@ -5553,7 +5189,6 @@ type PetTomeScanAttic struct {
 
 func (s *PetTomeScanAttic) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
 	return b.Bytes()
 }
 
@@ -5574,9 +5209,7 @@ type PickUpAll struct {
 
 func (s *PickUpAll) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 7+len(s.Exceptions)))
-	binary.Write(b, binary.LittleEndian, s.ItemCount)
-	binary.Write(b, binary.LittleEndian, s.ErrorCode)
-	writeString_50(b, s.Exceptions)
+	binary.Write(b, binary.LittleEndian, s.Exceptions)
 	return b.Bytes()
 }
 
@@ -5589,7 +5222,7 @@ func (s *PickUpAll) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ErrorCode); err != nil {
 		return err
 	}
-	if s.Exceptions, err = readString_50(b); err != nil {
+	if s.Exceptions, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -5602,8 +5235,6 @@ type PickUpHousingTexture struct {
 
 func (s *PickUpHousingTexture) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.RemapIndex)
-	binary.Write(b, binary.LittleEndian, s.TextureType)
 	return b.Bytes()
 }
 
@@ -5630,12 +5261,6 @@ type PlaceHousingFish struct {
 
 func (s *PlaceHousingFish) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 28))
-	binary.Write(b, binary.LittleEndian, s.FishTemplateID)
-	binary.Write(b, binary.LittleEndian, s.LocX)
-	binary.Write(b, binary.LittleEndian, s.LocY)
-	binary.Write(b, binary.LittleEndian, s.LocZ)
-	binary.Write(b, binary.LittleEndian, s.Yaw)
-	binary.Write(b, binary.LittleEndian, s.FishSize)
 	return b.Bytes()
 }
 
@@ -5674,12 +5299,6 @@ type PlaceHousingObject struct {
 
 func (s *PlaceHousingObject) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 25))
-	binary.Write(b, binary.LittleEndian, s.ObjectID)
-	binary.Write(b, binary.LittleEndian, s.LocX)
-	binary.Write(b, binary.LittleEndian, s.LocY)
-	binary.Write(b, binary.LittleEndian, s.LocZ)
-	binary.Write(b, binary.LittleEndian, s.Yaw)
-	binary.Write(b, binary.LittleEndian, s.SwitchCastleBlock)
 	return b.Bytes()
 }
 
@@ -5714,8 +5333,6 @@ type PlayerTeleportingToFriend struct {
 
 func (s *PlayerTeleportingToFriend) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.TargetCharacterID)
-	binary.Write(b, binary.LittleEndian, s.OriginatorID)
 	return b.Bytes()
 }
 
@@ -5737,7 +5354,6 @@ type PlayInteractiveMusic struct {
 
 func (s *PlayInteractiveMusic) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.InstrumentNote)
 	return b.Bytes()
 }
 
@@ -5756,14 +5372,14 @@ type PlayInteractiveMusic2 struct {
 
 func (s *PlayInteractiveMusic2) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.InstrumentNotes)))
-	writeString_50(b, s.InstrumentNotes)
+	binary.Write(b, binary.LittleEndian, s.InstrumentNotes)
 	return b.Bytes()
 }
 
 func (s *PlayInteractiveMusic2) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.InstrumentNotes, err = readString_50(b); err != nil {
+	if s.InstrumentNotes, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -5780,12 +5396,7 @@ type PlayInteractiveMusicLoop struct {
 
 func (s *PlayInteractiveMusicLoop) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 27+len(s.TargetPlayers)))
-	binary.Write(b, binary.LittleEndian, s.PlayerGID)
-	binary.Write(b, binary.LittleEndian, s.TemplateID)
-	binary.Write(b, binary.LittleEndian, s.LoopIndex)
-	binary.Write(b, binary.LittleEndian, s.ObjectGID)
-	writeString_50(b, s.TargetPlayers)
-	binary.Write(b, binary.LittleEndian, s.LoopOffset)
+	binary.Write(b, binary.LittleEndian, s.TargetPlayers)
 	return b.Bytes()
 }
 
@@ -5804,7 +5415,7 @@ func (s *PlayInteractiveMusicLoop) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ObjectGID); err != nil {
 		return err
 	}
-	if s.TargetPlayers, err = readString_50(b); err != nil {
+	if s.TargetPlayers, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.LoopOffset); err != nil {
@@ -5821,9 +5432,6 @@ type PlayInteractiveMusicLooping struct {
 
 func (s *PlayInteractiveMusicLooping) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.InstrumentNote)
-	binary.Write(b, binary.LittleEndian, s.ObjectGID)
-	binary.Write(b, binary.LittleEndian, s.LoopOffset)
 	return b.Bytes()
 }
 
@@ -5850,16 +5458,14 @@ type PlayInteractiveMusicLooping2 struct {
 
 func (s *PlayInteractiveMusicLooping2) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.InstrumentNotes)))
-	writeString_50(b, s.InstrumentNotes)
-	binary.Write(b, binary.LittleEndian, s.ObjectGID)
-	binary.Write(b, binary.LittleEndian, s.LoopOffset)
+	binary.Write(b, binary.LittleEndian, s.InstrumentNotes)
 	return b.Bytes()
 }
 
 func (s *PlayInteractiveMusicLooping2) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.InstrumentNotes, err = readString_50(b); err != nil {
+	if s.InstrumentNotes, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ObjectGID); err != nil {
@@ -5879,9 +5485,7 @@ type PlayTrainSound struct {
 
 func (s *PlayTrainSound) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 18+len(s.SoundName)))
-	binary.Write(b, binary.LittleEndian, s.ZoneID)
-	binary.Write(b, binary.LittleEndian, s.TrainID)
-	writeString_50(b, s.SoundName)
+	binary.Write(b, binary.LittleEndian, s.SoundName)
 	return b.Bytes()
 }
 
@@ -5894,7 +5498,7 @@ func (s *PlayTrainSound) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.TrainID); err != nil {
 		return err
 	}
-	if s.SoundName, err = readString_50(b); err != nil {
+	if s.SoundName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -5908,9 +5512,6 @@ type RemoveFishFromAquarium struct {
 
 func (s *RemoveFishFromAquarium) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.FishTemplateID)
-	binary.Write(b, binary.LittleEndian, s.Size)
 	return b.Bytes()
 }
 
@@ -5936,8 +5537,6 @@ type RemoveHouseMusic struct {
 
 func (s *RemoveHouseMusic) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.MusicPlayerGID)
-	binary.Write(b, binary.LittleEndian, s.MusicTemplateID)
 	return b.Bytes()
 }
 
@@ -5961,9 +5560,7 @@ type ReportHouse struct {
 
 func (s *ReportHouse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.Message)))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.DeedTemplateID)
-	writeString_50(b, s.Message)
+	binary.Write(b, binary.LittleEndian, s.Message)
 	return b.Bytes()
 }
 
@@ -5976,7 +5573,7 @@ func (s *ReportHouse) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.DeedTemplateID); err != nil {
 		return err
 	}
-	if s.Message, err = readString_50(b); err != nil {
+	if s.Message, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -5989,8 +5586,7 @@ type AddRequestAllFish struct {
 
 func (s *AddRequestAllFish) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.FishData)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_50(b, s.FishData)
+	binary.Write(b, binary.LittleEndian, s.FishData)
 	return b.Bytes()
 }
 
@@ -6000,7 +5596,7 @@ func (s *AddRequestAllFish) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.FishData, err = readString_50(b); err != nil {
+	if s.FishData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6012,7 +5608,6 @@ type RequestAttic struct {
 
 func (s *RequestAttic) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
 	return b.Bytes()
 }
 
@@ -6033,9 +5628,6 @@ type RequestCatchSuccess struct {
 
 func (s *RequestCatchSuccess) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.SpellTemplateID)
-	binary.Write(b, binary.LittleEndian, s.FishingPassport)
-	binary.Write(b, binary.LittleEndian, s.FishID)
 	return b.Bytes()
 }
 
@@ -6063,10 +5655,7 @@ type RequestDeedZone struct {
 
 func (s *RequestDeedZone) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 18+len(s.Arguments)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.Status)
-	binary.Write(b, binary.LittleEndian, s.Teleport)
-	writeString_50(b, s.Arguments)
+	binary.Write(b, binary.LittleEndian, s.Arguments)
 	return b.Bytes()
 }
 
@@ -6082,7 +5671,7 @@ func (s *RequestDeedZone) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Teleport); err != nil {
 		return err
 	}
-	if s.Arguments, err = readString_50(b); err != nil {
+	if s.Arguments, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6095,8 +5684,7 @@ type AddRequestFishHistory struct {
 
 func (s *AddRequestFishHistory) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.FishData)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_50(b, s.FishData)
+	binary.Write(b, binary.LittleEndian, s.FishData)
 	return b.Bytes()
 }
 
@@ -6106,7 +5694,7 @@ func (s *AddRequestFishHistory) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.FishData, err = readString_50(b); err != nil {
+	if s.FishData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6119,8 +5707,6 @@ type RequestHouseOwnerCharacterID struct {
 
 func (s *RequestHouseOwnerCharacterID) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.DeedTemplateID)
 	return b.Bytes()
 }
 
@@ -6142,14 +5728,14 @@ type RequestHouseTransferList struct {
 
 func (s *RequestHouseTransferList) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Data)))
-	writeString_50(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
 func (s *RequestHouseTransferList) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6163,9 +5749,6 @@ type RequestHousingZone struct {
 
 func (s *RequestHousingZone) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.Status)
-	binary.Write(b, binary.LittleEndian, s.TemplateGID)
 	return b.Bytes()
 }
 
@@ -6191,8 +5774,7 @@ type RequestHousingZoneTeleport struct {
 
 func (s *RequestHousingZoneTeleport) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Location)))
-	binary.Write(b, binary.LittleEndian, s.TemplateGID)
-	writeString_50(b, s.Location)
+	binary.Write(b, binary.LittleEndian, s.Location)
 	return b.Bytes()
 }
 
@@ -6202,7 +5784,7 @@ func (s *RequestHousingZoneTeleport) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.TemplateGID); err != nil {
 		return err
 	}
-	if s.Location, err = readString_50(b); err != nil {
+	if s.Location, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6216,9 +5798,7 @@ type RequestInteractiveMusic struct {
 
 func (s *RequestInteractiveMusic) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.PlayerName)))
-	binary.Write(b, binary.LittleEndian, s.ObjectGID)
-	binary.Write(b, binary.LittleEndian, s.InUse)
-	writeString_50(b, s.PlayerName)
+	binary.Write(b, binary.LittleEndian, s.PlayerName)
 	return b.Bytes()
 }
 
@@ -6231,7 +5811,7 @@ func (s *RequestInteractiveMusic) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.InUse); err != nil {
 		return err
 	}
-	if s.PlayerName, err = readString_50(b); err != nil {
+	if s.PlayerName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6244,8 +5824,6 @@ type RequestIslandSwitch struct {
 
 func (s *RequestIslandSwitch) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.Status)
 	return b.Bytes()
 }
 
@@ -6269,9 +5847,7 @@ type RequestRestoreState struct {
 
 func (s *RequestRestoreState) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.State)
-	writeString_50(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -6284,7 +5860,7 @@ func (s *RequestRestoreState) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.State); err != nil {
 		return err
 	}
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6297,8 +5873,6 @@ type RequestSendAway struct {
 
 func (s *RequestSendAway) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9))
-	binary.Write(b, binary.LittleEndian, s.TargetPlayer)
-	binary.Write(b, binary.LittleEndian, s.ISCSR)
 	return b.Bytes()
 }
 
@@ -6320,7 +5894,6 @@ type RequestTeleporterHousingConfirm struct {
 
 func (s *RequestTeleporterHousingConfirm) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
 	return b.Bytes()
 }
 
@@ -6342,10 +5915,6 @@ type RequestTeleporterHousingZone struct {
 
 func (s *RequestTeleporterHousingZone) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 28))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.Status)
-	binary.Write(b, binary.LittleEndian, s.TemplateGID)
-	binary.Write(b, binary.LittleEndian, s.StructureGID)
 	return b.Bytes()
 }
 
@@ -6374,8 +5943,7 @@ type RequestTransition struct {
 
 func (s *RequestTransition) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.ZoneName)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_50(b, s.ZoneName)
+	binary.Write(b, binary.LittleEndian, s.ZoneName)
 	return b.Bytes()
 }
 
@@ -6385,7 +5953,7 @@ func (s *RequestTransition) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.ZoneName, err = readString_50(b); err != nil {
+	if s.ZoneName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6397,14 +5965,14 @@ type RequestBlobs struct {
 
 func (s *RequestBlobs) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Data)))
-	writeString_50(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
 func (s *RequestBlobs) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6423,14 +5991,7 @@ type Respec struct {
 
 func (s *Respec) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 25+len(s.Buffer)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.Points)
-	binary.Write(b, binary.LittleEndian, s.WebFailure)
-	binary.Write(b, binary.LittleEndian, s.Credits)
-	binary.Write(b, binary.LittleEndian, s.LevelIsLow)
-	binary.Write(b, binary.LittleEndian, s.EncounteredUpgradedTierSpell)
-	binary.Write(b, binary.LittleEndian, s.Cost)
-	writeString_50(b, s.Buffer)
+	binary.Write(b, binary.LittleEndian, s.Buffer)
 	return b.Bytes()
 }
 
@@ -6458,7 +6019,7 @@ func (s *Respec) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Cost); err != nil {
 		return err
 	}
-	if s.Buffer, err = readString_50(b); err != nil {
+	if s.Buffer, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6471,8 +6032,6 @@ type SelectHouseMusic struct {
 
 func (s *SelectHouseMusic) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.MusicPlayerGID)
-	binary.Write(b, binary.LittleEndian, s.MusicTemplateID)
 	return b.Bytes()
 }
 
@@ -6495,8 +6054,6 @@ type SelectMusicStyle struct {
 
 func (s *SelectMusicStyle) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.MusicPlayerGID)
-	binary.Write(b, binary.LittleEndian, s.MusicStyle)
 	return b.Bytes()
 }
 
@@ -6520,9 +6077,6 @@ type SellFishOpen struct {
 
 func (s *SellFishOpen) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.FishTemplateID)
-	binary.Write(b, binary.LittleEndian, s.CatchOfTheDayBonus)
 	return b.Bytes()
 }
 
@@ -6547,14 +6101,14 @@ type SellFishRequest struct {
 
 func (s *SellFishRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.FishData)))
-	writeString_50(b, s.FishData)
+	binary.Write(b, binary.LittleEndian, s.FishData)
 	return b.Bytes()
 }
 
 func (s *SellFishRequest) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.FishData, err = readString_50(b); err != nil {
+	if s.FishData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6566,14 +6120,14 @@ type SendHousingObjectStates struct {
 
 func (s *SendHousingObjectStates) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Data)))
-	writeString_50(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
 func (s *SendHousingObjectStates) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6586,8 +6140,6 @@ type SendHousingTextureInfo struct {
 
 func (s *SendHousingTextureInfo) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.ObjectID)
-	binary.Write(b, binary.LittleEndian, s.RemapIndex)
 	return b.Bytes()
 }
 
@@ -6610,15 +6162,14 @@ type SendBlob struct {
 
 func (s *SendBlob) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.Data)))
-	writeString_50(b, s.Data)
-	binary.Write(b, binary.LittleEndian, s.UserData)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
 func (s *SendBlob) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.UserData); err != nil {
@@ -6634,8 +6185,6 @@ type SetAtticID struct {
 
 func (s *SetAtticID) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.AtticID)
 	return b.Bytes()
 }
 
@@ -6658,8 +6207,7 @@ type SetFishingPlayers struct {
 
 func (s *SetFishingPlayers) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.ZoneNameID)
-	writeString_50(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -6669,7 +6217,7 @@ func (s *SetFishingPlayers) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ZoneNameID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6683,9 +6231,8 @@ type SetHouseSign struct {
 
 func (s *SetHouseSign) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12+len(s.SignText)+len(s.NameText)))
-	binary.Write(b, binary.LittleEndian, s.ObjectID)
-	writeString_50(b, s.SignText)
-	writeString_50(b, s.NameText)
+	binary.Write(b, binary.LittleEndian, s.SignText)
+	binary.Write(b, binary.LittleEndian, s.NameText)
 	return b.Bytes()
 }
 
@@ -6695,10 +6242,10 @@ func (s *SetHouseSign) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ObjectID); err != nil {
 		return err
 	}
-	if s.SignText, err = readString_50(b); err != nil {
+	if s.SignText, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.NameText, err = readString_50(b); err != nil {
+	if s.NameText, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6714,11 +6261,6 @@ type SetHouseTeleporter struct {
 
 func (s *SetHouseTeleporter) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24))
-	binary.Write(b, binary.LittleEndian, s.ObjectID)
-	binary.Write(b, binary.LittleEndian, s.LocX)
-	binary.Write(b, binary.LittleEndian, s.LocY)
-	binary.Write(b, binary.LittleEndian, s.LocZ)
-	binary.Write(b, binary.LittleEndian, s.Yaw)
 	return b.Bytes()
 }
 
@@ -6752,17 +6294,15 @@ type SetHousingGameState struct {
 
 func (s *SetHousingGameState) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.PlayerName)+len(s.Score)))
-	writeString_50(b, s.PlayerName)
-	binary.Write(b, binary.LittleEndian, s.GameState)
-	binary.Write(b, binary.LittleEndian, s.ObjectGID)
-	writeString_50(b, s.Score)
+	binary.Write(b, binary.LittleEndian, s.PlayerName)
+	binary.Write(b, binary.LittleEndian, s.Score)
 	return b.Bytes()
 }
 
 func (s *SetHousingGameState) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.PlayerName, err = readString_50(b); err != nil {
+	if s.PlayerName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.GameState); err != nil {
@@ -6771,7 +6311,7 @@ func (s *SetHousingGameState) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ObjectGID); err != nil {
 		return err
 	}
-	if s.Score, err = readString_50(b); err != nil {
+	if s.Score, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6784,8 +6324,6 @@ type SetHousingPalette struct {
 
 func (s *SetHousingPalette) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9))
-	binary.Write(b, binary.LittleEndian, s.ObjectGID)
-	binary.Write(b, binary.LittleEndian, s.PrimaryColorIndex)
 	return b.Bytes()
 }
 
@@ -6808,8 +6346,7 @@ type SetInstanceFish struct {
 
 func (s *SetInstanceFish) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.ZoneNameID)
-	writeString_50(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -6819,7 +6356,7 @@ func (s *SetInstanceFish) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ZoneNameID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6831,7 +6368,6 @@ type InvisibleToFriends struct {
 
 func (s *InvisibleToFriends) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.InvisibleToFriends)
 	return b.Bytes()
 }
 
@@ -6851,8 +6387,7 @@ type SetMusicLoop struct {
 
 func (s *SetMusicLoop) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.ObjectGID)
-	writeString_50(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -6862,7 +6397,7 @@ func (s *SetMusicLoop) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ObjectGID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6876,9 +6411,6 @@ type SetNextTrain struct {
 
 func (s *SetNextTrain) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24))
-	binary.Write(b, binary.LittleEndian, s.ZoneID)
-	binary.Write(b, binary.LittleEndian, s.TrainID)
-	binary.Write(b, binary.LittleEndian, s.NextTrainID)
 	return b.Bytes()
 }
 
@@ -6905,9 +6437,6 @@ type SetTileWallpaper struct {
 
 func (s *SetTileWallpaper) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10))
-	binary.Write(b, binary.LittleEndian, s.ObjectID)
-	binary.Write(b, binary.LittleEndian, s.RemapIndex)
-	binary.Write(b, binary.LittleEndian, s.IsWallpaper)
 	return b.Bytes()
 }
 
@@ -6937,12 +6466,6 @@ type ShowFishingCast struct {
 
 func (s *ShowFishingCast) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 28))
-	binary.Write(b, binary.LittleEndian, s.ObjectGID)
-	binary.Write(b, binary.LittleEndian, s.PositionX)
-	binary.Write(b, binary.LittleEndian, s.PositionY)
-	binary.Write(b, binary.LittleEndian, s.PositionZ)
-	binary.Write(b, binary.LittleEndian, s.Yaw)
-	binary.Write(b, binary.LittleEndian, s.SpellTemplateID)
 	return b.Bytes()
 }
 
@@ -6979,23 +6502,21 @@ type StartHousingGame struct {
 
 func (s *StartHousingGame) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9+len(s.GameType)+len(s.Data)))
-	writeString_50(b, s.GameType)
-	binary.Write(b, binary.LittleEndian, s.GameInProgress)
-	writeString_50(b, s.Data)
-	binary.Write(b, binary.LittleEndian, s.IsPublic)
+	binary.Write(b, binary.LittleEndian, s.GameType)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
 func (s *StartHousingGame) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.GameType, err = readString_50(b); err != nil {
+	if s.GameType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.GameInProgress); err != nil {
 		return err
 	}
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.IsPublic); err != nil {
@@ -7012,9 +6533,6 @@ type StartTrain struct {
 
 func (s *StartTrain) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 17))
-	binary.Write(b, binary.LittleEndian, s.ZoneID)
-	binary.Write(b, binary.LittleEndian, s.TrainID)
-	binary.Write(b, binary.LittleEndian, s.Start)
 	return b.Bytes()
 }
 
@@ -7039,7 +6557,6 @@ type StopInteractiveMusicLoop struct {
 
 func (s *StopInteractiveMusicLoop) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.PlayerGID)
 	return b.Bytes()
 }
 
@@ -7069,7 +6586,6 @@ type TeleportedToDeletedLot struct {
 
 func (s *TeleportedToDeletedLot) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.Quarantined)
 	return b.Bytes()
 }
 
@@ -7088,7 +6604,6 @@ type TeleportToStart struct {
 
 func (s *TeleportToStart) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.Inside)
 	return b.Bytes()
 }
 
@@ -7108,8 +6623,6 @@ type UpdateAtticCount struct {
 
 func (s *UpdateAtticCount) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.ItemCount)
 	return b.Bytes()
 }
 
@@ -7134,10 +6647,6 @@ type UpdateGardeningXP struct {
 
 func (s *UpdateGardeningXP) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 17))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.XP)
-	binary.Write(b, binary.LittleEndian, s.Level)
-	binary.Write(b, binary.LittleEndian, s.IsPet)
 	return b.Bytes()
 }
 
@@ -7172,14 +6681,6 @@ type UpdateHousingObject struct {
 
 func (s *UpdateHousingObject) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 33))
-	binary.Write(b, binary.LittleEndian, s.ObjectGID)
-	binary.Write(b, binary.LittleEndian, s.LocX)
-	binary.Write(b, binary.LittleEndian, s.LocY)
-	binary.Write(b, binary.LittleEndian, s.LocZ)
-	binary.Write(b, binary.LittleEndian, s.Yaw)
-	binary.Write(b, binary.LittleEndian, s.SwitchCastleBlock)
-	binary.Write(b, binary.LittleEndian, s.UseExtendedYaw)
-	binary.Write(b, binary.LittleEndian, s.Scale)
 	return b.Bytes()
 }
 
@@ -7220,15 +6721,14 @@ type UpdateHousingPet struct {
 
 func (s *UpdateHousingPet) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Data)))
-	writeString_50(b, s.Data)
-	binary.Write(b, binary.LittleEndian, s.ZoneID)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
 func (s *UpdateHousingPet) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_50(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ZoneID); err != nil {
@@ -7243,7 +6743,6 @@ type UpdateIslandSpace struct {
 
 func (s *UpdateIslandSpace) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.IslandLimit)
 	return b.Bytes()
 }
 
@@ -7264,9 +6763,6 @@ type UpdateMaximumHousingItems struct {
 
 func (s *UpdateMaximumHousingItems) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.ZoneGID)
-	binary.Write(b, binary.LittleEndian, s.NewMaximumItems)
-	binary.Write(b, binary.LittleEndian, s.IncreaseAmount)
 	return b.Bytes()
 }
 
@@ -7293,9 +6789,6 @@ type UpdateTrain struct {
 
 func (s *UpdateTrain) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.ZoneID)
-	binary.Write(b, binary.LittleEndian, s.TrainID)
-	binary.Write(b, binary.LittleEndian, s.BreadCrumbID)
 	return b.Bytes()
 }
 
@@ -7312,21 +6805,4 @@ func (s *UpdateTrain) Unmarshal(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func writeString_50(b *bytes.Buffer, v string) {
-	binary.Write(b, binary.LittleEndian, uint16(len(v)))
-	b.WriteString(v)
-}
-
-func readString_50(buf *bytes.Reader) (string, error) {
-	var length uint16
-	if err := binary.Read(buf, binary.LittleEndian, &length); err != nil {
-		return "", err
-	}
-	data := make([]byte, length)
-	if _, err := buf.Read(data); err != nil {
-		return "", err
-	}
-	return *(*string)(unsafe.Pointer(&data)), nil
 }

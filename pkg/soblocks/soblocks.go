@@ -4,11 +4,11 @@ package soblocks
 import (
 	"bytes"
 	"encoding/binary"
+	"github.com/cedws/w101-client-go/codegen"
 	"github.com/cedws/w101-client-go/proto"
-	"unsafe"
 )
 
-type soblocksService interface {
+type service interface {
 	SoblocksAdvanceOff(SoblocksAdvanceOff)
 	SoblocksAdvanceOn(SoblocksAdvanceOn)
 	SoblocksAttack(SoblocksAttack)
@@ -34,39 +34,31 @@ type soblocksService interface {
 	SoblocksWin(SoblocksWin)
 }
 
-type SoblocksService struct {
-	soblocksService
-}
+func (Service) SoblocksAdvanceOff(SoblocksAdvanceOff)     {}
+func (Service) SoblocksAdvanceOn(SoblocksAdvanceOn)       {}
+func (Service) SoblocksAttack(SoblocksAttack)             {}
+func (Service) SoblocksCountdown(SoblocksCountdown)       {}
+func (Service) SoblocksEndGame(SoblocksEndGame)           {}
+func (Service) SoblocksFreezeBlocks(SoblocksFreezeBlocks) {}
+func (Service) SoblocksInfo(SoblocksInfo)                 {}
+func (Service) SoblocksLevelUp(SoblocksLevelUp)           {}
+func (Service) SoblocksLoss(SoblocksLoss)                 {}
+func (Service) SoblocksPause(SoblocksPause)               {}
+func (Service) SoblocksPauseOff(SoblocksPauseOff)         {}
+func (Service) SoblocksPauseOn(SoblocksPauseOn)           {}
+func (Service) SoblocksReady(SoblocksReady)               {}
+func (Service) SoblocksRequestRow(SoblocksRequestRow)     {}
+func (Service) SoblocksResetGame(SoblocksResetGame)       {}
+func (Service) SoblocksRockDrop(SoblocksRockDrop)         {}
+func (Service) SoblocksRowInfo(SoblocksRowInfo)           {}
+func (Service) SoblocksSelectGame(SoblocksSelectGame)     {}
+func (Service) SoblocksSendRow(SoblocksSendRow)           {}
+func (Service) SoblocksSetLevel(SoblocksSetLevel)         {}
+func (Service) SoblocksStartSwap(SoblocksStartSwap)       {}
+func (Service) SoblocksTimedDrop(SoblocksTimedDrop)       {}
+func (Service) SoblocksWin(SoblocksWin)                   {}
 
-type SoblocksClient struct {
-	c *proto.Client
-}
-
-func (l *SoblocksService) SoblocksAdvanceOff(_ SoblocksAdvanceOff)     {}
-func (l *SoblocksService) SoblocksAdvanceOn(_ SoblocksAdvanceOn)       {}
-func (l *SoblocksService) SoblocksAttack(_ SoblocksAttack)             {}
-func (l *SoblocksService) SoblocksCountdown(_ SoblocksCountdown)       {}
-func (l *SoblocksService) SoblocksEndGame(_ SoblocksEndGame)           {}
-func (l *SoblocksService) SoblocksFreezeBlocks(_ SoblocksFreezeBlocks) {}
-func (l *SoblocksService) SoblocksInfo(_ SoblocksInfo)                 {}
-func (l *SoblocksService) SoblocksLevelUp(_ SoblocksLevelUp)           {}
-func (l *SoblocksService) SoblocksLoss(_ SoblocksLoss)                 {}
-func (l *SoblocksService) SoblocksPause(_ SoblocksPause)               {}
-func (l *SoblocksService) SoblocksPauseOff(_ SoblocksPauseOff)         {}
-func (l *SoblocksService) SoblocksPauseOn(_ SoblocksPauseOn)           {}
-func (l *SoblocksService) SoblocksReady(_ SoblocksReady)               {}
-func (l *SoblocksService) SoblocksRequestRow(_ SoblocksRequestRow)     {}
-func (l *SoblocksService) SoblocksResetGame(_ SoblocksResetGame)       {}
-func (l *SoblocksService) SoblocksRockDrop(_ SoblocksRockDrop)         {}
-func (l *SoblocksService) SoblocksRowInfo(_ SoblocksRowInfo)           {}
-func (l *SoblocksService) SoblocksSelectGame(_ SoblocksSelectGame)     {}
-func (l *SoblocksService) SoblocksSendRow(_ SoblocksSendRow)           {}
-func (l *SoblocksService) SoblocksSetLevel(_ SoblocksSetLevel)         {}
-func (l *SoblocksService) SoblocksStartSwap(_ SoblocksStartSwap)       {}
-func (l *SoblocksService) SoblocksTimedDrop(_ SoblocksTimedDrop)       {}
-func (l *SoblocksService) SoblocksWin(_ SoblocksWin)                   {}
-
-func RegisterSoblocksService(r *proto.MessageRouter, s soblocksService) {
+func RegisterService(r *proto.MessageRouter, s service) {
 	proto.RegisterMessageHandler(r, 25, 1, s.SoblocksAdvanceOff)
 	proto.RegisterMessageHandler(r, 25, 2, s.SoblocksAdvanceOn)
 	proto.RegisterMessageHandler(r, 25, 3, s.SoblocksAttack)
@@ -92,102 +84,109 @@ func RegisterSoblocksService(r *proto.MessageRouter, s soblocksService) {
 	proto.RegisterMessageHandler(r, 25, 23, s.SoblocksWin)
 }
 
-func NewSoblocksClient(c *proto.Client) SoblocksClient {
-	return SoblocksClient{c}
+func NewClient(c *proto.Client) Client {
+	return Client{c}
 }
 
-func (c SoblocksClient) SoblocksAdvanceOff(m *SoblocksAdvanceOff) error {
+func (c Client) SoblocksAdvanceOff(m *SoblocksAdvanceOff) error {
 	return c.c.WriteMessage(25, 1, m)
 }
 
-func (c SoblocksClient) SoblocksAdvanceOn(m *SoblocksAdvanceOn) error {
+func (c Client) SoblocksAdvanceOn(m *SoblocksAdvanceOn) error {
 	return c.c.WriteMessage(25, 2, m)
 }
 
-func (c SoblocksClient) SoblocksAttack(m *SoblocksAttack) error {
+func (c Client) SoblocksAttack(m *SoblocksAttack) error {
 	return c.c.WriteMessage(25, 3, m)
 }
 
-func (c SoblocksClient) SoblocksCountdown(m *SoblocksCountdown) error {
+func (c Client) SoblocksCountdown(m *SoblocksCountdown) error {
 	return c.c.WriteMessage(25, 4, m)
 }
 
-func (c SoblocksClient) SoblocksEndGame(m *SoblocksEndGame) error {
+func (c Client) SoblocksEndGame(m *SoblocksEndGame) error {
 	return c.c.WriteMessage(25, 5, m)
 }
 
-func (c SoblocksClient) SoblocksFreezeBlocks(m *SoblocksFreezeBlocks) error {
+func (c Client) SoblocksFreezeBlocks(m *SoblocksFreezeBlocks) error {
 	return c.c.WriteMessage(25, 6, m)
 }
 
-func (c SoblocksClient) SoblocksInfo(m *SoblocksInfo) error {
+func (c Client) SoblocksInfo(m *SoblocksInfo) error {
 	return c.c.WriteMessage(25, 7, m)
 }
 
-func (c SoblocksClient) SoblocksLevelUp(m *SoblocksLevelUp) error {
+func (c Client) SoblocksLevelUp(m *SoblocksLevelUp) error {
 	return c.c.WriteMessage(25, 8, m)
 }
 
-func (c SoblocksClient) SoblocksLoss(m *SoblocksLoss) error {
+func (c Client) SoblocksLoss(m *SoblocksLoss) error {
 	return c.c.WriteMessage(25, 9, m)
 }
 
-func (c SoblocksClient) SoblocksPause(m *SoblocksPause) error {
+func (c Client) SoblocksPause(m *SoblocksPause) error {
 	return c.c.WriteMessage(25, 10, m)
 }
 
-func (c SoblocksClient) SoblocksPauseOff(m *SoblocksPauseOff) error {
+func (c Client) SoblocksPauseOff(m *SoblocksPauseOff) error {
 	return c.c.WriteMessage(25, 11, m)
 }
 
-func (c SoblocksClient) SoblocksPauseOn(m *SoblocksPauseOn) error {
+func (c Client) SoblocksPauseOn(m *SoblocksPauseOn) error {
 	return c.c.WriteMessage(25, 12, m)
 }
 
-func (c SoblocksClient) SoblocksReady(m *SoblocksReady) error {
+func (c Client) SoblocksReady(m *SoblocksReady) error {
 	return c.c.WriteMessage(25, 13, m)
 }
 
-func (c SoblocksClient) SoblocksRequestRow(m *SoblocksRequestRow) error {
+func (c Client) SoblocksRequestRow(m *SoblocksRequestRow) error {
 	return c.c.WriteMessage(25, 14, m)
 }
 
-func (c SoblocksClient) SoblocksResetGame(m *SoblocksResetGame) error {
+func (c Client) SoblocksResetGame(m *SoblocksResetGame) error {
 	return c.c.WriteMessage(25, 15, m)
 }
 
-func (c SoblocksClient) SoblocksRockDrop(m *SoblocksRockDrop) error {
+func (c Client) SoblocksRockDrop(m *SoblocksRockDrop) error {
 	return c.c.WriteMessage(25, 16, m)
 }
 
-func (c SoblocksClient) SoblocksRowInfo(m *SoblocksRowInfo) error {
+func (c Client) SoblocksRowInfo(m *SoblocksRowInfo) error {
 	return c.c.WriteMessage(25, 17, m)
 }
 
-func (c SoblocksClient) SoblocksSelectGame(m *SoblocksSelectGame) error {
+func (c Client) SoblocksSelectGame(m *SoblocksSelectGame) error {
 	return c.c.WriteMessage(25, 18, m)
 }
 
-func (c SoblocksClient) SoblocksSendRow(m *SoblocksSendRow) error {
+func (c Client) SoblocksSendRow(m *SoblocksSendRow) error {
 	return c.c.WriteMessage(25, 19, m)
 }
 
-func (c SoblocksClient) SoblocksSetLevel(m *SoblocksSetLevel) error {
+func (c Client) SoblocksSetLevel(m *SoblocksSetLevel) error {
 	return c.c.WriteMessage(25, 20, m)
 }
 
-func (c SoblocksClient) SoblocksStartSwap(m *SoblocksStartSwap) error {
+func (c Client) SoblocksStartSwap(m *SoblocksStartSwap) error {
 	return c.c.WriteMessage(25, 21, m)
 }
 
-func (c SoblocksClient) SoblocksTimedDrop(m *SoblocksTimedDrop) error {
+func (c Client) SoblocksTimedDrop(m *SoblocksTimedDrop) error {
 	return c.c.WriteMessage(25, 22, m)
 }
 
-func (c SoblocksClient) SoblocksWin(m *SoblocksWin) error {
+func (c Client) SoblocksWin(m *SoblocksWin) error {
 	return c.c.WriteMessage(25, 23, m)
 }
 
+type Service struct {
+	service
+}
+
+type Client struct {
+	c *proto.Client
+}
 type SoblocksAdvanceOff struct {
 }
 
@@ -222,13 +221,6 @@ type SoblocksAttack struct {
 
 func (s *SoblocksAttack) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 28))
-	binary.Write(b, binary.LittleEndian, s.Index1)
-	binary.Write(b, binary.LittleEndian, s.Index2)
-	binary.Write(b, binary.LittleEndian, s.Index3)
-	binary.Write(b, binary.LittleEndian, s.Index4)
-	binary.Write(b, binary.LittleEndian, s.Index5)
-	binary.Write(b, binary.LittleEndian, s.Index6)
-	binary.Write(b, binary.LittleEndian, s.Index7)
 	return b.Bytes()
 }
 
@@ -265,7 +257,6 @@ type SoblocksCountdown struct {
 
 func (s *SoblocksCountdown) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.Number)
 	return b.Bytes()
 }
 
@@ -284,7 +275,6 @@ type SoblocksEndGame struct {
 
 func (s *SoblocksEndGame) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.Score)
 	return b.Bytes()
 }
 
@@ -303,7 +293,6 @@ type SoblocksFreezeBlocks struct {
 
 func (s *SoblocksFreezeBlocks) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.Amount)
 	return b.Bytes()
 }
 
@@ -322,14 +311,14 @@ type SoblocksInfo struct {
 
 func (s *SoblocksInfo) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Name)))
-	writeString_25(b, s.Name)
+	binary.Write(b, binary.LittleEndian, s.Name)
 	return b.Bytes()
 }
 
 func (s *SoblocksInfo) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Name, err = readString_25(b); err != nil {
+	if s.Name, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -446,13 +435,6 @@ type SoblocksRowInfo struct {
 
 func (s *SoblocksRowInfo) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 28))
-	binary.Write(b, binary.LittleEndian, s.Index1)
-	binary.Write(b, binary.LittleEndian, s.Index2)
-	binary.Write(b, binary.LittleEndian, s.Index3)
-	binary.Write(b, binary.LittleEndian, s.Index4)
-	binary.Write(b, binary.LittleEndian, s.Index5)
-	binary.Write(b, binary.LittleEndian, s.Index6)
-	binary.Write(b, binary.LittleEndian, s.Index7)
 	return b.Bytes()
 }
 
@@ -489,7 +471,6 @@ type SoblocksSelectGame struct {
 
 func (s *SoblocksSelectGame) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.GameType)
 	return b.Bytes()
 }
 
@@ -514,13 +495,6 @@ type SoblocksSendRow struct {
 
 func (s *SoblocksSendRow) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 28))
-	binary.Write(b, binary.LittleEndian, s.Index1)
-	binary.Write(b, binary.LittleEndian, s.Index2)
-	binary.Write(b, binary.LittleEndian, s.Index3)
-	binary.Write(b, binary.LittleEndian, s.Index4)
-	binary.Write(b, binary.LittleEndian, s.Index5)
-	binary.Write(b, binary.LittleEndian, s.Index6)
-	binary.Write(b, binary.LittleEndian, s.Index7)
 	return b.Bytes()
 }
 
@@ -563,13 +537,6 @@ type SoblocksSetLevel struct {
 
 func (s *SoblocksSetLevel) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 28))
-	binary.Write(b, binary.LittleEndian, s.Speed)
-	binary.Write(b, binary.LittleEndian, s.SpeedUp)
-	binary.Write(b, binary.LittleEndian, s.FallSpeed)
-	binary.Write(b, binary.LittleEndian, s.RemoveSpeed)
-	binary.Write(b, binary.LittleEndian, s.Bonus)
-	binary.Write(b, binary.LittleEndian, s.ComboTime)
-	binary.Write(b, binary.LittleEndian, s.MultiTime)
 	return b.Bytes()
 }
 
@@ -623,13 +590,6 @@ type SoblocksTimedDrop struct {
 
 func (s *SoblocksTimedDrop) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 28))
-	binary.Write(b, binary.LittleEndian, s.Index1)
-	binary.Write(b, binary.LittleEndian, s.Index2)
-	binary.Write(b, binary.LittleEndian, s.Index3)
-	binary.Write(b, binary.LittleEndian, s.Index4)
-	binary.Write(b, binary.LittleEndian, s.Index5)
-	binary.Write(b, binary.LittleEndian, s.Index6)
-	binary.Write(b, binary.LittleEndian, s.Index7)
 	return b.Bytes()
 }
 
@@ -669,21 +629,4 @@ func (s *SoblocksWin) Marshal() []byte {
 
 func (s *SoblocksWin) Unmarshal(data []byte) error {
 	return nil
-}
-
-func writeString_25(b *bytes.Buffer, v string) {
-	binary.Write(b, binary.LittleEndian, uint16(len(v)))
-	b.WriteString(v)
-}
-
-func readString_25(buf *bytes.Reader) (string, error) {
-	var length uint16
-	if err := binary.Read(buf, binary.LittleEndian, &length); err != nil {
-		return "", err
-	}
-	data := make([]byte, length)
-	if _, err := buf.Read(data); err != nil {
-		return "", err
-	}
-	return *(*string)(unsafe.Pointer(&data)), nil
 }

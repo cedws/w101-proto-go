@@ -4,11 +4,11 @@ package game
 import (
 	"bytes"
 	"encoding/binary"
+	"github.com/cedws/w101-client-go/codegen"
 	"github.com/cedws/w101-client-go/proto"
-	"unsafe"
 )
 
-type gameService interface {
+type service interface {
 	ADCLICKTHROUGH(ADCLICKTHROUGH)
 	AddEffect(AddEffect)
 	AddItemRequest(AddItemRequest)
@@ -264,269 +264,261 @@ type gameService interface {
 	ZoneTransferRequest(ZoneTransferRequest)
 }
 
-type GameService struct {
-	gameService
-}
+func (Service) ADCLICKTHROUGH(ADCLICKTHROUGH)                                         {}
+func (Service) AddEffect(AddEffect)                                                   {}
+func (Service) AddItemRequest(AddItemRequest)                                         {}
+func (Service) AddObject(AddObject)                                                   {}
+func (Service) AddParticle(AddParticle)                                               {}
+func (Service) AddZoneTimer(AddZoneTimer)                                             {}
+func (Service) Attach(Attach)                                                         {}
+func (Service) AttachFailed(AttachFailed)                                             {}
+func (Service) AuctionHouseUpdate(AuctionHouseUpdate)                                 {}
+func (Service) Badges(Badges)                                                         {}
+func (Service) BanRsp(BanRsp)                                                         {}
+func (Service) BestFriend(BestFriend)                                                 {}
+func (Service) Blackball(Blackball)                                                   {}
+func (Service) BuddyDrop(BuddyDrop)                                                   {}
+func (Service) BuddyEntry(BuddyEntry)                                                 {}
+func (Service) BuddyListComplete(BuddyListComplete)                                   {}
+func (Service) BuddyRequestAccept(BuddyRequestAccept)                                 {}
+func (Service) BuddyRequestAcceptFwd(BuddyRequestAcceptFwd)                           {}
+func (Service) BuddyRequestAdd(BuddyRequestAdd)                                       {}
+func (Service) BuddyRequestAddFwd(BuddyRequestAddFwd)                                 {}
+func (Service) BuddyRequestDeny(BuddyRequestDeny)                                     {}
+func (Service) BuddyRequestDenyFwd(BuddyRequestDenyFwd)                               {}
+func (Service) BuddyRequestDrop(BuddyRequestDrop)                                     {}
+func (Service) BuddyRequestError(BuddyRequestError)                                   {}
+func (Service) BuddyRequestList(BuddyRequestList)                                     {}
+func (Service) BuddyStats(BuddyStats)                                                 {}
+func (Service) BuddyStatusUpdate(BuddyStatusUpdate)                                   {}
+func (Service) BugReport(BugReport)                                                   {}
+func (Service) BugSubmitResponse(BugSubmitResponse)                                   {}
+func (Service) ChannelChat(ChannelChat)                                               {}
+func (Service) ChannelSubscription(ChannelSubscription)                               {}
+func (Service) ChatDiagnostics(ChatDiagnostics)                                       {}
+func (Service) ChatError(ChatError)                                                   {}
+func (Service) CheckSubscription(CheckSubscription)                                   {}
+func (Service) CheckMail(CheckMail)                                                   {}
+func (Service) ClientMove(ClientMove)                                                 {}
+func (Service) ClientMoveState(ClientMoveState)                                       {}
+func (Service) ClientNotifyText(ClientNotifyText)                                     {}
+func (Service) ClientTutorialEvent(ClientTutorialEvent)                               {}
+func (Service) ClientDisconnect(ClientDisconnect)                                     {}
+func (Service) ClientError(ClientError)                                               {}
+func (Service) CLIENTPROCESSTERMINATED(CLIENTPROCESSTERMINATED)                       {}
+func (Service) CombineInventoryItems(CombineInventoryItems)                           {}
+func (Service) Command(Command)                                                       {}
+func (Service) CommandResult(CommandResult)                                           {}
+func (Service) CompanionEffects(CompanionEffects)                                     {}
+func (Service) CoreEmote(CoreEmote)                                                   {}
+func (Service) CreateChannelResponse(CreateChannelResponse)                           {}
+func (Service) CREATESESSION(CREATESESSION)                                           {}
+func (Service) CSRBankItems(CSRBankItems)                                             {}
+func (Service) CSRBankItemsDone(CSRBankItemsDone)                                     {}
+func (Service) CSREditCharacter(CSREditCharacter)                                     {}
+func (Service) CSREditCharacterFailed(CSREditCharacterFailed)                         {}
+func (Service) CSRFinishedHouse(CSRFinishedHouse)                                     {}
+func (Service) CSRSearchList(CSRSearchList)                                           {}
+func (Service) CSRMailData(CSRMailData)                                               {}
+func (Service) CSRReceiveGifts(CSRReceiveGifts)                                       {}
+func (Service) DEBUGDELETEALLOBJECTS(DEBUGDELETEALLOBJECTS)                           {}
+func (Service) DeleteObject(DeleteObject)                                             {}
+func (Service) DeleteGift(DeleteGift)                                                 {}
+func (Service) DirectedChat(DirectedChat)                                             {}
+func (Service) DirectedChatByNameResponse(DirectedChatByNameResponse)                 {}
+func (Service) DirectedChatFail(DirectedChatFail)                                     {}
+func (Service) DirectedQuickChat(DirectedQuickChat)                                   {}
+func (Service) DirectedQuickChatExt(DirectedQuickChatExt)                             {}
+func (Service) DisconnectAfk(DisconnectAfk)                                           {}
+func (Service) DownloadBrowser(DownloadBrowser)                                       {}
+func (Service) DownloadPackage(DownloadPackage)                                       {}
+func (Service) DownloadPackageElement(DownloadPackageElement)                         {}
+func (Service) DynaModBehaviorUpdateMods(DynaModBehaviorUpdateMods)                   {}
+func (Service) DynaModDump(DynaModDump)                                               {}
+func (Service) EnterState(EnterState)                                                 {}
+func (Service) EquipItem(EquipItem)                                                   {}
+func (Service) EquipmentBehaviorEquipItem(EquipmentBehaviorEquipItem)                 {}
+func (Service) EquipmentBehaviorPublicEquipItem(EquipmentBehaviorPublicEquipItem)     {}
+func (Service) EquipmentBehaviorPublicUnequipItem(EquipmentBehaviorPublicUnequipItem) {}
+func (Service) EquipmentBehaviorUnequipItem(EquipmentBehaviorUnequipItem)             {}
+func (Service) FeedInventoryItem(FeedInventoryItem)                                   {}
+func (Service) FINDSESSIONS(FINDSESSIONS)                                             {}
+func (Service) FINDSESSIONPLAYERS(FINDSESSIONPLAYERS)                                 {}
+func (Service) GenericGame(GenericGame)                                               {}
+func (Service) GetLadder(GetLadder)                                                   {}
+func (Service) GETRANKINGS(GETRANKINGS)                                               {}
+func (Service) GiftRedeemed(GiftRedeemed)                                             {}
+func (Service) GotoPlayer(GotoPlayer)                                                 {}
+func (Service) GotoPlayerResponse(GotoPlayerResponse)                                 {}
+func (Service) HarassmentReport(HarassmentReport)                                     {}
+func (Service) IgnoreAdd(IgnoreAdd)                                                   {}
+func (Service) IgnoreDrop(IgnoreDrop)                                                 {}
+func (Service) IgnoreList(IgnoreList)                                                 {}
+func (Service) InteractObject(InteractObject)                                         {}
+func (Service) InteractOption(InteractOption)                                         {}
+func (Service) INVENTORYBEHAVIORADDITEM(INVENTORYBEHAVIORADDITEM)                     {}
+func (Service) INVENTORYBEHAVIORREMOVEITEM(INVENTORYBEHAVIORREMOVEITEM)               {}
+func (Service) INVENTORYBEHAVIORTRADEITEM(INVENTORYBEHAVIORTRADEITEM)                 {}
+func (Service) InviteFriend(InviteFriend)                                             {}
+func (Service) InviteResponse(InviteResponse)                                         {}
+func (Service) JoinChannelResponse(JoinChannelResponse)                               {}
+func (Service) JOINSESSION(JOINSESSION)                                               {}
+func (Service) Jump(Jump)                                                             {}
+func (Service) KILLCLIENTPROCESS(KILLCLIENTPROCESS)                                   {}
+func (Service) LADDER(LADDER)                                                         {}
+func (Service) LeaveChannelResponse(LeaveChannelResponse)                             {}
+func (Service) LeaveHousingLot(LeaveHousingLot)                                       {}
+func (Service) LeaveServiceRange(LeaveServiceRange)                                   {}
+func (Service) LeaveState(LeaveState)                                                 {}
+func (Service) LOADSAVEOBJECTS(LOADSAVEOBJECTS)                                       {}
+func (Service) LoginComplete(LoginComplete)                                           {}
+func (Service) MailData(MailData)                                                     {}
+func (Service) MarkLocation(MarkLocation)                                             {}
+func (Service) MarkLocationResponse(MarkLocationResponse)                             {}
+func (Service) MatchAward(MatchAward)                                                 {}
+func (Service) MatchInvite(MatchInvite)                                               {}
+func (Service) MatchMakerUpdate(MatchMakerUpdate)                                     {}
+func (Service) MatchReady(MatchReady)                                                 {}
+func (Service) MatchResult(MatchResult)                                               {}
+func (Service) MESSAGEPROCESS(MESSAGEPROCESS)                                         {}
+func (Service) MoveCorrection(MoveCorrection)                                         {}
+func (Service) MoveState(MoveState)                                                   {}
+func (Service) Mute(Mute)                                                             {}
+func (Service) MuteRsp(MuteRsp)                                                       {}
+func (Service) NewObject(NewObject)                                                   {}
+func (Service) NewSysStats(NewSysStats)                                               {}
+func (Service) NewTickCnt(NewTickCnt)                                                 {}
+func (Service) NewTourneyRewards(NewTourneyRewards)                                   {}
+func (Service) NewMail(NewMail)                                                       {}
+func (Service) NotifyChannelInstance(NotifyChannelInstance)                           {}
+func (Service) NotifyGift(NotifyGift)                                                 {}
+func (Service) NotMuted(NotMuted)                                                     {}
+func (Service) NotAfk(NotAfk)                                                         {}
+func (Service) NPCSpeech(NPCSpeech)                                                   {}
+func (Service) ObjectInfoQuery(ObjectInfoQuery)                                       {}
+func (Service) PartyDisband(PartyDisband)                                             {}
+func (Service) PartyJoinFailed(PartyJoinFailed)                                       {}
+func (Service) PartyJoinNotification(PartyJoinNotification)                           {}
+func (Service) PartyLeave(PartyLeave)                                                 {}
+func (Service) PartyLeaveNotification(PartyLeaveNotification)                         {}
+func (Service) PartyLevelUp(PartyLevelUp)                                             {}
+func (Service) PartyLevelUpUpdate(PartyLevelUpUpdate)                                 {}
+func (Service) PartyMultiPlayerMountEquip(PartyMultiPlayerMountEquip)                 {}
+func (Service) PartyMultiPlayerMountEquipUpdate(PartyMultiPlayerMountEquipUpdate)     {}
+func (Service) PartyMultiPlayerMountJoin(PartyMultiPlayerMountJoin)                   {}
+func (Service) PartyMultiPlayerMountJoinUpdate(PartyMultiPlayerMountJoinUpdate)       {}
+func (Service) PartyRequestAccept(PartyRequestAccept)                                 {}
+func (Service) PartyRequestDecline(PartyRequestDecline)                               {}
+func (Service) PartyRequestInvite(PartyRequestInvite)                                 {}
+func (Service) PartyRequestJoin(PartyRequestJoin)                                     {}
+func (Service) PartyRequestMemberZones(PartyRequestMemberZones)                       {}
+func (Service) PartyRequestResponse(PartyRequestResponse)                             {}
+func (Service) PartyRequestTimeout(PartyRequestTimeout)                               {}
+func (Service) PartySubmitMemberZones(PartySubmitMemberZones)                         {}
+func (Service) PartyUpdate(PartyUpdate)                                               {}
+func (Service) PartyZoneRequest(PartyZoneRequest)                                     {}
+func (Service) PartyZoneRequestResponse(PartyZoneRequestResponse)                     {}
+func (Service) PickUpObject(PickUpObject)                                             {}
+func (Service) PlaceObject(PlaceObject)                                               {}
+func (Service) PlayCinematic(PlayCinematic)                                           {}
+func (Service) PlayerBlackballedAlert(PlayerBlackballedAlert)                         {}
+func (Service) PlayerReadyAck(PlayerReadyAck)                                         {}
+func (Service) PlaySound(PlaySound)                                                   {}
+func (Service) PostZoneEventFromClient(PostZoneEventFromClient)                       {}
+func (Service) PreviewIsland(PreviewIsland)                                           {}
+func (Service) PvPUpdateInfo(PvPUpdateInfo)                                           {}
+func (Service) QueryLogout(QueryLogout)                                               {}
+func (Service) RadialChat(RadialChat)                                                 {}
+func (Service) RadialQuickChat(RadialQuickChat)                                       {}
+func (Service) RadialQuickChatExt(RadialQuickChatExt)                                 {}
+func (Service) RadialZoneClusterQuickChat(RadialZoneClusterQuickChat)                 {}
+func (Service) RANKING(RANKING)                                                       {}
+func (Service) RealmInfoQuery(RealmInfoQuery)                                         {}
+func (Service) RecallLocation(RecallLocation)                                         {}
+func (Service) ReceiveGifts(ReceiveGifts)                                             {}
+func (Service) ReceivePromotions(ReceivePromotions)                                   {}
+func (Service) RedeemGift(RedeemGift)                                                 {}
+func (Service) RedeemMailGift(RedeemMailGift)                                         {}
+func (Service) RedeemMailGiftResponse(RedeemMailGiftResponse)                         {}
+func (Service) ReleaseDelay(ReleaseDelay)                                             {}
+func (Service) ReloadTemplateDir(ReloadTemplateDir)                                   {}
+func (Service) RemovedShopper(RemovedShopper)                                         {}
+func (Service) RemoveEffect(RemoveEffect)                                             {}
+func (Service) RemoveItemRequest(RemoveItemRequest)                                   {}
+func (Service) RemoveObject(RemoveObject)                                             {}
+func (Service) RemoveParticle(RemoveParticle)                                         {}
+func (Service) RemoveZoneTimer(RemoveZoneTimer)                                       {}
+func (Service) ReportAdTakeover(ReportAdTakeover)                                     {}
+func (Service) ReqAskServer(ReqAskServer)                                             {}
+func (Service) ReqChatDiagnostics(ReqChatDiagnostics)                                 {}
+func (Service) RequestAdvanceChannelInstance(RequestAdvanceChannelInstance)           {}
+func (Service) RequestChatCode(RequestChatCode)                                       {}
+func (Service) RequestCreateChannel(RequestCreateChannel)                             {}
+func (Service) RequestDirectedChat(RequestDirectedChat)                               {}
+func (Service) RequestDirectedChatByName(RequestDirectedChatByName)                   {}
+func (Service) RequestDirectedQuickChat(RequestDirectedQuickChat)                     {}
+func (Service) RequestDirectedQuickChatExt(RequestDirectedQuickChatExt)               {}
+func (Service) RequestJoinChannel(RequestJoinChannel)                                 {}
+func (Service) RequestJoinChannelByName(RequestJoinChannelByName)                     {}
+func (Service) RequestLeaveChannel(RequestLeaveChannel)                               {}
+func (Service) RequestLeaveChannelByName(RequestLeaveChannelByName)                   {}
+func (Service) RequestMaxFriends(RequestMaxFriends)                                   {}
+func (Service) RequestRadialChat(RequestRadialChat)                                   {}
+func (Service) RequestRadialFriendChat(RequestRadialFriendChat)                       {}
+func (Service) RequestRadialFriendQuickChat(RequestRadialFriendQuickChat)             {}
+func (Service) RequestRadialOwnerChat(RequestRadialOwnerChat)                         {}
+func (Service) RequestRadialQuickChat(RequestRadialQuickChat)                         {}
+func (Service) RequestRadialQuickChatExt(RequestRadialQuickChatExt)                   {}
+func (Service) RequestSession(RequestSession)                                         {}
+func (Service) RequestZoneClusterQuickChat(RequestZoneClusterQuickChat)               {}
+func (Service) RequestGifts(RequestGifts)                                             {}
+func (Service) RequestPromotions(RequestPromotions)                                   {}
+func (Service) RestoreCharRsp(RestoreCharRsp)                                         {}
+func (Service) RetrieveMail(RetrieveMail)                                             {}
+func (Service) RetryTeleport(RetryTeleport)                                           {}
+func (Service) Script(Script)                                                         {}
+func (Service) SelectBadge(SelectBadge)                                               {}
+func (Service) SendChatCode(SendChatCode)                                             {}
+func (Service) SendInteractOptions(SendInteractOptions)                               {}
+func (Service) SendText(SendText)                                                     {}
+func (Service) ServerMove(ServerMove)                                                 {}
+func (Service) ServerShutdown(ServerShutdown)                                         {}
+func (Service) ServerTeleport(ServerTeleport)                                         {}
+func (Service) ServerTransfer(ServerTransfer)                                         {}
+func (Service) ServerTutorialCommand(ServerTutorialCommand)                           {}
+func (Service) ServerError(ServerError)                                               {}
+func (Service) SERVERPROCESSRUNNING(SERVERPROCESSRUNNING)                             {}
+func (Service) SESSION(SESSION)                                                       {}
+func (Service) SESSIONERROR(SESSIONERROR)                                             {}
+func (Service) SESSIONPLAYER(SESSIONPLAYER)                                           {}
+func (Service) SETHOUSECUSTOMIZATION(SETHOUSECUSTOMIZATION)                           {}
+func (Service) SplitQuantity(SplitQuantity)                                           {}
+func (Service) StartStagedCinematic(StartStagedCinematic)                             {}
+func (Service) STARTCLIENTPROCESS(STARTCLIENTPROCESS)                                 {}
+func (Service) STARTSERVERPROCESS(STARTSERVERPROCESS)                                 {}
+func (Service) SuboptimalBracketResponse(SuboptimalBracketResponse)                   {}
+func (Service) TeleportToGameZone(TeleportToGameZone)                                 {}
+func (Service) TournamentUpdate(TournamentUpdate)                                     {}
+func (Service) TransferCharRsp(TransferCharRsp)                                       {}
+func (Service) TransferInstance(TransferInstance)                                     {}
+func (Service) TransferRealms(TransferRealms)                                         {}
+func (Service) TrashInventoryItem(TrashInventoryItem)                                 {}
+func (Service) Tutorials(Tutorials)                                                   {}
+func (Service) UpdateObject(UpdateObject)                                             {}
+func (Service) UpdateQuantity(UpdateQuantity)                                         {}
+func (Service) UpdateZoneCounter(UpdateZoneCounter)                                   {}
+func (Service) UpdateZoneTimer(UpdateZoneTimer)                                       {}
+func (Service) UseChatCode(UseChatCode)                                               {}
+func (Service) CSRViewAccount(CSRViewAccount)                                         {}
+func (Service) WizBang(WizBang)                                                       {}
+func (Service) ZombiePlayer(ZombiePlayer)                                             {}
+func (Service) ZONEEVENTTIMEREXPIRED(ZONEEVENTTIMEREXPIRED)                           {}
+func (Service) ZoneTransfer(ZoneTransfer)                                             {}
+func (Service) ZoneTransferAck(ZoneTransferAck)                                       {}
+func (Service) ZoneTransferNack(ZoneTransferNack)                                     {}
+func (Service) ZoneTransferRequest(ZoneTransferRequest)                               {}
 
-type GameClient struct {
-	c *proto.Client
-}
-
-func (l *GameService) ADCLICKTHROUGH(_ ADCLICKTHROUGH)                                         {}
-func (l *GameService) AddEffect(_ AddEffect)                                                   {}
-func (l *GameService) AddItemRequest(_ AddItemRequest)                                         {}
-func (l *GameService) AddObject(_ AddObject)                                                   {}
-func (l *GameService) AddParticle(_ AddParticle)                                               {}
-func (l *GameService) AddZoneTimer(_ AddZoneTimer)                                             {}
-func (l *GameService) Attach(_ Attach)                                                         {}
-func (l *GameService) AttachFailed(_ AttachFailed)                                             {}
-func (l *GameService) AuctionHouseUpdate(_ AuctionHouseUpdate)                                 {}
-func (l *GameService) Badges(_ Badges)                                                         {}
-func (l *GameService) BanRsp(_ BanRsp)                                                         {}
-func (l *GameService) BestFriend(_ BestFriend)                                                 {}
-func (l *GameService) Blackball(_ Blackball)                                                   {}
-func (l *GameService) BuddyDrop(_ BuddyDrop)                                                   {}
-func (l *GameService) BuddyEntry(_ BuddyEntry)                                                 {}
-func (l *GameService) BuddyListComplete(_ BuddyListComplete)                                   {}
-func (l *GameService) BuddyRequestAccept(_ BuddyRequestAccept)                                 {}
-func (l *GameService) BuddyRequestAcceptFwd(_ BuddyRequestAcceptFwd)                           {}
-func (l *GameService) BuddyRequestAdd(_ BuddyRequestAdd)                                       {}
-func (l *GameService) BuddyRequestAddFwd(_ BuddyRequestAddFwd)                                 {}
-func (l *GameService) BuddyRequestDeny(_ BuddyRequestDeny)                                     {}
-func (l *GameService) BuddyRequestDenyFwd(_ BuddyRequestDenyFwd)                               {}
-func (l *GameService) BuddyRequestDrop(_ BuddyRequestDrop)                                     {}
-func (l *GameService) BuddyRequestError(_ BuddyRequestError)                                   {}
-func (l *GameService) BuddyRequestList(_ BuddyRequestList)                                     {}
-func (l *GameService) BuddyStats(_ BuddyStats)                                                 {}
-func (l *GameService) BuddyStatusUpdate(_ BuddyStatusUpdate)                                   {}
-func (l *GameService) BugReport(_ BugReport)                                                   {}
-func (l *GameService) BugSubmitResponse(_ BugSubmitResponse)                                   {}
-func (l *GameService) ChannelChat(_ ChannelChat)                                               {}
-func (l *GameService) ChannelSubscription(_ ChannelSubscription)                               {}
-func (l *GameService) ChatDiagnostics(_ ChatDiagnostics)                                       {}
-func (l *GameService) ChatError(_ ChatError)                                                   {}
-func (l *GameService) CheckSubscription(_ CheckSubscription)                                   {}
-func (l *GameService) CheckMail(_ CheckMail)                                                   {}
-func (l *GameService) ClientMove(_ ClientMove)                                                 {}
-func (l *GameService) ClientMoveState(_ ClientMoveState)                                       {}
-func (l *GameService) ClientNotifyText(_ ClientNotifyText)                                     {}
-func (l *GameService) ClientTutorialEvent(_ ClientTutorialEvent)                               {}
-func (l *GameService) ClientDisconnect(_ ClientDisconnect)                                     {}
-func (l *GameService) ClientError(_ ClientError)                                               {}
-func (l *GameService) CLIENTPROCESSTERMINATED(_ CLIENTPROCESSTERMINATED)                       {}
-func (l *GameService) CombineInventoryItems(_ CombineInventoryItems)                           {}
-func (l *GameService) Command(_ Command)                                                       {}
-func (l *GameService) CommandResult(_ CommandResult)                                           {}
-func (l *GameService) CompanionEffects(_ CompanionEffects)                                     {}
-func (l *GameService) CoreEmote(_ CoreEmote)                                                   {}
-func (l *GameService) CreateChannelResponse(_ CreateChannelResponse)                           {}
-func (l *GameService) CREATESESSION(_ CREATESESSION)                                           {}
-func (l *GameService) CSRBankItems(_ CSRBankItems)                                             {}
-func (l *GameService) CSRBankItemsDone(_ CSRBankItemsDone)                                     {}
-func (l *GameService) CSREditCharacter(_ CSREditCharacter)                                     {}
-func (l *GameService) CSREditCharacterFailed(_ CSREditCharacterFailed)                         {}
-func (l *GameService) CSRFinishedHouse(_ CSRFinishedHouse)                                     {}
-func (l *GameService) CSRSearchList(_ CSRSearchList)                                           {}
-func (l *GameService) CSRMailData(_ CSRMailData)                                               {}
-func (l *GameService) CSRReceiveGifts(_ CSRReceiveGifts)                                       {}
-func (l *GameService) DEBUGDELETEALLOBJECTS(_ DEBUGDELETEALLOBJECTS)                           {}
-func (l *GameService) DeleteObject(_ DeleteObject)                                             {}
-func (l *GameService) DeleteGift(_ DeleteGift)                                                 {}
-func (l *GameService) DirectedChat(_ DirectedChat)                                             {}
-func (l *GameService) DirectedChatByNameResponse(_ DirectedChatByNameResponse)                 {}
-func (l *GameService) DirectedChatFail(_ DirectedChatFail)                                     {}
-func (l *GameService) DirectedQuickChat(_ DirectedQuickChat)                                   {}
-func (l *GameService) DirectedQuickChatExt(_ DirectedQuickChatExt)                             {}
-func (l *GameService) DisconnectAfk(_ DisconnectAfk)                                           {}
-func (l *GameService) DownloadBrowser(_ DownloadBrowser)                                       {}
-func (l *GameService) DownloadPackage(_ DownloadPackage)                                       {}
-func (l *GameService) DownloadPackageElement(_ DownloadPackageElement)                         {}
-func (l *GameService) DynaModBehaviorUpdateMods(_ DynaModBehaviorUpdateMods)                   {}
-func (l *GameService) DynaModDump(_ DynaModDump)                                               {}
-func (l *GameService) EnterState(_ EnterState)                                                 {}
-func (l *GameService) EquipItem(_ EquipItem)                                                   {}
-func (l *GameService) EquipmentBehaviorEquipItem(_ EquipmentBehaviorEquipItem)                 {}
-func (l *GameService) EquipmentBehaviorPublicEquipItem(_ EquipmentBehaviorPublicEquipItem)     {}
-func (l *GameService) EquipmentBehaviorPublicUnequipItem(_ EquipmentBehaviorPublicUnequipItem) {}
-func (l *GameService) EquipmentBehaviorUnequipItem(_ EquipmentBehaviorUnequipItem)             {}
-func (l *GameService) FeedInventoryItem(_ FeedInventoryItem)                                   {}
-func (l *GameService) FINDSESSIONS(_ FINDSESSIONS)                                             {}
-func (l *GameService) FINDSESSIONPLAYERS(_ FINDSESSIONPLAYERS)                                 {}
-func (l *GameService) GenericGame(_ GenericGame)                                               {}
-func (l *GameService) GetLadder(_ GetLadder)                                                   {}
-func (l *GameService) GETRANKINGS(_ GETRANKINGS)                                               {}
-func (l *GameService) GiftRedeemed(_ GiftRedeemed)                                             {}
-func (l *GameService) GotoPlayer(_ GotoPlayer)                                                 {}
-func (l *GameService) GotoPlayerResponse(_ GotoPlayerResponse)                                 {}
-func (l *GameService) HarassmentReport(_ HarassmentReport)                                     {}
-func (l *GameService) IgnoreAdd(_ IgnoreAdd)                                                   {}
-func (l *GameService) IgnoreDrop(_ IgnoreDrop)                                                 {}
-func (l *GameService) IgnoreList(_ IgnoreList)                                                 {}
-func (l *GameService) InteractObject(_ InteractObject)                                         {}
-func (l *GameService) InteractOption(_ InteractOption)                                         {}
-func (l *GameService) INVENTORYBEHAVIORADDITEM(_ INVENTORYBEHAVIORADDITEM)                     {}
-func (l *GameService) INVENTORYBEHAVIORREMOVEITEM(_ INVENTORYBEHAVIORREMOVEITEM)               {}
-func (l *GameService) INVENTORYBEHAVIORTRADEITEM(_ INVENTORYBEHAVIORTRADEITEM)                 {}
-func (l *GameService) InviteFriend(_ InviteFriend)                                             {}
-func (l *GameService) InviteResponse(_ InviteResponse)                                         {}
-func (l *GameService) JoinChannelResponse(_ JoinChannelResponse)                               {}
-func (l *GameService) JOINSESSION(_ JOINSESSION)                                               {}
-func (l *GameService) Jump(_ Jump)                                                             {}
-func (l *GameService) KILLCLIENTPROCESS(_ KILLCLIENTPROCESS)                                   {}
-func (l *GameService) LADDER(_ LADDER)                                                         {}
-func (l *GameService) LeaveChannelResponse(_ LeaveChannelResponse)                             {}
-func (l *GameService) LeaveHousingLot(_ LeaveHousingLot)                                       {}
-func (l *GameService) LeaveServiceRange(_ LeaveServiceRange)                                   {}
-func (l *GameService) LeaveState(_ LeaveState)                                                 {}
-func (l *GameService) LOADSAVEOBJECTS(_ LOADSAVEOBJECTS)                                       {}
-func (l *GameService) LoginComplete(_ LoginComplete)                                           {}
-func (l *GameService) MailData(_ MailData)                                                     {}
-func (l *GameService) MarkLocation(_ MarkLocation)                                             {}
-func (l *GameService) MarkLocationResponse(_ MarkLocationResponse)                             {}
-func (l *GameService) MatchAward(_ MatchAward)                                                 {}
-func (l *GameService) MatchInvite(_ MatchInvite)                                               {}
-func (l *GameService) MatchMakerUpdate(_ MatchMakerUpdate)                                     {}
-func (l *GameService) MatchReady(_ MatchReady)                                                 {}
-func (l *GameService) MatchResult(_ MatchResult)                                               {}
-func (l *GameService) MESSAGEPROCESS(_ MESSAGEPROCESS)                                         {}
-func (l *GameService) MoveCorrection(_ MoveCorrection)                                         {}
-func (l *GameService) MoveState(_ MoveState)                                                   {}
-func (l *GameService) Mute(_ Mute)                                                             {}
-func (l *GameService) MuteRsp(_ MuteRsp)                                                       {}
-func (l *GameService) NewObject(_ NewObject)                                                   {}
-func (l *GameService) NewSysStats(_ NewSysStats)                                               {}
-func (l *GameService) NewTickCnt(_ NewTickCnt)                                                 {}
-func (l *GameService) NewTourneyRewards(_ NewTourneyRewards)                                   {}
-func (l *GameService) NewMail(_ NewMail)                                                       {}
-func (l *GameService) NotifyChannelInstance(_ NotifyChannelInstance)                           {}
-func (l *GameService) NotifyGift(_ NotifyGift)                                                 {}
-func (l *GameService) NotMuted(_ NotMuted)                                                     {}
-func (l *GameService) NotAfk(_ NotAfk)                                                         {}
-func (l *GameService) NPCSpeech(_ NPCSpeech)                                                   {}
-func (l *GameService) ObjectInfoQuery(_ ObjectInfoQuery)                                       {}
-func (l *GameService) PartyDisband(_ PartyDisband)                                             {}
-func (l *GameService) PartyJoinFailed(_ PartyJoinFailed)                                       {}
-func (l *GameService) PartyJoinNotification(_ PartyJoinNotification)                           {}
-func (l *GameService) PartyLeave(_ PartyLeave)                                                 {}
-func (l *GameService) PartyLeaveNotification(_ PartyLeaveNotification)                         {}
-func (l *GameService) PartyLevelUp(_ PartyLevelUp)                                             {}
-func (l *GameService) PartyLevelUpUpdate(_ PartyLevelUpUpdate)                                 {}
-func (l *GameService) PartyMultiPlayerMountEquip(_ PartyMultiPlayerMountEquip)                 {}
-func (l *GameService) PartyMultiPlayerMountEquipUpdate(_ PartyMultiPlayerMountEquipUpdate)     {}
-func (l *GameService) PartyMultiPlayerMountJoin(_ PartyMultiPlayerMountJoin)                   {}
-func (l *GameService) PartyMultiPlayerMountJoinUpdate(_ PartyMultiPlayerMountJoinUpdate)       {}
-func (l *GameService) PartyRequestAccept(_ PartyRequestAccept)                                 {}
-func (l *GameService) PartyRequestDecline(_ PartyRequestDecline)                               {}
-func (l *GameService) PartyRequestInvite(_ PartyRequestInvite)                                 {}
-func (l *GameService) PartyRequestJoin(_ PartyRequestJoin)                                     {}
-func (l *GameService) PartyRequestMemberZones(_ PartyRequestMemberZones)                       {}
-func (l *GameService) PartyRequestResponse(_ PartyRequestResponse)                             {}
-func (l *GameService) PartyRequestTimeout(_ PartyRequestTimeout)                               {}
-func (l *GameService) PartySubmitMemberZones(_ PartySubmitMemberZones)                         {}
-func (l *GameService) PartyUpdate(_ PartyUpdate)                                               {}
-func (l *GameService) PartyZoneRequest(_ PartyZoneRequest)                                     {}
-func (l *GameService) PartyZoneRequestResponse(_ PartyZoneRequestResponse)                     {}
-func (l *GameService) PickUpObject(_ PickUpObject)                                             {}
-func (l *GameService) PlaceObject(_ PlaceObject)                                               {}
-func (l *GameService) PlayCinematic(_ PlayCinematic)                                           {}
-func (l *GameService) PlayerBlackballedAlert(_ PlayerBlackballedAlert)                         {}
-func (l *GameService) PlayerReadyAck(_ PlayerReadyAck)                                         {}
-func (l *GameService) PlaySound(_ PlaySound)                                                   {}
-func (l *GameService) PostZoneEventFromClient(_ PostZoneEventFromClient)                       {}
-func (l *GameService) PreviewIsland(_ PreviewIsland)                                           {}
-func (l *GameService) PvPUpdateInfo(_ PvPUpdateInfo)                                           {}
-func (l *GameService) QueryLogout(_ QueryLogout)                                               {}
-func (l *GameService) RadialChat(_ RadialChat)                                                 {}
-func (l *GameService) RadialQuickChat(_ RadialQuickChat)                                       {}
-func (l *GameService) RadialQuickChatExt(_ RadialQuickChatExt)                                 {}
-func (l *GameService) RadialZoneClusterQuickChat(_ RadialZoneClusterQuickChat)                 {}
-func (l *GameService) RANKING(_ RANKING)                                                       {}
-func (l *GameService) RealmInfoQuery(_ RealmInfoQuery)                                         {}
-func (l *GameService) RecallLocation(_ RecallLocation)                                         {}
-func (l *GameService) ReceiveGifts(_ ReceiveGifts)                                             {}
-func (l *GameService) ReceivePromotions(_ ReceivePromotions)                                   {}
-func (l *GameService) RedeemGift(_ RedeemGift)                                                 {}
-func (l *GameService) RedeemMailGift(_ RedeemMailGift)                                         {}
-func (l *GameService) RedeemMailGiftResponse(_ RedeemMailGiftResponse)                         {}
-func (l *GameService) ReleaseDelay(_ ReleaseDelay)                                             {}
-func (l *GameService) ReloadTemplateDir(_ ReloadTemplateDir)                                   {}
-func (l *GameService) RemovedShopper(_ RemovedShopper)                                         {}
-func (l *GameService) RemoveEffect(_ RemoveEffect)                                             {}
-func (l *GameService) RemoveItemRequest(_ RemoveItemRequest)                                   {}
-func (l *GameService) RemoveObject(_ RemoveObject)                                             {}
-func (l *GameService) RemoveParticle(_ RemoveParticle)                                         {}
-func (l *GameService) RemoveZoneTimer(_ RemoveZoneTimer)                                       {}
-func (l *GameService) ReportAdTakeover(_ ReportAdTakeover)                                     {}
-func (l *GameService) ReqAskServer(_ ReqAskServer)                                             {}
-func (l *GameService) ReqChatDiagnostics(_ ReqChatDiagnostics)                                 {}
-func (l *GameService) RequestAdvanceChannelInstance(_ RequestAdvanceChannelInstance)           {}
-func (l *GameService) RequestChatCode(_ RequestChatCode)                                       {}
-func (l *GameService) RequestCreateChannel(_ RequestCreateChannel)                             {}
-func (l *GameService) RequestDirectedChat(_ RequestDirectedChat)                               {}
-func (l *GameService) RequestDirectedChatByName(_ RequestDirectedChatByName)                   {}
-func (l *GameService) RequestDirectedQuickChat(_ RequestDirectedQuickChat)                     {}
-func (l *GameService) RequestDirectedQuickChatExt(_ RequestDirectedQuickChatExt)               {}
-func (l *GameService) RequestJoinChannel(_ RequestJoinChannel)                                 {}
-func (l *GameService) RequestJoinChannelByName(_ RequestJoinChannelByName)                     {}
-func (l *GameService) RequestLeaveChannel(_ RequestLeaveChannel)                               {}
-func (l *GameService) RequestLeaveChannelByName(_ RequestLeaveChannelByName)                   {}
-func (l *GameService) RequestMaxFriends(_ RequestMaxFriends)                                   {}
-func (l *GameService) RequestRadialChat(_ RequestRadialChat)                                   {}
-func (l *GameService) RequestRadialFriendChat(_ RequestRadialFriendChat)                       {}
-func (l *GameService) RequestRadialFriendQuickChat(_ RequestRadialFriendQuickChat)             {}
-func (l *GameService) RequestRadialOwnerChat(_ RequestRadialOwnerChat)                         {}
-func (l *GameService) RequestRadialQuickChat(_ RequestRadialQuickChat)                         {}
-func (l *GameService) RequestRadialQuickChatExt(_ RequestRadialQuickChatExt)                   {}
-func (l *GameService) RequestSession(_ RequestSession)                                         {}
-func (l *GameService) RequestZoneClusterQuickChat(_ RequestZoneClusterQuickChat)               {}
-func (l *GameService) RequestGifts(_ RequestGifts)                                             {}
-func (l *GameService) RequestPromotions(_ RequestPromotions)                                   {}
-func (l *GameService) RestoreCharRsp(_ RestoreCharRsp)                                         {}
-func (l *GameService) RetrieveMail(_ RetrieveMail)                                             {}
-func (l *GameService) RetryTeleport(_ RetryTeleport)                                           {}
-func (l *GameService) Script(_ Script)                                                         {}
-func (l *GameService) SelectBadge(_ SelectBadge)                                               {}
-func (l *GameService) SendChatCode(_ SendChatCode)                                             {}
-func (l *GameService) SendInteractOptions(_ SendInteractOptions)                               {}
-func (l *GameService) SendText(_ SendText)                                                     {}
-func (l *GameService) ServerMove(_ ServerMove)                                                 {}
-func (l *GameService) ServerShutdown(_ ServerShutdown)                                         {}
-func (l *GameService) ServerTeleport(_ ServerTeleport)                                         {}
-func (l *GameService) ServerTransfer(_ ServerTransfer)                                         {}
-func (l *GameService) ServerTutorialCommand(_ ServerTutorialCommand)                           {}
-func (l *GameService) ServerError(_ ServerError)                                               {}
-func (l *GameService) SERVERPROCESSRUNNING(_ SERVERPROCESSRUNNING)                             {}
-func (l *GameService) SESSION(_ SESSION)                                                       {}
-func (l *GameService) SESSIONERROR(_ SESSIONERROR)                                             {}
-func (l *GameService) SESSIONPLAYER(_ SESSIONPLAYER)                                           {}
-func (l *GameService) SETHOUSECUSTOMIZATION(_ SETHOUSECUSTOMIZATION)                           {}
-func (l *GameService) SplitQuantity(_ SplitQuantity)                                           {}
-func (l *GameService) StartStagedCinematic(_ StartStagedCinematic)                             {}
-func (l *GameService) STARTCLIENTPROCESS(_ STARTCLIENTPROCESS)                                 {}
-func (l *GameService) STARTSERVERPROCESS(_ STARTSERVERPROCESS)                                 {}
-func (l *GameService) SuboptimalBracketResponse(_ SuboptimalBracketResponse)                   {}
-func (l *GameService) TeleportToGameZone(_ TeleportToGameZone)                                 {}
-func (l *GameService) TournamentUpdate(_ TournamentUpdate)                                     {}
-func (l *GameService) TransferCharRsp(_ TransferCharRsp)                                       {}
-func (l *GameService) TransferInstance(_ TransferInstance)                                     {}
-func (l *GameService) TransferRealms(_ TransferRealms)                                         {}
-func (l *GameService) TrashInventoryItem(_ TrashInventoryItem)                                 {}
-func (l *GameService) Tutorials(_ Tutorials)                                                   {}
-func (l *GameService) UpdateObject(_ UpdateObject)                                             {}
-func (l *GameService) UpdateQuantity(_ UpdateQuantity)                                         {}
-func (l *GameService) UpdateZoneCounter(_ UpdateZoneCounter)                                   {}
-func (l *GameService) UpdateZoneTimer(_ UpdateZoneTimer)                                       {}
-func (l *GameService) UseChatCode(_ UseChatCode)                                               {}
-func (l *GameService) CSRViewAccount(_ CSRViewAccount)                                         {}
-func (l *GameService) WizBang(_ WizBang)                                                       {}
-func (l *GameService) ZombiePlayer(_ ZombiePlayer)                                             {}
-func (l *GameService) ZONEEVENTTIMEREXPIRED(_ ZONEEVENTTIMEREXPIRED)                           {}
-func (l *GameService) ZoneTransfer(_ ZoneTransfer)                                             {}
-func (l *GameService) ZoneTransferAck(_ ZoneTransferAck)                                       {}
-func (l *GameService) ZoneTransferNack(_ ZoneTransferNack)                                     {}
-func (l *GameService) ZoneTransferRequest(_ ZoneTransferRequest)                               {}
-
-func RegisterGameService(r *proto.MessageRouter, s gameService) {
+func RegisterService(r *proto.MessageRouter, s service) {
 	proto.RegisterMessageHandler(r, 5, 1, s.ADCLICKTHROUGH)
 	proto.RegisterMessageHandler(r, 5, 2, s.AddEffect)
 	proto.RegisterMessageHandler(r, 5, 3, s.AddItemRequest)
@@ -782,1022 +774,1029 @@ func RegisterGameService(r *proto.MessageRouter, s gameService) {
 	proto.RegisterMessageHandler(r, 5, 253, s.ZoneTransferRequest)
 }
 
-func NewGameClient(c *proto.Client) GameClient {
-	return GameClient{c}
+func NewClient(c *proto.Client) Client {
+	return Client{c}
 }
 
-func (c GameClient) ADCLICKTHROUGH(m *ADCLICKTHROUGH) error {
+func (c Client) ADCLICKTHROUGH(m *ADCLICKTHROUGH) error {
 	return c.c.WriteMessage(5, 1, m)
 }
 
-func (c GameClient) AddEffect(m *AddEffect) error {
+func (c Client) AddEffect(m *AddEffect) error {
 	return c.c.WriteMessage(5, 2, m)
 }
 
-func (c GameClient) AddItemRequest(m *AddItemRequest) error {
+func (c Client) AddItemRequest(m *AddItemRequest) error {
 	return c.c.WriteMessage(5, 3, m)
 }
 
-func (c GameClient) AddObject(m *AddObject) error {
+func (c Client) AddObject(m *AddObject) error {
 	return c.c.WriteMessage(5, 4, m)
 }
 
-func (c GameClient) AddParticle(m *AddParticle) error {
+func (c Client) AddParticle(m *AddParticle) error {
 	return c.c.WriteMessage(5, 5, m)
 }
 
-func (c GameClient) AddZoneTimer(m *AddZoneTimer) error {
+func (c Client) AddZoneTimer(m *AddZoneTimer) error {
 	return c.c.WriteMessage(5, 6, m)
 }
 
-func (c GameClient) Attach(m *Attach) error {
+func (c Client) Attach(m *Attach) error {
 	return c.c.WriteMessage(5, 7, m)
 }
 
-func (c GameClient) AttachFailed(m *AttachFailed) error {
+func (c Client) AttachFailed(m *AttachFailed) error {
 	return c.c.WriteMessage(5, 8, m)
 }
 
-func (c GameClient) AuctionHouseUpdate(m *AuctionHouseUpdate) error {
+func (c Client) AuctionHouseUpdate(m *AuctionHouseUpdate) error {
 	return c.c.WriteMessage(5, 9, m)
 }
 
-func (c GameClient) Badges(m *Badges) error {
+func (c Client) Badges(m *Badges) error {
 	return c.c.WriteMessage(5, 10, m)
 }
 
-func (c GameClient) BanRsp(m *BanRsp) error {
+func (c Client) BanRsp(m *BanRsp) error {
 	return c.c.WriteMessage(5, 11, m)
 }
 
-func (c GameClient) BestFriend(m *BestFriend) error {
+func (c Client) BestFriend(m *BestFriend) error {
 	return c.c.WriteMessage(5, 12, m)
 }
 
-func (c GameClient) Blackball(m *Blackball) error {
+func (c Client) Blackball(m *Blackball) error {
 	return c.c.WriteMessage(5, 13, m)
 }
 
-func (c GameClient) BuddyDrop(m *BuddyDrop) error {
+func (c Client) BuddyDrop(m *BuddyDrop) error {
 	return c.c.WriteMessage(5, 14, m)
 }
 
-func (c GameClient) BuddyEntry(m *BuddyEntry) error {
+func (c Client) BuddyEntry(m *BuddyEntry) error {
 	return c.c.WriteMessage(5, 15, m)
 }
 
-func (c GameClient) BuddyListComplete(m *BuddyListComplete) error {
+func (c Client) BuddyListComplete(m *BuddyListComplete) error {
 	return c.c.WriteMessage(5, 16, m)
 }
 
-func (c GameClient) BuddyRequestAccept(m *BuddyRequestAccept) error {
+func (c Client) BuddyRequestAccept(m *BuddyRequestAccept) error {
 	return c.c.WriteMessage(5, 17, m)
 }
 
-func (c GameClient) BuddyRequestAcceptFwd(m *BuddyRequestAcceptFwd) error {
+func (c Client) BuddyRequestAcceptFwd(m *BuddyRequestAcceptFwd) error {
 	return c.c.WriteMessage(5, 18, m)
 }
 
-func (c GameClient) BuddyRequestAdd(m *BuddyRequestAdd) error {
+func (c Client) BuddyRequestAdd(m *BuddyRequestAdd) error {
 	return c.c.WriteMessage(5, 19, m)
 }
 
-func (c GameClient) BuddyRequestAddFwd(m *BuddyRequestAddFwd) error {
+func (c Client) BuddyRequestAddFwd(m *BuddyRequestAddFwd) error {
 	return c.c.WriteMessage(5, 20, m)
 }
 
-func (c GameClient) BuddyRequestDeny(m *BuddyRequestDeny) error {
+func (c Client) BuddyRequestDeny(m *BuddyRequestDeny) error {
 	return c.c.WriteMessage(5, 21, m)
 }
 
-func (c GameClient) BuddyRequestDenyFwd(m *BuddyRequestDenyFwd) error {
+func (c Client) BuddyRequestDenyFwd(m *BuddyRequestDenyFwd) error {
 	return c.c.WriteMessage(5, 22, m)
 }
 
-func (c GameClient) BuddyRequestDrop(m *BuddyRequestDrop) error {
+func (c Client) BuddyRequestDrop(m *BuddyRequestDrop) error {
 	return c.c.WriteMessage(5, 23, m)
 }
 
-func (c GameClient) BuddyRequestError(m *BuddyRequestError) error {
+func (c Client) BuddyRequestError(m *BuddyRequestError) error {
 	return c.c.WriteMessage(5, 24, m)
 }
 
-func (c GameClient) BuddyRequestList(m *BuddyRequestList) error {
+func (c Client) BuddyRequestList(m *BuddyRequestList) error {
 	return c.c.WriteMessage(5, 25, m)
 }
 
-func (c GameClient) BuddyStats(m *BuddyStats) error {
+func (c Client) BuddyStats(m *BuddyStats) error {
 	return c.c.WriteMessage(5, 26, m)
 }
 
-func (c GameClient) BuddyStatusUpdate(m *BuddyStatusUpdate) error {
+func (c Client) BuddyStatusUpdate(m *BuddyStatusUpdate) error {
 	return c.c.WriteMessage(5, 27, m)
 }
 
-func (c GameClient) BugReport(m *BugReport) error {
+func (c Client) BugReport(m *BugReport) error {
 	return c.c.WriteMessage(5, 28, m)
 }
 
-func (c GameClient) BugSubmitResponse(m *BugSubmitResponse) error {
+func (c Client) BugSubmitResponse(m *BugSubmitResponse) error {
 	return c.c.WriteMessage(5, 29, m)
 }
 
-func (c GameClient) ChannelChat(m *ChannelChat) error {
+func (c Client) ChannelChat(m *ChannelChat) error {
 	return c.c.WriteMessage(5, 30, m)
 }
 
-func (c GameClient) ChannelSubscription(m *ChannelSubscription) error {
+func (c Client) ChannelSubscription(m *ChannelSubscription) error {
 	return c.c.WriteMessage(5, 31, m)
 }
 
-func (c GameClient) ChatDiagnostics(m *ChatDiagnostics) error {
+func (c Client) ChatDiagnostics(m *ChatDiagnostics) error {
 	return c.c.WriteMessage(5, 32, m)
 }
 
-func (c GameClient) ChatError(m *ChatError) error {
+func (c Client) ChatError(m *ChatError) error {
 	return c.c.WriteMessage(5, 33, m)
 }
 
-func (c GameClient) CheckSubscription(m *CheckSubscription) error {
+func (c Client) CheckSubscription(m *CheckSubscription) error {
 	return c.c.WriteMessage(5, 34, m)
 }
 
-func (c GameClient) CheckMail(m *CheckMail) error {
+func (c Client) CheckMail(m *CheckMail) error {
 	return c.c.WriteMessage(5, 35, m)
 }
 
-func (c GameClient) ClientMove(m *ClientMove) error {
+func (c Client) ClientMove(m *ClientMove) error {
 	return c.c.WriteMessage(5, 36, m)
 }
 
-func (c GameClient) ClientMoveState(m *ClientMoveState) error {
+func (c Client) ClientMoveState(m *ClientMoveState) error {
 	return c.c.WriteMessage(5, 37, m)
 }
 
-func (c GameClient) ClientNotifyText(m *ClientNotifyText) error {
+func (c Client) ClientNotifyText(m *ClientNotifyText) error {
 	return c.c.WriteMessage(5, 38, m)
 }
 
-func (c GameClient) ClientTutorialEvent(m *ClientTutorialEvent) error {
+func (c Client) ClientTutorialEvent(m *ClientTutorialEvent) error {
 	return c.c.WriteMessage(5, 39, m)
 }
 
-func (c GameClient) ClientDisconnect(m *ClientDisconnect) error {
+func (c Client) ClientDisconnect(m *ClientDisconnect) error {
 	return c.c.WriteMessage(5, 40, m)
 }
 
-func (c GameClient) ClientError(m *ClientError) error {
+func (c Client) ClientError(m *ClientError) error {
 	return c.c.WriteMessage(5, 41, m)
 }
 
-func (c GameClient) CLIENTPROCESSTERMINATED(m *CLIENTPROCESSTERMINATED) error {
+func (c Client) CLIENTPROCESSTERMINATED(m *CLIENTPROCESSTERMINATED) error {
 	return c.c.WriteMessage(5, 42, m)
 }
 
-func (c GameClient) CombineInventoryItems(m *CombineInventoryItems) error {
+func (c Client) CombineInventoryItems(m *CombineInventoryItems) error {
 	return c.c.WriteMessage(5, 43, m)
 }
 
-func (c GameClient) Command(m *Command) error {
+func (c Client) Command(m *Command) error {
 	return c.c.WriteMessage(5, 44, m)
 }
 
-func (c GameClient) CommandResult(m *CommandResult) error {
+func (c Client) CommandResult(m *CommandResult) error {
 	return c.c.WriteMessage(5, 45, m)
 }
 
-func (c GameClient) CompanionEffects(m *CompanionEffects) error {
+func (c Client) CompanionEffects(m *CompanionEffects) error {
 	return c.c.WriteMessage(5, 46, m)
 }
 
-func (c GameClient) CoreEmote(m *CoreEmote) error {
+func (c Client) CoreEmote(m *CoreEmote) error {
 	return c.c.WriteMessage(5, 47, m)
 }
 
-func (c GameClient) CreateChannelResponse(m *CreateChannelResponse) error {
+func (c Client) CreateChannelResponse(m *CreateChannelResponse) error {
 	return c.c.WriteMessage(5, 48, m)
 }
 
-func (c GameClient) CREATESESSION(m *CREATESESSION) error {
+func (c Client) CREATESESSION(m *CREATESESSION) error {
 	return c.c.WriteMessage(5, 49, m)
 }
 
-func (c GameClient) CSRBankItems(m *CSRBankItems) error {
+func (c Client) CSRBankItems(m *CSRBankItems) error {
 	return c.c.WriteMessage(5, 50, m)
 }
 
-func (c GameClient) CSRBankItemsDone(m *CSRBankItemsDone) error {
+func (c Client) CSRBankItemsDone(m *CSRBankItemsDone) error {
 	return c.c.WriteMessage(5, 51, m)
 }
 
-func (c GameClient) CSREditCharacter(m *CSREditCharacter) error {
+func (c Client) CSREditCharacter(m *CSREditCharacter) error {
 	return c.c.WriteMessage(5, 52, m)
 }
 
-func (c GameClient) CSREditCharacterFailed(m *CSREditCharacterFailed) error {
+func (c Client) CSREditCharacterFailed(m *CSREditCharacterFailed) error {
 	return c.c.WriteMessage(5, 53, m)
 }
 
-func (c GameClient) CSRFinishedHouse(m *CSRFinishedHouse) error {
+func (c Client) CSRFinishedHouse(m *CSRFinishedHouse) error {
 	return c.c.WriteMessage(5, 54, m)
 }
 
-func (c GameClient) CSRSearchList(m *CSRSearchList) error {
+func (c Client) CSRSearchList(m *CSRSearchList) error {
 	return c.c.WriteMessage(5, 55, m)
 }
 
-func (c GameClient) CSRMailData(m *CSRMailData) error {
+func (c Client) CSRMailData(m *CSRMailData) error {
 	return c.c.WriteMessage(5, 56, m)
 }
 
-func (c GameClient) CSRReceiveGifts(m *CSRReceiveGifts) error {
+func (c Client) CSRReceiveGifts(m *CSRReceiveGifts) error {
 	return c.c.WriteMessage(5, 57, m)
 }
 
-func (c GameClient) DEBUGDELETEALLOBJECTS(m *DEBUGDELETEALLOBJECTS) error {
+func (c Client) DEBUGDELETEALLOBJECTS(m *DEBUGDELETEALLOBJECTS) error {
 	return c.c.WriteMessage(5, 58, m)
 }
 
-func (c GameClient) DeleteObject(m *DeleteObject) error {
+func (c Client) DeleteObject(m *DeleteObject) error {
 	return c.c.WriteMessage(5, 59, m)
 }
 
-func (c GameClient) DeleteGift(m *DeleteGift) error {
+func (c Client) DeleteGift(m *DeleteGift) error {
 	return c.c.WriteMessage(5, 60, m)
 }
 
-func (c GameClient) DirectedChat(m *DirectedChat) error {
+func (c Client) DirectedChat(m *DirectedChat) error {
 	return c.c.WriteMessage(5, 61, m)
 }
 
-func (c GameClient) DirectedChatByNameResponse(m *DirectedChatByNameResponse) error {
+func (c Client) DirectedChatByNameResponse(m *DirectedChatByNameResponse) error {
 	return c.c.WriteMessage(5, 62, m)
 }
 
-func (c GameClient) DirectedChatFail(m *DirectedChatFail) error {
+func (c Client) DirectedChatFail(m *DirectedChatFail) error {
 	return c.c.WriteMessage(5, 63, m)
 }
 
-func (c GameClient) DirectedQuickChat(m *DirectedQuickChat) error {
+func (c Client) DirectedQuickChat(m *DirectedQuickChat) error {
 	return c.c.WriteMessage(5, 64, m)
 }
 
-func (c GameClient) DirectedQuickChatExt(m *DirectedQuickChatExt) error {
+func (c Client) DirectedQuickChatExt(m *DirectedQuickChatExt) error {
 	return c.c.WriteMessage(5, 65, m)
 }
 
-func (c GameClient) DisconnectAfk(m *DisconnectAfk) error {
+func (c Client) DisconnectAfk(m *DisconnectAfk) error {
 	return c.c.WriteMessage(5, 66, m)
 }
 
-func (c GameClient) DownloadBrowser(m *DownloadBrowser) error {
+func (c Client) DownloadBrowser(m *DownloadBrowser) error {
 	return c.c.WriteMessage(5, 67, m)
 }
 
-func (c GameClient) DownloadPackage(m *DownloadPackage) error {
+func (c Client) DownloadPackage(m *DownloadPackage) error {
 	return c.c.WriteMessage(5, 68, m)
 }
 
-func (c GameClient) DownloadPackageElement(m *DownloadPackageElement) error {
+func (c Client) DownloadPackageElement(m *DownloadPackageElement) error {
 	return c.c.WriteMessage(5, 69, m)
 }
 
-func (c GameClient) DynaModBehaviorUpdateMods(m *DynaModBehaviorUpdateMods) error {
+func (c Client) DynaModBehaviorUpdateMods(m *DynaModBehaviorUpdateMods) error {
 	return c.c.WriteMessage(5, 70, m)
 }
 
-func (c GameClient) DynaModDump(m *DynaModDump) error {
+func (c Client) DynaModDump(m *DynaModDump) error {
 	return c.c.WriteMessage(5, 71, m)
 }
 
-func (c GameClient) EnterState(m *EnterState) error {
+func (c Client) EnterState(m *EnterState) error {
 	return c.c.WriteMessage(5, 72, m)
 }
 
-func (c GameClient) EquipItem(m *EquipItem) error {
+func (c Client) EquipItem(m *EquipItem) error {
 	return c.c.WriteMessage(5, 73, m)
 }
 
-func (c GameClient) EquipmentBehaviorEquipItem(m *EquipmentBehaviorEquipItem) error {
+func (c Client) EquipmentBehaviorEquipItem(m *EquipmentBehaviorEquipItem) error {
 	return c.c.WriteMessage(5, 74, m)
 }
 
-func (c GameClient) EquipmentBehaviorPublicEquipItem(m *EquipmentBehaviorPublicEquipItem) error {
+func (c Client) EquipmentBehaviorPublicEquipItem(m *EquipmentBehaviorPublicEquipItem) error {
 	return c.c.WriteMessage(5, 75, m)
 }
 
-func (c GameClient) EquipmentBehaviorPublicUnequipItem(m *EquipmentBehaviorPublicUnequipItem) error {
+func (c Client) EquipmentBehaviorPublicUnequipItem(m *EquipmentBehaviorPublicUnequipItem) error {
 	return c.c.WriteMessage(5, 76, m)
 }
 
-func (c GameClient) EquipmentBehaviorUnequipItem(m *EquipmentBehaviorUnequipItem) error {
+func (c Client) EquipmentBehaviorUnequipItem(m *EquipmentBehaviorUnequipItem) error {
 	return c.c.WriteMessage(5, 77, m)
 }
 
-func (c GameClient) FeedInventoryItem(m *FeedInventoryItem) error {
+func (c Client) FeedInventoryItem(m *FeedInventoryItem) error {
 	return c.c.WriteMessage(5, 78, m)
 }
 
-func (c GameClient) FINDSESSIONS(m *FINDSESSIONS) error {
+func (c Client) FINDSESSIONS(m *FINDSESSIONS) error {
 	return c.c.WriteMessage(5, 79, m)
 }
 
-func (c GameClient) FINDSESSIONPLAYERS(m *FINDSESSIONPLAYERS) error {
+func (c Client) FINDSESSIONPLAYERS(m *FINDSESSIONPLAYERS) error {
 	return c.c.WriteMessage(5, 80, m)
 }
 
-func (c GameClient) GenericGame(m *GenericGame) error {
+func (c Client) GenericGame(m *GenericGame) error {
 	return c.c.WriteMessage(5, 81, m)
 }
 
-func (c GameClient) GetLadder(m *GetLadder) error {
+func (c Client) GetLadder(m *GetLadder) error {
 	return c.c.WriteMessage(5, 82, m)
 }
 
-func (c GameClient) GETRANKINGS(m *GETRANKINGS) error {
+func (c Client) GETRANKINGS(m *GETRANKINGS) error {
 	return c.c.WriteMessage(5, 83, m)
 }
 
-func (c GameClient) GiftRedeemed(m *GiftRedeemed) error {
+func (c Client) GiftRedeemed(m *GiftRedeemed) error {
 	return c.c.WriteMessage(5, 84, m)
 }
 
-func (c GameClient) GotoPlayer(m *GotoPlayer) error {
+func (c Client) GotoPlayer(m *GotoPlayer) error {
 	return c.c.WriteMessage(5, 85, m)
 }
 
-func (c GameClient) GotoPlayerResponse(m *GotoPlayerResponse) error {
+func (c Client) GotoPlayerResponse(m *GotoPlayerResponse) error {
 	return c.c.WriteMessage(5, 86, m)
 }
 
-func (c GameClient) HarassmentReport(m *HarassmentReport) error {
+func (c Client) HarassmentReport(m *HarassmentReport) error {
 	return c.c.WriteMessage(5, 87, m)
 }
 
-func (c GameClient) IgnoreAdd(m *IgnoreAdd) error {
+func (c Client) IgnoreAdd(m *IgnoreAdd) error {
 	return c.c.WriteMessage(5, 88, m)
 }
 
-func (c GameClient) IgnoreDrop(m *IgnoreDrop) error {
+func (c Client) IgnoreDrop(m *IgnoreDrop) error {
 	return c.c.WriteMessage(5, 89, m)
 }
 
-func (c GameClient) IgnoreList(m *IgnoreList) error {
+func (c Client) IgnoreList(m *IgnoreList) error {
 	return c.c.WriteMessage(5, 90, m)
 }
 
-func (c GameClient) InteractObject(m *InteractObject) error {
+func (c Client) InteractObject(m *InteractObject) error {
 	return c.c.WriteMessage(5, 91, m)
 }
 
-func (c GameClient) InteractOption(m *InteractOption) error {
+func (c Client) InteractOption(m *InteractOption) error {
 	return c.c.WriteMessage(5, 92, m)
 }
 
-func (c GameClient) INVENTORYBEHAVIORADDITEM(m *INVENTORYBEHAVIORADDITEM) error {
+func (c Client) INVENTORYBEHAVIORADDITEM(m *INVENTORYBEHAVIORADDITEM) error {
 	return c.c.WriteMessage(5, 93, m)
 }
 
-func (c GameClient) INVENTORYBEHAVIORREMOVEITEM(m *INVENTORYBEHAVIORREMOVEITEM) error {
+func (c Client) INVENTORYBEHAVIORREMOVEITEM(m *INVENTORYBEHAVIORREMOVEITEM) error {
 	return c.c.WriteMessage(5, 94, m)
 }
 
-func (c GameClient) INVENTORYBEHAVIORTRADEITEM(m *INVENTORYBEHAVIORTRADEITEM) error {
+func (c Client) INVENTORYBEHAVIORTRADEITEM(m *INVENTORYBEHAVIORTRADEITEM) error {
 	return c.c.WriteMessage(5, 95, m)
 }
 
-func (c GameClient) InviteFriend(m *InviteFriend) error {
+func (c Client) InviteFriend(m *InviteFriend) error {
 	return c.c.WriteMessage(5, 96, m)
 }
 
-func (c GameClient) InviteResponse(m *InviteResponse) error {
+func (c Client) InviteResponse(m *InviteResponse) error {
 	return c.c.WriteMessage(5, 97, m)
 }
 
-func (c GameClient) JoinChannelResponse(m *JoinChannelResponse) error {
+func (c Client) JoinChannelResponse(m *JoinChannelResponse) error {
 	return c.c.WriteMessage(5, 98, m)
 }
 
-func (c GameClient) JOINSESSION(m *JOINSESSION) error {
+func (c Client) JOINSESSION(m *JOINSESSION) error {
 	return c.c.WriteMessage(5, 99, m)
 }
 
-func (c GameClient) Jump(m *Jump) error {
+func (c Client) Jump(m *Jump) error {
 	return c.c.WriteMessage(5, 100, m)
 }
 
-func (c GameClient) KILLCLIENTPROCESS(m *KILLCLIENTPROCESS) error {
+func (c Client) KILLCLIENTPROCESS(m *KILLCLIENTPROCESS) error {
 	return c.c.WriteMessage(5, 101, m)
 }
 
-func (c GameClient) LADDER(m *LADDER) error {
+func (c Client) LADDER(m *LADDER) error {
 	return c.c.WriteMessage(5, 102, m)
 }
 
-func (c GameClient) LeaveChannelResponse(m *LeaveChannelResponse) error {
+func (c Client) LeaveChannelResponse(m *LeaveChannelResponse) error {
 	return c.c.WriteMessage(5, 103, m)
 }
 
-func (c GameClient) LeaveHousingLot(m *LeaveHousingLot) error {
+func (c Client) LeaveHousingLot(m *LeaveHousingLot) error {
 	return c.c.WriteMessage(5, 104, m)
 }
 
-func (c GameClient) LeaveServiceRange(m *LeaveServiceRange) error {
+func (c Client) LeaveServiceRange(m *LeaveServiceRange) error {
 	return c.c.WriteMessage(5, 105, m)
 }
 
-func (c GameClient) LeaveState(m *LeaveState) error {
+func (c Client) LeaveState(m *LeaveState) error {
 	return c.c.WriteMessage(5, 106, m)
 }
 
-func (c GameClient) LOADSAVEOBJECTS(m *LOADSAVEOBJECTS) error {
+func (c Client) LOADSAVEOBJECTS(m *LOADSAVEOBJECTS) error {
 	return c.c.WriteMessage(5, 107, m)
 }
 
-func (c GameClient) LoginComplete(m *LoginComplete) error {
+func (c Client) LoginComplete(m *LoginComplete) error {
 	return c.c.WriteMessage(5, 108, m)
 }
 
-func (c GameClient) MailData(m *MailData) error {
+func (c Client) MailData(m *MailData) error {
 	return c.c.WriteMessage(5, 109, m)
 }
 
-func (c GameClient) MarkLocation(m *MarkLocation) error {
+func (c Client) MarkLocation(m *MarkLocation) error {
 	return c.c.WriteMessage(5, 110, m)
 }
 
-func (c GameClient) MarkLocationResponse(m *MarkLocationResponse) error {
+func (c Client) MarkLocationResponse(m *MarkLocationResponse) error {
 	return c.c.WriteMessage(5, 111, m)
 }
 
-func (c GameClient) MatchAward(m *MatchAward) error {
+func (c Client) MatchAward(m *MatchAward) error {
 	return c.c.WriteMessage(5, 112, m)
 }
 
-func (c GameClient) MatchInvite(m *MatchInvite) error {
+func (c Client) MatchInvite(m *MatchInvite) error {
 	return c.c.WriteMessage(5, 113, m)
 }
 
-func (c GameClient) MatchMakerUpdate(m *MatchMakerUpdate) error {
+func (c Client) MatchMakerUpdate(m *MatchMakerUpdate) error {
 	return c.c.WriteMessage(5, 114, m)
 }
 
-func (c GameClient) MatchReady(m *MatchReady) error {
+func (c Client) MatchReady(m *MatchReady) error {
 	return c.c.WriteMessage(5, 115, m)
 }
 
-func (c GameClient) MatchResult(m *MatchResult) error {
+func (c Client) MatchResult(m *MatchResult) error {
 	return c.c.WriteMessage(5, 116, m)
 }
 
-func (c GameClient) MESSAGEPROCESS(m *MESSAGEPROCESS) error {
+func (c Client) MESSAGEPROCESS(m *MESSAGEPROCESS) error {
 	return c.c.WriteMessage(5, 117, m)
 }
 
-func (c GameClient) MoveCorrection(m *MoveCorrection) error {
+func (c Client) MoveCorrection(m *MoveCorrection) error {
 	return c.c.WriteMessage(5, 118, m)
 }
 
-func (c GameClient) MoveState(m *MoveState) error {
+func (c Client) MoveState(m *MoveState) error {
 	return c.c.WriteMessage(5, 119, m)
 }
 
-func (c GameClient) Mute(m *Mute) error {
+func (c Client) Mute(m *Mute) error {
 	return c.c.WriteMessage(5, 120, m)
 }
 
-func (c GameClient) MuteRsp(m *MuteRsp) error {
+func (c Client) MuteRsp(m *MuteRsp) error {
 	return c.c.WriteMessage(5, 121, m)
 }
 
-func (c GameClient) NewObject(m *NewObject) error {
+func (c Client) NewObject(m *NewObject) error {
 	return c.c.WriteMessage(5, 122, m)
 }
 
-func (c GameClient) NewSysStats(m *NewSysStats) error {
+func (c Client) NewSysStats(m *NewSysStats) error {
 	return c.c.WriteMessage(5, 123, m)
 }
 
-func (c GameClient) NewTickCnt(m *NewTickCnt) error {
+func (c Client) NewTickCnt(m *NewTickCnt) error {
 	return c.c.WriteMessage(5, 124, m)
 }
 
-func (c GameClient) NewTourneyRewards(m *NewTourneyRewards) error {
+func (c Client) NewTourneyRewards(m *NewTourneyRewards) error {
 	return c.c.WriteMessage(5, 125, m)
 }
 
-func (c GameClient) NewMail(m *NewMail) error {
+func (c Client) NewMail(m *NewMail) error {
 	return c.c.WriteMessage(5, 126, m)
 }
 
-func (c GameClient) NotifyChannelInstance(m *NotifyChannelInstance) error {
+func (c Client) NotifyChannelInstance(m *NotifyChannelInstance) error {
 	return c.c.WriteMessage(5, 127, m)
 }
 
-func (c GameClient) NotifyGift(m *NotifyGift) error {
+func (c Client) NotifyGift(m *NotifyGift) error {
 	return c.c.WriteMessage(5, 128, m)
 }
 
-func (c GameClient) NotMuted(m *NotMuted) error {
+func (c Client) NotMuted(m *NotMuted) error {
 	return c.c.WriteMessage(5, 129, m)
 }
 
-func (c GameClient) NotAfk(m *NotAfk) error {
+func (c Client) NotAfk(m *NotAfk) error {
 	return c.c.WriteMessage(5, 130, m)
 }
 
-func (c GameClient) NPCSpeech(m *NPCSpeech) error {
+func (c Client) NPCSpeech(m *NPCSpeech) error {
 	return c.c.WriteMessage(5, 131, m)
 }
 
-func (c GameClient) ObjectInfoQuery(m *ObjectInfoQuery) error {
+func (c Client) ObjectInfoQuery(m *ObjectInfoQuery) error {
 	return c.c.WriteMessage(5, 132, m)
 }
 
-func (c GameClient) PartyDisband(m *PartyDisband) error {
+func (c Client) PartyDisband(m *PartyDisband) error {
 	return c.c.WriteMessage(5, 133, m)
 }
 
-func (c GameClient) PartyJoinFailed(m *PartyJoinFailed) error {
+func (c Client) PartyJoinFailed(m *PartyJoinFailed) error {
 	return c.c.WriteMessage(5, 134, m)
 }
 
-func (c GameClient) PartyJoinNotification(m *PartyJoinNotification) error {
+func (c Client) PartyJoinNotification(m *PartyJoinNotification) error {
 	return c.c.WriteMessage(5, 135, m)
 }
 
-func (c GameClient) PartyLeave(m *PartyLeave) error {
+func (c Client) PartyLeave(m *PartyLeave) error {
 	return c.c.WriteMessage(5, 136, m)
 }
 
-func (c GameClient) PartyLeaveNotification(m *PartyLeaveNotification) error {
+func (c Client) PartyLeaveNotification(m *PartyLeaveNotification) error {
 	return c.c.WriteMessage(5, 137, m)
 }
 
-func (c GameClient) PartyLevelUp(m *PartyLevelUp) error {
+func (c Client) PartyLevelUp(m *PartyLevelUp) error {
 	return c.c.WriteMessage(5, 138, m)
 }
 
-func (c GameClient) PartyLevelUpUpdate(m *PartyLevelUpUpdate) error {
+func (c Client) PartyLevelUpUpdate(m *PartyLevelUpUpdate) error {
 	return c.c.WriteMessage(5, 139, m)
 }
 
-func (c GameClient) PartyMultiPlayerMountEquip(m *PartyMultiPlayerMountEquip) error {
+func (c Client) PartyMultiPlayerMountEquip(m *PartyMultiPlayerMountEquip) error {
 	return c.c.WriteMessage(5, 140, m)
 }
 
-func (c GameClient) PartyMultiPlayerMountEquipUpdate(m *PartyMultiPlayerMountEquipUpdate) error {
+func (c Client) PartyMultiPlayerMountEquipUpdate(m *PartyMultiPlayerMountEquipUpdate) error {
 	return c.c.WriteMessage(5, 141, m)
 }
 
-func (c GameClient) PartyMultiPlayerMountJoin(m *PartyMultiPlayerMountJoin) error {
+func (c Client) PartyMultiPlayerMountJoin(m *PartyMultiPlayerMountJoin) error {
 	return c.c.WriteMessage(5, 142, m)
 }
 
-func (c GameClient) PartyMultiPlayerMountJoinUpdate(m *PartyMultiPlayerMountJoinUpdate) error {
+func (c Client) PartyMultiPlayerMountJoinUpdate(m *PartyMultiPlayerMountJoinUpdate) error {
 	return c.c.WriteMessage(5, 143, m)
 }
 
-func (c GameClient) PartyRequestAccept(m *PartyRequestAccept) error {
+func (c Client) PartyRequestAccept(m *PartyRequestAccept) error {
 	return c.c.WriteMessage(5, 144, m)
 }
 
-func (c GameClient) PartyRequestDecline(m *PartyRequestDecline) error {
+func (c Client) PartyRequestDecline(m *PartyRequestDecline) error {
 	return c.c.WriteMessage(5, 145, m)
 }
 
-func (c GameClient) PartyRequestInvite(m *PartyRequestInvite) error {
+func (c Client) PartyRequestInvite(m *PartyRequestInvite) error {
 	return c.c.WriteMessage(5, 146, m)
 }
 
-func (c GameClient) PartyRequestJoin(m *PartyRequestJoin) error {
+func (c Client) PartyRequestJoin(m *PartyRequestJoin) error {
 	return c.c.WriteMessage(5, 147, m)
 }
 
-func (c GameClient) PartyRequestMemberZones(m *PartyRequestMemberZones) error {
+func (c Client) PartyRequestMemberZones(m *PartyRequestMemberZones) error {
 	return c.c.WriteMessage(5, 148, m)
 }
 
-func (c GameClient) PartyRequestResponse(m *PartyRequestResponse) error {
+func (c Client) PartyRequestResponse(m *PartyRequestResponse) error {
 	return c.c.WriteMessage(5, 149, m)
 }
 
-func (c GameClient) PartyRequestTimeout(m *PartyRequestTimeout) error {
+func (c Client) PartyRequestTimeout(m *PartyRequestTimeout) error {
 	return c.c.WriteMessage(5, 150, m)
 }
 
-func (c GameClient) PartySubmitMemberZones(m *PartySubmitMemberZones) error {
+func (c Client) PartySubmitMemberZones(m *PartySubmitMemberZones) error {
 	return c.c.WriteMessage(5, 151, m)
 }
 
-func (c GameClient) PartyUpdate(m *PartyUpdate) error {
+func (c Client) PartyUpdate(m *PartyUpdate) error {
 	return c.c.WriteMessage(5, 152, m)
 }
 
-func (c GameClient) PartyZoneRequest(m *PartyZoneRequest) error {
+func (c Client) PartyZoneRequest(m *PartyZoneRequest) error {
 	return c.c.WriteMessage(5, 153, m)
 }
 
-func (c GameClient) PartyZoneRequestResponse(m *PartyZoneRequestResponse) error {
+func (c Client) PartyZoneRequestResponse(m *PartyZoneRequestResponse) error {
 	return c.c.WriteMessage(5, 154, m)
 }
 
-func (c GameClient) PickUpObject(m *PickUpObject) error {
+func (c Client) PickUpObject(m *PickUpObject) error {
 	return c.c.WriteMessage(5, 155, m)
 }
 
-func (c GameClient) PlaceObject(m *PlaceObject) error {
+func (c Client) PlaceObject(m *PlaceObject) error {
 	return c.c.WriteMessage(5, 156, m)
 }
 
-func (c GameClient) PlayCinematic(m *PlayCinematic) error {
+func (c Client) PlayCinematic(m *PlayCinematic) error {
 	return c.c.WriteMessage(5, 157, m)
 }
 
-func (c GameClient) PlayerBlackballedAlert(m *PlayerBlackballedAlert) error {
+func (c Client) PlayerBlackballedAlert(m *PlayerBlackballedAlert) error {
 	return c.c.WriteMessage(5, 158, m)
 }
 
-func (c GameClient) PlayerReadyAck(m *PlayerReadyAck) error {
+func (c Client) PlayerReadyAck(m *PlayerReadyAck) error {
 	return c.c.WriteMessage(5, 159, m)
 }
 
-func (c GameClient) PlaySound(m *PlaySound) error {
+func (c Client) PlaySound(m *PlaySound) error {
 	return c.c.WriteMessage(5, 160, m)
 }
 
-func (c GameClient) PostZoneEventFromClient(m *PostZoneEventFromClient) error {
+func (c Client) PostZoneEventFromClient(m *PostZoneEventFromClient) error {
 	return c.c.WriteMessage(5, 161, m)
 }
 
-func (c GameClient) PreviewIsland(m *PreviewIsland) error {
+func (c Client) PreviewIsland(m *PreviewIsland) error {
 	return c.c.WriteMessage(5, 162, m)
 }
 
-func (c GameClient) PvPUpdateInfo(m *PvPUpdateInfo) error {
+func (c Client) PvPUpdateInfo(m *PvPUpdateInfo) error {
 	return c.c.WriteMessage(5, 163, m)
 }
 
-func (c GameClient) QueryLogout(m *QueryLogout) error {
+func (c Client) QueryLogout(m *QueryLogout) error {
 	return c.c.WriteMessage(5, 164, m)
 }
 
-func (c GameClient) RadialChat(m *RadialChat) error {
+func (c Client) RadialChat(m *RadialChat) error {
 	return c.c.WriteMessage(5, 165, m)
 }
 
-func (c GameClient) RadialQuickChat(m *RadialQuickChat) error {
+func (c Client) RadialQuickChat(m *RadialQuickChat) error {
 	return c.c.WriteMessage(5, 166, m)
 }
 
-func (c GameClient) RadialQuickChatExt(m *RadialQuickChatExt) error {
+func (c Client) RadialQuickChatExt(m *RadialQuickChatExt) error {
 	return c.c.WriteMessage(5, 167, m)
 }
 
-func (c GameClient) RadialZoneClusterQuickChat(m *RadialZoneClusterQuickChat) error {
+func (c Client) RadialZoneClusterQuickChat(m *RadialZoneClusterQuickChat) error {
 	return c.c.WriteMessage(5, 168, m)
 }
 
-func (c GameClient) RANKING(m *RANKING) error {
+func (c Client) RANKING(m *RANKING) error {
 	return c.c.WriteMessage(5, 169, m)
 }
 
-func (c GameClient) RealmInfoQuery(m *RealmInfoQuery) error {
+func (c Client) RealmInfoQuery(m *RealmInfoQuery) error {
 	return c.c.WriteMessage(5, 170, m)
 }
 
-func (c GameClient) RecallLocation(m *RecallLocation) error {
+func (c Client) RecallLocation(m *RecallLocation) error {
 	return c.c.WriteMessage(5, 171, m)
 }
 
-func (c GameClient) ReceiveGifts(m *ReceiveGifts) error {
+func (c Client) ReceiveGifts(m *ReceiveGifts) error {
 	return c.c.WriteMessage(5, 172, m)
 }
 
-func (c GameClient) ReceivePromotions(m *ReceivePromotions) error {
+func (c Client) ReceivePromotions(m *ReceivePromotions) error {
 	return c.c.WriteMessage(5, 173, m)
 }
 
-func (c GameClient) RedeemGift(m *RedeemGift) error {
+func (c Client) RedeemGift(m *RedeemGift) error {
 	return c.c.WriteMessage(5, 174, m)
 }
 
-func (c GameClient) RedeemMailGift(m *RedeemMailGift) error {
+func (c Client) RedeemMailGift(m *RedeemMailGift) error {
 	return c.c.WriteMessage(5, 175, m)
 }
 
-func (c GameClient) RedeemMailGiftResponse(m *RedeemMailGiftResponse) error {
+func (c Client) RedeemMailGiftResponse(m *RedeemMailGiftResponse) error {
 	return c.c.WriteMessage(5, 176, m)
 }
 
-func (c GameClient) ReleaseDelay(m *ReleaseDelay) error {
+func (c Client) ReleaseDelay(m *ReleaseDelay) error {
 	return c.c.WriteMessage(5, 177, m)
 }
 
-func (c GameClient) ReloadTemplateDir(m *ReloadTemplateDir) error {
+func (c Client) ReloadTemplateDir(m *ReloadTemplateDir) error {
 	return c.c.WriteMessage(5, 178, m)
 }
 
-func (c GameClient) RemovedShopper(m *RemovedShopper) error {
+func (c Client) RemovedShopper(m *RemovedShopper) error {
 	return c.c.WriteMessage(5, 179, m)
 }
 
-func (c GameClient) RemoveEffect(m *RemoveEffect) error {
+func (c Client) RemoveEffect(m *RemoveEffect) error {
 	return c.c.WriteMessage(5, 180, m)
 }
 
-func (c GameClient) RemoveItemRequest(m *RemoveItemRequest) error {
+func (c Client) RemoveItemRequest(m *RemoveItemRequest) error {
 	return c.c.WriteMessage(5, 181, m)
 }
 
-func (c GameClient) RemoveObject(m *RemoveObject) error {
+func (c Client) RemoveObject(m *RemoveObject) error {
 	return c.c.WriteMessage(5, 182, m)
 }
 
-func (c GameClient) RemoveParticle(m *RemoveParticle) error {
+func (c Client) RemoveParticle(m *RemoveParticle) error {
 	return c.c.WriteMessage(5, 183, m)
 }
 
-func (c GameClient) RemoveZoneTimer(m *RemoveZoneTimer) error {
+func (c Client) RemoveZoneTimer(m *RemoveZoneTimer) error {
 	return c.c.WriteMessage(5, 184, m)
 }
 
-func (c GameClient) ReportAdTakeover(m *ReportAdTakeover) error {
+func (c Client) ReportAdTakeover(m *ReportAdTakeover) error {
 	return c.c.WriteMessage(5, 185, m)
 }
 
-func (c GameClient) ReqAskServer(m *ReqAskServer) error {
+func (c Client) ReqAskServer(m *ReqAskServer) error {
 	return c.c.WriteMessage(5, 186, m)
 }
 
-func (c GameClient) ReqChatDiagnostics(m *ReqChatDiagnostics) error {
+func (c Client) ReqChatDiagnostics(m *ReqChatDiagnostics) error {
 	return c.c.WriteMessage(5, 187, m)
 }
 
-func (c GameClient) RequestAdvanceChannelInstance(m *RequestAdvanceChannelInstance) error {
+func (c Client) RequestAdvanceChannelInstance(m *RequestAdvanceChannelInstance) error {
 	return c.c.WriteMessage(5, 188, m)
 }
 
-func (c GameClient) RequestChatCode(m *RequestChatCode) error {
+func (c Client) RequestChatCode(m *RequestChatCode) error {
 	return c.c.WriteMessage(5, 189, m)
 }
 
-func (c GameClient) RequestCreateChannel(m *RequestCreateChannel) error {
+func (c Client) RequestCreateChannel(m *RequestCreateChannel) error {
 	return c.c.WriteMessage(5, 190, m)
 }
 
-func (c GameClient) RequestDirectedChat(m *RequestDirectedChat) error {
+func (c Client) RequestDirectedChat(m *RequestDirectedChat) error {
 	return c.c.WriteMessage(5, 191, m)
 }
 
-func (c GameClient) RequestDirectedChatByName(m *RequestDirectedChatByName) error {
+func (c Client) RequestDirectedChatByName(m *RequestDirectedChatByName) error {
 	return c.c.WriteMessage(5, 192, m)
 }
 
-func (c GameClient) RequestDirectedQuickChat(m *RequestDirectedQuickChat) error {
+func (c Client) RequestDirectedQuickChat(m *RequestDirectedQuickChat) error {
 	return c.c.WriteMessage(5, 193, m)
 }
 
-func (c GameClient) RequestDirectedQuickChatExt(m *RequestDirectedQuickChatExt) error {
+func (c Client) RequestDirectedQuickChatExt(m *RequestDirectedQuickChatExt) error {
 	return c.c.WriteMessage(5, 194, m)
 }
 
-func (c GameClient) RequestJoinChannel(m *RequestJoinChannel) error {
+func (c Client) RequestJoinChannel(m *RequestJoinChannel) error {
 	return c.c.WriteMessage(5, 195, m)
 }
 
-func (c GameClient) RequestJoinChannelByName(m *RequestJoinChannelByName) error {
+func (c Client) RequestJoinChannelByName(m *RequestJoinChannelByName) error {
 	return c.c.WriteMessage(5, 196, m)
 }
 
-func (c GameClient) RequestLeaveChannel(m *RequestLeaveChannel) error {
+func (c Client) RequestLeaveChannel(m *RequestLeaveChannel) error {
 	return c.c.WriteMessage(5, 197, m)
 }
 
-func (c GameClient) RequestLeaveChannelByName(m *RequestLeaveChannelByName) error {
+func (c Client) RequestLeaveChannelByName(m *RequestLeaveChannelByName) error {
 	return c.c.WriteMessage(5, 198, m)
 }
 
-func (c GameClient) RequestMaxFriends(m *RequestMaxFriends) error {
+func (c Client) RequestMaxFriends(m *RequestMaxFriends) error {
 	return c.c.WriteMessage(5, 199, m)
 }
 
-func (c GameClient) RequestRadialChat(m *RequestRadialChat) error {
+func (c Client) RequestRadialChat(m *RequestRadialChat) error {
 	return c.c.WriteMessage(5, 200, m)
 }
 
-func (c GameClient) RequestRadialFriendChat(m *RequestRadialFriendChat) error {
+func (c Client) RequestRadialFriendChat(m *RequestRadialFriendChat) error {
 	return c.c.WriteMessage(5, 201, m)
 }
 
-func (c GameClient) RequestRadialFriendQuickChat(m *RequestRadialFriendQuickChat) error {
+func (c Client) RequestRadialFriendQuickChat(m *RequestRadialFriendQuickChat) error {
 	return c.c.WriteMessage(5, 202, m)
 }
 
-func (c GameClient) RequestRadialOwnerChat(m *RequestRadialOwnerChat) error {
+func (c Client) RequestRadialOwnerChat(m *RequestRadialOwnerChat) error {
 	return c.c.WriteMessage(5, 203, m)
 }
 
-func (c GameClient) RequestRadialQuickChat(m *RequestRadialQuickChat) error {
+func (c Client) RequestRadialQuickChat(m *RequestRadialQuickChat) error {
 	return c.c.WriteMessage(5, 204, m)
 }
 
-func (c GameClient) RequestRadialQuickChatExt(m *RequestRadialQuickChatExt) error {
+func (c Client) RequestRadialQuickChatExt(m *RequestRadialQuickChatExt) error {
 	return c.c.WriteMessage(5, 205, m)
 }
 
-func (c GameClient) RequestSession(m *RequestSession) error {
+func (c Client) RequestSession(m *RequestSession) error {
 	return c.c.WriteMessage(5, 206, m)
 }
 
-func (c GameClient) RequestZoneClusterQuickChat(m *RequestZoneClusterQuickChat) error {
+func (c Client) RequestZoneClusterQuickChat(m *RequestZoneClusterQuickChat) error {
 	return c.c.WriteMessage(5, 207, m)
 }
 
-func (c GameClient) RequestGifts(m *RequestGifts) error {
+func (c Client) RequestGifts(m *RequestGifts) error {
 	return c.c.WriteMessage(5, 208, m)
 }
 
-func (c GameClient) RequestPromotions(m *RequestPromotions) error {
+func (c Client) RequestPromotions(m *RequestPromotions) error {
 	return c.c.WriteMessage(5, 209, m)
 }
 
-func (c GameClient) RestoreCharRsp(m *RestoreCharRsp) error {
+func (c Client) RestoreCharRsp(m *RestoreCharRsp) error {
 	return c.c.WriteMessage(5, 210, m)
 }
 
-func (c GameClient) RetrieveMail(m *RetrieveMail) error {
+func (c Client) RetrieveMail(m *RetrieveMail) error {
 	return c.c.WriteMessage(5, 211, m)
 }
 
-func (c GameClient) RetryTeleport(m *RetryTeleport) error {
+func (c Client) RetryTeleport(m *RetryTeleport) error {
 	return c.c.WriteMessage(5, 212, m)
 }
 
-func (c GameClient) Script(m *Script) error {
+func (c Client) Script(m *Script) error {
 	return c.c.WriteMessage(5, 213, m)
 }
 
-func (c GameClient) SelectBadge(m *SelectBadge) error {
+func (c Client) SelectBadge(m *SelectBadge) error {
 	return c.c.WriteMessage(5, 214, m)
 }
 
-func (c GameClient) SendChatCode(m *SendChatCode) error {
+func (c Client) SendChatCode(m *SendChatCode) error {
 	return c.c.WriteMessage(5, 215, m)
 }
 
-func (c GameClient) SendInteractOptions(m *SendInteractOptions) error {
+func (c Client) SendInteractOptions(m *SendInteractOptions) error {
 	return c.c.WriteMessage(5, 216, m)
 }
 
-func (c GameClient) SendText(m *SendText) error {
+func (c Client) SendText(m *SendText) error {
 	return c.c.WriteMessage(5, 217, m)
 }
 
-func (c GameClient) ServerMove(m *ServerMove) error {
+func (c Client) ServerMove(m *ServerMove) error {
 	return c.c.WriteMessage(5, 218, m)
 }
 
-func (c GameClient) ServerShutdown(m *ServerShutdown) error {
+func (c Client) ServerShutdown(m *ServerShutdown) error {
 	return c.c.WriteMessage(5, 219, m)
 }
 
-func (c GameClient) ServerTeleport(m *ServerTeleport) error {
+func (c Client) ServerTeleport(m *ServerTeleport) error {
 	return c.c.WriteMessage(5, 220, m)
 }
 
-func (c GameClient) ServerTransfer(m *ServerTransfer) error {
+func (c Client) ServerTransfer(m *ServerTransfer) error {
 	return c.c.WriteMessage(5, 221, m)
 }
 
-func (c GameClient) ServerTutorialCommand(m *ServerTutorialCommand) error {
+func (c Client) ServerTutorialCommand(m *ServerTutorialCommand) error {
 	return c.c.WriteMessage(5, 222, m)
 }
 
-func (c GameClient) ServerError(m *ServerError) error {
+func (c Client) ServerError(m *ServerError) error {
 	return c.c.WriteMessage(5, 223, m)
 }
 
-func (c GameClient) SERVERPROCESSRUNNING(m *SERVERPROCESSRUNNING) error {
+func (c Client) SERVERPROCESSRUNNING(m *SERVERPROCESSRUNNING) error {
 	return c.c.WriteMessage(5, 224, m)
 }
 
-func (c GameClient) SESSION(m *SESSION) error {
+func (c Client) SESSION(m *SESSION) error {
 	return c.c.WriteMessage(5, 225, m)
 }
 
-func (c GameClient) SESSIONERROR(m *SESSIONERROR) error {
+func (c Client) SESSIONERROR(m *SESSIONERROR) error {
 	return c.c.WriteMessage(5, 226, m)
 }
 
-func (c GameClient) SESSIONPLAYER(m *SESSIONPLAYER) error {
+func (c Client) SESSIONPLAYER(m *SESSIONPLAYER) error {
 	return c.c.WriteMessage(5, 227, m)
 }
 
-func (c GameClient) SETHOUSECUSTOMIZATION(m *SETHOUSECUSTOMIZATION) error {
+func (c Client) SETHOUSECUSTOMIZATION(m *SETHOUSECUSTOMIZATION) error {
 	return c.c.WriteMessage(5, 228, m)
 }
 
-func (c GameClient) SplitQuantity(m *SplitQuantity) error {
+func (c Client) SplitQuantity(m *SplitQuantity) error {
 	return c.c.WriteMessage(5, 229, m)
 }
 
-func (c GameClient) StartStagedCinematic(m *StartStagedCinematic) error {
+func (c Client) StartStagedCinematic(m *StartStagedCinematic) error {
 	return c.c.WriteMessage(5, 230, m)
 }
 
-func (c GameClient) STARTCLIENTPROCESS(m *STARTCLIENTPROCESS) error {
+func (c Client) STARTCLIENTPROCESS(m *STARTCLIENTPROCESS) error {
 	return c.c.WriteMessage(5, 231, m)
 }
 
-func (c GameClient) STARTSERVERPROCESS(m *STARTSERVERPROCESS) error {
+func (c Client) STARTSERVERPROCESS(m *STARTSERVERPROCESS) error {
 	return c.c.WriteMessage(5, 232, m)
 }
 
-func (c GameClient) SuboptimalBracketResponse(m *SuboptimalBracketResponse) error {
+func (c Client) SuboptimalBracketResponse(m *SuboptimalBracketResponse) error {
 	return c.c.WriteMessage(5, 233, m)
 }
 
-func (c GameClient) TeleportToGameZone(m *TeleportToGameZone) error {
+func (c Client) TeleportToGameZone(m *TeleportToGameZone) error {
 	return c.c.WriteMessage(5, 234, m)
 }
 
-func (c GameClient) TournamentUpdate(m *TournamentUpdate) error {
+func (c Client) TournamentUpdate(m *TournamentUpdate) error {
 	return c.c.WriteMessage(5, 235, m)
 }
 
-func (c GameClient) TransferCharRsp(m *TransferCharRsp) error {
+func (c Client) TransferCharRsp(m *TransferCharRsp) error {
 	return c.c.WriteMessage(5, 236, m)
 }
 
-func (c GameClient) TransferInstance(m *TransferInstance) error {
+func (c Client) TransferInstance(m *TransferInstance) error {
 	return c.c.WriteMessage(5, 237, m)
 }
 
-func (c GameClient) TransferRealms(m *TransferRealms) error {
+func (c Client) TransferRealms(m *TransferRealms) error {
 	return c.c.WriteMessage(5, 238, m)
 }
 
-func (c GameClient) TrashInventoryItem(m *TrashInventoryItem) error {
+func (c Client) TrashInventoryItem(m *TrashInventoryItem) error {
 	return c.c.WriteMessage(5, 239, m)
 }
 
-func (c GameClient) Tutorials(m *Tutorials) error {
+func (c Client) Tutorials(m *Tutorials) error {
 	return c.c.WriteMessage(5, 240, m)
 }
 
-func (c GameClient) UpdateObject(m *UpdateObject) error {
+func (c Client) UpdateObject(m *UpdateObject) error {
 	return c.c.WriteMessage(5, 241, m)
 }
 
-func (c GameClient) UpdateQuantity(m *UpdateQuantity) error {
+func (c Client) UpdateQuantity(m *UpdateQuantity) error {
 	return c.c.WriteMessage(5, 242, m)
 }
 
-func (c GameClient) UpdateZoneCounter(m *UpdateZoneCounter) error {
+func (c Client) UpdateZoneCounter(m *UpdateZoneCounter) error {
 	return c.c.WriteMessage(5, 243, m)
 }
 
-func (c GameClient) UpdateZoneTimer(m *UpdateZoneTimer) error {
+func (c Client) UpdateZoneTimer(m *UpdateZoneTimer) error {
 	return c.c.WriteMessage(5, 244, m)
 }
 
-func (c GameClient) UseChatCode(m *UseChatCode) error {
+func (c Client) UseChatCode(m *UseChatCode) error {
 	return c.c.WriteMessage(5, 245, m)
 }
 
-func (c GameClient) CSRViewAccount(m *CSRViewAccount) error {
+func (c Client) CSRViewAccount(m *CSRViewAccount) error {
 	return c.c.WriteMessage(5, 246, m)
 }
 
-func (c GameClient) WizBang(m *WizBang) error {
+func (c Client) WizBang(m *WizBang) error {
 	return c.c.WriteMessage(5, 247, m)
 }
 
-func (c GameClient) ZombiePlayer(m *ZombiePlayer) error {
+func (c Client) ZombiePlayer(m *ZombiePlayer) error {
 	return c.c.WriteMessage(5, 248, m)
 }
 
-func (c GameClient) ZONEEVENTTIMEREXPIRED(m *ZONEEVENTTIMEREXPIRED) error {
+func (c Client) ZONEEVENTTIMEREXPIRED(m *ZONEEVENTTIMEREXPIRED) error {
 	return c.c.WriteMessage(5, 249, m)
 }
 
-func (c GameClient) ZoneTransfer(m *ZoneTransfer) error {
+func (c Client) ZoneTransfer(m *ZoneTransfer) error {
 	return c.c.WriteMessage(5, 250, m)
 }
 
-func (c GameClient) ZoneTransferAck(m *ZoneTransferAck) error {
+func (c Client) ZoneTransferAck(m *ZoneTransferAck) error {
 	return c.c.WriteMessage(5, 251, m)
 }
 
-func (c GameClient) ZoneTransferNack(m *ZoneTransferNack) error {
+func (c Client) ZoneTransferNack(m *ZoneTransferNack) error {
 	return c.c.WriteMessage(5, 252, m)
 }
 
-func (c GameClient) ZoneTransferRequest(m *ZoneTransferRequest) error {
+func (c Client) ZoneTransferRequest(m *ZoneTransferRequest) error {
 	return c.c.WriteMessage(5, 253, m)
 }
 
+type Service struct {
+	service
+}
+
+type Client struct {
+	c *proto.Client
+}
 type ADCLICKTHROUGH struct {
 	URL     string
 	Partner string
@@ -1805,18 +1804,18 @@ type ADCLICKTHROUGH struct {
 
 func (s *ADCLICKTHROUGH) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4+len(s.Partner)+len(s.URL)))
-	writeString_5(b, s.Partner)
-	writeString_5(b, s.URL)
+	binary.Write(b, binary.LittleEndian, s.Partner)
+	binary.Write(b, binary.LittleEndian, s.URL)
 	return b.Bytes()
 }
 
 func (s *ADCLICKTHROUGH) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Partner, err = readString_5(b); err != nil {
+	if s.Partner, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.URL, err = readString_5(b); err != nil {
+	if s.URL, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -1829,8 +1828,7 @@ type AddEffect struct {
 
 func (s *AddEffect) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.EffectData)))
-	binary.Write(b, binary.LittleEndian, s.GameObjectID)
-	writeString_5(b, s.EffectData)
+	binary.Write(b, binary.LittleEndian, s.EffectData)
 	return b.Bytes()
 }
 
@@ -1840,7 +1838,7 @@ func (s *AddEffect) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GameObjectID); err != nil {
 		return err
 	}
-	if s.EffectData, err = readString_5(b); err != nil {
+	if s.EffectData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -1854,9 +1852,6 @@ type AddItemRequest struct {
 
 func (s *AddItemRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.ItemTemplateID)
-	binary.Write(b, binary.LittleEndian, s.Quantity)
 	return b.Bytes()
 }
 
@@ -1887,13 +1882,7 @@ type AddObject struct {
 
 func (s *AddObject) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 34+len(s.Name)))
-	binary.Write(b, binary.LittleEndian, s.GameObjectID)
-	binary.Write(b, binary.LittleEndian, s.LocationX)
-	binary.Write(b, binary.LittleEndian, s.LocationY)
-	binary.Write(b, binary.LittleEndian, s.LocationZ)
-	binary.Write(b, binary.LittleEndian, s.Direction)
-	writeString_5(b, s.Name)
-	binary.Write(b, binary.LittleEndian, s.TemplateID)
+	binary.Write(b, binary.LittleEndian, s.Name)
 	return b.Bytes()
 }
 
@@ -1915,7 +1904,7 @@ func (s *AddObject) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Direction); err != nil {
 		return err
 	}
-	if s.Name, err = readString_5(b); err != nil {
+	if s.Name, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.TemplateID); err != nil {
@@ -1938,43 +1927,41 @@ type AddParticle struct {
 
 func (s *AddParticle) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 23+len(s.Asset)+len(s.NewName)+len(s.AttachTo)+len(s.FloatText)+len(s.ChatText)+len(s.ChatArgs)+len(s.Sound)))
-	writeString_5(b, s.Asset)
-	writeString_5(b, s.NewName)
-	writeString_5(b, s.AttachTo)
-	binary.Write(b, binary.LittleEndian, s.Loop)
-	writeString_5(b, s.FloatText)
-	writeString_5(b, s.ChatText)
-	writeString_5(b, s.ChatArgs)
-	writeString_5(b, s.Sound)
-	binary.Write(b, binary.LittleEndian, s.ParentID)
+	binary.Write(b, binary.LittleEndian, s.Asset)
+	binary.Write(b, binary.LittleEndian, s.NewName)
+	binary.Write(b, binary.LittleEndian, s.AttachTo)
+	binary.Write(b, binary.LittleEndian, s.FloatText)
+	binary.Write(b, binary.LittleEndian, s.ChatText)
+	binary.Write(b, binary.LittleEndian, s.ChatArgs)
+	binary.Write(b, binary.LittleEndian, s.Sound)
 	return b.Bytes()
 }
 
 func (s *AddParticle) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Asset, err = readString_5(b); err != nil {
+	if s.Asset, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.NewName, err = readString_5(b); err != nil {
+	if s.NewName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.AttachTo, err = readString_5(b); err != nil {
+	if s.AttachTo, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Loop); err != nil {
 		return err
 	}
-	if s.FloatText, err = readString_5(b); err != nil {
+	if s.FloatText, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.ChatText, err = readString_5(b); err != nil {
+	if s.ChatText, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.ChatArgs, err = readString_5(b); err != nil {
+	if s.ChatArgs, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Sound, err = readString_5(b); err != nil {
+	if s.Sound, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ParentID); err != nil {
@@ -1992,10 +1979,8 @@ type AddZoneTimer struct {
 
 func (s *AddZoneTimer) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12+len(s.Title)+len(s.TimerUI)))
-	binary.Write(b, binary.LittleEndian, s.TimerID)
-	writeString_5(b, s.Title)
-	writeString_5(b, s.TimerUI)
-	binary.Write(b, binary.LittleEndian, s.CountdownTime)
+	binary.Write(b, binary.LittleEndian, s.Title)
+	binary.Write(b, binary.LittleEndian, s.TimerUI)
 	return b.Bytes()
 }
 
@@ -2005,10 +1990,10 @@ func (s *AddZoneTimer) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.TimerID); err != nil {
 		return err
 	}
-	if s.Title, err = readString_5(b); err != nil {
+	if s.Title, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.TimerUI, err = readString_5(b); err != nil {
+	if s.TimerUI, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.CountdownTime); err != nil {
@@ -2038,22 +2023,11 @@ type Attach struct {
 
 func (s *Attach) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 76+len(s.LoginKey)+len(s.ZoneName)+len(s.Location)+len(s.PassKey)+len(s.Locale)))
-	binary.Write(b, binary.LittleEndian, s.GameObjectID)
-	writeString_5(b, s.LoginKey)
-	binary.Write(b, binary.LittleEndian, s.UserID)
-	binary.Write(b, binary.LittleEndian, s.CharID)
-	writeString_5(b, s.ZoneName)
-	writeString_5(b, s.Location)
-	binary.Write(b, binary.LittleEndian, s.TargetPlayerID)
-	binary.Write(b, binary.LittleEndian, s.ZoneID)
-	binary.Write(b, binary.LittleEndian, s.Slot)
-	binary.Write(b, binary.LittleEndian, s.SessionID)
-	binary.Write(b, binary.LittleEndian, s.SessionSlot)
-	writeString_5(b, s.PassKey)
-	binary.Write(b, binary.LittleEndian, s.Reattach)
-	binary.Write(b, binary.LittleEndian, s.Retry)
-	writeString_5(b, s.Locale)
-	binary.Write(b, binary.LittleEndian, s.MachineID)
+	binary.Write(b, binary.LittleEndian, s.LoginKey)
+	binary.Write(b, binary.LittleEndian, s.ZoneName)
+	binary.Write(b, binary.LittleEndian, s.Location)
+	binary.Write(b, binary.LittleEndian, s.PassKey)
+	binary.Write(b, binary.LittleEndian, s.Locale)
 	return b.Bytes()
 }
 
@@ -2063,7 +2037,7 @@ func (s *Attach) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GameObjectID); err != nil {
 		return err
 	}
-	if s.LoginKey, err = readString_5(b); err != nil {
+	if s.LoginKey, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.UserID); err != nil {
@@ -2072,10 +2046,10 @@ func (s *Attach) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.CharID); err != nil {
 		return err
 	}
-	if s.ZoneName, err = readString_5(b); err != nil {
+	if s.ZoneName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Location, err = readString_5(b); err != nil {
+	if s.Location, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.TargetPlayerID); err != nil {
@@ -2093,7 +2067,7 @@ func (s *Attach) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.SessionSlot); err != nil {
 		return err
 	}
-	if s.PassKey, err = readString_5(b); err != nil {
+	if s.PassKey, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Reattach); err != nil {
@@ -2102,7 +2076,7 @@ func (s *Attach) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Retry); err != nil {
 		return err
 	}
-	if s.Locale, err = readString_5(b); err != nil {
+	if s.Locale, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.MachineID); err != nil {
@@ -2119,9 +2093,6 @@ type AttachFailed struct {
 
 func (s *AttachFailed) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.Error)
-	binary.Write(b, binary.LittleEndian, s.Rejected)
-	binary.Write(b, binary.LittleEndian, s.NoDisconnect)
 	return b.Bytes()
 }
 
@@ -2147,15 +2118,14 @@ type AuctionHouseUpdate struct {
 
 func (s *AuctionHouseUpdate) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.UpdateInfo)))
-	writeString_5(b, s.UpdateInfo)
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
+	binary.Write(b, binary.LittleEndian, s.UpdateInfo)
 	return b.Bytes()
 }
 
 func (s *AuctionHouseUpdate) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.UpdateInfo, err = readString_5(b); err != nil {
+	if s.UpdateInfo, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.CharacterID); err != nil {
@@ -2179,16 +2149,9 @@ type Badges struct {
 
 func (s *Badges) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 22+len(s.BadgeName)+len(s.BadgeInfo)+len(s.BadgeFilterInfo)))
-	binary.Write(b, binary.LittleEndian, s.CurrentBadge)
-	binary.Write(b, binary.LittleEndian, s.UpdateAll)
-	binary.Write(b, binary.LittleEndian, s.TotalBadges)
-	binary.Write(b, binary.LittleEndian, s.Add)
-	binary.Write(b, binary.LittleEndian, s.Remove)
-	writeString_5(b, s.BadgeName)
-	writeString_5(b, s.BadgeInfo)
-	binary.Write(b, binary.LittleEndian, s.BadgeNameID)
-	writeString_5(b, s.BadgeFilterInfo)
-	binary.Write(b, binary.LittleEndian, s.Display)
+	binary.Write(b, binary.LittleEndian, s.BadgeName)
+	binary.Write(b, binary.LittleEndian, s.BadgeInfo)
+	binary.Write(b, binary.LittleEndian, s.BadgeFilterInfo)
 	return b.Bytes()
 }
 
@@ -2210,16 +2173,16 @@ func (s *Badges) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Remove); err != nil {
 		return err
 	}
-	if s.BadgeName, err = readString_5(b); err != nil {
+	if s.BadgeName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.BadgeInfo, err = readString_5(b); err != nil {
+	if s.BadgeInfo, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.BadgeNameID); err != nil {
 		return err
 	}
-	if s.BadgeFilterInfo, err = readString_5(b); err != nil {
+	if s.BadgeFilterInfo, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Display); err != nil {
@@ -2237,23 +2200,22 @@ type BanRsp struct {
 
 func (s *BanRsp) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 7+len(s.BannedID)+len(s.BanTime)+len(s.BanType)))
-	writeString_5(b, s.BannedID)
-	writeString_5(b, s.BanTime)
-	writeString_5(b, s.BanType)
-	binary.Write(b, binary.LittleEndian, s.Success)
+	binary.Write(b, binary.LittleEndian, s.BannedID)
+	binary.Write(b, binary.LittleEndian, s.BanTime)
+	binary.Write(b, binary.LittleEndian, s.BanType)
 	return b.Bytes()
 }
 
 func (s *BanRsp) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.BannedID, err = readString_5(b); err != nil {
+	if s.BannedID, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.BanTime, err = readString_5(b); err != nil {
+	if s.BanTime, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.BanType, err = readString_5(b); err != nil {
+	if s.BanType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Success); err != nil {
@@ -2271,10 +2233,6 @@ type BestFriend struct {
 
 func (s *BestFriend) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 18))
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
-	binary.Write(b, binary.LittleEndian, s.BuddyID)
-	binary.Write(b, binary.LittleEndian, s.Forwarded)
-	binary.Write(b, binary.LittleEndian, s.FriendSymbol)
 	return b.Bytes()
 }
 
@@ -2306,11 +2264,8 @@ type Blackball struct {
 
 func (s *Blackball) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.HarassmentType)+len(s.ChatLog)))
-	binary.Write(b, binary.LittleEndian, s.TargetObjID)
-	writeString_5(b, s.HarassmentType)
-	writeString_5(b, s.ChatLog)
-	binary.Write(b, binary.LittleEndian, s.IsMute)
-	binary.Write(b, binary.LittleEndian, s.IsCharacterID)
+	binary.Write(b, binary.LittleEndian, s.HarassmentType)
+	binary.Write(b, binary.LittleEndian, s.ChatLog)
 	return b.Bytes()
 }
 
@@ -2320,10 +2275,10 @@ func (s *Blackball) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.TargetObjID); err != nil {
 		return err
 	}
-	if s.HarassmentType, err = readString_5(b); err != nil {
+	if s.HarassmentType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.ChatLog, err = readString_5(b); err != nil {
+	if s.ChatLog, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.IsMute); err != nil {
@@ -2342,8 +2297,6 @@ type BuddyDrop struct {
 
 func (s *BuddyDrop) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
-	binary.Write(b, binary.LittleEndian, s.EntryGID)
 	return b.Bytes()
 }
 
@@ -2378,20 +2331,10 @@ type BuddyEntry struct {
 
 func (s *BuddyEntry) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 54+len(s.Name)+len(s.ZoneName)+len(s.RealmName)+len(s.PreviousName)))
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
-	binary.Write(b, binary.LittleEndian, s.EntryGID)
-	binary.Write(b, binary.LittleEndian, s.GameObjectID)
-	writeString_5(b, s.Name)
-	binary.Write(b, binary.LittleEndian, s.Status)
-	binary.Write(b, binary.LittleEndian, s.FriendInfo)
-	binary.Write(b, binary.LittleEndian, s.PasswordChat)
-	binary.Write(b, binary.LittleEndian, s.Permissions)
-	writeString_5(b, s.ZoneName)
-	writeString_5(b, s.RealmName)
-	binary.Write(b, binary.LittleEndian, s.Locale)
-	binary.Write(b, binary.LittleEndian, s.FriendDate)
-	binary.Write(b, binary.LittleEndian, s.FriendStatusDate)
-	writeString_5(b, s.PreviousName)
+	binary.Write(b, binary.LittleEndian, s.Name)
+	binary.Write(b, binary.LittleEndian, s.ZoneName)
+	binary.Write(b, binary.LittleEndian, s.RealmName)
+	binary.Write(b, binary.LittleEndian, s.PreviousName)
 	return b.Bytes()
 }
 
@@ -2407,7 +2350,7 @@ func (s *BuddyEntry) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GameObjectID); err != nil {
 		return err
 	}
-	if s.Name, err = readString_5(b); err != nil {
+	if s.Name, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Status); err != nil {
@@ -2422,10 +2365,10 @@ func (s *BuddyEntry) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Permissions); err != nil {
 		return err
 	}
-	if s.ZoneName, err = readString_5(b); err != nil {
+	if s.ZoneName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.RealmName, err = readString_5(b); err != nil {
+	if s.RealmName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Locale); err != nil {
@@ -2437,7 +2380,7 @@ func (s *BuddyEntry) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.FriendStatusDate); err != nil {
 		return err
 	}
-	if s.PreviousName, err = readString_5(b); err != nil {
+	if s.PreviousName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2449,7 +2392,6 @@ type BuddyListComplete struct {
 
 func (s *BuddyListComplete) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
 	return b.Bytes()
 }
 
@@ -2481,20 +2423,9 @@ type BuddyRequestAccept struct {
 
 func (s *BuddyRequestAccept) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 63+len(s.OwnerName)+len(s.EntryName)+len(s.PreviousName)))
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
-	binary.Write(b, binary.LittleEndian, s.EntryGID)
-	writeString_5(b, s.OwnerName)
-	writeString_5(b, s.EntryName)
-	binary.Write(b, binary.LittleEndian, s.SourceObjectID)
-	binary.Write(b, binary.LittleEndian, s.DestObjectID)
-	binary.Write(b, binary.LittleEndian, s.Error)
-	binary.Write(b, binary.LittleEndian, s.Permissions)
-	binary.Write(b, binary.LittleEndian, s.Forwarded)
-	binary.Write(b, binary.LittleEndian, s.EntryLocale)
-	binary.Write(b, binary.LittleEndian, s.FriendInfo)
-	binary.Write(b, binary.LittleEndian, s.FriendDate)
-	binary.Write(b, binary.LittleEndian, s.FriendStatusDate)
-	writeString_5(b, s.PreviousName)
+	binary.Write(b, binary.LittleEndian, s.OwnerName)
+	binary.Write(b, binary.LittleEndian, s.EntryName)
+	binary.Write(b, binary.LittleEndian, s.PreviousName)
 	return b.Bytes()
 }
 
@@ -2507,10 +2438,10 @@ func (s *BuddyRequestAccept) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.EntryGID); err != nil {
 		return err
 	}
-	if s.OwnerName, err = readString_5(b); err != nil {
+	if s.OwnerName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.EntryName, err = readString_5(b); err != nil {
+	if s.EntryName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.SourceObjectID); err != nil {
@@ -2540,7 +2471,7 @@ func (s *BuddyRequestAccept) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.FriendStatusDate); err != nil {
 		return err
 	}
-	if s.PreviousName, err = readString_5(b); err != nil {
+	if s.PreviousName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2563,18 +2494,9 @@ type BuddyRequestAcceptFwd struct {
 
 func (s *BuddyRequestAcceptFwd) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 58+len(s.OwnerName)+len(s.EntryName)+len(s.PreviousName)))
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
-	binary.Write(b, binary.LittleEndian, s.EntryGID)
-	writeString_5(b, s.OwnerName)
-	writeString_5(b, s.EntryName)
-	binary.Write(b, binary.LittleEndian, s.SourceObjectID)
-	binary.Write(b, binary.LittleEndian, s.DestObjectID)
-	binary.Write(b, binary.LittleEndian, s.Permissions)
-	binary.Write(b, binary.LittleEndian, s.EntryLocale)
-	binary.Write(b, binary.LittleEndian, s.FriendInfo)
-	binary.Write(b, binary.LittleEndian, s.FriendDate)
-	binary.Write(b, binary.LittleEndian, s.FriendStatusDate)
-	writeString_5(b, s.PreviousName)
+	binary.Write(b, binary.LittleEndian, s.OwnerName)
+	binary.Write(b, binary.LittleEndian, s.EntryName)
+	binary.Write(b, binary.LittleEndian, s.PreviousName)
 	return b.Bytes()
 }
 
@@ -2587,10 +2509,10 @@ func (s *BuddyRequestAcceptFwd) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.EntryGID); err != nil {
 		return err
 	}
-	if s.OwnerName, err = readString_5(b); err != nil {
+	if s.OwnerName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.EntryName, err = readString_5(b); err != nil {
+	if s.EntryName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.SourceObjectID); err != nil {
@@ -2614,7 +2536,7 @@ func (s *BuddyRequestAcceptFwd) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.FriendStatusDate); err != nil {
 		return err
 	}
-	if s.PreviousName, err = readString_5(b); err != nil {
+	if s.PreviousName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2631,12 +2553,8 @@ type BuddyRequestAdd struct {
 
 func (s *BuddyRequestAdd) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 22+len(s.OwnerName)+len(s.OwnerSchool)))
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
-	binary.Write(b, binary.LittleEndian, s.EntryGID)
-	writeString_5(b, s.OwnerName)
-	binary.Write(b, binary.LittleEndian, s.OwnerLevel)
-	writeString_5(b, s.OwnerSchool)
-	binary.Write(b, binary.LittleEndian, s.Remove)
+	binary.Write(b, binary.LittleEndian, s.OwnerName)
+	binary.Write(b, binary.LittleEndian, s.OwnerSchool)
 	return b.Bytes()
 }
 
@@ -2649,13 +2567,13 @@ func (s *BuddyRequestAdd) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.EntryGID); err != nil {
 		return err
 	}
-	if s.OwnerName, err = readString_5(b); err != nil {
+	if s.OwnerName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.OwnerLevel); err != nil {
 		return err
 	}
-	if s.OwnerSchool, err = readString_5(b); err != nil {
+	if s.OwnerSchool, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Remove); err != nil {
@@ -2675,12 +2593,8 @@ type BuddyRequestAddFwd struct {
 
 func (s *BuddyRequestAddFwd) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 22+len(s.OwnerName)+len(s.OwnerSchool)))
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
-	binary.Write(b, binary.LittleEndian, s.EntryGID)
-	writeString_5(b, s.OwnerName)
-	binary.Write(b, binary.LittleEndian, s.OwnerLevel)
-	writeString_5(b, s.OwnerSchool)
-	binary.Write(b, binary.LittleEndian, s.Remove)
+	binary.Write(b, binary.LittleEndian, s.OwnerName)
+	binary.Write(b, binary.LittleEndian, s.OwnerSchool)
 	return b.Bytes()
 }
 
@@ -2693,13 +2607,13 @@ func (s *BuddyRequestAddFwd) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.EntryGID); err != nil {
 		return err
 	}
-	if s.OwnerName, err = readString_5(b); err != nil {
+	if s.OwnerName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.OwnerLevel); err != nil {
 		return err
 	}
-	if s.OwnerSchool, err = readString_5(b); err != nil {
+	if s.OwnerSchool, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Remove); err != nil {
@@ -2715,8 +2629,6 @@ type BuddyRequestDeny struct {
 
 func (s *BuddyRequestDeny) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
-	binary.Write(b, binary.LittleEndian, s.EntryGID)
 	return b.Bytes()
 }
 
@@ -2739,8 +2651,6 @@ type BuddyRequestDenyFwd struct {
 
 func (s *BuddyRequestDenyFwd) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
-	binary.Write(b, binary.LittleEndian, s.EntryGID)
 	return b.Bytes()
 }
 
@@ -2764,9 +2674,6 @@ type BuddyRequestDrop struct {
 
 func (s *BuddyRequestDrop) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 17))
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
-	binary.Write(b, binary.LittleEndian, s.EntryGID)
-	binary.Write(b, binary.LittleEndian, s.Forwarded)
 	return b.Bytes()
 }
 
@@ -2793,9 +2700,6 @@ type BuddyRequestError struct {
 
 func (s *BuddyRequestError) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 17))
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
-	binary.Write(b, binary.LittleEndian, s.EntryGID)
-	binary.Write(b, binary.LittleEndian, s.Error)
 	return b.Bytes()
 }
 
@@ -2821,8 +2725,6 @@ type BuddyRequestList struct {
 
 func (s *BuddyRequestList) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9))
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
-	binary.Write(b, binary.LittleEndian, s.Forwarded)
 	return b.Bytes()
 }
 
@@ -2863,26 +2765,12 @@ type BuddyStats struct {
 
 func (s *BuddyStats) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 77+len(s.StatBlock)+len(s.PetStatBlock)+len(s.CharBlock)+len(s.EquipBlock)+len(s.EffectBlock)+len(s.WishlistBlock)))
-	binary.Write(b, binary.LittleEndian, s.BuddyID)
-	writeString_5(b, s.StatBlock)
-	writeString_5(b, s.PetStatBlock)
-	writeString_5(b, s.CharBlock)
-	writeString_5(b, s.EquipBlock)
-	writeString_5(b, s.EffectBlock)
-	writeString_5(b, s.WishlistBlock)
-	binary.Write(b, binary.LittleEndian, s.Level)
-	binary.Write(b, binary.LittleEndian, s.School)
-	binary.Write(b, binary.LittleEndian, s.ShowPVPOption)
-	binary.Write(b, binary.LittleEndian, s.Gender)
-	binary.Write(b, binary.LittleEndian, s.StatBlockCRC)
-	binary.Write(b, binary.LittleEndian, s.PetStatBlockCRC)
-	binary.Write(b, binary.LittleEndian, s.CharBlockCRC)
-	binary.Write(b, binary.LittleEndian, s.EquipBlockCRC)
-	binary.Write(b, binary.LittleEndian, s.EffectBlockCRC)
-	binary.Write(b, binary.LittleEndian, s.WishlistBlockCRC)
-	binary.Write(b, binary.LittleEndian, s.SourceCharacterGID)
-	binary.Write(b, binary.LittleEndian, s.TargetCharacterGID)
-	binary.Write(b, binary.LittleEndian, s.PetJewelID)
+	binary.Write(b, binary.LittleEndian, s.StatBlock)
+	binary.Write(b, binary.LittleEndian, s.PetStatBlock)
+	binary.Write(b, binary.LittleEndian, s.CharBlock)
+	binary.Write(b, binary.LittleEndian, s.EquipBlock)
+	binary.Write(b, binary.LittleEndian, s.EffectBlock)
+	binary.Write(b, binary.LittleEndian, s.WishlistBlock)
 	return b.Bytes()
 }
 
@@ -2892,22 +2780,22 @@ func (s *BuddyStats) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.BuddyID); err != nil {
 		return err
 	}
-	if s.StatBlock, err = readString_5(b); err != nil {
+	if s.StatBlock, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.PetStatBlock, err = readString_5(b); err != nil {
+	if s.PetStatBlock, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.CharBlock, err = readString_5(b); err != nil {
+	if s.CharBlock, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.EquipBlock, err = readString_5(b); err != nil {
+	if s.EquipBlock, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.EffectBlock, err = readString_5(b); err != nil {
+	if s.EffectBlock, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.WishlistBlock, err = readString_5(b); err != nil {
+	if s.WishlistBlock, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Level); err != nil {
@@ -2968,17 +2856,9 @@ type BuddyStatusUpdate struct {
 
 func (s *BuddyStatusUpdate) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 43+len(s.ZoneName)+len(s.RealmName)+len(s.PreviousName)))
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
-	binary.Write(b, binary.LittleEndian, s.EntryGID)
-	binary.Write(b, binary.LittleEndian, s.Status)
-	binary.Write(b, binary.LittleEndian, s.Permissions)
-	writeString_5(b, s.ZoneName)
-	binary.Write(b, binary.LittleEndian, s.Locale)
-	writeString_5(b, s.RealmName)
-	binary.Write(b, binary.LittleEndian, s.FriendInfo)
-	binary.Write(b, binary.LittleEndian, s.FriendDate)
-	binary.Write(b, binary.LittleEndian, s.FriendStatusDate)
-	writeString_5(b, s.PreviousName)
+	binary.Write(b, binary.LittleEndian, s.ZoneName)
+	binary.Write(b, binary.LittleEndian, s.RealmName)
+	binary.Write(b, binary.LittleEndian, s.PreviousName)
 	return b.Bytes()
 }
 
@@ -2997,13 +2877,13 @@ func (s *BuddyStatusUpdate) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Permissions); err != nil {
 		return err
 	}
-	if s.ZoneName, err = readString_5(b); err != nil {
+	if s.ZoneName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Locale); err != nil {
 		return err
 	}
-	if s.RealmName, err = readString_5(b); err != nil {
+	if s.RealmName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.FriendInfo); err != nil {
@@ -3015,7 +2895,7 @@ func (s *BuddyStatusUpdate) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.FriendStatusDate); err != nil {
 		return err
 	}
-	if s.PreviousName, err = readString_5(b); err != nil {
+	if s.PreviousName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -3027,14 +2907,14 @@ type BugReport struct {
 
 func (s *BugReport) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Report)))
-	writeString_5(b, s.Report)
+	binary.Write(b, binary.LittleEndian, s.Report)
 	return b.Bytes()
 }
 
 func (s *BugReport) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Report, err = readString_5(b); err != nil {
+	if s.Report, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -3047,8 +2927,6 @@ type BugSubmitResponse struct {
 
 func (s *BugSubmitResponse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2))
-	binary.Write(b, binary.LittleEndian, s.Success)
-	binary.Write(b, binary.LittleEndian, s.Type)
 	return b.Bytes()
 }
 
@@ -3075,25 +2953,21 @@ type ChannelChat struct {
 
 func (s *ChannelChat) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 25+len(s.SourceName)+len(s.Message)))
-	writeString_5(b, s.SourceName)
-	binary.Write(b, binary.LittleEndian, s.SourceID)
-	writeString_5(b, s.Message)
-	binary.Write(b, binary.LittleEndian, s.TargetID)
-	binary.Write(b, binary.LittleEndian, s.Filter)
-	binary.Write(b, binary.LittleEndian, s.Flags)
+	binary.Write(b, binary.LittleEndian, s.SourceName)
+	binary.Write(b, binary.LittleEndian, s.Message)
 	return b.Bytes()
 }
 
 func (s *ChannelChat) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.SourceName, err = readString_5(b); err != nil {
+	if s.SourceName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.SourceID); err != nil {
 		return err
 	}
-	if s.Message, err = readString_5(b); err != nil {
+	if s.Message, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.TargetID); err != nil {
@@ -3118,11 +2992,7 @@ type ChannelSubscription struct {
 
 func (s *ChannelSubscription) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 27+len(s.ChannelName)))
-	binary.Write(b, binary.LittleEndian, s.RecipientID)
-	binary.Write(b, binary.LittleEndian, s.ChannelID)
-	binary.Write(b, binary.LittleEndian, s.ParentID)
-	writeString_5(b, s.ChannelName)
-	binary.Write(b, binary.LittleEndian, s.ChannelType)
+	binary.Write(b, binary.LittleEndian, s.ChannelName)
 	return b.Bytes()
 }
 
@@ -3138,7 +3008,7 @@ func (s *ChannelSubscription) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ParentID); err != nil {
 		return err
 	}
-	if s.ChannelName, err = readString_5(b); err != nil {
+	if s.ChannelName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ChannelType); err != nil {
@@ -3154,8 +3024,7 @@ type ChatDiagnostics struct {
 
 func (s *ChatDiagnostics) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	writeString_5(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -3165,7 +3034,7 @@ func (s *ChatDiagnostics) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.CharacterID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_5(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -3179,9 +3048,6 @@ type ChatError struct {
 
 func (s *ChatError) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20))
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.Error)
 	return b.Bytes()
 }
 
@@ -3206,7 +3072,6 @@ type CheckSubscription struct {
 
 func (s *CheckSubscription) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.Success)
 	return b.Bytes()
 }
 
@@ -3225,7 +3090,6 @@ type CheckMail struct {
 
 func (s *CheckMail) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
 	return b.Bytes()
 }
 
@@ -3248,11 +3112,6 @@ type ClientMove struct {
 
 func (s *ClientMove) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.LocationX)
-	binary.Write(b, binary.LittleEndian, s.LocationY)
-	binary.Write(b, binary.LittleEndian, s.LocationZ)
-	binary.Write(b, binary.LittleEndian, s.Direction)
-	binary.Write(b, binary.LittleEndian, s.ZoneCounter)
 	return b.Bytes()
 }
 
@@ -3283,7 +3142,6 @@ type ClientMoveState struct {
 
 func (s *ClientMoveState) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.NewState)
 	return b.Bytes()
 }
 
@@ -3305,23 +3163,21 @@ type ClientNotifyText struct {
 
 func (s *ClientNotifyText) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9+len(s.NotifyText)+len(s.Madlibs)))
-	writeString_5(b, s.NotifyText)
-	binary.Write(b, binary.LittleEndian, s.Type)
-	writeString_5(b, s.Madlibs)
-	binary.Write(b, binary.LittleEndian, s.AddToChat)
+	binary.Write(b, binary.LittleEndian, s.NotifyText)
+	binary.Write(b, binary.LittleEndian, s.Madlibs)
 	return b.Bytes()
 }
 
 func (s *ClientNotifyText) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.NotifyText, err = readString_5(b); err != nil {
+	if s.NotifyText, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Type); err != nil {
 		return err
 	}
-	if s.Madlibs, err = readString_5(b); err != nil {
+	if s.Madlibs, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.AddToChat); err != nil {
@@ -3336,14 +3192,14 @@ type ClientTutorialEvent struct {
 
 func (s *ClientTutorialEvent) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Event)))
-	writeString_5(b, s.Event)
+	binary.Write(b, binary.LittleEndian, s.Event)
 	return b.Bytes()
 }
 
 func (s *ClientTutorialEvent) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Event, err = readString_5(b); err != nil {
+	if s.Event, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -3366,14 +3222,14 @@ type ClientError struct {
 
 func (s *ClientError) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Function)))
-	writeString_5(b, s.Function)
+	binary.Write(b, binary.LittleEndian, s.Function)
 	return b.Bytes()
 }
 
 func (s *ClientError) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Function, err = readString_5(b); err != nil {
+	if s.Function, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -3385,7 +3241,6 @@ type CLIENTPROCESSTERMINATED struct {
 
 func (s *CLIENTPROCESSTERMINATED) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.JobID)
 	return b.Bytes()
 }
 
@@ -3406,9 +3261,6 @@ type CombineInventoryItems struct {
 
 func (s *CombineInventoryItems) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.ItemID1)
-	binary.Write(b, binary.LittleEndian, s.ItemID2)
 	return b.Bytes()
 }
 
@@ -3435,19 +3287,18 @@ type Command struct {
 
 func (s *Command) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8+len(s.Command)+len(s.ResultEvent)))
-	writeString_5(b, s.Command)
-	writeString_5(b, s.ResultEvent)
-	binary.Write(b, binary.LittleEndian, s.TimeLeft)
+	binary.Write(b, binary.LittleEndian, s.Command)
+	binary.Write(b, binary.LittleEndian, s.ResultEvent)
 	return b.Bytes()
 }
 
 func (s *Command) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Command, err = readString_5(b); err != nil {
+	if s.Command, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.ResultEvent, err = readString_5(b); err != nil {
+	if s.ResultEvent, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.TimeLeft); err != nil {
@@ -3464,22 +3315,22 @@ type CommandResult struct {
 
 func (s *CommandResult) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.Command)+len(s.ResultEvent)+len(s.Results)))
-	writeString_5(b, s.Command)
-	writeString_5(b, s.ResultEvent)
-	writeString_5(b, s.Results)
+	binary.Write(b, binary.LittleEndian, s.Command)
+	binary.Write(b, binary.LittleEndian, s.ResultEvent)
+	binary.Write(b, binary.LittleEndian, s.Results)
 	return b.Bytes()
 }
 
 func (s *CommandResult) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Command, err = readString_5(b); err != nil {
+	if s.Command, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.ResultEvent, err = readString_5(b); err != nil {
+	if s.ResultEvent, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Results, err = readString_5(b); err != nil {
+	if s.Results, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -3493,9 +3344,7 @@ type CompanionEffects struct {
 
 func (s *CompanionEffects) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 7+len(s.EffectInfoList)))
-	binary.Write(b, binary.LittleEndian, s.NPC)
-	writeString_5(b, s.EffectInfoList)
-	binary.Write(b, binary.LittleEndian, s.Add)
+	binary.Write(b, binary.LittleEndian, s.EffectInfoList)
 	return b.Bytes()
 }
 
@@ -3505,7 +3354,7 @@ func (s *CompanionEffects) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.NPC); err != nil {
 		return err
 	}
-	if s.EffectInfoList, err = readString_5(b); err != nil {
+	if s.EffectInfoList, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Add); err != nil {
@@ -3522,16 +3371,14 @@ type CoreEmote struct {
 
 func (s *CoreEmote) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 7+len(s.Name)))
-	writeString_5(b, s.Name)
-	binary.Write(b, binary.LittleEndian, s.ExcludeOriginator)
-	binary.Write(b, binary.LittleEndian, s.PhraseID)
+	binary.Write(b, binary.LittleEndian, s.Name)
 	return b.Bytes()
 }
 
 func (s *CoreEmote) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Name, err = readString_5(b); err != nil {
+	if s.Name, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ExcludeOriginator); err != nil {
@@ -3552,10 +3399,7 @@ type CreateChannelResponse struct {
 
 func (s *CreateChannelResponse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 19+len(s.ChannelName)))
-	binary.Write(b, binary.LittleEndian, s.SourceID)
-	binary.Write(b, binary.LittleEndian, s.ChannelID)
-	writeString_5(b, s.ChannelName)
-	binary.Write(b, binary.LittleEndian, s.ErrorCode)
+	binary.Write(b, binary.LittleEndian, s.ChannelName)
 	return b.Bytes()
 }
 
@@ -3568,7 +3412,7 @@ func (s *CreateChannelResponse) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ChannelID); err != nil {
 		return err
 	}
-	if s.ChannelName, err = readString_5(b); err != nil {
+	if s.ChannelName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ErrorCode); err != nil {
@@ -3596,9 +3440,7 @@ type CSRBankItems struct {
 
 func (s *CSRBankItems) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 11+len(s.SerializedItem)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.SharedBank)
-	writeString_5(b, s.SerializedItem)
+	binary.Write(b, binary.LittleEndian, s.SerializedItem)
 	return b.Bytes()
 }
 
@@ -3611,7 +3453,7 @@ func (s *CSRBankItems) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.SharedBank); err != nil {
 		return err
 	}
-	if s.SerializedItem, err = readString_5(b); err != nil {
+	if s.SerializedItem, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -3625,9 +3467,6 @@ type CSRBankItemsDone struct {
 
 func (s *CSRBankItemsDone) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 13))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.SharedBank)
-	binary.Write(b, binary.LittleEndian, s.Limit)
 	return b.Bytes()
 }
 
@@ -3669,24 +3508,15 @@ type CSREditCharacter struct {
 
 func (s *CSREditCharacter) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 47+len(s.UserName)+len(s.CurrentBan)+len(s.CurrentMute)+len(s.Object)+len(s.CurrentQuests)+len(s.Registry)+len(s.AccessPasses)+len(s.BadgeList)+len(s.DynaMods)))
-	binary.Write(b, binary.LittleEndian, s.ChunkNum)
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.UserID)
-	writeString_5(b, s.UserName)
-	writeString_5(b, s.CurrentBan)
-	writeString_5(b, s.CurrentMute)
-	binary.Write(b, binary.LittleEndian, s.AcctAssoc)
-	writeString_5(b, s.Object)
-	writeString_5(b, s.CurrentQuests)
-	writeString_5(b, s.Registry)
-	writeString_5(b, s.AccessPasses)
-	writeString_5(b, s.BadgeList)
-	binary.Write(b, binary.LittleEndian, s.Edit)
-	binary.Write(b, binary.LittleEndian, s.AllowedToReport)
-	writeString_5(b, s.DynaMods)
-	binary.Write(b, binary.LittleEndian, s.CharacterSlots)
-	binary.Write(b, binary.LittleEndian, s.SegmentedMessage)
-	binary.Write(b, binary.LittleEndian, s.LastSegment)
+	binary.Write(b, binary.LittleEndian, s.UserName)
+	binary.Write(b, binary.LittleEndian, s.CurrentBan)
+	binary.Write(b, binary.LittleEndian, s.CurrentMute)
+	binary.Write(b, binary.LittleEndian, s.Object)
+	binary.Write(b, binary.LittleEndian, s.CurrentQuests)
+	binary.Write(b, binary.LittleEndian, s.Registry)
+	binary.Write(b, binary.LittleEndian, s.AccessPasses)
+	binary.Write(b, binary.LittleEndian, s.BadgeList)
+	binary.Write(b, binary.LittleEndian, s.DynaMods)
 	return b.Bytes()
 }
 
@@ -3702,31 +3532,31 @@ func (s *CSREditCharacter) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.UserID); err != nil {
 		return err
 	}
-	if s.UserName, err = readString_5(b); err != nil {
+	if s.UserName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.CurrentBan, err = readString_5(b); err != nil {
+	if s.CurrentBan, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.CurrentMute, err = readString_5(b); err != nil {
+	if s.CurrentMute, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.AcctAssoc); err != nil {
 		return err
 	}
-	if s.Object, err = readString_5(b); err != nil {
+	if s.Object, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.CurrentQuests, err = readString_5(b); err != nil {
+	if s.CurrentQuests, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Registry, err = readString_5(b); err != nil {
+	if s.Registry, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.AccessPasses, err = readString_5(b); err != nil {
+	if s.AccessPasses, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.BadgeList, err = readString_5(b); err != nil {
+	if s.BadgeList, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Edit); err != nil {
@@ -3735,7 +3565,7 @@ func (s *CSREditCharacter) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.AllowedToReport); err != nil {
 		return err
 	}
-	if s.DynaMods, err = readString_5(b); err != nil {
+	if s.DynaMods, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.CharacterSlots); err != nil {
@@ -3756,7 +3586,6 @@ type CSREditCharacterFailed struct {
 
 func (s *CSREditCharacterFailed) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
 	return b.Bytes()
 }
 
@@ -3778,10 +3607,6 @@ type CSRFinishedHouse struct {
 
 func (s *CSRFinishedHouse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 25))
-	binary.Write(b, binary.LittleEndian, s.OldGid)
-	binary.Write(b, binary.LittleEndian, s.NewGid)
-	binary.Write(b, binary.LittleEndian, s.Character)
-	binary.Write(b, binary.LittleEndian, s.Error)
 	return b.Bytes()
 }
 
@@ -3810,8 +3635,7 @@ type CSRSearchList struct {
 
 func (s *CSRSearchList) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 3+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.StartEnd)
-	writeString_5(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -3821,7 +3645,7 @@ func (s *CSRSearchList) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.StartEnd); err != nil {
 		return err
 	}
-	if s.Data, err = readString_5(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -3833,14 +3657,14 @@ type CSRMailData struct {
 
 func (s *CSRMailData) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Data)))
-	writeString_5(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
 func (s *CSRMailData) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_5(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -3853,8 +3677,7 @@ type CSRReceiveGifts struct {
 
 func (s *CSRReceiveGifts) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.Success)
-	writeString_5(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -3864,7 +3687,7 @@ func (s *CSRReceiveGifts) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Success); err != nil {
 		return err
 	}
-	if s.Data, err = readString_5(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -3888,8 +3711,7 @@ type DeleteObject struct {
 
 func (s *DeleteObject) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.GameObjectID)
-	writeString_5(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -3899,7 +3721,7 @@ func (s *DeleteObject) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GameObjectID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_5(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -3913,16 +3735,14 @@ type DeleteGift struct {
 
 func (s *DeleteGift) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 7+len(s.GiftID)))
-	writeString_5(b, s.GiftID)
-	binary.Write(b, binary.LittleEndian, s.Success)
-	binary.Write(b, binary.LittleEndian, s.IsPeriodicItem)
+	binary.Write(b, binary.LittleEndian, s.GiftID)
 	return b.Bytes()
 }
 
 func (s *DeleteGift) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.GiftID, err = readString_5(b); err != nil {
+	if s.GiftID, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Success); err != nil {
@@ -3944,24 +3764,21 @@ type DirectedChat struct {
 
 func (s *DirectedChat) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 21+len(s.SourceName)+len(s.Message)))
-	writeString_5(b, s.SourceName)
-	binary.Write(b, binary.LittleEndian, s.SourceID)
-	writeString_5(b, s.Message)
-	binary.Write(b, binary.LittleEndian, s.TargetID)
-	binary.Write(b, binary.LittleEndian, s.Filter)
+	binary.Write(b, binary.LittleEndian, s.SourceName)
+	binary.Write(b, binary.LittleEndian, s.Message)
 	return b.Bytes()
 }
 
 func (s *DirectedChat) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.SourceName, err = readString_5(b); err != nil {
+	if s.SourceName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.SourceID); err != nil {
 		return err
 	}
-	if s.Message, err = readString_5(b); err != nil {
+	if s.Message, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.TargetID); err != nil {
@@ -3980,8 +3797,7 @@ type DirectedChatByNameResponse struct {
 
 func (s *DirectedChatByNameResponse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.TargetName)))
-	binary.Write(b, binary.LittleEndian, s.TargetID)
-	writeString_5(b, s.TargetName)
+	binary.Write(b, binary.LittleEndian, s.TargetName)
 	return b.Bytes()
 }
 
@@ -3991,7 +3807,7 @@ func (s *DirectedChatByNameResponse) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.TargetID); err != nil {
 		return err
 	}
-	if s.TargetName, err = readString_5(b); err != nil {
+	if s.TargetName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -4018,18 +3834,14 @@ type DirectedQuickChat struct {
 
 func (s *DirectedQuickChat) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 19+len(s.SourceName)))
-	writeString_5(b, s.SourceName)
-	binary.Write(b, binary.LittleEndian, s.SourceID)
-	binary.Write(b, binary.LittleEndian, s.MessageID)
-	binary.Write(b, binary.LittleEndian, s.Filter)
-	binary.Write(b, binary.LittleEndian, s.Flags)
+	binary.Write(b, binary.LittleEndian, s.SourceName)
 	return b.Bytes()
 }
 
 func (s *DirectedQuickChat) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.SourceName, err = readString_5(b); err != nil {
+	if s.SourceName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.SourceID); err != nil {
@@ -4057,24 +3869,21 @@ type DirectedQuickChatExt struct {
 
 func (s *DirectedQuickChatExt) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 17+len(s.SourceName)+len(s.Message)))
-	writeString_5(b, s.SourceName)
-	binary.Write(b, binary.LittleEndian, s.SourceID)
-	writeString_5(b, s.Message)
-	binary.Write(b, binary.LittleEndian, s.Filter)
-	binary.Write(b, binary.LittleEndian, s.Flags)
+	binary.Write(b, binary.LittleEndian, s.SourceName)
+	binary.Write(b, binary.LittleEndian, s.Message)
 	return b.Bytes()
 }
 
 func (s *DirectedQuickChatExt) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.SourceName, err = readString_5(b); err != nil {
+	if s.SourceName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.SourceID); err != nil {
 		return err
 	}
-	if s.Message, err = readString_5(b); err != nil {
+	if s.Message, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Filter); err != nil {
@@ -4092,7 +3901,6 @@ type DisconnectAfk struct {
 
 func (s *DisconnectAfk) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.Warning)
 	return b.Bytes()
 }
 
@@ -4122,14 +3930,14 @@ type DownloadPackage struct {
 
 func (s *DownloadPackage) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Data)))
-	writeString_5(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
 func (s *DownloadPackage) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_5(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -4141,14 +3949,14 @@ type DownloadPackageElement struct {
 
 func (s *DownloadPackageElement) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Data)))
-	writeString_5(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
 func (s *DownloadPackageElement) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_5(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -4166,13 +3974,8 @@ type DynaModBehaviorUpdateMods struct {
 
 func (s *DynaModBehaviorUpdateMods) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 19+len(s.AllMods)+len(s.NewMod)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.UpdateAll)
-	binary.Write(b, binary.LittleEndian, s.Add)
-	binary.Write(b, binary.LittleEndian, s.Remove)
-	writeString_5(b, s.AllMods)
-	writeString_5(b, s.NewMod)
-	binary.Write(b, binary.LittleEndian, s.Index)
+	binary.Write(b, binary.LittleEndian, s.AllMods)
+	binary.Write(b, binary.LittleEndian, s.NewMod)
 	return b.Bytes()
 }
 
@@ -4191,10 +3994,10 @@ func (s *DynaModBehaviorUpdateMods) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Remove); err != nil {
 		return err
 	}
-	if s.AllMods, err = readString_5(b); err != nil {
+	if s.AllMods, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.NewMod, err = readString_5(b); err != nil {
+	if s.NewMod, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Index); err != nil {
@@ -4210,18 +4013,18 @@ type DynaModDump struct {
 
 func (s *DynaModDump) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4+len(s.Data)+len(s.Filename)))
-	writeString_5(b, s.Data)
-	writeString_5(b, s.Filename)
+	binary.Write(b, binary.LittleEndian, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Filename)
 	return b.Bytes()
 }
 
 func (s *DynaModDump) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_5(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Filename, err = readString_5(b); err != nil {
+	if s.Filename, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -4236,10 +4039,7 @@ type EnterState struct {
 
 func (s *EnterState) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 15+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.GameObjectID)
-	binary.Write(b, binary.LittleEndian, s.State)
-	writeString_5(b, s.Data)
-	binary.Write(b, binary.LittleEndian, s.IgnoreIfCurrentStateIsOff)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -4252,7 +4052,7 @@ func (s *EnterState) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.State); err != nil {
 		return err
 	}
-	if s.Data, err = readString_5(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.IgnoreIfCurrentStateIsOff); err != nil {
@@ -4269,9 +4069,7 @@ type EquipItem struct {
 
 func (s *EquipItem) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.SlotName)))
-	binary.Write(b, binary.LittleEndian, s.IsEquip)
-	binary.Write(b, binary.LittleEndian, s.ItemID)
-	writeString_5(b, s.SlotName)
+	binary.Write(b, binary.LittleEndian, s.SlotName)
 	return b.Bytes()
 }
 
@@ -4284,7 +4082,7 @@ func (s *EquipItem) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ItemID); err != nil {
 		return err
 	}
-	if s.SlotName, err = readString_5(b); err != nil {
+	if s.SlotName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -4299,10 +4097,8 @@ type EquipmentBehaviorEquipItem struct {
 
 func (s *EquipmentBehaviorEquipItem) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.SlotName)+len(s.SerializedItem)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_5(b, s.SlotName)
-	binary.Write(b, binary.LittleEndian, s.IsValid)
-	writeString_5(b, s.SerializedItem)
+	binary.Write(b, binary.LittleEndian, s.SlotName)
+	binary.Write(b, binary.LittleEndian, s.SerializedItem)
 	return b.Bytes()
 }
 
@@ -4312,13 +4108,13 @@ func (s *EquipmentBehaviorEquipItem) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.SlotName, err = readString_5(b); err != nil {
+	if s.SlotName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.IsValid); err != nil {
 		return err
 	}
-	if s.SerializedItem, err = readString_5(b); err != nil {
+	if s.SerializedItem, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -4331,8 +4127,7 @@ type EquipmentBehaviorPublicEquipItem struct {
 
 func (s *EquipmentBehaviorPublicEquipItem) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.SerializedInfo)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_5(b, s.SerializedInfo)
+	binary.Write(b, binary.LittleEndian, s.SerializedInfo)
 	return b.Bytes()
 }
 
@@ -4342,7 +4137,7 @@ func (s *EquipmentBehaviorPublicEquipItem) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.SerializedInfo, err = readString_5(b); err != nil {
+	if s.SerializedInfo, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -4355,8 +4150,6 @@ type EquipmentBehaviorPublicUnequipItem struct {
 
 func (s *EquipmentBehaviorPublicUnequipItem) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.IndexToRemove)
 	return b.Bytes()
 }
 
@@ -4379,8 +4172,6 @@ type EquipmentBehaviorUnequipItem struct {
 
 func (s *EquipmentBehaviorUnequipItem) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.ItemID)
 	return b.Bytes()
 }
 
@@ -4403,8 +4194,6 @@ type FeedInventoryItem struct {
 
 func (s *FeedInventoryItem) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.PetID)
-	binary.Write(b, binary.LittleEndian, s.FedObjectID)
 	return b.Bytes()
 }
 
@@ -4438,8 +4227,6 @@ type FINDSESSIONPLAYERS struct {
 
 func (s *FINDSESSIONPLAYERS) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.ZoneID)
-	binary.Write(b, binary.LittleEndian, s.SessionID)
 	return b.Bytes()
 }
 
@@ -4467,13 +4254,7 @@ type GenericGame struct {
 
 func (s *GenericGame) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 26+len(s.Message)))
-	binary.Write(b, binary.LittleEndian, s.A)
-	binary.Write(b, binary.LittleEndian, s.B)
-	binary.Write(b, binary.LittleEndian, s.X)
-	binary.Write(b, binary.LittleEndian, s.Y)
-	binary.Write(b, binary.LittleEndian, s.Z)
-	binary.Write(b, binary.LittleEndian, s.W)
-	writeString_5(b, s.Message)
+	binary.Write(b, binary.LittleEndian, s.Message)
 	return b.Bytes()
 }
 
@@ -4498,7 +4279,7 @@ func (s *GenericGame) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.W); err != nil {
 		return err
 	}
-	if s.Message, err = readString_5(b); err != nil {
+	if s.Message, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -4512,16 +4293,14 @@ type GetLadder struct {
 
 func (s *GetLadder) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.NameBlob)))
-	writeString_5(b, s.NameBlob)
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.TournamentNameID)
+	binary.Write(b, binary.LittleEndian, s.NameBlob)
 	return b.Bytes()
 }
 
 func (s *GetLadder) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.NameBlob, err = readString_5(b); err != nil {
+	if s.NameBlob, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.CharacterID); err != nil {
@@ -4542,17 +4321,14 @@ type GETRANKINGS struct {
 
 func (s *GETRANKINGS) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 18+len(s.Game)))
-	writeString_5(b, s.Game)
-	binary.Write(b, binary.LittleEndian, s.RankingCount)
-	binary.Write(b, binary.LittleEndian, s.Time)
-	binary.Write(b, binary.LittleEndian, s.GroupID)
+	binary.Write(b, binary.LittleEndian, s.Game)
 	return b.Bytes()
 }
 
 func (s *GETRANKINGS) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Game, err = readString_5(b); err != nil {
+	if s.Game, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.RankingCount); err != nil {
@@ -4582,16 +4358,8 @@ type GiftRedeemed struct {
 
 func (s *GiftRedeemed) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 35+len(s.GiftID)+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.Success)
-	writeString_5(b, s.GiftID)
-	binary.Write(b, binary.LittleEndian, s.GID)
-	writeString_5(b, s.Data)
-	binary.Write(b, binary.LittleEndian, s.TemplateID)
-	binary.Write(b, binary.LittleEndian, s.ErrorCode)
-	binary.Write(b, binary.LittleEndian, s.Quantity)
-	binary.Write(b, binary.LittleEndian, s.HasMorePromoGifts)
-	binary.Write(b, binary.LittleEndian, s.HasMoreCrownsRewards)
-	binary.Write(b, binary.LittleEndian, s.HasMorePeriodicItems)
+	binary.Write(b, binary.LittleEndian, s.GiftID)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -4601,13 +4369,13 @@ func (s *GiftRedeemed) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Success); err != nil {
 		return err
 	}
-	if s.GiftID, err = readString_5(b); err != nil {
+	if s.GiftID, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.GID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_5(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.TemplateID); err != nil {
@@ -4639,9 +4407,6 @@ type GotoPlayer struct {
 
 func (s *GotoPlayer) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 17))
-	binary.Write(b, binary.LittleEndian, s.TargetCharacterID)
-	binary.Write(b, binary.LittleEndian, s.OriginatorID)
-	binary.Write(b, binary.LittleEndian, s.MustBeFriend)
 	return b.Bytes()
 }
 
@@ -4670,11 +4435,7 @@ type GotoPlayerResponse struct {
 
 func (s *GotoPlayerResponse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 30+len(s.ZoneName)))
-	binary.Write(b, binary.LittleEndian, s.TargetCharacterID)
-	writeString_5(b, s.ZoneName)
-	binary.Write(b, binary.LittleEndian, s.ZoneID)
-	binary.Write(b, binary.LittleEndian, s.OriginatorID)
-	binary.Write(b, binary.LittleEndian, s.Error)
+	binary.Write(b, binary.LittleEndian, s.ZoneName)
 	return b.Bytes()
 }
 
@@ -4684,7 +4445,7 @@ func (s *GotoPlayerResponse) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.TargetCharacterID); err != nil {
 		return err
 	}
-	if s.ZoneName, err = readString_5(b); err != nil {
+	if s.ZoneName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ZoneID); err != nil {
@@ -4706,8 +4467,6 @@ type HarassmentReport struct {
 
 func (s *HarassmentReport) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.Count)
-	binary.Write(b, binary.LittleEndian, s.CountToMute)
 	return b.Bytes()
 }
 
@@ -4733,11 +4492,7 @@ type IgnoreAdd struct {
 
 func (s *IgnoreAdd) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 27+len(s.CharacterName)))
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
-	binary.Write(b, binary.LittleEndian, s.CharacterGID)
-	binary.Write(b, binary.LittleEndian, s.GameObjectGID)
-	writeString_5(b, s.CharacterName)
-	binary.Write(b, binary.LittleEndian, s.Forwarded)
+	binary.Write(b, binary.LittleEndian, s.CharacterName)
 	return b.Bytes()
 }
 
@@ -4753,7 +4508,7 @@ func (s *IgnoreAdd) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GameObjectGID); err != nil {
 		return err
 	}
-	if s.CharacterName, err = readString_5(b); err != nil {
+	if s.CharacterName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Forwarded); err != nil {
@@ -4771,10 +4526,6 @@ type IgnoreDrop struct {
 
 func (s *IgnoreDrop) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 25))
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
-	binary.Write(b, binary.LittleEndian, s.CharacterGID)
-	binary.Write(b, binary.LittleEndian, s.GameObjectGID)
-	binary.Write(b, binary.LittleEndian, s.Forwarded)
 	return b.Bytes()
 }
 
@@ -4804,9 +4555,7 @@ type IgnoreList struct {
 
 func (s *IgnoreList) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 11+len(s.ListData)))
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
-	writeString_5(b, s.ListData)
-	binary.Write(b, binary.LittleEndian, s.Add)
+	binary.Write(b, binary.LittleEndian, s.ListData)
 	return b.Bytes()
 }
 
@@ -4816,7 +4565,7 @@ func (s *IgnoreList) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ListOwnerGID); err != nil {
 		return err
 	}
-	if s.ListData, err = readString_5(b); err != nil {
+	if s.ListData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Add); err != nil {
@@ -4832,8 +4581,6 @@ type InteractObject struct {
 
 func (s *InteractObject) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.TemplateID)
 	return b.Bytes()
 }
 
@@ -4856,8 +4603,6 @@ type InteractOption struct {
 
 func (s *InteractOption) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.ObjectID)
-	binary.Write(b, binary.LittleEndian, s.OptionIndex)
 	return b.Bytes()
 }
 
@@ -4880,8 +4625,7 @@ type INVENTORYBEHAVIORADDITEM struct {
 
 func (s *INVENTORYBEHAVIORADDITEM) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.SerializedItem)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_5(b, s.SerializedItem)
+	binary.Write(b, binary.LittleEndian, s.SerializedItem)
 	return b.Bytes()
 }
 
@@ -4891,7 +4635,7 @@ func (s *INVENTORYBEHAVIORADDITEM) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.SerializedItem, err = readString_5(b); err != nil {
+	if s.SerializedItem, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -4904,8 +4648,6 @@ type INVENTORYBEHAVIORREMOVEITEM struct {
 
 func (s *INVENTORYBEHAVIORREMOVEITEM) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.ItemID)
 	return b.Bytes()
 }
 
@@ -4929,9 +4671,6 @@ type INVENTORYBEHAVIORTRADEITEM struct {
 
 func (s *INVENTORYBEHAVIORTRADEITEM) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.ItemID)
-	binary.Write(b, binary.LittleEndian, s.Trading)
 	return b.Bytes()
 }
 
@@ -4961,31 +4700,30 @@ type InviteFriend struct {
 
 func (s *InviteFriend) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 11+len(s.PromoID)+len(s.YourName)+len(s.FriendName)+len(s.FriendEmail)+len(s.Locale)))
-	writeString_5(b, s.PromoID)
-	writeString_5(b, s.YourName)
-	writeString_5(b, s.FriendName)
-	writeString_5(b, s.FriendEmail)
-	writeString_5(b, s.Locale)
-	binary.Write(b, binary.LittleEndian, s.SendInEnglish)
+	binary.Write(b, binary.LittleEndian, s.PromoID)
+	binary.Write(b, binary.LittleEndian, s.YourName)
+	binary.Write(b, binary.LittleEndian, s.FriendName)
+	binary.Write(b, binary.LittleEndian, s.FriendEmail)
+	binary.Write(b, binary.LittleEndian, s.Locale)
 	return b.Bytes()
 }
 
 func (s *InviteFriend) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.PromoID, err = readString_5(b); err != nil {
+	if s.PromoID, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.YourName, err = readString_5(b); err != nil {
+	if s.YourName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.FriendName, err = readString_5(b); err != nil {
+	if s.FriendName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.FriendEmail, err = readString_5(b); err != nil {
+	if s.FriendEmail, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Locale, err = readString_5(b); err != nil {
+	if s.Locale, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.SendInEnglish); err != nil {
@@ -5001,8 +4739,7 @@ type InviteResponse struct {
 
 func (s *InviteResponse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.ErrorDesc)))
-	binary.Write(b, binary.LittleEndian, s.Success)
-	writeString_5(b, s.ErrorDesc)
+	binary.Write(b, binary.LittleEndian, s.ErrorDesc)
 	return b.Bytes()
 }
 
@@ -5012,7 +4749,7 @@ func (s *InviteResponse) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Success); err != nil {
 		return err
 	}
-	if s.ErrorDesc, err = readString_5(b); err != nil {
+	if s.ErrorDesc, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -5030,13 +4767,7 @@ type JoinChannelResponse struct {
 
 func (s *JoinChannelResponse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 36+len(s.ChannelName)))
-	binary.Write(b, binary.LittleEndian, s.SourceID)
-	binary.Write(b, binary.LittleEndian, s.ParentID)
-	binary.Write(b, binary.LittleEndian, s.ChannelID)
-	writeString_5(b, s.ChannelName)
-	binary.Write(b, binary.LittleEndian, s.ErrorCode)
-	binary.Write(b, binary.LittleEndian, s.ChannelType)
-	binary.Write(b, binary.LittleEndian, s.RecipientID)
+	binary.Write(b, binary.LittleEndian, s.ChannelName)
 	return b.Bytes()
 }
 
@@ -5052,7 +4783,7 @@ func (s *JoinChannelResponse) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ChannelID); err != nil {
 		return err
 	}
-	if s.ChannelName, err = readString_5(b); err != nil {
+	if s.ChannelName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ErrorCode); err != nil {
@@ -5074,8 +4805,6 @@ type JOINSESSION struct {
 
 func (s *JOINSESSION) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.ZoneID)
-	binary.Write(b, binary.LittleEndian, s.SessionID)
 	return b.Bytes()
 }
 
@@ -5097,7 +4826,6 @@ type Jump struct {
 
 func (s *Jump) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.ExcludeOriginator)
 	return b.Bytes()
 }
 
@@ -5116,7 +4844,6 @@ type KILLCLIENTPROCESS struct {
 
 func (s *KILLCLIENTPROCESS) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.JobID)
 	return b.Bytes()
 }
 
@@ -5137,9 +4864,7 @@ type LADDER struct {
 
 func (s *LADDER) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.LadderData)))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	writeString_5(b, s.LadderData)
-	binary.Write(b, binary.LittleEndian, s.TourneyCredits)
+	binary.Write(b, binary.LittleEndian, s.LadderData)
 	return b.Bytes()
 }
 
@@ -5149,7 +4874,7 @@ func (s *LADDER) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.CharacterID); err != nil {
 		return err
 	}
-	if s.LadderData, err = readString_5(b); err != nil {
+	if s.LadderData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.TourneyCredits); err != nil {
@@ -5170,13 +4895,7 @@ type LeaveChannelResponse struct {
 
 func (s *LeaveChannelResponse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 36+len(s.ChannelName)))
-	binary.Write(b, binary.LittleEndian, s.SourceID)
-	binary.Write(b, binary.LittleEndian, s.ParentID)
-	binary.Write(b, binary.LittleEndian, s.ChannelID)
-	writeString_5(b, s.ChannelName)
-	binary.Write(b, binary.LittleEndian, s.ChannelType)
-	binary.Write(b, binary.LittleEndian, s.ErrorCode)
-	binary.Write(b, binary.LittleEndian, s.RecipientID)
+	binary.Write(b, binary.LittleEndian, s.ChannelName)
 	return b.Bytes()
 }
 
@@ -5192,7 +4911,7 @@ func (s *LeaveChannelResponse) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ChannelID); err != nil {
 		return err
 	}
-	if s.ChannelName, err = readString_5(b); err != nil {
+	if s.ChannelName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ChannelType); err != nil {
@@ -5224,7 +4943,6 @@ type LeaveServiceRange struct {
 
 func (s *LeaveServiceRange) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.MobileID)
 	return b.Bytes()
 }
 
@@ -5244,8 +4962,6 @@ type LeaveState struct {
 
 func (s *LeaveState) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.GameObjectID)
-	binary.Write(b, binary.LittleEndian, s.State)
 	return b.Bytes()
 }
 
@@ -5268,15 +4984,14 @@ type LOADSAVEOBJECTS struct {
 
 func (s *LOADSAVEOBJECTS) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 3+len(s.Filename)))
-	writeString_5(b, s.Filename)
-	binary.Write(b, binary.LittleEndian, s.Save)
+	binary.Write(b, binary.LittleEndian, s.Filename)
 	return b.Bytes()
 }
 
 func (s *LOADSAVEOBJECTS) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Filename, err = readString_5(b); err != nil {
+	if s.Filename, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Save); err != nil {
@@ -5313,39 +5028,21 @@ type LoginComplete struct {
 
 func (s *LoginComplete) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 65+len(s.ZoneName)+len(s.Data)+len(s.ZoneServer)+len(s.RealmName)+len(s.CriticalObjects)))
-	writeString_5(b, s.ZoneName)
-	writeString_5(b, s.Data)
-	binary.Write(b, binary.LittleEndian, s.ServerTime)
-	binary.Write(b, binary.LittleEndian, s.ZoneID)
-	binary.Write(b, binary.LittleEndian, s.DynamicZoneID)
-	binary.Write(b, binary.LittleEndian, s.DynamicServerProcID)
-	binary.Write(b, binary.LittleEndian, s.Permissions)
-	binary.Write(b, binary.LittleEndian, s.IsCSR)
-	writeString_5(b, s.ZoneServer)
-	binary.Write(b, binary.LittleEndian, s.TestServer)
-	binary.Write(b, binary.LittleEndian, s.AltMusicFile)
-	binary.Write(b, binary.LittleEndian, s.ShowSubscriberIcon)
-	binary.Write(b, binary.LittleEndian, s.SubscriberCrownsPricePercent)
-	binary.Write(b, binary.LittleEndian, s.UseFriendFinder)
-	writeString_5(b, s.RealmName)
-	binary.Write(b, binary.LittleEndian, s.IsBossMarkZone)
-	writeString_5(b, s.CriticalObjects)
-	binary.Write(b, binary.LittleEndian, s.ZoneHasFriendlyPlayers)
-	binary.Write(b, binary.LittleEndian, s.HourOffset)
-	binary.Write(b, binary.LittleEndian, s.DisableBeastmoonGroups)
-	binary.Write(b, binary.LittleEndian, s.PickUpAllEnabled)
-	binary.Write(b, binary.LittleEndian, s.SegmentedMessage)
-	binary.Write(b, binary.LittleEndian, s.LastSegment)
+	binary.Write(b, binary.LittleEndian, s.ZoneName)
+	binary.Write(b, binary.LittleEndian, s.Data)
+	binary.Write(b, binary.LittleEndian, s.ZoneServer)
+	binary.Write(b, binary.LittleEndian, s.RealmName)
+	binary.Write(b, binary.LittleEndian, s.CriticalObjects)
 	return b.Bytes()
 }
 
 func (s *LoginComplete) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.ZoneName, err = readString_5(b); err != nil {
+	if s.ZoneName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Data, err = readString_5(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ServerTime); err != nil {
@@ -5366,7 +5063,7 @@ func (s *LoginComplete) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.IsCSR); err != nil {
 		return err
 	}
-	if s.ZoneServer, err = readString_5(b); err != nil {
+	if s.ZoneServer, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.TestServer); err != nil {
@@ -5384,13 +5081,13 @@ func (s *LoginComplete) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.UseFriendFinder); err != nil {
 		return err
 	}
-	if s.RealmName, err = readString_5(b); err != nil {
+	if s.RealmName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.IsBossMarkZone); err != nil {
 		return err
 	}
-	if s.CriticalObjects, err = readString_5(b); err != nil {
+	if s.CriticalObjects, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ZoneHasFriendlyPlayers); err != nil {
@@ -5420,14 +5117,14 @@ type MailData struct {
 
 func (s *MailData) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Data)))
-	writeString_5(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
 func (s *MailData) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_5(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -5460,17 +5157,10 @@ type MarkLocationResponse struct {
 
 func (s *MarkLocationResponse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 34+len(s.ZoneName)+len(s.ZoneDisplayNameId)+len(s.CommonsZoneId)+len(s.MarkType)))
-	binary.Write(b, binary.LittleEndian, s.Result)
-	writeString_5(b, s.ZoneName)
-	writeString_5(b, s.ZoneDisplayNameId)
-	binary.Write(b, binary.LittleEndian, s.ZoneType)
-	binary.Write(b, binary.LittleEndian, s.InstanceId)
-	binary.Write(b, binary.LittleEndian, s.LocationX)
-	binary.Write(b, binary.LittleEndian, s.LocationY)
-	binary.Write(b, binary.LittleEndian, s.LocationZ)
-	binary.Write(b, binary.LittleEndian, s.Direction)
-	writeString_5(b, s.CommonsZoneId)
-	writeString_5(b, s.MarkType)
+	binary.Write(b, binary.LittleEndian, s.ZoneName)
+	binary.Write(b, binary.LittleEndian, s.ZoneDisplayNameId)
+	binary.Write(b, binary.LittleEndian, s.CommonsZoneId)
+	binary.Write(b, binary.LittleEndian, s.MarkType)
 	return b.Bytes()
 }
 
@@ -5480,10 +5170,10 @@ func (s *MarkLocationResponse) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Result); err != nil {
 		return err
 	}
-	if s.ZoneName, err = readString_5(b); err != nil {
+	if s.ZoneName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.ZoneDisplayNameId, err = readString_5(b); err != nil {
+	if s.ZoneDisplayNameId, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ZoneType); err != nil {
@@ -5504,10 +5194,10 @@ func (s *MarkLocationResponse) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Direction); err != nil {
 		return err
 	}
-	if s.CommonsZoneId, err = readString_5(b); err != nil {
+	if s.CommonsZoneId, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.MarkType, err = readString_5(b); err != nil {
+	if s.MarkType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -5520,8 +5210,7 @@ type MatchAward struct {
 
 func (s *MatchAward) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.AwardData)))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	writeString_5(b, s.AwardData)
+	binary.Write(b, binary.LittleEndian, s.AwardData)
 	return b.Bytes()
 }
 
@@ -5531,7 +5220,7 @@ func (s *MatchAward) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.CharacterID); err != nil {
 		return err
 	}
-	if s.AwardData, err = readString_5(b); err != nil {
+	if s.AwardData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -5545,9 +5234,7 @@ type MatchInvite struct {
 
 func (s *MatchInvite) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.MatchActor)))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.TournamentNameID)
-	writeString_5(b, s.MatchActor)
+	binary.Write(b, binary.LittleEndian, s.MatchActor)
 	return b.Bytes()
 }
 
@@ -5560,7 +5247,7 @@ func (s *MatchInvite) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.TournamentNameID); err != nil {
 		return err
 	}
-	if s.MatchActor, err = readString_5(b); err != nil {
+	if s.MatchActor, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -5578,13 +5265,11 @@ type MatchMakerUpdate struct {
 
 func (s *MatchMakerUpdate) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 19+len(s.MatchTeam)+len(s.MatchActor)+len(s.BracketInfo)+len(s.RegistrationInfo)+len(s.UpdateMessage)))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	writeString_5(b, s.MatchTeam)
-	writeString_5(b, s.MatchActor)
-	writeString_5(b, s.BracketInfo)
-	writeString_5(b, s.RegistrationInfo)
-	writeString_5(b, s.UpdateMessage)
-	binary.Write(b, binary.LittleEndian, s.Status)
+	binary.Write(b, binary.LittleEndian, s.MatchTeam)
+	binary.Write(b, binary.LittleEndian, s.MatchActor)
+	binary.Write(b, binary.LittleEndian, s.BracketInfo)
+	binary.Write(b, binary.LittleEndian, s.RegistrationInfo)
+	binary.Write(b, binary.LittleEndian, s.UpdateMessage)
 	return b.Bytes()
 }
 
@@ -5594,19 +5279,19 @@ func (s *MatchMakerUpdate) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.CharacterID); err != nil {
 		return err
 	}
-	if s.MatchTeam, err = readString_5(b); err != nil {
+	if s.MatchTeam, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.MatchActor, err = readString_5(b); err != nil {
+	if s.MatchActor, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.BracketInfo, err = readString_5(b); err != nil {
+	if s.BracketInfo, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.RegistrationInfo, err = readString_5(b); err != nil {
+	if s.RegistrationInfo, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.UpdateMessage, err = readString_5(b); err != nil {
+	if s.UpdateMessage, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Status); err != nil {
@@ -5625,11 +5310,8 @@ type MatchReady struct {
 
 func (s *MatchReady) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24+len(s.ZoneName)+len(s.MatchActor)))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.ZoneID)
-	writeString_5(b, s.ZoneName)
-	binary.Write(b, binary.LittleEndian, s.TournamentNameID)
-	writeString_5(b, s.MatchActor)
+	binary.Write(b, binary.LittleEndian, s.ZoneName)
+	binary.Write(b, binary.LittleEndian, s.MatchActor)
 	return b.Bytes()
 }
 
@@ -5642,13 +5324,13 @@ func (s *MatchReady) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ZoneID); err != nil {
 		return err
 	}
-	if s.ZoneName, err = readString_5(b); err != nil {
+	if s.ZoneName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.TournamentNameID); err != nil {
 		return err
 	}
-	if s.MatchActor, err = readString_5(b); err != nil {
+	if s.MatchActor, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -5662,9 +5344,8 @@ type MatchResult struct {
 
 func (s *MatchResult) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12+len(s.ResultData)+len(s.AwardData)))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	writeString_5(b, s.ResultData)
-	writeString_5(b, s.AwardData)
+	binary.Write(b, binary.LittleEndian, s.ResultData)
+	binary.Write(b, binary.LittleEndian, s.AwardData)
 	return b.Bytes()
 }
 
@@ -5674,10 +5355,10 @@ func (s *MatchResult) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.CharacterID); err != nil {
 		return err
 	}
-	if s.ResultData, err = readString_5(b); err != nil {
+	if s.ResultData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.AwardData, err = readString_5(b); err != nil {
+	if s.AwardData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -5690,8 +5371,7 @@ type MESSAGEPROCESS struct {
 
 func (s *MESSAGEPROCESS) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.Message)))
-	binary.Write(b, binary.LittleEndian, s.JobID)
-	writeString_5(b, s.Message)
+	binary.Write(b, binary.LittleEndian, s.Message)
 	return b.Bytes()
 }
 
@@ -5701,7 +5381,7 @@ func (s *MESSAGEPROCESS) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.JobID); err != nil {
 		return err
 	}
-	if s.Message, err = readString_5(b); err != nil {
+	if s.Message, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -5716,10 +5396,6 @@ type MoveCorrection struct {
 
 func (s *MoveCorrection) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.LocationX)
-	binary.Write(b, binary.LittleEndian, s.LocationY)
-	binary.Write(b, binary.LittleEndian, s.LocationZ)
-	binary.Write(b, binary.LittleEndian, s.Direction)
 	return b.Bytes()
 }
 
@@ -5748,8 +5424,6 @@ type MoveState struct {
 
 func (s *MoveState) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.NewState)
 	return b.Bytes()
 }
 
@@ -5772,15 +5446,14 @@ type Mute struct {
 
 func (s *Mute) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 3+len(s.MuteTime)))
-	writeString_5(b, s.MuteTime)
-	binary.Write(b, binary.LittleEndian, s.ForceMessage)
+	binary.Write(b, binary.LittleEndian, s.MuteTime)
 	return b.Bytes()
 }
 
 func (s *Mute) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.MuteTime, err = readString_5(b); err != nil {
+	if s.MuteTime, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ForceMessage); err != nil {
@@ -5798,23 +5471,22 @@ type MuteRsp struct {
 
 func (s *MuteRsp) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 7+len(s.MutedID)+len(s.MuteTime)+len(s.MuteType)))
-	writeString_5(b, s.MutedID)
-	writeString_5(b, s.MuteTime)
-	writeString_5(b, s.MuteType)
-	binary.Write(b, binary.LittleEndian, s.Success)
+	binary.Write(b, binary.LittleEndian, s.MutedID)
+	binary.Write(b, binary.LittleEndian, s.MuteTime)
+	binary.Write(b, binary.LittleEndian, s.MuteType)
 	return b.Bytes()
 }
 
 func (s *MuteRsp) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.MutedID, err = readString_5(b); err != nil {
+	if s.MutedID, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.MuteTime, err = readString_5(b); err != nil {
+	if s.MuteTime, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.MuteType, err = readString_5(b); err != nil {
+	if s.MuteType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Success); err != nil {
@@ -5829,14 +5501,14 @@ type NewObject struct {
 
 func (s *NewObject) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Data)))
-	writeString_5(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
 func (s *NewObject) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_5(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -5850,9 +5522,6 @@ type NewSysStats struct {
 
 func (s *NewSysStats) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.CpuUsage)
-	binary.Write(b, binary.LittleEndian, s.VMemUsed)
-	binary.Write(b, binary.LittleEndian, s.RMemUsed)
 	return b.Bytes()
 }
 
@@ -5877,7 +5546,6 @@ type NewTickCnt struct {
 
 func (s *NewTickCnt) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.TickCnt)
 	return b.Bytes()
 }
 
@@ -5898,22 +5566,21 @@ type NewTourneyRewards struct {
 
 func (s *NewTourneyRewards) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12+len(s.Data)+len(s.TourneyNameSTKey)))
-	writeString_5(b, s.Data)
-	binary.Write(b, binary.LittleEndian, s.BracketID)
-	writeString_5(b, s.TourneyNameSTKey)
+	binary.Write(b, binary.LittleEndian, s.Data)
+	binary.Write(b, binary.LittleEndian, s.TourneyNameSTKey)
 	return b.Bytes()
 }
 
 func (s *NewTourneyRewards) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_5(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.BracketID); err != nil {
 		return err
 	}
-	if s.TourneyNameSTKey, err = readString_5(b); err != nil {
+	if s.TourneyNameSTKey, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -5927,9 +5594,6 @@ type NewMail struct {
 
 func (s *NewMail) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 13))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.MailType)
-	binary.Write(b, binary.LittleEndian, s.AccountMail)
 	return b.Bytes()
 }
 
@@ -5958,11 +5622,7 @@ type NotifyChannelInstance struct {
 
 func (s *NotifyChannelInstance) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 27+len(s.Name)))
-	binary.Write(b, binary.LittleEndian, s.RecipientID)
-	binary.Write(b, binary.LittleEndian, s.ParentID)
-	binary.Write(b, binary.LittleEndian, s.ID)
-	writeString_5(b, s.Name)
-	binary.Write(b, binary.LittleEndian, s.Create)
+	binary.Write(b, binary.LittleEndian, s.Name)
 	return b.Bytes()
 }
 
@@ -5978,7 +5638,7 @@ func (s *NotifyChannelInstance) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ID); err != nil {
 		return err
 	}
-	if s.Name, err = readString_5(b); err != nil {
+	if s.Name, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Create); err != nil {
@@ -5995,9 +5655,6 @@ type NotifyGift struct {
 
 func (s *NotifyGift) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.Gift)
-	binary.Write(b, binary.LittleEndian, s.CrownsRewards)
-	binary.Write(b, binary.LittleEndian, s.PeriodicItems)
 	return b.Bytes()
 }
 
@@ -6050,35 +5707,32 @@ type NPCSpeech struct {
 
 func (s *NPCSpeech) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 28+len(s.SourceName)+len(s.TargetName)+len(s.Talk)+len(s.Sound)))
-	writeString_5(b, s.SourceName)
-	binary.Write(b, binary.LittleEndian, s.SourceID)
-	writeString_5(b, s.TargetName)
-	binary.Write(b, binary.LittleEndian, s.TargetID)
-	writeString_5(b, s.Talk)
-	writeString_5(b, s.Sound)
-	binary.Write(b, binary.LittleEndian, s.WidthOverride)
+	binary.Write(b, binary.LittleEndian, s.SourceName)
+	binary.Write(b, binary.LittleEndian, s.TargetName)
+	binary.Write(b, binary.LittleEndian, s.Talk)
+	binary.Write(b, binary.LittleEndian, s.Sound)
 	return b.Bytes()
 }
 
 func (s *NPCSpeech) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.SourceName, err = readString_5(b); err != nil {
+	if s.SourceName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.SourceID); err != nil {
 		return err
 	}
-	if s.TargetName, err = readString_5(b); err != nil {
+	if s.TargetName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.TargetID); err != nil {
 		return err
 	}
-	if s.Talk, err = readString_5(b); err != nil {
+	if s.Talk, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Sound, err = readString_5(b); err != nil {
+	if s.Sound, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.WidthOverride); err != nil {
@@ -6096,17 +5750,14 @@ type ObjectInfoQuery struct {
 
 func (s *ObjectInfoQuery) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.Info)))
-	writeString_5(b, s.Info)
-	binary.Write(b, binary.LittleEndian, s.Part)
-	binary.Write(b, binary.LittleEndian, s.Total)
-	binary.Write(b, binary.LittleEndian, s.Size)
+	binary.Write(b, binary.LittleEndian, s.Info)
 	return b.Bytes()
 }
 
 func (s *ObjectInfoQuery) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Info, err = readString_5(b); err != nil {
+	if s.Info, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Part); err != nil {
@@ -6127,7 +5778,6 @@ type PartyDisband struct {
 
 func (s *PartyDisband) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.DestinationCharacterID)
 	return b.Bytes()
 }
 
@@ -6147,8 +5797,6 @@ type PartyJoinFailed struct {
 
 func (s *PartyJoinFailed) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.DestinationCharacterID)
-	binary.Write(b, binary.LittleEndian, s.ErrorCode)
 	return b.Bytes()
 }
 
@@ -6174,11 +5822,6 @@ type PartyJoinNotification struct {
 
 func (s *PartyJoinNotification) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 29))
-	binary.Write(b, binary.LittleEndian, s.DestinationCharacterID)
-	binary.Write(b, binary.LittleEndian, s.ChannelID)
-	binary.Write(b, binary.LittleEndian, s.PartyID)
-	binary.Write(b, binary.LittleEndian, s.PartyTotalSize)
-	binary.Write(b, binary.LittleEndian, s.FromAdventureParty)
 	return b.Bytes()
 }
 
@@ -6209,7 +5852,6 @@ type PartyLeave struct {
 
 func (s *PartyLeave) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.SourceCharacterID)
 	return b.Bytes()
 }
 
@@ -6231,10 +5873,6 @@ type PartyLeaveNotification struct {
 
 func (s *PartyLeaveNotification) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 21))
-	binary.Write(b, binary.LittleEndian, s.DestinationCharacterID)
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.PartyTotalSize)
-	binary.Write(b, binary.LittleEndian, s.FromAdventureParty)
 	return b.Bytes()
 }
 
@@ -6263,8 +5901,6 @@ type PartyLevelUp struct {
 
 func (s *PartyLevelUp) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.NewLevel)
 	return b.Bytes()
 }
 
@@ -6288,9 +5924,6 @@ type PartyLevelUpUpdate struct {
 
 func (s *PartyLevelUpUpdate) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20))
-	binary.Write(b, binary.LittleEndian, s.DestinationCharacterID)
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.NewLevel)
 	return b.Bytes()
 }
 
@@ -6316,8 +5949,6 @@ type PartyMultiPlayerMountEquip struct {
 
 func (s *PartyMultiPlayerMountEquip) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.SourceCharacterID)
-	binary.Write(b, binary.LittleEndian, s.MountTemplateID)
 	return b.Bytes()
 }
 
@@ -6341,9 +5972,6 @@ type PartyMultiPlayerMountEquipUpdate struct {
 
 func (s *PartyMultiPlayerMountEquipUpdate) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24))
-	binary.Write(b, binary.LittleEndian, s.DestinationCharacterID)
-	binary.Write(b, binary.LittleEndian, s.SourceCharacterID)
-	binary.Write(b, binary.LittleEndian, s.MountTemplateID)
 	return b.Bytes()
 }
 
@@ -6370,9 +5998,6 @@ type PartyMultiPlayerMountJoin struct {
 
 func (s *PartyMultiPlayerMountJoin) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24))
-	binary.Write(b, binary.LittleEndian, s.SourceCharacterID)
-	binary.Write(b, binary.LittleEndian, s.MountOwnerCharacterID)
-	binary.Write(b, binary.LittleEndian, s.MountTemplateID)
 	return b.Bytes()
 }
 
@@ -6400,10 +6025,6 @@ type PartyMultiPlayerMountJoinUpdate struct {
 
 func (s *PartyMultiPlayerMountJoinUpdate) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 32))
-	binary.Write(b, binary.LittleEndian, s.DestinationCharacterID)
-	binary.Write(b, binary.LittleEndian, s.SourceCharacterID)
-	binary.Write(b, binary.LittleEndian, s.MountOwnerCharacterID)
-	binary.Write(b, binary.LittleEndian, s.MountTemplateID)
 	return b.Bytes()
 }
 
@@ -6432,8 +6053,6 @@ type PartyRequestAccept struct {
 
 func (s *PartyRequestAccept) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.SourceCharacterID)
-	binary.Write(b, binary.LittleEndian, s.PartyID)
 	return b.Bytes()
 }
 
@@ -6456,8 +6075,6 @@ type PartyRequestDecline struct {
 
 func (s *PartyRequestDecline) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.SourceCharacterID)
-	binary.Write(b, binary.LittleEndian, s.PartyID)
 	return b.Bytes()
 }
 
@@ -6483,11 +6100,6 @@ type PartyRequestInvite struct {
 
 func (s *PartyRequestInvite) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 33))
-	binary.Write(b, binary.LittleEndian, s.SourceCharacterID)
-	binary.Write(b, binary.LittleEndian, s.SourceGlobalID)
-	binary.Write(b, binary.LittleEndian, s.TargetCharacterID)
-	binary.Write(b, binary.LittleEndian, s.TargetGlobalID)
-	binary.Write(b, binary.LittleEndian, s.FromAdventureParty)
 	return b.Bytes()
 }
 
@@ -6523,12 +6135,7 @@ type PartyRequestJoin struct {
 
 func (s *PartyRequestJoin) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 38+len(s.PlayerNameBlob)))
-	binary.Write(b, binary.LittleEndian, s.DestinationCharacterID)
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_5(b, s.PlayerNameBlob)
-	binary.Write(b, binary.LittleEndian, s.PartyID)
-	binary.Write(b, binary.LittleEndian, s.FriendsOnly)
+	binary.Write(b, binary.LittleEndian, s.PlayerNameBlob)
 	return b.Bytes()
 }
 
@@ -6544,7 +6151,7 @@ func (s *PartyRequestJoin) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.PlayerNameBlob, err = readString_5(b); err != nil {
+	if s.PlayerNameBlob, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PartyID); err != nil {
@@ -6563,8 +6170,6 @@ type PartyRequestMemberZones struct {
 
 func (s *PartyRequestMemberZones) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.PartyID)
-	binary.Write(b, binary.LittleEndian, s.SourceCharacterID)
 	return b.Bytes()
 }
 
@@ -6590,11 +6195,7 @@ type PartyRequestResponse struct {
 
 func (s *PartyRequestResponse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 30+len(s.PlayerNameBlob)))
-	binary.Write(b, binary.LittleEndian, s.DestinationCharacterID)
-	binary.Write(b, binary.LittleEndian, s.TargetCharacterID)
-	binary.Write(b, binary.LittleEndian, s.TargetGlobalID)
-	binary.Write(b, binary.LittleEndian, s.ErrorCode)
-	writeString_5(b, s.PlayerNameBlob)
+	binary.Write(b, binary.LittleEndian, s.PlayerNameBlob)
 	return b.Bytes()
 }
 
@@ -6613,7 +6214,7 @@ func (s *PartyRequestResponse) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ErrorCode); err != nil {
 		return err
 	}
-	if s.PlayerNameBlob, err = readString_5(b); err != nil {
+	if s.PlayerNameBlob, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6625,7 +6226,6 @@ type PartyRequestTimeout struct {
 
 func (s *PartyRequestTimeout) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.DestinationCharacterID)
 	return b.Bytes()
 }
 
@@ -6645,15 +6245,14 @@ type PartySubmitMemberZones struct {
 
 func (s *PartySubmitMemberZones) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.PartyMemberZones)))
-	writeString_5(b, s.PartyMemberZones)
-	binary.Write(b, binary.LittleEndian, s.DestinationCharacterID)
+	binary.Write(b, binary.LittleEndian, s.PartyMemberZones)
 	return b.Bytes()
 }
 
 func (s *PartySubmitMemberZones) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.PartyMemberZones, err = readString_5(b); err != nil {
+	if s.PartyMemberZones, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.DestinationCharacterID); err != nil {
@@ -6681,20 +6280,8 @@ type PartyUpdate struct {
 
 func (s *PartyUpdate) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 70+len(s.PlayerNameBlob)+len(s.ZoneDisplayName)))
-	binary.Write(b, binary.LittleEndian, s.DestinationCharacterID)
-	writeString_5(b, s.PlayerNameBlob)
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.SchoolID)
-	binary.Write(b, binary.LittleEndian, s.Level)
-	writeString_5(b, s.ZoneDisplayName)
-	binary.Write(b, binary.LittleEndian, s.HasFilteredChat)
-	binary.Write(b, binary.LittleEndian, s.PartyTotalSize)
-	binary.Write(b, binary.LittleEndian, s.FromAdventureParty)
-	binary.Write(b, binary.LittleEndian, s.SigilSlot)
-	binary.Write(b, binary.LittleEndian, s.LeaderGID)
-	binary.Write(b, binary.LittleEndian, s.QuestGID)
-	binary.Write(b, binary.LittleEndian, s.GoalGID)
+	binary.Write(b, binary.LittleEndian, s.PlayerNameBlob)
+	binary.Write(b, binary.LittleEndian, s.ZoneDisplayName)
 	return b.Bytes()
 }
 
@@ -6704,7 +6291,7 @@ func (s *PartyUpdate) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.DestinationCharacterID); err != nil {
 		return err
 	}
-	if s.PlayerNameBlob, err = readString_5(b); err != nil {
+	if s.PlayerNameBlob, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.CharacterID); err != nil {
@@ -6719,7 +6306,7 @@ func (s *PartyUpdate) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Level); err != nil {
 		return err
 	}
-	if s.ZoneDisplayName, err = readString_5(b); err != nil {
+	if s.ZoneDisplayName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.HasFilteredChat); err != nil {
@@ -6752,7 +6339,6 @@ type PartyZoneRequest struct {
 
 func (s *PartyZoneRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
 	return b.Bytes()
 }
 
@@ -6774,10 +6360,6 @@ type PartyZoneRequestResponse struct {
 
 func (s *PartyZoneRequestResponse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 21))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.PartyID)
-	binary.Write(b, binary.LittleEndian, s.PartyTotalSize)
-	binary.Write(b, binary.LittleEndian, s.FromAdventureParty)
 	return b.Bytes()
 }
 
@@ -6805,7 +6387,6 @@ type PickUpObject struct {
 
 func (s *PickUpObject) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.GameObjectID)
 	return b.Bytes()
 }
 
@@ -6825,8 +6406,6 @@ type PlaceObject struct {
 
 func (s *PlaceObject) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.TemplateID)
 	return b.Bytes()
 }
 
@@ -6857,16 +6436,7 @@ type PlayCinematic struct {
 
 func (s *PlayCinematic) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 43+len(s.Asset)))
-	binary.Write(b, binary.LittleEndian, s.CinematicID)
-	binary.Write(b, binary.LittleEndian, s.TargetID)
-	binary.Write(b, binary.LittleEndian, s.Start_X)
-	binary.Write(b, binary.LittleEndian, s.Start_Y)
-	binary.Write(b, binary.LittleEndian, s.Start_Z)
-	binary.Write(b, binary.LittleEndian, s.End_X)
-	binary.Write(b, binary.LittleEndian, s.End_Y)
-	binary.Write(b, binary.LittleEndian, s.End_Z)
-	writeString_5(b, s.Asset)
-	binary.Write(b, binary.LittleEndian, s.DisableInteraction)
+	binary.Write(b, binary.LittleEndian, s.Asset)
 	return b.Bytes()
 }
 
@@ -6897,7 +6467,7 @@ func (s *PlayCinematic) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.End_Z); err != nil {
 		return err
 	}
-	if s.Asset, err = readString_5(b); err != nil {
+	if s.Asset, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.DisableInteraction); err != nil {
@@ -6913,8 +6483,6 @@ type PlayerBlackballedAlert struct {
 
 func (s *PlayerBlackballedAlert) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.Muted)
 	return b.Bytes()
 }
 
@@ -6940,11 +6508,6 @@ type PlayerReadyAck struct {
 
 func (s *PlayerReadyAck) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 25))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.TournamentNameID)
-	binary.Write(b, binary.LittleEndian, s.MatchNameID)
-	binary.Write(b, binary.LittleEndian, s.BracketID)
-	binary.Write(b, binary.LittleEndian, s.Online)
 	return b.Bytes()
 }
 
@@ -6979,11 +6542,7 @@ type PlaySound struct {
 
 func (s *PlaySound) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 19+len(s.SoundFilename)))
-	binary.Write(b, binary.LittleEndian, s.SoundID)
-	binary.Write(b, binary.LittleEndian, s.ReinteractTime)
-	writeString_5(b, s.SoundFilename)
-	binary.Write(b, binary.LittleEndian, s.StartDelay)
-	binary.Write(b, binary.LittleEndian, s.PlayAtMusicVolume)
+	binary.Write(b, binary.LittleEndian, s.SoundFilename)
 	return b.Bytes()
 }
 
@@ -6996,7 +6555,7 @@ func (s *PlaySound) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ReinteractTime); err != nil {
 		return err
 	}
-	if s.SoundFilename, err = readString_5(b); err != nil {
+	if s.SoundFilename, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.StartDelay); err != nil {
@@ -7014,14 +6573,14 @@ type PostZoneEventFromClient struct {
 
 func (s *PostZoneEventFromClient) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.EventName)))
-	writeString_5(b, s.EventName)
+	binary.Write(b, binary.LittleEndian, s.EventName)
 	return b.Bytes()
 }
 
 func (s *PostZoneEventFromClient) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.EventName, err = readString_5(b); err != nil {
+	if s.EventName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -7033,7 +6592,6 @@ type PreviewIsland struct {
 
 func (s *PreviewIsland) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.TemplateID)
 	return b.Bytes()
 }
 
@@ -7056,18 +6614,14 @@ type PvPUpdateInfo struct {
 
 func (s *PvPUpdateInfo) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.TournamentInfo)))
-	writeString_5(b, s.TournamentInfo)
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.PromptMsg)
-	binary.Write(b, binary.LittleEndian, s.DiffType)
-	binary.Write(b, binary.LittleEndian, s.IsPvPQueue)
+	binary.Write(b, binary.LittleEndian, s.TournamentInfo)
 	return b.Bytes()
 }
 
 func (s *PvPUpdateInfo) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.TournamentInfo, err = readString_5(b); err != nil {
+	if s.TournamentInfo, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.CharacterID); err != nil {
@@ -7091,7 +6645,6 @@ type QueryLogout struct {
 
 func (s *QueryLogout) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.IsInstance)
 	return b.Bytes()
 }
 
@@ -7113,23 +6666,21 @@ type RadialChat struct {
 
 func (s *RadialChat) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 13+len(s.SourceName)+len(s.Message)))
-	writeString_5(b, s.SourceName)
-	binary.Write(b, binary.LittleEndian, s.SourceID)
-	writeString_5(b, s.Message)
-	binary.Write(b, binary.LittleEndian, s.Filter)
+	binary.Write(b, binary.LittleEndian, s.SourceName)
+	binary.Write(b, binary.LittleEndian, s.Message)
 	return b.Bytes()
 }
 
 func (s *RadialChat) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.SourceName, err = readString_5(b); err != nil {
+	if s.SourceName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.SourceID); err != nil {
 		return err
 	}
-	if s.Message, err = readString_5(b); err != nil {
+	if s.Message, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Filter); err != nil {
@@ -7147,17 +6698,14 @@ type RadialQuickChat struct {
 
 func (s *RadialQuickChat) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 15+len(s.SourceName)))
-	writeString_5(b, s.SourceName)
-	binary.Write(b, binary.LittleEndian, s.SourceID)
-	binary.Write(b, binary.LittleEndian, s.MessageID)
-	binary.Write(b, binary.LittleEndian, s.Filter)
+	binary.Write(b, binary.LittleEndian, s.SourceName)
 	return b.Bytes()
 }
 
 func (s *RadialQuickChat) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.SourceName, err = readString_5(b); err != nil {
+	if s.SourceName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.SourceID); err != nil {
@@ -7181,23 +6729,21 @@ type RadialQuickChatExt struct {
 
 func (s *RadialQuickChatExt) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 13+len(s.SourceName)+len(s.Message)))
-	writeString_5(b, s.SourceName)
-	binary.Write(b, binary.LittleEndian, s.SourceID)
-	writeString_5(b, s.Message)
-	binary.Write(b, binary.LittleEndian, s.Filter)
+	binary.Write(b, binary.LittleEndian, s.SourceName)
+	binary.Write(b, binary.LittleEndian, s.Message)
 	return b.Bytes()
 }
 
 func (s *RadialQuickChatExt) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.SourceName, err = readString_5(b); err != nil {
+	if s.SourceName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.SourceID); err != nil {
 		return err
 	}
-	if s.Message, err = readString_5(b); err != nil {
+	if s.Message, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Filter); err != nil {
@@ -7216,18 +6762,14 @@ type RadialZoneClusterQuickChat struct {
 
 func (s *RadialZoneClusterQuickChat) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.SourceName)))
-	writeString_5(b, s.SourceName)
-	binary.Write(b, binary.LittleEndian, s.SourceID)
-	binary.Write(b, binary.LittleEndian, s.MessageID)
-	binary.Write(b, binary.LittleEndian, s.Filter)
-	binary.Write(b, binary.LittleEndian, s.IsOwner)
+	binary.Write(b, binary.LittleEndian, s.SourceName)
 	return b.Bytes()
 }
 
 func (s *RadialZoneClusterQuickChat) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.SourceName, err = readString_5(b); err != nil {
+	if s.SourceName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.SourceID); err != nil {
@@ -7255,11 +6797,7 @@ type RANKING struct {
 
 func (s *RANKING) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 22+len(s.Name)))
-	binary.Write(b, binary.LittleEndian, s.GameID)
-	writeString_5(b, s.Name)
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.Score)
-	binary.Write(b, binary.LittleEndian, s.Rank)
+	binary.Write(b, binary.LittleEndian, s.Name)
 	return b.Bytes()
 }
 
@@ -7269,7 +6807,7 @@ func (s *RANKING) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GameID); err != nil {
 		return err
 	}
-	if s.Name, err = readString_5(b); err != nil {
+	if s.Name, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.CharacterID); err != nil {
@@ -7293,26 +6831,26 @@ type RealmInfoQuery struct {
 
 func (s *RealmInfoQuery) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8+len(s.RealmInfoList)+len(s.CurrentRealm)+len(s.InstanceInfoList)+len(s.CurrentZone)))
-	writeString_5(b, s.RealmInfoList)
-	writeString_5(b, s.CurrentRealm)
-	writeString_5(b, s.InstanceInfoList)
-	writeString_5(b, s.CurrentZone)
+	binary.Write(b, binary.LittleEndian, s.RealmInfoList)
+	binary.Write(b, binary.LittleEndian, s.CurrentRealm)
+	binary.Write(b, binary.LittleEndian, s.InstanceInfoList)
+	binary.Write(b, binary.LittleEndian, s.CurrentZone)
 	return b.Bytes()
 }
 
 func (s *RealmInfoQuery) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.RealmInfoList, err = readString_5(b); err != nil {
+	if s.RealmInfoList, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.CurrentRealm, err = readString_5(b); err != nil {
+	if s.CurrentRealm, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.InstanceInfoList, err = readString_5(b); err != nil {
+	if s.InstanceInfoList, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.CurrentZone, err = readString_5(b); err != nil {
+	if s.CurrentZone, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -7338,10 +6876,7 @@ type ReceiveGifts struct {
 
 func (s *ReceiveGifts) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.Success)
-	writeString_5(b, s.Data)
-	binary.Write(b, binary.LittleEndian, s.CrownsRewards)
-	binary.Write(b, binary.LittleEndian, s.PeriodicItems)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -7351,7 +6886,7 @@ func (s *ReceiveGifts) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Success); err != nil {
 		return err
 	}
-	if s.Data, err = readString_5(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.CrownsRewards); err != nil {
@@ -7370,8 +6905,7 @@ type ReceivePromotions struct {
 
 func (s *ReceivePromotions) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.Success)
-	writeString_5(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -7381,7 +6915,7 @@ func (s *ReceivePromotions) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Success); err != nil {
 		return err
 	}
-	if s.Data, err = readString_5(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -7397,18 +6931,14 @@ type RedeemGift struct {
 
 func (s *RedeemGift) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 19+len(s.GiftID)))
-	writeString_5(b, s.GiftID)
-	binary.Write(b, binary.LittleEndian, s.BundleChoiceID)
-	binary.Write(b, binary.LittleEndian, s.PrimaryColorIndex)
-	binary.Write(b, binary.LittleEndian, s.IsPeriodicItem)
-	binary.Write(b, binary.LittleEndian, s.RedeemElixirEquipNow)
+	binary.Write(b, binary.LittleEndian, s.GiftID)
 	return b.Bytes()
 }
 
 func (s *RedeemGift) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.GiftID, err = readString_5(b); err != nil {
+	if s.GiftID, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.BundleChoiceID); err != nil {
@@ -7433,8 +6963,6 @@ type RedeemMailGift struct {
 
 func (s *RedeemMailGift) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.MailId)
-	binary.Write(b, binary.LittleEndian, s.PrimaryColorIndex)
 	return b.Bytes()
 }
 
@@ -7458,9 +6986,6 @@ type RedeemMailGiftResponse struct {
 
 func (s *RedeemMailGiftResponse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20))
-	binary.Write(b, binary.LittleEndian, s.MailId)
-	binary.Write(b, binary.LittleEndian, s.ErrorCode)
-	binary.Write(b, binary.LittleEndian, s.TemplateId)
 	return b.Bytes()
 }
 
@@ -7497,15 +7022,14 @@ type ReloadTemplateDir struct {
 
 func (s *ReloadTemplateDir) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 3+len(s.Directory)))
-	writeString_5(b, s.Directory)
-	binary.Write(b, binary.LittleEndian, s.Recursive)
+	binary.Write(b, binary.LittleEndian, s.Directory)
 	return b.Bytes()
 }
 
 func (s *ReloadTemplateDir) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Directory, err = readString_5(b); err != nil {
+	if s.Directory, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Recursive); err != nil {
@@ -7520,14 +7044,14 @@ type RemovedShopper struct {
 
 func (s *RemovedShopper) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.StateName)))
-	writeString_5(b, s.StateName)
+	binary.Write(b, binary.LittleEndian, s.StateName)
 	return b.Bytes()
 }
 
 func (s *RemovedShopper) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.StateName, err = readString_5(b); err != nil {
+	if s.StateName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -7541,9 +7065,6 @@ type RemoveEffect struct {
 
 func (s *RemoveEffect) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GameObjectID)
-	binary.Write(b, binary.LittleEndian, s.EffectNameID)
-	binary.Write(b, binary.LittleEndian, s.InternalID)
 	return b.Bytes()
 }
 
@@ -7570,9 +7091,6 @@ type RemoveItemRequest struct {
 
 func (s *RemoveItemRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.ItemTemplateID)
-	binary.Write(b, binary.LittleEndian, s.Quantity)
 	return b.Bytes()
 }
 
@@ -7597,7 +7115,6 @@ type RemoveObject struct {
 
 func (s *RemoveObject) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.GameObjectID)
 	return b.Bytes()
 }
 
@@ -7618,19 +7135,18 @@ type RemoveParticle struct {
 
 func (s *RemoveParticle) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12+len(s.NewName)+len(s.AttachTo)))
-	writeString_5(b, s.NewName)
-	writeString_5(b, s.AttachTo)
-	binary.Write(b, binary.LittleEndian, s.ParentID)
+	binary.Write(b, binary.LittleEndian, s.NewName)
+	binary.Write(b, binary.LittleEndian, s.AttachTo)
 	return b.Bytes()
 }
 
 func (s *RemoveParticle) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.NewName, err = readString_5(b); err != nil {
+	if s.NewName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.AttachTo, err = readString_5(b); err != nil {
+	if s.AttachTo, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ParentID); err != nil {
@@ -7645,7 +7161,6 @@ type RemoveZoneTimer struct {
 
 func (s *RemoveZoneTimer) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.TimerID)
 	return b.Bytes()
 }
 
@@ -7665,18 +7180,18 @@ type ReportAdTakeover struct {
 
 func (s *ReportAdTakeover) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4+len(s.PARTNER)+len(s.URL)))
-	writeString_5(b, s.PARTNER)
-	writeString_5(b, s.URL)
+	binary.Write(b, binary.LittleEndian, s.PARTNER)
+	binary.Write(b, binary.LittleEndian, s.URL)
 	return b.Bytes()
 }
 
 func (s *ReportAdTakeover) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.PARTNER, err = readString_5(b); err != nil {
+	if s.PARTNER, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.URL, err = readString_5(b); err != nil {
+	if s.URL, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -7690,9 +7205,7 @@ type ReqAskServer struct {
 
 func (s *ReqAskServer) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Requirement)))
-	binary.Write(b, binary.LittleEndian, s.RequestID)
-	writeString_5(b, s.Requirement)
-	binary.Write(b, binary.LittleEndian, s.Response)
+	binary.Write(b, binary.LittleEndian, s.Requirement)
 	return b.Bytes()
 }
 
@@ -7702,7 +7215,7 @@ func (s *ReqAskServer) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.RequestID); err != nil {
 		return err
 	}
-	if s.Requirement, err = readString_5(b); err != nil {
+	if s.Requirement, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Response); err != nil {
@@ -7718,8 +7231,7 @@ type ReqChatDiagnostics struct {
 
 func (s *ReqChatDiagnostics) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	writeString_5(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -7729,7 +7241,7 @@ func (s *ReqChatDiagnostics) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.CharacterID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_5(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -7742,8 +7254,6 @@ type RequestAdvanceChannelInstance struct {
 
 func (s *RequestAdvanceChannelInstance) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.SourceID)
-	binary.Write(b, binary.LittleEndian, s.ChannelID)
 	return b.Bytes()
 }
 
@@ -7770,12 +7280,8 @@ type RequestChatCode struct {
 
 func (s *RequestChatCode) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 21+len(s.Code)+len(s.NameBlob)))
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
-	writeString_5(b, s.Code)
-	binary.Write(b, binary.LittleEndian, s.CodeTime)
-	binary.Write(b, binary.LittleEndian, s.SpecialCode)
-	binary.Write(b, binary.LittleEndian, s.Forwarded)
-	writeString_5(b, s.NameBlob)
+	binary.Write(b, binary.LittleEndian, s.Code)
+	binary.Write(b, binary.LittleEndian, s.NameBlob)
 	return b.Bytes()
 }
 
@@ -7785,7 +7291,7 @@ func (s *RequestChatCode) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ListOwnerGID); err != nil {
 		return err
 	}
-	if s.Code, err = readString_5(b); err != nil {
+	if s.Code, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.CodeTime); err != nil {
@@ -7797,7 +7303,7 @@ func (s *RequestChatCode) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Forwarded); err != nil {
 		return err
 	}
-	if s.NameBlob, err = readString_5(b); err != nil {
+	if s.NameBlob, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -7814,12 +7320,8 @@ type RequestCreateChannel struct {
 
 func (s *RequestCreateChannel) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24+len(s.Name)+len(s.Password)))
-	binary.Write(b, binary.LittleEndian, s.SourceID)
-	writeString_5(b, s.Name)
-	writeString_5(b, s.Password)
-	binary.Write(b, binary.LittleEndian, s.Flags)
-	binary.Write(b, binary.LittleEndian, s.ChatInfoFlags)
-	binary.Write(b, binary.LittleEndian, s.UserLimit)
+	binary.Write(b, binary.LittleEndian, s.Name)
+	binary.Write(b, binary.LittleEndian, s.Password)
 	return b.Bytes()
 }
 
@@ -7829,10 +7331,10 @@ func (s *RequestCreateChannel) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.SourceID); err != nil {
 		return err
 	}
-	if s.Name, err = readString_5(b); err != nil {
+	if s.Name, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Password, err = readString_5(b); err != nil {
+	if s.Password, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Flags); err != nil {
@@ -7854,15 +7356,14 @@ type RequestDirectedChat struct {
 
 func (s *RequestDirectedChat) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Message)))
-	writeString_5(b, s.Message)
-	binary.Write(b, binary.LittleEndian, s.TargetID)
+	binary.Write(b, binary.LittleEndian, s.Message)
 	return b.Bytes()
 }
 
 func (s *RequestDirectedChat) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Message, err = readString_5(b); err != nil {
+	if s.Message, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.TargetID); err != nil {
@@ -7878,18 +7379,18 @@ type RequestDirectedChatByName struct {
 
 func (s *RequestDirectedChatByName) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4+len(s.Message)+len(s.TargetName)))
-	writeString_5(b, s.Message)
-	writeString_5(b, s.TargetName)
+	binary.Write(b, binary.LittleEndian, s.Message)
+	binary.Write(b, binary.LittleEndian, s.TargetName)
 	return b.Bytes()
 }
 
 func (s *RequestDirectedChatByName) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Message, err = readString_5(b); err != nil {
+	if s.Message, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.TargetName, err = readString_5(b); err != nil {
+	if s.TargetName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -7902,8 +7403,6 @@ type RequestDirectedQuickChat struct {
 
 func (s *RequestDirectedQuickChat) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.TargetID)
-	binary.Write(b, binary.LittleEndian, s.MessageID)
 	return b.Bytes()
 }
 
@@ -7926,8 +7425,7 @@ type RequestDirectedQuickChatExt struct {
 
 func (s *RequestDirectedQuickChatExt) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Message)))
-	binary.Write(b, binary.LittleEndian, s.TargetID)
-	writeString_5(b, s.Message)
+	binary.Write(b, binary.LittleEndian, s.Message)
 	return b.Bytes()
 }
 
@@ -7937,7 +7435,7 @@ func (s *RequestDirectedQuickChatExt) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.TargetID); err != nil {
 		return err
 	}
-	if s.Message, err = readString_5(b); err != nil {
+	if s.Message, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -7951,9 +7449,7 @@ type RequestJoinChannel struct {
 
 func (s *RequestJoinChannel) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 18+len(s.Password)))
-	binary.Write(b, binary.LittleEndian, s.SourceID)
-	binary.Write(b, binary.LittleEndian, s.ChannelID)
-	writeString_5(b, s.Password)
+	binary.Write(b, binary.LittleEndian, s.Password)
 	return b.Bytes()
 }
 
@@ -7966,7 +7462,7 @@ func (s *RequestJoinChannel) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ChannelID); err != nil {
 		return err
 	}
-	if s.Password, err = readString_5(b); err != nil {
+	if s.Password, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -7980,9 +7476,8 @@ type RequestJoinChannelByName struct {
 
 func (s *RequestJoinChannelByName) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12+len(s.ChannelName)+len(s.Password)))
-	binary.Write(b, binary.LittleEndian, s.SourceID)
-	writeString_5(b, s.ChannelName)
-	writeString_5(b, s.Password)
+	binary.Write(b, binary.LittleEndian, s.ChannelName)
+	binary.Write(b, binary.LittleEndian, s.Password)
 	return b.Bytes()
 }
 
@@ -7992,10 +7487,10 @@ func (s *RequestJoinChannelByName) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.SourceID); err != nil {
 		return err
 	}
-	if s.ChannelName, err = readString_5(b); err != nil {
+	if s.ChannelName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Password, err = readString_5(b); err != nil {
+	if s.Password, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -8008,8 +7503,6 @@ type RequestLeaveChannel struct {
 
 func (s *RequestLeaveChannel) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.SourceID)
-	binary.Write(b, binary.LittleEndian, s.ChannelID)
 	return b.Bytes()
 }
 
@@ -8032,8 +7525,7 @@ type RequestLeaveChannelByName struct {
 
 func (s *RequestLeaveChannelByName) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.ChannelName)))
-	binary.Write(b, binary.LittleEndian, s.SourceID)
-	writeString_5(b, s.ChannelName)
+	binary.Write(b, binary.LittleEndian, s.ChannelName)
 	return b.Bytes()
 }
 
@@ -8043,7 +7535,7 @@ func (s *RequestLeaveChannelByName) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.SourceID); err != nil {
 		return err
 	}
-	if s.ChannelName, err = readString_5(b); err != nil {
+	if s.ChannelName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -8057,9 +7549,6 @@ type RequestMaxFriends struct {
 
 func (s *RequestMaxFriends) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.RequestingPlayerGID)
-	binary.Write(b, binary.LittleEndian, s.MaximumFriends)
-	binary.Write(b, binary.LittleEndian, s.MaximumSubscriberFriends)
 	return b.Bytes()
 }
 
@@ -8084,14 +7573,14 @@ type RequestRadialChat struct {
 
 func (s *RequestRadialChat) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Message)))
-	writeString_5(b, s.Message)
+	binary.Write(b, binary.LittleEndian, s.Message)
 	return b.Bytes()
 }
 
 func (s *RequestRadialChat) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Message, err = readString_5(b); err != nil {
+	if s.Message, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -8107,11 +7596,8 @@ type RequestRadialFriendChat struct {
 
 func (s *RequestRadialFriendChat) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 21+len(s.Message)+len(s.SourceName)))
-	binary.Write(b, binary.LittleEndian, s.PlayerGID)
-	writeString_5(b, s.Message)
-	binary.Write(b, binary.LittleEndian, s.SourceID)
-	binary.Write(b, binary.LittleEndian, s.Filter)
-	writeString_5(b, s.SourceName)
+	binary.Write(b, binary.LittleEndian, s.Message)
+	binary.Write(b, binary.LittleEndian, s.SourceName)
 	return b.Bytes()
 }
 
@@ -8121,7 +7607,7 @@ func (s *RequestRadialFriendChat) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.PlayerGID); err != nil {
 		return err
 	}
-	if s.Message, err = readString_5(b); err != nil {
+	if s.Message, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.SourceID); err != nil {
@@ -8130,7 +7616,7 @@ func (s *RequestRadialFriendChat) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Filter); err != nil {
 		return err
 	}
-	if s.SourceName, err = readString_5(b); err != nil {
+	if s.SourceName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -8146,11 +7632,7 @@ type RequestRadialFriendQuickChat struct {
 
 func (s *RequestRadialFriendQuickChat) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 23+len(s.SourceName)))
-	binary.Write(b, binary.LittleEndian, s.PlayerGID)
-	binary.Write(b, binary.LittleEndian, s.MessageID)
-	binary.Write(b, binary.LittleEndian, s.SourceID)
-	binary.Write(b, binary.LittleEndian, s.Filter)
-	writeString_5(b, s.SourceName)
+	binary.Write(b, binary.LittleEndian, s.SourceName)
 	return b.Bytes()
 }
 
@@ -8169,7 +7651,7 @@ func (s *RequestRadialFriendQuickChat) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Filter); err != nil {
 		return err
 	}
-	if s.SourceName, err = readString_5(b); err != nil {
+	if s.SourceName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -8185,18 +7667,15 @@ type RequestRadialOwnerChat struct {
 
 func (s *RequestRadialOwnerChat) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.Message)+len(s.SourceName)))
-	writeString_5(b, s.Message)
-	binary.Write(b, binary.LittleEndian, s.SourceID)
-	binary.Write(b, binary.LittleEndian, s.Filter)
-	writeString_5(b, s.SourceName)
-	binary.Write(b, binary.LittleEndian, s.IsOwner)
+	binary.Write(b, binary.LittleEndian, s.Message)
+	binary.Write(b, binary.LittleEndian, s.SourceName)
 	return b.Bytes()
 }
 
 func (s *RequestRadialOwnerChat) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Message, err = readString_5(b); err != nil {
+	if s.Message, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.SourceID); err != nil {
@@ -8205,7 +7684,7 @@ func (s *RequestRadialOwnerChat) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Filter); err != nil {
 		return err
 	}
-	if s.SourceName, err = readString_5(b); err != nil {
+	if s.SourceName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.IsOwner); err != nil {
@@ -8220,7 +7699,6 @@ type RequestRadialQuickChat struct {
 
 func (s *RequestRadialQuickChat) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.MessageID)
 	return b.Bytes()
 }
 
@@ -8239,14 +7717,14 @@ type RequestRadialQuickChatExt struct {
 
 func (s *RequestRadialQuickChatExt) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Message)))
-	writeString_5(b, s.Message)
+	binary.Write(b, binary.LittleEndian, s.Message)
 	return b.Bytes()
 }
 
 func (s *RequestRadialQuickChatExt) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Message, err = readString_5(b); err != nil {
+	if s.Message, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -8264,20 +7742,16 @@ type RequestSession struct {
 
 func (s *RequestSession) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 19+len(s.Session)+len(s.STEAMID)+len(s.Whitelist)))
-	writeString_5(b, s.Session)
-	binary.Write(b, binary.LittleEndian, s.Valid)
-	binary.Write(b, binary.LittleEndian, s.ID)
-	binary.Write(b, binary.LittleEndian, s.CRC)
-	writeString_5(b, s.STEAMID)
-	writeString_5(b, s.Whitelist)
-	binary.Write(b, binary.LittleEndian, s.Threshold)
+	binary.Write(b, binary.LittleEndian, s.Session)
+	binary.Write(b, binary.LittleEndian, s.STEAMID)
+	binary.Write(b, binary.LittleEndian, s.Whitelist)
 	return b.Bytes()
 }
 
 func (s *RequestSession) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Session, err = readString_5(b); err != nil {
+	if s.Session, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Valid); err != nil {
@@ -8289,10 +7763,10 @@ func (s *RequestSession) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.CRC); err != nil {
 		return err
 	}
-	if s.STEAMID, err = readString_5(b); err != nil {
+	if s.STEAMID, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Whitelist, err = readString_5(b); err != nil {
+	if s.Whitelist, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Threshold); err != nil {
@@ -8308,8 +7782,6 @@ type RequestZoneClusterQuickChat struct {
 
 func (s *RequestZoneClusterQuickChat) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 5))
-	binary.Write(b, binary.LittleEndian, s.MessageID)
-	binary.Write(b, binary.LittleEndian, s.IsOwner)
 	return b.Bytes()
 }
 
@@ -8331,14 +7803,14 @@ type RequestGifts struct {
 
 func (s *RequestGifts) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.GiftType)))
-	writeString_5(b, s.GiftType)
+	binary.Write(b, binary.LittleEndian, s.GiftType)
 	return b.Bytes()
 }
 
 func (s *RequestGifts) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.GiftType, err = readString_5(b); err != nil {
+	if s.GiftType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -8350,14 +7822,14 @@ type RequestPromotions struct {
 
 func (s *RequestPromotions) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Locale)))
-	writeString_5(b, s.Locale)
+	binary.Write(b, binary.LittleEndian, s.Locale)
 	return b.Bytes()
 }
 
 func (s *RequestPromotions) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Locale, err = readString_5(b); err != nil {
+	if s.Locale, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -8369,7 +7841,6 @@ type RestoreCharRsp struct {
 
 func (s *RestoreCharRsp) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.Success)
 	return b.Bytes()
 }
 
@@ -8411,8 +7882,7 @@ type Script struct {
 
 func (s *Script) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.Message)))
-	binary.Write(b, binary.LittleEndian, s.ProcessID)
-	writeString_5(b, s.Message)
+	binary.Write(b, binary.LittleEndian, s.Message)
 	return b.Bytes()
 }
 
@@ -8422,7 +7892,7 @@ func (s *Script) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ProcessID); err != nil {
 		return err
 	}
-	if s.Message, err = readString_5(b); err != nil {
+	if s.Message, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -8435,8 +7905,6 @@ type SelectBadge struct {
 
 func (s *SelectBadge) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.BadgeNameID)
-	binary.Write(b, binary.LittleEndian, s.Error)
 	return b.Bytes()
 }
 
@@ -8462,11 +7930,8 @@ type SendChatCode struct {
 
 func (s *SendChatCode) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24+len(s.Code)+len(s.CreatorName)))
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
-	writeString_5(b, s.Code)
-	binary.Write(b, binary.LittleEndian, s.Error)
-	binary.Write(b, binary.LittleEndian, s.UseSuccess)
-	writeString_5(b, s.CreatorName)
+	binary.Write(b, binary.LittleEndian, s.Code)
+	binary.Write(b, binary.LittleEndian, s.CreatorName)
 	return b.Bytes()
 }
 
@@ -8476,7 +7941,7 @@ func (s *SendChatCode) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ListOwnerGID); err != nil {
 		return err
 	}
-	if s.Code, err = readString_5(b); err != nil {
+	if s.Code, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Error); err != nil {
@@ -8485,7 +7950,7 @@ func (s *SendChatCode) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.UseSuccess); err != nil {
 		return err
 	}
-	if s.CreatorName, err = readString_5(b); err != nil {
+	if s.CreatorName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -8498,8 +7963,7 @@ type SendInteractOptions struct {
 
 func (s *SendInteractOptions) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Options)))
-	binary.Write(b, binary.LittleEndian, s.MobileID)
-	writeString_5(b, s.Options)
+	binary.Write(b, binary.LittleEndian, s.Options)
 	return b.Bytes()
 }
 
@@ -8509,7 +7973,7 @@ func (s *SendInteractOptions) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.MobileID); err != nil {
 		return err
 	}
-	if s.Options, err = readString_5(b); err != nil {
+	if s.Options, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -8522,8 +7986,7 @@ type SendText struct {
 
 func (s *SendText) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Message)))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	writeString_5(b, s.Message)
+	binary.Write(b, binary.LittleEndian, s.Message)
 	return b.Bytes()
 }
 
@@ -8533,7 +7996,7 @@ func (s *SendText) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.CharacterID); err != nil {
 		return err
 	}
-	if s.Message, err = readString_5(b); err != nil {
+	if s.Message, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -8549,11 +8012,6 @@ type ServerMove struct {
 
 func (s *ServerMove) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9))
-	binary.Write(b, binary.LittleEndian, s.LocationX)
-	binary.Write(b, binary.LittleEndian, s.LocationY)
-	binary.Write(b, binary.LittleEndian, s.LocationZ)
-	binary.Write(b, binary.LittleEndian, s.Direction)
-	binary.Write(b, binary.LittleEndian, s.MobileID)
 	return b.Bytes()
 }
 
@@ -8584,7 +8042,6 @@ type ServerShutdown struct {
 
 func (s *ServerShutdown) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.Message)
 	return b.Bytes()
 }
 
@@ -8607,11 +8064,6 @@ type ServerTeleport struct {
 
 func (s *ServerTeleport) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9))
-	binary.Write(b, binary.LittleEndian, s.LocationX)
-	binary.Write(b, binary.LittleEndian, s.LocationY)
-	binary.Write(b, binary.LittleEndian, s.LocationZ)
-	binary.Write(b, binary.LittleEndian, s.Direction)
-	binary.Write(b, binary.LittleEndian, s.MobileID)
 	return b.Bytes()
 }
 
@@ -8661,33 +8113,18 @@ type ServerTransfer struct {
 
 func (s *ServerTransfer) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 94+len(s.IP)+len(s.ZoneName)+len(s.Location)+len(s.FallbackIP)+len(s.FallbackZone)))
-	writeString_5(b, s.IP)
-	binary.Write(b, binary.LittleEndian, s.TCPPort)
-	binary.Write(b, binary.LittleEndian, s.UDPPort)
-	binary.Write(b, binary.LittleEndian, s.Key)
-	binary.Write(b, binary.LittleEndian, s.UserID)
-	binary.Write(b, binary.LittleEndian, s.CharID)
-	writeString_5(b, s.ZoneName)
-	binary.Write(b, binary.LittleEndian, s.ZoneID)
-	writeString_5(b, s.Location)
-	binary.Write(b, binary.LittleEndian, s.Slot)
-	binary.Write(b, binary.LittleEndian, s.SessionID)
-	binary.Write(b, binary.LittleEndian, s.SessionSlot)
-	binary.Write(b, binary.LittleEndian, s.TargetPlayerID)
-	writeString_5(b, s.FallbackIP)
-	binary.Write(b, binary.LittleEndian, s.FallbackTCPPort)
-	binary.Write(b, binary.LittleEndian, s.FallbackUDPPort)
-	binary.Write(b, binary.LittleEndian, s.FallbackKey)
-	writeString_5(b, s.FallbackZone)
-	binary.Write(b, binary.LittleEndian, s.FallbackZoneID)
-	binary.Write(b, binary.LittleEndian, s.TransitionID)
+	binary.Write(b, binary.LittleEndian, s.IP)
+	binary.Write(b, binary.LittleEndian, s.ZoneName)
+	binary.Write(b, binary.LittleEndian, s.Location)
+	binary.Write(b, binary.LittleEndian, s.FallbackIP)
+	binary.Write(b, binary.LittleEndian, s.FallbackZone)
 	return b.Bytes()
 }
 
 func (s *ServerTransfer) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.IP, err = readString_5(b); err != nil {
+	if s.IP, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.TCPPort); err != nil {
@@ -8705,13 +8142,13 @@ func (s *ServerTransfer) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.CharID); err != nil {
 		return err
 	}
-	if s.ZoneName, err = readString_5(b); err != nil {
+	if s.ZoneName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ZoneID); err != nil {
 		return err
 	}
-	if s.Location, err = readString_5(b); err != nil {
+	if s.Location, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Slot); err != nil {
@@ -8726,7 +8163,7 @@ func (s *ServerTransfer) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.TargetPlayerID); err != nil {
 		return err
 	}
-	if s.FallbackIP, err = readString_5(b); err != nil {
+	if s.FallbackIP, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.FallbackTCPPort); err != nil {
@@ -8738,7 +8175,7 @@ func (s *ServerTransfer) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.FallbackKey); err != nil {
 		return err
 	}
-	if s.FallbackZone, err = readString_5(b); err != nil {
+	if s.FallbackZone, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.FallbackZoneID); err != nil {
@@ -8761,31 +8198,30 @@ type ServerTutorialCommand struct {
 
 func (s *ServerTutorialCommand) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.QuestToAdd)+len(s.QuestToRemove)+len(s.GoalToComplete)+len(s.EventToPost)+len(s.Action)))
-	writeString_5(b, s.QuestToAdd)
-	writeString_5(b, s.QuestToRemove)
-	writeString_5(b, s.GoalToComplete)
-	writeString_5(b, s.EventToPost)
-	writeString_5(b, s.Action)
-	binary.Write(b, binary.LittleEndian, s.Value)
+	binary.Write(b, binary.LittleEndian, s.QuestToAdd)
+	binary.Write(b, binary.LittleEndian, s.QuestToRemove)
+	binary.Write(b, binary.LittleEndian, s.GoalToComplete)
+	binary.Write(b, binary.LittleEndian, s.EventToPost)
+	binary.Write(b, binary.LittleEndian, s.Action)
 	return b.Bytes()
 }
 
 func (s *ServerTutorialCommand) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.QuestToAdd, err = readString_5(b); err != nil {
+	if s.QuestToAdd, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.QuestToRemove, err = readString_5(b); err != nil {
+	if s.QuestToRemove, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.GoalToComplete, err = readString_5(b); err != nil {
+	if s.GoalToComplete, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.EventToPost, err = readString_5(b); err != nil {
+	if s.EventToPost, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Action, err = readString_5(b); err != nil {
+	if s.Action, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Value); err != nil {
@@ -8800,7 +8236,6 @@ type ServerError struct {
 
 func (s *ServerError) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.Error)
 	return b.Bytes()
 }
 
@@ -8820,8 +8255,6 @@ type SERVERPROCESSRUNNING struct {
 
 func (s *SERVERPROCESSRUNNING) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.PID)
-	binary.Write(b, binary.LittleEndian, s.JobID)
 	return b.Bytes()
 }
 
@@ -8849,13 +8282,9 @@ type SESSION struct {
 
 func (s *SESSION) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 30+len(s.Name)+len(s.Zone)+len(s.Rules)))
-	binary.Write(b, binary.LittleEndian, s.ZoneID)
-	binary.Write(b, binary.LittleEndian, s.SessionID)
-	writeString_5(b, s.Name)
-	binary.Write(b, binary.LittleEndian, s.Slots)
-	binary.Write(b, binary.LittleEndian, s.ActiveSlots)
-	writeString_5(b, s.Zone)
-	writeString_5(b, s.Rules)
+	binary.Write(b, binary.LittleEndian, s.Name)
+	binary.Write(b, binary.LittleEndian, s.Zone)
+	binary.Write(b, binary.LittleEndian, s.Rules)
 	return b.Bytes()
 }
 
@@ -8868,7 +8297,7 @@ func (s *SESSION) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.SessionID); err != nil {
 		return err
 	}
-	if s.Name, err = readString_5(b); err != nil {
+	if s.Name, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Slots); err != nil {
@@ -8877,10 +8306,10 @@ func (s *SESSION) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ActiveSlots); err != nil {
 		return err
 	}
-	if s.Zone, err = readString_5(b); err != nil {
+	if s.Zone, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Rules, err = readString_5(b); err != nil {
+	if s.Rules, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -8892,7 +8321,6 @@ type SESSIONERROR struct {
 
 func (s *SESSIONERROR) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.ErrorCode)
 	return b.Bytes()
 }
 
@@ -8915,11 +8343,8 @@ type SESSIONPLAYER struct {
 
 func (s *SESSIONPLAYER) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20+len(s.Name)+len(s.Ranking)))
-	binary.Write(b, binary.LittleEndian, s.Slot)
-	binary.Write(b, binary.LittleEndian, s.CharID)
-	writeString_5(b, s.Name)
-	writeString_5(b, s.Ranking)
-	binary.Write(b, binary.LittleEndian, s.IsFriend)
+	binary.Write(b, binary.LittleEndian, s.Name)
+	binary.Write(b, binary.LittleEndian, s.Ranking)
 	return b.Bytes()
 }
 
@@ -8932,10 +8357,10 @@ func (s *SESSIONPLAYER) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.CharID); err != nil {
 		return err
 	}
-	if s.Name, err = readString_5(b); err != nil {
+	if s.Name, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Ranking, err = readString_5(b); err != nil {
+	if s.Ranking, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.IsFriend); err != nil {
@@ -8952,9 +8377,8 @@ type SETHOUSECUSTOMIZATION struct {
 
 func (s *SETHOUSECUSTOMIZATION) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12+len(s.TagName)+len(s.TextureFilename)))
-	binary.Write(b, binary.LittleEndian, s.GameObjectID)
-	writeString_5(b, s.TagName)
-	writeString_5(b, s.TextureFilename)
+	binary.Write(b, binary.LittleEndian, s.TagName)
+	binary.Write(b, binary.LittleEndian, s.TextureFilename)
 	return b.Bytes()
 }
 
@@ -8964,10 +8388,10 @@ func (s *SETHOUSECUSTOMIZATION) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GameObjectID); err != nil {
 		return err
 	}
-	if s.TagName, err = readString_5(b); err != nil {
+	if s.TagName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.TextureFilename, err = readString_5(b); err != nil {
+	if s.TextureFilename, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -8981,9 +8405,6 @@ type SplitQuantity struct {
 
 func (s *SplitQuantity) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.ItemID)
-	binary.Write(b, binary.LittleEndian, s.Quantity)
 	return b.Bytes()
 }
 
@@ -9015,24 +8436,18 @@ type StartStagedCinematic struct {
 
 func (s *StartStagedCinematic) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 29+len(s.CinematicName)+len(s.InitialStageName)))
-	writeString_5(b, s.CinematicName)
-	writeString_5(b, s.InitialStageName)
-	binary.Write(b, binary.LittleEndian, s.Start_X)
-	binary.Write(b, binary.LittleEndian, s.Start_Y)
-	binary.Write(b, binary.LittleEndian, s.Start_Z)
-	binary.Write(b, binary.LittleEndian, s.Yaw)
-	binary.Write(b, binary.LittleEndian, s.DuelID)
-	binary.Write(b, binary.LittleEndian, s.WinningTeamID)
+	binary.Write(b, binary.LittleEndian, s.CinematicName)
+	binary.Write(b, binary.LittleEndian, s.InitialStageName)
 	return b.Bytes()
 }
 
 func (s *StartStagedCinematic) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.CinematicName, err = readString_5(b); err != nil {
+	if s.CinematicName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.InitialStageName, err = readString_5(b); err != nil {
+	if s.InitialStageName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Start_X); err != nil {
@@ -9064,9 +8479,7 @@ type STARTCLIENTPROCESS struct {
 
 func (s *STARTCLIENTPROCESS) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.ScriptName)))
-	binary.Write(b, binary.LittleEndian, s.JobID)
-	writeString_5(b, s.ScriptName)
-	binary.Write(b, binary.LittleEndian, s.OwnerGID)
+	binary.Write(b, binary.LittleEndian, s.ScriptName)
 	return b.Bytes()
 }
 
@@ -9076,7 +8489,7 @@ func (s *STARTCLIENTPROCESS) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.JobID); err != nil {
 		return err
 	}
-	if s.ScriptName, err = readString_5(b); err != nil {
+	if s.ScriptName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.OwnerGID); err != nil {
@@ -9093,9 +8506,7 @@ type STARTSERVERPROCESS struct {
 
 func (s *STARTSERVERPROCESS) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.ScriptName)))
-	binary.Write(b, binary.LittleEndian, s.PID)
-	writeString_5(b, s.ScriptName)
-	binary.Write(b, binary.LittleEndian, s.OwnerGID)
+	binary.Write(b, binary.LittleEndian, s.ScriptName)
 	return b.Bytes()
 }
 
@@ -9105,7 +8516,7 @@ func (s *STARTSERVERPROCESS) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.PID); err != nil {
 		return err
 	}
-	if s.ScriptName, err = readString_5(b); err != nil {
+	if s.ScriptName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.OwnerGID); err != nil {
@@ -9120,7 +8531,6 @@ type SuboptimalBracketResponse struct {
 
 func (s *SuboptimalBracketResponse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.Choice)
 	return b.Bytes()
 }
 
@@ -9142,10 +8552,8 @@ type TeleportToGameZone struct {
 
 func (s *TeleportToGameZone) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20+len(s.Game)+len(s.Track)))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	writeString_5(b, s.Game)
-	writeString_5(b, s.Track)
-	binary.Write(b, binary.LittleEndian, s.ZoneInstanceID)
+	binary.Write(b, binary.LittleEndian, s.Game)
+	binary.Write(b, binary.LittleEndian, s.Track)
 	return b.Bytes()
 }
 
@@ -9155,10 +8563,10 @@ func (s *TeleportToGameZone) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.CharacterID); err != nil {
 		return err
 	}
-	if s.Game, err = readString_5(b); err != nil {
+	if s.Game, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Track, err = readString_5(b); err != nil {
+	if s.Track, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ZoneInstanceID); err != nil {
@@ -9174,15 +8582,14 @@ type TournamentUpdate struct {
 
 func (s *TournamentUpdate) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Updates)))
-	writeString_5(b, s.Updates)
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
+	binary.Write(b, binary.LittleEndian, s.Updates)
 	return b.Bytes()
 }
 
 func (s *TournamentUpdate) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Updates, err = readString_5(b); err != nil {
+	if s.Updates, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.CharacterID); err != nil {
@@ -9197,7 +8604,6 @@ type TransferCharRsp struct {
 
 func (s *TransferCharRsp) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.Success)
 	return b.Bytes()
 }
 
@@ -9217,8 +8623,6 @@ type TransferInstance struct {
 
 func (s *TransferInstance) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.ZoneID)
-	binary.Write(b, binary.LittleEndian, s.Error)
 	return b.Bytes()
 }
 
@@ -9241,15 +8645,14 @@ type TransferRealms struct {
 
 func (s *TransferRealms) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.RealmName)))
-	writeString_5(b, s.RealmName)
-	binary.Write(b, binary.LittleEndian, s.Error)
+	binary.Write(b, binary.LittleEndian, s.RealmName)
 	return b.Bytes()
 }
 
 func (s *TransferRealms) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.RealmName, err = readString_5(b); err != nil {
+	if s.RealmName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Error); err != nil {
@@ -9265,8 +8668,6 @@ type TrashInventoryItem struct {
 
 func (s *TrashInventoryItem) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.TemplateID)
 	return b.Bytes()
 }
 
@@ -9290,9 +8691,7 @@ type Tutorials struct {
 
 func (s *Tutorials) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.TutorialInfo)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.Remove)
-	writeString_5(b, s.TutorialInfo)
+	binary.Write(b, binary.LittleEndian, s.TutorialInfo)
 	return b.Bytes()
 }
 
@@ -9305,7 +8704,7 @@ func (s *Tutorials) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Remove); err != nil {
 		return err
 	}
-	if s.TutorialInfo, err = readString_5(b); err != nil {
+	if s.TutorialInfo, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -9324,14 +8723,7 @@ type UpdateObject struct {
 
 func (s *UpdateObject) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 38+len(s.Name)))
-	binary.Write(b, binary.LittleEndian, s.GameObjectID)
-	binary.Write(b, binary.LittleEndian, s.LocationX)
-	binary.Write(b, binary.LittleEndian, s.LocationY)
-	binary.Write(b, binary.LittleEndian, s.LocationZ)
-	binary.Write(b, binary.LittleEndian, s.Direction)
-	writeString_5(b, s.Name)
-	binary.Write(b, binary.LittleEndian, s.TemplateID)
-	binary.Write(b, binary.LittleEndian, s.StartDragging)
+	binary.Write(b, binary.LittleEndian, s.Name)
 	return b.Bytes()
 }
 
@@ -9353,7 +8745,7 @@ func (s *UpdateObject) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Direction); err != nil {
 		return err
 	}
-	if s.Name, err = readString_5(b); err != nil {
+	if s.Name, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.TemplateID); err != nil {
@@ -9372,8 +8764,6 @@ type UpdateQuantity struct {
 
 func (s *UpdateQuantity) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.Quantity)
 	return b.Bytes()
 }
 
@@ -9395,7 +8785,6 @@ type UpdateZoneCounter struct {
 
 func (s *UpdateZoneCounter) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.ZoneCounter)
 	return b.Bytes()
 }
 
@@ -9417,10 +8806,8 @@ type UpdateZoneTimer struct {
 
 func (s *UpdateZoneTimer) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12+len(s.Title)+len(s.TimerUI)))
-	binary.Write(b, binary.LittleEndian, s.TimerID)
-	writeString_5(b, s.Title)
-	writeString_5(b, s.TimerUI)
-	binary.Write(b, binary.LittleEndian, s.CountdownTime)
+	binary.Write(b, binary.LittleEndian, s.Title)
+	binary.Write(b, binary.LittleEndian, s.TimerUI)
 	return b.Bytes()
 }
 
@@ -9430,10 +8817,10 @@ func (s *UpdateZoneTimer) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.TimerID); err != nil {
 		return err
 	}
-	if s.Title, err = readString_5(b); err != nil {
+	if s.Title, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.TimerUI, err = readString_5(b); err != nil {
+	if s.TimerUI, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.CountdownTime); err != nil {
@@ -9451,10 +8838,7 @@ type UseChatCode struct {
 
 func (s *UseChatCode) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 19+len(s.Code)))
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
-	binary.Write(b, binary.LittleEndian, s.BuddyID)
-	writeString_5(b, s.Code)
-	binary.Write(b, binary.LittleEndian, s.Forwarded)
+	binary.Write(b, binary.LittleEndian, s.Code)
 	return b.Bytes()
 }
 
@@ -9467,7 +8851,7 @@ func (s *UseChatCode) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.BuddyID); err != nil {
 		return err
 	}
-	if s.Code, err = readString_5(b); err != nil {
+	if s.Code, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Forwarded); err != nil {
@@ -9487,19 +8871,14 @@ type CSRViewAccount struct {
 
 func (s *CSRViewAccount) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 21+len(s.AccountName)))
-	writeString_5(b, s.AccountName)
-	binary.Write(b, binary.LittleEndian, s.AccountID)
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.CanFilterChat)
-	binary.Write(b, binary.LittleEndian, s.CanOpenChat)
-	binary.Write(b, binary.LittleEndian, s.CanUseCodes)
+	binary.Write(b, binary.LittleEndian, s.AccountName)
 	return b.Bytes()
 }
 
 func (s *CSRViewAccount) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.AccountName, err = readString_5(b); err != nil {
+	if s.AccountName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.AccountID); err != nil {
@@ -9527,8 +8906,6 @@ type WizBang struct {
 
 func (s *WizBang) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.GameObjectID)
-	binary.Write(b, binary.LittleEndian, s.WizBangID)
 	return b.Bytes()
 }
 
@@ -9551,8 +8928,6 @@ type ZombiePlayer struct {
 
 func (s *ZombiePlayer) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.Remaining)
 	return b.Bytes()
 }
 
@@ -9575,18 +8950,18 @@ type ZONEEVENTTIMEREXPIRED struct {
 
 func (s *ZONEEVENTTIMEREXPIRED) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4+len(s.TimerName)+len(s.EventName)))
-	writeString_5(b, s.TimerName)
-	writeString_5(b, s.EventName)
+	binary.Write(b, binary.LittleEndian, s.TimerName)
+	binary.Write(b, binary.LittleEndian, s.EventName)
 	return b.Bytes()
 }
 
 func (s *ZONEEVENTTIMEREXPIRED) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.TimerName, err = readString_5(b); err != nil {
+	if s.TimerName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.EventName, err = readString_5(b); err != nil {
+	if s.EventName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -9606,22 +8981,14 @@ type ZoneTransfer struct {
 
 func (s *ZoneTransfer) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 39+len(s.ZoneName)))
-	writeString_5(b, s.ZoneName)
-	binary.Write(b, binary.LittleEndian, s.ZoneID)
-	binary.Write(b, binary.LittleEndian, s.Slot)
-	binary.Write(b, binary.LittleEndian, s.DynamicZoneID)
-	binary.Write(b, binary.LittleEndian, s.DynamicServerProcID)
-	binary.Write(b, binary.LittleEndian, s.ZoneCounter)
-	binary.Write(b, binary.LittleEndian, s.TransitionID)
-	binary.Write(b, binary.LittleEndian, s.SessionID)
-	binary.Write(b, binary.LittleEndian, s.SessionSlot)
+	binary.Write(b, binary.LittleEndian, s.ZoneName)
 	return b.Bytes()
 }
 
 func (s *ZoneTransfer) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.ZoneName, err = readString_5(b); err != nil {
+	if s.ZoneName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ZoneID); err != nil {
@@ -9680,36 +9047,18 @@ type ZoneTransferRequest struct {
 
 func (s *ZoneTransferRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 3+len(s.ZoneName)))
-	writeString_5(b, s.ZoneName)
-	binary.Write(b, binary.LittleEndian, s.SendAck)
+	binary.Write(b, binary.LittleEndian, s.ZoneName)
 	return b.Bytes()
 }
 
 func (s *ZoneTransferRequest) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.ZoneName, err = readString_5(b); err != nil {
+	if s.ZoneName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.SendAck); err != nil {
 		return err
 	}
 	return nil
-}
-
-func writeString_5(b *bytes.Buffer, v string) {
-	binary.Write(b, binary.LittleEndian, uint16(len(v)))
-	b.WriteString(v)
-}
-
-func readString_5(buf *bytes.Reader) (string, error) {
-	var length uint16
-	if err := binary.Read(buf, binary.LittleEndian, &length); err != nil {
-		return "", err
-	}
-	data := make([]byte, length)
-	if _, err := buf.Read(data); err != nil {
-		return "", err
-	}
-	return *(*string)(unsafe.Pointer(&data)), nil
 }

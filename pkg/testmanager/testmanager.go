@@ -4,43 +4,42 @@ package testmanager
 import (
 	"bytes"
 	"encoding/binary"
+	"github.com/cedws/w101-client-go/codegen"
 	"github.com/cedws/w101-client-go/proto"
-	"unsafe"
 )
 
-type testmanagerService interface {
+type service interface {
 	Login(Login)
 	LoginResponse(LoginResponse)
 }
 
-type TestmanagerService struct {
-	testmanagerService
-}
+func (Service) Login(Login)                 {}
+func (Service) LoginResponse(LoginResponse) {}
 
-type TestmanagerClient struct {
-	c *proto.Client
-}
-
-func (l *TestmanagerService) Login(_ Login)                 {}
-func (l *TestmanagerService) LoginResponse(_ LoginResponse) {}
-
-func RegisterTestmanagerService(r *proto.MessageRouter, s testmanagerService) {
+func RegisterService(r *proto.MessageRouter, s service) {
 	proto.RegisterMessageHandler(r, 11, 1, s.Login)
 	proto.RegisterMessageHandler(r, 11, 2, s.LoginResponse)
 }
 
-func NewTestmanagerClient(c *proto.Client) TestmanagerClient {
-	return TestmanagerClient{c}
+func NewClient(c *proto.Client) Client {
+	return Client{c}
 }
 
-func (c TestmanagerClient) Login(m *Login) error {
+func (c Client) Login(m *Login) error {
 	return c.c.WriteMessage(11, 1, m)
 }
 
-func (c TestmanagerClient) LoginResponse(m *LoginResponse) error {
+func (c Client) LoginResponse(m *LoginResponse) error {
 	return c.c.WriteMessage(11, 2, m)
 }
 
+type Service struct {
+	service
+}
+
+type Client struct {
+	c *proto.Client
+}
 type Login struct {
 	Password string
 	Username string
@@ -48,18 +47,18 @@ type Login struct {
 
 func (s *Login) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4+len(s.Username)+len(s.Password)))
-	writeString_11(b, s.Username)
-	writeString_11(b, s.Password)
+	binary.Write(b, binary.LittleEndian, s.Username)
+	binary.Write(b, binary.LittleEndian, s.Password)
 	return b.Bytes()
 }
 
 func (s *Login) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Username, err = readString_11(b); err != nil {
+	if s.Username, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Password, err = readString_11(b); err != nil {
+	if s.Password, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -71,7 +70,6 @@ type LoginResponse struct {
 
 func (s *LoginResponse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.Success)
 	return b.Bytes()
 }
 
@@ -82,21 +80,4 @@ func (s *LoginResponse) Unmarshal(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func writeString_11(b *bytes.Buffer, v string) {
-	binary.Write(b, binary.LittleEndian, uint16(len(v)))
-	b.WriteString(v)
-}
-
-func readString_11(buf *bytes.Reader) (string, error) {
-	var length uint16
-	if err := binary.Read(buf, binary.LittleEndian, &length); err != nil {
-		return "", err
-	}
-	data := make([]byte, length)
-	if _, err := buf.Read(data); err != nil {
-		return "", err
-	}
-	return *(*string)(unsafe.Pointer(&data)), nil
 }

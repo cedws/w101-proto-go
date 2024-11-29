@@ -2,45 +2,41 @@
 package system
 
 import (
-	"bytes"
-	"encoding/binary"
 	"github.com/cedws/w101-client-go/proto"
-	"unsafe"
 )
 
-type systemService interface {
+type service interface {
 	Ping(Ping)
 	PingRsp(PingRsp)
 }
 
-type SystemService struct {
-	systemService
-}
+func (Service) Ping(Ping)       {}
+func (Service) PingRsp(PingRsp) {}
 
-type SystemClient struct {
-	c *proto.Client
-}
-
-func (l *SystemService) Ping(_ Ping)       {}
-func (l *SystemService) PingRsp(_ PingRsp) {}
-
-func RegisterSystemService(r *proto.MessageRouter, s systemService) {
+func RegisterService(r *proto.MessageRouter, s service) {
 	proto.RegisterMessageHandler(r, 1, 1, s.Ping)
 	proto.RegisterMessageHandler(r, 1, 2, s.PingRsp)
 }
 
-func NewSystemClient(c *proto.Client) SystemClient {
-	return SystemClient{c}
+func NewClient(c *proto.Client) Client {
+	return Client{c}
 }
 
-func (c SystemClient) Ping(m *Ping) error {
+func (c Client) Ping(m *Ping) error {
 	return c.c.WriteMessage(1, 1, m)
 }
 
-func (c SystemClient) PingRsp(m *PingRsp) error {
+func (c Client) PingRsp(m *PingRsp) error {
 	return c.c.WriteMessage(1, 2, m)
 }
 
+type Service struct {
+	service
+}
+
+type Client struct {
+	c *proto.Client
+}
 type Ping struct {
 }
 
@@ -61,21 +57,4 @@ func (s *PingRsp) Marshal() []byte {
 
 func (s *PingRsp) Unmarshal(data []byte) error {
 	return nil
-}
-
-func writeString_1(b *bytes.Buffer, v string) {
-	binary.Write(b, binary.LittleEndian, uint16(len(v)))
-	b.WriteString(v)
-}
-
-func readString_1(buf *bytes.Reader) (string, error) {
-	var length uint16
-	if err := binary.Read(buf, binary.LittleEndian, &length); err != nil {
-		return "", err
-	}
-	data := make([]byte, length)
-	if _, err := buf.Read(data); err != nil {
-		return "", err
-	}
-	return *(*string)(unsafe.Pointer(&data)), nil
 }

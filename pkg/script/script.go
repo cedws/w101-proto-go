@@ -4,11 +4,11 @@ package script
 import (
 	"bytes"
 	"encoding/binary"
+	"github.com/cedws/w101-client-go/codegen"
 	"github.com/cedws/w101-client-go/proto"
-	"unsafe"
 )
 
-type scriptService interface {
+type service interface {
 	ADDBREAKPOINT(ADDBREAKPOINT)
 	ADDMESSAGE(ADDMESSAGE)
 	ADDPROCESS(ADDPROCESS)
@@ -31,36 +31,28 @@ type scriptService interface {
 	STEPPROCESS(STEPPROCESS)
 }
 
-type ScriptService struct {
-	scriptService
-}
+func (Service) ADDBREAKPOINT(ADDBREAKPOINT)     {}
+func (Service) ADDMESSAGE(ADDMESSAGE)           {}
+func (Service) ADDPROCESS(ADDPROCESS)           {}
+func (Service) ADDWATCH(ADDWATCH)               {}
+func (Service) ATTACHPROCESS(ATTACHPROCESS)     {}
+func (Service) BREAKPROCESS(BREAKPROCESS)       {}
+func (Service) DELBREAKPOINT(DELBREAKPOINT)     {}
+func (Service) DELWATCH(DELWATCH)               {}
+func (Service) DETACHPROCESS(DETACHPROCESS)     {}
+func (Service) ENUMPROCESS(ENUMPROCESS)         {}
+func (Service) KILLPROCESS(KILLPROCESS)         {}
+func (Service) PROCESSSTATE(PROCESSSTATE)       {}
+func (Service) PROCESSSTATUS(PROCESSSTATUS)     {}
+func (Service) REMOVEPROCESS(REMOVEPROCESS)     {}
+func (Service) RUNPROCESS(RUNPROCESS)           {}
+func (Service) SENDSTATE(SENDSTATE)             {}
+func (Service) SETVARIABLE(SETVARIABLE)         {}
+func (Service) STARTPROCESS(STARTPROCESS)       {}
+func (Service) STEPOVERPROCESS(STEPOVERPROCESS) {}
+func (Service) STEPPROCESS(STEPPROCESS)         {}
 
-type ScriptClient struct {
-	c *proto.Client
-}
-
-func (l *ScriptService) ADDBREAKPOINT(_ ADDBREAKPOINT)     {}
-func (l *ScriptService) ADDMESSAGE(_ ADDMESSAGE)           {}
-func (l *ScriptService) ADDPROCESS(_ ADDPROCESS)           {}
-func (l *ScriptService) ADDWATCH(_ ADDWATCH)               {}
-func (l *ScriptService) ATTACHPROCESS(_ ATTACHPROCESS)     {}
-func (l *ScriptService) BREAKPROCESS(_ BREAKPROCESS)       {}
-func (l *ScriptService) DELBREAKPOINT(_ DELBREAKPOINT)     {}
-func (l *ScriptService) DELWATCH(_ DELWATCH)               {}
-func (l *ScriptService) DETACHPROCESS(_ DETACHPROCESS)     {}
-func (l *ScriptService) ENUMPROCESS(_ ENUMPROCESS)         {}
-func (l *ScriptService) KILLPROCESS(_ KILLPROCESS)         {}
-func (l *ScriptService) PROCESSSTATE(_ PROCESSSTATE)       {}
-func (l *ScriptService) PROCESSSTATUS(_ PROCESSSTATUS)     {}
-func (l *ScriptService) REMOVEPROCESS(_ REMOVEPROCESS)     {}
-func (l *ScriptService) RUNPROCESS(_ RUNPROCESS)           {}
-func (l *ScriptService) SENDSTATE(_ SENDSTATE)             {}
-func (l *ScriptService) SETVARIABLE(_ SETVARIABLE)         {}
-func (l *ScriptService) STARTPROCESS(_ STARTPROCESS)       {}
-func (l *ScriptService) STEPOVERPROCESS(_ STEPOVERPROCESS) {}
-func (l *ScriptService) STEPPROCESS(_ STEPPROCESS)         {}
-
-func RegisterScriptService(r *proto.MessageRouter, s scriptService) {
+func RegisterService(r *proto.MessageRouter, s service) {
 	proto.RegisterMessageHandler(r, 10, 1, s.ADDBREAKPOINT)
 	proto.RegisterMessageHandler(r, 10, 2, s.ADDMESSAGE)
 	proto.RegisterMessageHandler(r, 10, 3, s.ADDPROCESS)
@@ -83,90 +75,97 @@ func RegisterScriptService(r *proto.MessageRouter, s scriptService) {
 	proto.RegisterMessageHandler(r, 10, 20, s.STEPPROCESS)
 }
 
-func NewScriptClient(c *proto.Client) ScriptClient {
-	return ScriptClient{c}
+func NewClient(c *proto.Client) Client {
+	return Client{c}
 }
 
-func (c ScriptClient) ADDBREAKPOINT(m *ADDBREAKPOINT) error {
+func (c Client) ADDBREAKPOINT(m *ADDBREAKPOINT) error {
 	return c.c.WriteMessage(10, 1, m)
 }
 
-func (c ScriptClient) ADDMESSAGE(m *ADDMESSAGE) error {
+func (c Client) ADDMESSAGE(m *ADDMESSAGE) error {
 	return c.c.WriteMessage(10, 2, m)
 }
 
-func (c ScriptClient) ADDPROCESS(m *ADDPROCESS) error {
+func (c Client) ADDPROCESS(m *ADDPROCESS) error {
 	return c.c.WriteMessage(10, 3, m)
 }
 
-func (c ScriptClient) ADDWATCH(m *ADDWATCH) error {
+func (c Client) ADDWATCH(m *ADDWATCH) error {
 	return c.c.WriteMessage(10, 4, m)
 }
 
-func (c ScriptClient) ATTACHPROCESS(m *ATTACHPROCESS) error {
+func (c Client) ATTACHPROCESS(m *ATTACHPROCESS) error {
 	return c.c.WriteMessage(10, 5, m)
 }
 
-func (c ScriptClient) BREAKPROCESS(m *BREAKPROCESS) error {
+func (c Client) BREAKPROCESS(m *BREAKPROCESS) error {
 	return c.c.WriteMessage(10, 6, m)
 }
 
-func (c ScriptClient) DELBREAKPOINT(m *DELBREAKPOINT) error {
+func (c Client) DELBREAKPOINT(m *DELBREAKPOINT) error {
 	return c.c.WriteMessage(10, 7, m)
 }
 
-func (c ScriptClient) DELWATCH(m *DELWATCH) error {
+func (c Client) DELWATCH(m *DELWATCH) error {
 	return c.c.WriteMessage(10, 8, m)
 }
 
-func (c ScriptClient) DETACHPROCESS(m *DETACHPROCESS) error {
+func (c Client) DETACHPROCESS(m *DETACHPROCESS) error {
 	return c.c.WriteMessage(10, 9, m)
 }
 
-func (c ScriptClient) ENUMPROCESS(m *ENUMPROCESS) error {
+func (c Client) ENUMPROCESS(m *ENUMPROCESS) error {
 	return c.c.WriteMessage(10, 10, m)
 }
 
-func (c ScriptClient) KILLPROCESS(m *KILLPROCESS) error {
+func (c Client) KILLPROCESS(m *KILLPROCESS) error {
 	return c.c.WriteMessage(10, 11, m)
 }
 
-func (c ScriptClient) PROCESSSTATE(m *PROCESSSTATE) error {
+func (c Client) PROCESSSTATE(m *PROCESSSTATE) error {
 	return c.c.WriteMessage(10, 12, m)
 }
 
-func (c ScriptClient) PROCESSSTATUS(m *PROCESSSTATUS) error {
+func (c Client) PROCESSSTATUS(m *PROCESSSTATUS) error {
 	return c.c.WriteMessage(10, 13, m)
 }
 
-func (c ScriptClient) REMOVEPROCESS(m *REMOVEPROCESS) error {
+func (c Client) REMOVEPROCESS(m *REMOVEPROCESS) error {
 	return c.c.WriteMessage(10, 14, m)
 }
 
-func (c ScriptClient) RUNPROCESS(m *RUNPROCESS) error {
+func (c Client) RUNPROCESS(m *RUNPROCESS) error {
 	return c.c.WriteMessage(10, 15, m)
 }
 
-func (c ScriptClient) SENDSTATE(m *SENDSTATE) error {
+func (c Client) SENDSTATE(m *SENDSTATE) error {
 	return c.c.WriteMessage(10, 16, m)
 }
 
-func (c ScriptClient) SETVARIABLE(m *SETVARIABLE) error {
+func (c Client) SETVARIABLE(m *SETVARIABLE) error {
 	return c.c.WriteMessage(10, 17, m)
 }
 
-func (c ScriptClient) STARTPROCESS(m *STARTPROCESS) error {
+func (c Client) STARTPROCESS(m *STARTPROCESS) error {
 	return c.c.WriteMessage(10, 18, m)
 }
 
-func (c ScriptClient) STEPOVERPROCESS(m *STEPOVERPROCESS) error {
+func (c Client) STEPOVERPROCESS(m *STEPOVERPROCESS) error {
 	return c.c.WriteMessage(10, 19, m)
 }
 
-func (c ScriptClient) STEPPROCESS(m *STEPPROCESS) error {
+func (c Client) STEPPROCESS(m *STEPPROCESS) error {
 	return c.c.WriteMessage(10, 20, m)
 }
 
+type Service struct {
+	service
+}
+
+type Client struct {
+	c *proto.Client
+}
 type ADDBREAKPOINT struct {
 	File string
 	Line uint32
@@ -174,15 +173,14 @@ type ADDBREAKPOINT struct {
 
 func (s *ADDBREAKPOINT) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.File)))
-	writeString_10(b, s.File)
-	binary.Write(b, binary.LittleEndian, s.Line)
+	binary.Write(b, binary.LittleEndian, s.File)
 	return b.Bytes()
 }
 
 func (s *ADDBREAKPOINT) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.File, err = readString_10(b); err != nil {
+	if s.File, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Line); err != nil {
@@ -197,14 +195,14 @@ type ADDMESSAGE struct {
 
 func (s *ADDMESSAGE) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Message)))
-	writeString_10(b, s.Message)
+	binary.Write(b, binary.LittleEndian, s.Message)
 	return b.Bytes()
 }
 
 func (s *ADDMESSAGE) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Message, err = readString_10(b); err != nil {
+	if s.Message, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -220,11 +218,10 @@ type ADDPROCESS struct {
 
 func (s *ADDPROCESS) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12+len(s.Root)+len(s.Zone)+len(s.Name)+len(s.Status)))
-	binary.Write(b, binary.LittleEndian, s.PID)
-	writeString_10(b, s.Root)
-	writeString_10(b, s.Zone)
-	writeString_10(b, s.Name)
-	writeString_10(b, s.Status)
+	binary.Write(b, binary.LittleEndian, s.Root)
+	binary.Write(b, binary.LittleEndian, s.Zone)
+	binary.Write(b, binary.LittleEndian, s.Name)
+	binary.Write(b, binary.LittleEndian, s.Status)
 	return b.Bytes()
 }
 
@@ -234,16 +231,16 @@ func (s *ADDPROCESS) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.PID); err != nil {
 		return err
 	}
-	if s.Root, err = readString_10(b); err != nil {
+	if s.Root, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Zone, err = readString_10(b); err != nil {
+	if s.Zone, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Name, err = readString_10(b); err != nil {
+	if s.Name, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Status, err = readString_10(b); err != nil {
+	if s.Status, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -255,14 +252,14 @@ type ADDWATCH struct {
 
 func (s *ADDWATCH) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Variable)))
-	writeString_10(b, s.Variable)
+	binary.Write(b, binary.LittleEndian, s.Variable)
 	return b.Bytes()
 }
 
 func (s *ADDWATCH) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Variable, err = readString_10(b); err != nil {
+	if s.Variable, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -274,7 +271,6 @@ type ATTACHPROCESS struct {
 
 func (s *ATTACHPROCESS) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.PID)
 	return b.Bytes()
 }
 
@@ -305,15 +301,14 @@ type DELBREAKPOINT struct {
 
 func (s *DELBREAKPOINT) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.File)))
-	writeString_10(b, s.File)
-	binary.Write(b, binary.LittleEndian, s.Line)
+	binary.Write(b, binary.LittleEndian, s.File)
 	return b.Bytes()
 }
 
 func (s *DELBREAKPOINT) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.File, err = readString_10(b); err != nil {
+	if s.File, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Line); err != nil {
@@ -328,14 +323,14 @@ type DELWATCH struct {
 
 func (s *DELWATCH) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Variable)))
-	writeString_10(b, s.Variable)
+	binary.Write(b, binary.LittleEndian, s.Variable)
 	return b.Bytes()
 }
 
 func (s *DELWATCH) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Variable, err = readString_10(b); err != nil {
+	if s.Variable, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -347,7 +342,6 @@ type DETACHPROCESS struct {
 
 func (s *DETACHPROCESS) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.PID)
 	return b.Bytes()
 }
 
@@ -377,7 +371,6 @@ type KILLPROCESS struct {
 
 func (s *KILLPROCESS) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.PID)
 	return b.Bytes()
 }
 
@@ -397,8 +390,7 @@ type PROCESSSTATE struct {
 
 func (s *PROCESSSTATE) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.State)))
-	binary.Write(b, binary.LittleEndian, s.PID)
-	writeString_10(b, s.State)
+	binary.Write(b, binary.LittleEndian, s.State)
 	return b.Bytes()
 }
 
@@ -408,7 +400,7 @@ func (s *PROCESSSTATE) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.PID); err != nil {
 		return err
 	}
-	if s.State, err = readString_10(b); err != nil {
+	if s.State, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -421,8 +413,7 @@ type PROCESSSTATUS struct {
 
 func (s *PROCESSSTATUS) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.Status)))
-	binary.Write(b, binary.LittleEndian, s.PID)
-	writeString_10(b, s.Status)
+	binary.Write(b, binary.LittleEndian, s.Status)
 	return b.Bytes()
 }
 
@@ -432,7 +423,7 @@ func (s *PROCESSSTATUS) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.PID); err != nil {
 		return err
 	}
-	if s.Status, err = readString_10(b); err != nil {
+	if s.Status, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -446,9 +437,8 @@ type REMOVEPROCESS struct {
 
 func (s *REMOVEPROCESS) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8+len(s.Name)+len(s.Status)))
-	binary.Write(b, binary.LittleEndian, s.PID)
-	writeString_10(b, s.Name)
-	writeString_10(b, s.Status)
+	binary.Write(b, binary.LittleEndian, s.Name)
+	binary.Write(b, binary.LittleEndian, s.Status)
 	return b.Bytes()
 }
 
@@ -458,10 +448,10 @@ func (s *REMOVEPROCESS) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.PID); err != nil {
 		return err
 	}
-	if s.Name, err = readString_10(b); err != nil {
+	if s.Name, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Status, err = readString_10(b); err != nil {
+	if s.Status, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -496,18 +486,18 @@ type SETVARIABLE struct {
 
 func (s *SETVARIABLE) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4+len(s.Variable)+len(s.Value)))
-	writeString_10(b, s.Variable)
-	writeString_10(b, s.Value)
+	binary.Write(b, binary.LittleEndian, s.Variable)
+	binary.Write(b, binary.LittleEndian, s.Value)
 	return b.Bytes()
 }
 
 func (s *SETVARIABLE) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Variable, err = readString_10(b); err != nil {
+	if s.Variable, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Value, err = readString_10(b); err != nil {
+	if s.Value, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -523,24 +513,22 @@ type STARTPROCESS struct {
 
 func (s *STARTPROCESS) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.DataRoot)+len(s.Zone)+len(s.Script)))
-	writeString_10(b, s.DataRoot)
-	writeString_10(b, s.Zone)
-	writeString_10(b, s.Script)
-	binary.Write(b, binary.LittleEndian, s.StartAttached)
-	binary.Write(b, binary.LittleEndian, s.StartRunning)
+	binary.Write(b, binary.LittleEndian, s.DataRoot)
+	binary.Write(b, binary.LittleEndian, s.Zone)
+	binary.Write(b, binary.LittleEndian, s.Script)
 	return b.Bytes()
 }
 
 func (s *STARTPROCESS) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.DataRoot, err = readString_10(b); err != nil {
+	if s.DataRoot, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Zone, err = readString_10(b); err != nil {
+	if s.Zone, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Script, err = readString_10(b); err != nil {
+	if s.Script, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.StartAttached); err != nil {
@@ -572,21 +560,4 @@ func (s *STEPPROCESS) Marshal() []byte {
 
 func (s *STEPPROCESS) Unmarshal(data []byte) error {
 	return nil
-}
-
-func writeString_10(b *bytes.Buffer, v string) {
-	binary.Write(b, binary.LittleEndian, uint16(len(v)))
-	b.WriteString(v)
-}
-
-func readString_10(buf *bytes.Reader) (string, error) {
-	var length uint16
-	if err := binary.Read(buf, binary.LittleEndian, &length); err != nil {
-		return "", err
-	}
-	data := make([]byte, length)
-	if _, err := buf.Read(data); err != nil {
-		return "", err
-	}
-	return *(*string)(unsafe.Pointer(&data)), nil
 }

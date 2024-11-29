@@ -4,50 +4,49 @@ package mg4
 import (
 	"bytes"
 	"encoding/binary"
+	"github.com/cedws/w101-client-go/codegen"
 	"github.com/cedws/w101-client-go/proto"
-	"unsafe"
 )
 
-type mg4Service interface {
+type service interface {
 	MG4Connect(MG4Connect)
 	MG4Moved(MG4Moved)
 	MG4Rewards(MG4Rewards)
 }
 
-type Mg4Service struct {
-	mg4Service
-}
+func (Service) MG4Connect(MG4Connect) {}
+func (Service) MG4Moved(MG4Moved)     {}
+func (Service) MG4Rewards(MG4Rewards) {}
 
-type Mg4Client struct {
-	c *proto.Client
-}
-
-func (l *Mg4Service) MG4Connect(_ MG4Connect) {}
-func (l *Mg4Service) MG4Moved(_ MG4Moved)     {}
-func (l *Mg4Service) MG4Rewards(_ MG4Rewards) {}
-
-func RegisterMg4Service(r *proto.MessageRouter, s mg4Service) {
+func RegisterService(r *proto.MessageRouter, s service) {
 	proto.RegisterMessageHandler(r, 45, 1, s.MG4Connect)
 	proto.RegisterMessageHandler(r, 45, 2, s.MG4Moved)
 	proto.RegisterMessageHandler(r, 45, 3, s.MG4Rewards)
 }
 
-func NewMg4Client(c *proto.Client) Mg4Client {
-	return Mg4Client{c}
+func NewClient(c *proto.Client) Client {
+	return Client{c}
 }
 
-func (c Mg4Client) MG4Connect(m *MG4Connect) error {
+func (c Client) MG4Connect(m *MG4Connect) error {
 	return c.c.WriteMessage(45, 1, m)
 }
 
-func (c Mg4Client) MG4Moved(m *MG4Moved) error {
+func (c Client) MG4Moved(m *MG4Moved) error {
 	return c.c.WriteMessage(45, 2, m)
 }
 
-func (c Mg4Client) MG4Rewards(m *MG4Rewards) error {
+func (c Client) MG4Rewards(m *MG4Rewards) error {
 	return c.c.WriteMessage(45, 3, m)
 }
 
+type Service struct {
+	service
+}
+
+type Client struct {
+	c *proto.Client
+}
 type MG4Connect struct {
 }
 
@@ -77,8 +76,7 @@ type MG4Rewards struct {
 
 func (s *MG4Rewards) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.GameName)))
-	binary.Write(b, binary.LittleEndian, s.Score)
-	writeString_45(b, s.GameName)
+	binary.Write(b, binary.LittleEndian, s.GameName)
 	return b.Bytes()
 }
 
@@ -88,25 +86,8 @@ func (s *MG4Rewards) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Score); err != nil {
 		return err
 	}
-	if s.GameName, err = readString_45(b); err != nil {
+	if s.GameName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
-}
-
-func writeString_45(b *bytes.Buffer, v string) {
-	binary.Write(b, binary.LittleEndian, uint16(len(v)))
-	b.WriteString(v)
-}
-
-func readString_45(buf *bytes.Reader) (string, error) {
-	var length uint16
-	if err := binary.Read(buf, binary.LittleEndian, &length); err != nil {
-		return "", err
-	}
-	data := make([]byte, length)
-	if _, err := buf.Read(data); err != nil {
-		return "", err
-	}
-	return *(*string)(unsafe.Pointer(&data)), nil
 }

@@ -4,11 +4,11 @@ package wizard
 import (
 	"bytes"
 	"encoding/binary"
+	"github.com/cedws/w101-client-go/codegen"
 	"github.com/cedws/w101-client-go/proto"
-	"unsafe"
 )
 
-type wizardService interface {
+type service interface {
 	AcceptQuestBogus(AcceptQuestBogus)
 	AccessPassBuyConfirm(AccessPassBuyConfirm)
 	AccessPassBuyRequest(AccessPassBuyRequest)
@@ -264,271 +264,262 @@ type wizardService interface {
 	WorldTeleportRequest(WorldTeleportRequest)
 }
 
-type WizardService struct {
-	wizardService
+func (Service) AcceptQuestBogus(AcceptQuestBogus)                               {}
+func (Service) AccessPassBuyConfirm(AccessPassBuyConfirm)                       {}
+func (Service) AccessPassBuyRequest(AccessPassBuyRequest)                       {}
+func (Service) AccessPassDeclined(AccessPassDeclined)                           {}
+func (Service) AccessPassInfoRequest(AccessPassInfoRequest)                     {}
+func (Service) AccessPassOffer(AccessPassOffer)                                 {}
+func (Service) AccessPassRejected(AccessPassRejected)                           {}
+func (Service) ActorDialog(ActorDialog)                                         {}
+func (Service) AddQuestFinder(AddQuestFinder)                                   {}
+func (Service) AddSpellToBook(AddSpellToBook)                                   {}
+func (Service) AddSpellToDeck(AddSpellToDeck)                                   {}
+func (Service) AddTreasureSpellToBook(AddTreasureSpellToBook)                   {}
+func (Service) AddTreasureSpellToDeck(AddTreasureSpellToDeck)                   {}
+func (Service) AdventurePartyMessage(AdventurePartyMessage)                     {}
+func (Service) Aggro(Aggro)                                                     {}
+func (Service) AlchemyStation(AlchemyStation)                                   {}
+func (Service) ArenaError(ArenaError)                                           {}
+func (Service) AuctionHouseContents(AuctionHouseContents)                       {}
+func (Service) AuctionHouseMoreAcknowledgement(AuctionHouseMoreAcknowledgement) {}
+func (Service) AuctionHouseRequest(AuctionHouseRequest)                         {}
+func (Service) AuctionRequestBank(AuctionRequestBank)                           {}
+func (Service) AuctionResponse(AuctionResponse)                                 {}
+func (Service) BankDelete(BankDelete)                                           {}
+func (Service) BankDeleteConfirm(BankDeleteConfirm)                             {}
+func (Service) BankToBankConfirm(BankToBankConfirm)                             {}
+func (Service) BankToInvConfirm(BankToInvConfirm)                               {}
+func (Service) BoosterDistributionResults(BoosterDistributionResults)           {}
+func (Service) BracketReport(BracketReport)                                     {}
+func (Service) BuyEnergyConfirm(BuyEnergyConfirm)                               {}
+func (Service) ChatFilterBlack(ChatFilterBlack)                                 {}
+func (Service) ChatFilterWhite(ChatFilterWhite)                                 {}
+func (Service) ChooseFocus(ChooseFocus)                                         {}
+func (Service) ClearAllCraftingSlots(ClearAllCraftingSlots)                     {}
+func (Service) ClearEquippedDeck(ClearEquippedDeck)                             {}
+func (Service) CompleteDialog(CompleteDialog)                                   {}
+func (Service) ControlMusic(ControlMusic)                                       {}
+func (Service) CraftingSlotAdd(CraftingSlotAdd)                                 {}
+func (Service) CraftingSlotCount(CraftingSlotCount)                             {}
+func (Service) CraftingSlotRemove(CraftingSlotRemove)                           {}
+func (Service) CreateBoosterDistribution(CreateBoosterDistribution)             {}
+func (Service) CrownBalance(CrownBalance)                                       {}
+func (Service) CrownsBuyConfirm(CrownsBuyConfirm)                               {}
+func (Service) CrownsBuyRequest(CrownsBuyRequest)                               {}
+func (Service) CrownServicesOpen(CrownServicesOpen)                             {}
+func (Service) CSRCrownBalance(CSRCrownBalance)                                 {}
+func (Service) CSRRequestBlobs(CSRRequestBlobs)                                 {}
+func (Service) DeliveryInvoiceRequestBank(DeliveryInvoiceRequestBank)           {}
+func (Service) DeliveryInvoiceTransferObjectsFromStorageToBank(DeliveryInvoiceTransferObjectsFromStorageToBank) {
 }
+func (Service) DismissTutorialTip(DismissTutorialTip)                                             {}
+func (Service) DoneShopping(DoneShopping)                                                         {}
+func (Service) DuelSimResult(DuelSimResult)                                                       {}
+func (Service) DyeConfirm(DyeConfirm)                                                             {}
+func (Service) DyeRequest(DyeRequest)                                                             {}
+func (Service) DyeShopOpen(DyeShopOpen)                                                           {}
+func (Service) ElixirStateChange(ElixirStateChange)                                               {}
+func (Service) EncounterDialog(EncounterDialog)                                                   {}
+func (Service) EnergyBuyRequest(EnergyBuyRequest)                                                 {}
+func (Service) EnergyShopOpen(EnergyShopOpen)                                                     {}
+func (Service) EnterMinigame(EnterMinigame)                                                       {}
+func (Service) ExitConfirmTeleport(ExitConfirmTeleport)                                           {}
+func (Service) ExpandPvPSearch(ExpandPvPSearch)                                                   {}
+func (Service) FreeTourneyCreditInfo(FreeTourneyCreditInfo)                                       {}
+func (Service) GetSnackList(GetSnackList)                                                         {}
+func (Service) GetSubscriberOnlyItems(GetSubscriberOnlyItems)                                     {}
+func (Service) GetTimedAccessPasses(GetTimedAccessPasses)                                         {}
+func (Service) GoHome(GoHome)                                                                     {}
+func (Service) GotoDorm(GotoDorm)                                                                 {}
+func (Service) GotoFriendlyPlayer(GotoFriendlyPlayer)                                             {}
+func (Service) GroupQuestCredit(GroupQuestCredit)                                                 {}
+func (Service) InteractAvailableQuest(InteractAvailableQuest)                                     {}
+func (Service) InteractCompleteGoal(InteractCompleteGoal)                                         {}
+func (Service) InteractUnderwayQuest(InteractUnderwayQuest)                                       {}
+func (Service) InvToBankConfirm(InvToBankConfirm)                                                 {}
+func (Service) ItemDrop(ItemDrop)                                                                 {}
+func (Service) ItemLock(ItemLock)                                                                 {}
+func (Service) ItemOverflowToBank(ItemOverflowToBank)                                             {}
+func (Service) LeaderboardFriendRequest(LeaderboardFriendRequest)                                 {}
+func (Service) LeaderboardRequest(LeaderboardRequest)                                             {}
+func (Service) LeaderboardResponse(LeaderboardResponse)                                           {}
+func (Service) Leash(Leash)                                                                       {}
+func (Service) LeashOffset(LeashOffset)                                                           {}
+func (Service) LeaveAdventureParty(LeaveAdventureParty)                                           {}
+func (Service) LeaveMinigame(LeaveMinigame)                                                       {}
+func (Service) LeaveSigilTimerWaiting(LeaveSigilTimerWaiting)                                     {}
+func (Service) LemuriaStatus(LemuriaStatus)                                                       {}
+func (Service) LevelUp(LevelUp)                                                                   {}
+func (Service) LogClientResolution(LogClientResolution)                                           {}
+func (Service) LogOffer(LogOffer)                                                                 {}
+func (Service) LogPatchClientPatchTime(LogPatchClientPatchTime)                                   {}
+func (Service) Loot(Loot)                                                                         {}
+func (Service) MinigameKiosk(MinigameKiosk)                                                       {}
+func (Service) MinigameRewards(MinigameRewards)                                                   {}
+func (Service) MinigameSelect(MinigameSelect)                                                     {}
+func (Service) MinigameTimerEnd(MinigameTimerEnd)                                                 {}
+func (Service) MinigameTimerStart(MinigameTimerStart)                                             {}
+func (Service) MoveBankToBank(MoveBankToBank)                                                     {}
+func (Service) MoveBankToInv(MoveBankToInv)                                                       {}
+func (Service) MoveInvToBank(MoveInvToBank)                                                       {}
+func (Service) NewTitle(NewTitle)                                                                 {}
+func (Service) NotifySchoolFocus(NotifySchoolFocus)                                               {}
+func (Service) OpenBank(OpenBank)                                                                 {}
+func (Service) PaidLootCrownsBalance(PaidLootCrownsBalance)                                       {}
+func (Service) PaidLootRollError(PaidLootRollError)                                               {}
+func (Service) PaidLootRollPrompt(PaidLootRollPrompt)                                             {}
+func (Service) PaidLootRollResponse(PaidLootRollResponse)                                         {}
+func (Service) PaidLootRollResult(PaidLootRollResult)                                             {}
+func (Service) PatchingBlocked(PatchingBlocked)                                                   {}
+func (Service) PCSCacheSegReqsSummaryRequest(PCSCacheSegReqsSummaryRequest)                       {}
+func (Service) PCSListRequest(PCSListRequest)                                                     {}
+func (Service) PCSListResponse(PCSListResponse)                                                   {}
+func (Service) PCSPATCH(PCSPATCH)                                                                 {}
+func (Service) PCSPriceLockRequest(PCSPriceLockRequest)                                           {}
+func (Service) PCSPriceLockResponse(PCSPriceLockResponse)                                         {}
+func (Service) PCSPurchaseRequest(PCSPurchaseRequest)                                             {}
+func (Service) PCSPurchaseResponse(PCSPurchaseResponse)                                           {}
+func (Service) PCSSegDataRequest(PCSSegDataRequest)                                               {}
+func (Service) PCSSegDataResponse(PCSSegDataResponse)                                             {}
+func (Service) PCSUpdateUserWishlist(PCSUpdateUserWishlist)                                       {}
+func (Service) PetGameKiosk(PetGameKiosk)                                                         {}
+func (Service) PetHatchCreate(PetHatchCreate)                                                     {}
+func (Service) PetHatchJoinStatus(PetHatchJoinStatus)                                             {}
+func (Service) PetHatchReadyStatus(PetHatchReadyStatus)                                           {}
+func (Service) PetHatchRequest(PetHatchRequest)                                                   {}
+func (Service) PetHatchResult(PetHatchResult)                                                     {}
+func (Service) PetRenameConfirm(PetRenameConfirm)                                                 {}
+func (Service) PetRenameRequest(PetRenameRequest)                                                 {}
+func (Service) PlayerArrived(PlayerArrived)                                                       {}
+func (Service) PlayerWizbang(PlayerWizbang)                                                       {}
+func (Service) PlayMusic(PlayMusic)                                                               {}
+func (Service) PotionBuyConfirm(PotionBuyConfirm)                                                 {}
+func (Service) PotionBuyRequest(PotionBuyRequest)                                                 {}
+func (Service) PotionShopOpen(PotionShopOpen)                                                     {}
+func (Service) PreLeaderboard(PreLeaderboard)                                                     {}
+func (Service) PremiumContent(PremiumContent)                                                     {}
+func (Service) PrePvPKiosk(PrePvPKiosk)                                                           {}
+func (Service) PvPConfirm(PvPConfirm)                                                             {}
+func (Service) PvPConfirmTourney(PvPConfirmTourney)                                               {}
+func (Service) PvPConsumePvPTourneyCurrency(PvPConsumePvPTourneyCurrency)                         {}
+func (Service) PvPIntent(PvPIntent)                                                               {}
+func (Service) PvpMatchRequest(PvpMatchRequest)                                                   {}
+func (Service) PvPQueue(PvPQueue)                                                                 {}
+func (Service) PvPRegisterFailed(PvPRegisterFailed)                                               {}
+func (Service) PvPUpdateRequest(PvPUpdateRequest)                                                 {}
+func (Service) QuestDialog(QuestDialog)                                                           {}
+func (Service) QuestFinderOption(QuestFinderOption)                                               {}
+func (Service) QuestRewards(QuestRewards)                                                         {}
+func (Service) QuickSellRequestBank(QuickSellRequestBank)                                         {}
+func (Service) ReagentAdd(ReagentAdd)                                                             {}
+func (Service) ReagentRemove(ReagentRemove)                                                       {}
+func (Service) ReagentRemoveRequest(ReagentRemoveRequest)                                         {}
+func (Service) ReagentUpdate(ReagentUpdate)                                                       {}
+func (Service) RecipeAdd(RecipeAdd)                                                               {}
+func (Service) RecipeRemove(RecipeRemove)                                                         {}
+func (Service) Registrar(Registrar)                                                               {}
+func (Service) RemoveSpellFromBook(RemoveSpellFromBook)                                           {}
+func (Service) RemoveSpellFromDeck(RemoveSpellFromDeck)                                           {}
+func (Service) RemoveTreasureSpellFromBook(RemoveTreasureSpellFromBook)                           {}
+func (Service) RemoveTreasureSpellFromDeck(RemoveTreasureSpellFromDeck)                           {}
+func (Service) RemoveTreasureSpellFromVault(RemoveTreasureSpellFromVault)                         {}
+func (Service) RentalUpdate(RentalUpdate)                                                         {}
+func (Service) RequestActiveMapQuests(RequestActiveMapQuests)                                     {}
+func (Service) RequestAdventureParty(RequestAdventureParty)                                       {}
+func (Service) RequestCombatSigils(RequestCombatSigils)                                           {}
+func (Service) RequestCreateAdventureParty(RequestCreateAdventureParty)                           {}
+func (Service) RequestFriendFinderCode(RequestFriendFinderCode)                                   {}
+func (Service) RequestFriendlyPlayerQuest(RequestFriendlyPlayerQuest)                             {}
+func (Service) RequestFriendlyPlayerQuest2(RequestFriendlyPlayerQuest2)                           {}
+func (Service) RequestFriendlyPlayers(RequestFriendlyPlayers)                                     {}
+func (Service) RequestHouseTeleport(RequestHouseTeleport)                                         {}
+func (Service) RequestJoinAdventureParty(RequestJoinAdventureParty)                               {}
+func (Service) RequestLeaveAdventureParty(RequestLeaveAdventureParty)                             {}
+func (Service) RequestNextClosestQuest(RequestNextClosestQuest)                                   {}
+func (Service) RequestPrivacyOptions(RequestPrivacyOptions)                                       {}
+func (Service) RequestPvPActor(RequestPvPActor)                                                   {}
+func (Service) RequestPvPKiosk(RequestPvPKiosk)                                                   {}
+func (Service) RequestQuestDialog(RequestQuestDialog)                                             {}
+func (Service) RequestQuickSell(RequestQuickSell)                                                 {}
+func (Service) RequestTeamUpInfo(RequestTeamUpInfo)                                               {}
+func (Service) RequestToggleLockItem(RequestToggleLockItem)                                       {}
+func (Service) RequestVolunteerInfo(RequestVolunteerInfo)                                         {}
+func (Service) RespecConfirm(RespecConfirm)                                                       {}
+func (Service) ResponsePrivacyOptions(ResponsePrivacyOptions)                                     {}
+func (Service) RideMount(RideMount)                                                               {}
+func (Service) SeamstressOpen(SeamstressOpen)                                                     {}
+func (Service) SendFriendFinderCode(SendFriendFinderCode)                                         {}
+func (Service) SendTalentDataCSR(SendTalentDataCSR)                                               {}
+func (Service) SetDeckName(SetDeckName)                                                           {}
+func (Service) DontAllowFriendFinderCodes(DontAllowFriendFinderCodes)                             {}
+func (Service) SetFriendlyPlayer(SetFriendlyPlayer)                                               {}
+func (Service) SetRentalTimer(SetRentalTimer)                                                     {}
+func (Service) SetVolunteerFlag(SetVolunteerFlag)                                                 {}
+func (Service) SharedBankDeleteReagentOrPetSnack(SharedBankDeleteReagentOrPetSnack)               {}
+func (Service) SharedBankDeleteReagentOrPetSnackConfirm(SharedBankDeleteReagentOrPetSnackConfirm) {}
+func (Service) ShopBuyConfirm(ShopBuyConfirm)                                                     {}
+func (Service) ShopBuyRequest(ShopBuyRequest)                                                     {}
+func (Service) ShopList(ShopList)                                                                 {}
+func (Service) ShopSellConfirm(ShopSellConfirm)                                                   {}
+func (Service) ShopSellRequest(ShopSellRequest)                                                   {}
+func (Service) ShowcasedStoreItemInfo(ShowcasedStoreItemInfo)                                     {}
+func (Service) ShowClientMessageBox(ShowClientMessageBox)                                         {}
+func (Service) ShowGUI(ShowGUI)                                                                   {}
+func (Service) SnackList(SnackList)                                                               {}
+func (Service) SpellList(SpellList)                                                               {}
+func (Service) SpellTrainComplete(SpellTrainComplete)                                             {}
+func (Service) StartRide(StartRide)                                                               {}
+func (Service) StitchItems(StitchItems)                                                           {}
+func (Service) StitchItemsConfirm(StitchItemsConfirm)                                             {}
+func (Service) StorageClientAdd(StorageClientAdd)                                                 {}
+func (Service) StorageClientRemove(StorageClientRemove)                                           {}
+func (Service) SubmitCombatSigils(SubmitCombatSigils)                                             {}
+func (Service) SubscriberOnlyItems(SubscriberOnlyItems)                                           {}
+func (Service) TimedAccessPasses(TimedAccessPasses)                                               {}
+func (Service) TradeChangeItem(TradeChangeItem)                                                   {}
+func (Service) TradeChangeMoney(TradeChangeMoney)                                                 {}
+func (Service) TradeCreate(TradeCreate)                                                           {}
+func (Service) TradeJoinStatus(TradeJoinStatus)                                                   {}
+func (Service) TradeReadyStatus(TradeReadyStatus)                                                 {}
+func (Service) TradeRequest(TradeRequest)                                                         {}
+func (Service) TradeResult(TradeResult)                                                           {}
+func (Service) Train(Train)                                                                       {}
+func (Service) TreasureBuy(TreasureBuy)                                                           {}
+func (Service) TreasureBuyConfirm(TreasureBuyConfirm)                                             {}
+func (Service) TreasureShopList(TreasureShopList)                                                 {}
+func (Service) TutorialEvent(TutorialEvent)                                                       {}
+func (Service) UnstitchItems(UnstitchItems)                                                       {}
+func (Service) UnstitchOpen(UnstitchOpen)                                                         {}
+func (Service) UpdateArenaPoints(UpdateArenaPoints)                                               {}
+func (Service) UpdateFriendlyPlayerWorlds(UpdateFriendlyPlayerWorlds)                             {}
+func (Service) UpdateFriendlyWorld(UpdateFriendlyWorld)                                           {}
+func (Service) UpdateGender(UpdateGender)                                                         {}
+func (Service) UpdateGold(UpdateGold)                                                             {}
+func (Service) UpdateHealth(UpdateHealth)                                                         {}
+func (Service) UpdateMana(UpdateMana)                                                             {}
+func (Service) UpdatePotions(UpdatePotions)                                                       {}
+func (Service) UpdatePowerPip(UpdatePowerPip)                                                     {}
+func (Service) UpdatePrivacyOptions(UpdatePrivacyOptions)                                         {}
+func (Service) UpdateSchool(UpdateSchool)                                                         {}
+func (Service) UpdateShadowPipRating(UpdateShadowPipRating)                                       {}
+func (Service) UpdateTraining(UpdateTraining)                                                     {}
+func (Service) UpdateVolunteerInfo(UpdateVolunteerInfo)                                           {}
+func (Service) UpdateXP(UpdateXP)                                                                 {}
+func (Service) UseFriendFinderCode(UseFriendFinderCode)                                           {}
+func (Service) UseFriendFinderCodeResponse(UseFriendFinderCodeResponse)                           {}
+func (Service) UsePotion(UsePotion)                                                               {}
+func (Service) UseRecipe(UseRecipe)                                                               {}
+func (Service) VolunteerRequest(VolunteerRequest)                                                 {}
+func (Service) VolunteerTeamHelpComplete(VolunteerTeamHelpComplete)                               {}
+func (Service) VolunteerTeamHelpJoin(VolunteerTeamHelpJoin)                                       {}
+func (Service) WizGameStats(WizGameStats)                                                         {}
+func (Service) WizInventoryClientAdd(WizInventoryClientAdd)                                       {}
+func (Service) WizInventoryClientRemove(WizInventoryClientRemove)                                 {}
+func (Service) WorldTeleportList(WorldTeleportList)                                               {}
+func (Service) WorldTeleportRequest(WorldTeleportRequest)                                         {}
 
-type WizardClient struct {
-	c *proto.Client
-}
-
-func (l *WizardService) AcceptQuestBogus(_ AcceptQuestBogus)                               {}
-func (l *WizardService) AccessPassBuyConfirm(_ AccessPassBuyConfirm)                       {}
-func (l *WizardService) AccessPassBuyRequest(_ AccessPassBuyRequest)                       {}
-func (l *WizardService) AccessPassDeclined(_ AccessPassDeclined)                           {}
-func (l *WizardService) AccessPassInfoRequest(_ AccessPassInfoRequest)                     {}
-func (l *WizardService) AccessPassOffer(_ AccessPassOffer)                                 {}
-func (l *WizardService) AccessPassRejected(_ AccessPassRejected)                           {}
-func (l *WizardService) ActorDialog(_ ActorDialog)                                         {}
-func (l *WizardService) AddQuestFinder(_ AddQuestFinder)                                   {}
-func (l *WizardService) AddSpellToBook(_ AddSpellToBook)                                   {}
-func (l *WizardService) AddSpellToDeck(_ AddSpellToDeck)                                   {}
-func (l *WizardService) AddTreasureSpellToBook(_ AddTreasureSpellToBook)                   {}
-func (l *WizardService) AddTreasureSpellToDeck(_ AddTreasureSpellToDeck)                   {}
-func (l *WizardService) AdventurePartyMessage(_ AdventurePartyMessage)                     {}
-func (l *WizardService) Aggro(_ Aggro)                                                     {}
-func (l *WizardService) AlchemyStation(_ AlchemyStation)                                   {}
-func (l *WizardService) ArenaError(_ ArenaError)                                           {}
-func (l *WizardService) AuctionHouseContents(_ AuctionHouseContents)                       {}
-func (l *WizardService) AuctionHouseMoreAcknowledgement(_ AuctionHouseMoreAcknowledgement) {}
-func (l *WizardService) AuctionHouseRequest(_ AuctionHouseRequest)                         {}
-func (l *WizardService) AuctionRequestBank(_ AuctionRequestBank)                           {}
-func (l *WizardService) AuctionResponse(_ AuctionResponse)                                 {}
-func (l *WizardService) BankDelete(_ BankDelete)                                           {}
-func (l *WizardService) BankDeleteConfirm(_ BankDeleteConfirm)                             {}
-func (l *WizardService) BankToBankConfirm(_ BankToBankConfirm)                             {}
-func (l *WizardService) BankToInvConfirm(_ BankToInvConfirm)                               {}
-func (l *WizardService) BoosterDistributionResults(_ BoosterDistributionResults)           {}
-func (l *WizardService) BracketReport(_ BracketReport)                                     {}
-func (l *WizardService) BuyEnergyConfirm(_ BuyEnergyConfirm)                               {}
-func (l *WizardService) ChatFilterBlack(_ ChatFilterBlack)                                 {}
-func (l *WizardService) ChatFilterWhite(_ ChatFilterWhite)                                 {}
-func (l *WizardService) ChooseFocus(_ ChooseFocus)                                         {}
-func (l *WizardService) ClearAllCraftingSlots(_ ClearAllCraftingSlots)                     {}
-func (l *WizardService) ClearEquippedDeck(_ ClearEquippedDeck)                             {}
-func (l *WizardService) CompleteDialog(_ CompleteDialog)                                   {}
-func (l *WizardService) ControlMusic(_ ControlMusic)                                       {}
-func (l *WizardService) CraftingSlotAdd(_ CraftingSlotAdd)                                 {}
-func (l *WizardService) CraftingSlotCount(_ CraftingSlotCount)                             {}
-func (l *WizardService) CraftingSlotRemove(_ CraftingSlotRemove)                           {}
-func (l *WizardService) CreateBoosterDistribution(_ CreateBoosterDistribution)             {}
-func (l *WizardService) CrownBalance(_ CrownBalance)                                       {}
-func (l *WizardService) CrownsBuyConfirm(_ CrownsBuyConfirm)                               {}
-func (l *WizardService) CrownsBuyRequest(_ CrownsBuyRequest)                               {}
-func (l *WizardService) CrownServicesOpen(_ CrownServicesOpen)                             {}
-func (l *WizardService) CSRCrownBalance(_ CSRCrownBalance)                                 {}
-func (l *WizardService) CSRRequestBlobs(_ CSRRequestBlobs)                                 {}
-func (l *WizardService) DeliveryInvoiceRequestBank(_ DeliveryInvoiceRequestBank)           {}
-func (l *WizardService) DeliveryInvoiceTransferObjectsFromStorageToBank(_ DeliveryInvoiceTransferObjectsFromStorageToBank) {
-}
-func (l *WizardService) DismissTutorialTip(_ DismissTutorialTip)                               {}
-func (l *WizardService) DoneShopping(_ DoneShopping)                                           {}
-func (l *WizardService) DuelSimResult(_ DuelSimResult)                                         {}
-func (l *WizardService) DyeConfirm(_ DyeConfirm)                                               {}
-func (l *WizardService) DyeRequest(_ DyeRequest)                                               {}
-func (l *WizardService) DyeShopOpen(_ DyeShopOpen)                                             {}
-func (l *WizardService) ElixirStateChange(_ ElixirStateChange)                                 {}
-func (l *WizardService) EncounterDialog(_ EncounterDialog)                                     {}
-func (l *WizardService) EnergyBuyRequest(_ EnergyBuyRequest)                                   {}
-func (l *WizardService) EnergyShopOpen(_ EnergyShopOpen)                                       {}
-func (l *WizardService) EnterMinigame(_ EnterMinigame)                                         {}
-func (l *WizardService) ExitConfirmTeleport(_ ExitConfirmTeleport)                             {}
-func (l *WizardService) ExpandPvPSearch(_ ExpandPvPSearch)                                     {}
-func (l *WizardService) FreeTourneyCreditInfo(_ FreeTourneyCreditInfo)                         {}
-func (l *WizardService) GetSnackList(_ GetSnackList)                                           {}
-func (l *WizardService) GetSubscriberOnlyItems(_ GetSubscriberOnlyItems)                       {}
-func (l *WizardService) GetTimedAccessPasses(_ GetTimedAccessPasses)                           {}
-func (l *WizardService) GoHome(_ GoHome)                                                       {}
-func (l *WizardService) GotoDorm(_ GotoDorm)                                                   {}
-func (l *WizardService) GotoFriendlyPlayer(_ GotoFriendlyPlayer)                               {}
-func (l *WizardService) GroupQuestCredit(_ GroupQuestCredit)                                   {}
-func (l *WizardService) InteractAvailableQuest(_ InteractAvailableQuest)                       {}
-func (l *WizardService) InteractCompleteGoal(_ InteractCompleteGoal)                           {}
-func (l *WizardService) InteractUnderwayQuest(_ InteractUnderwayQuest)                         {}
-func (l *WizardService) InvToBankConfirm(_ InvToBankConfirm)                                   {}
-func (l *WizardService) ItemDrop(_ ItemDrop)                                                   {}
-func (l *WizardService) ItemLock(_ ItemLock)                                                   {}
-func (l *WizardService) ItemOverflowToBank(_ ItemOverflowToBank)                               {}
-func (l *WizardService) LeaderboardFriendRequest(_ LeaderboardFriendRequest)                   {}
-func (l *WizardService) LeaderboardRequest(_ LeaderboardRequest)                               {}
-func (l *WizardService) LeaderboardResponse(_ LeaderboardResponse)                             {}
-func (l *WizardService) Leash(_ Leash)                                                         {}
-func (l *WizardService) LeashOffset(_ LeashOffset)                                             {}
-func (l *WizardService) LeaveAdventureParty(_ LeaveAdventureParty)                             {}
-func (l *WizardService) LeaveMinigame(_ LeaveMinigame)                                         {}
-func (l *WizardService) LeaveSigilTimerWaiting(_ LeaveSigilTimerWaiting)                       {}
-func (l *WizardService) LemuriaStatus(_ LemuriaStatus)                                         {}
-func (l *WizardService) LevelUp(_ LevelUp)                                                     {}
-func (l *WizardService) LogClientResolution(_ LogClientResolution)                             {}
-func (l *WizardService) LogOffer(_ LogOffer)                                                   {}
-func (l *WizardService) LogPatchClientPatchTime(_ LogPatchClientPatchTime)                     {}
-func (l *WizardService) Loot(_ Loot)                                                           {}
-func (l *WizardService) MinigameKiosk(_ MinigameKiosk)                                         {}
-func (l *WizardService) MinigameRewards(_ MinigameRewards)                                     {}
-func (l *WizardService) MinigameSelect(_ MinigameSelect)                                       {}
-func (l *WizardService) MinigameTimerEnd(_ MinigameTimerEnd)                                   {}
-func (l *WizardService) MinigameTimerStart(_ MinigameTimerStart)                               {}
-func (l *WizardService) MoveBankToBank(_ MoveBankToBank)                                       {}
-func (l *WizardService) MoveBankToInv(_ MoveBankToInv)                                         {}
-func (l *WizardService) MoveInvToBank(_ MoveInvToBank)                                         {}
-func (l *WizardService) NewTitle(_ NewTitle)                                                   {}
-func (l *WizardService) NotifySchoolFocus(_ NotifySchoolFocus)                                 {}
-func (l *WizardService) OpenBank(_ OpenBank)                                                   {}
-func (l *WizardService) PaidLootCrownsBalance(_ PaidLootCrownsBalance)                         {}
-func (l *WizardService) PaidLootRollError(_ PaidLootRollError)                                 {}
-func (l *WizardService) PaidLootRollPrompt(_ PaidLootRollPrompt)                               {}
-func (l *WizardService) PaidLootRollResponse(_ PaidLootRollResponse)                           {}
-func (l *WizardService) PaidLootRollResult(_ PaidLootRollResult)                               {}
-func (l *WizardService) PatchingBlocked(_ PatchingBlocked)                                     {}
-func (l *WizardService) PCSCacheSegReqsSummaryRequest(_ PCSCacheSegReqsSummaryRequest)         {}
-func (l *WizardService) PCSListRequest(_ PCSListRequest)                                       {}
-func (l *WizardService) PCSListResponse(_ PCSListResponse)                                     {}
-func (l *WizardService) PCSPATCH(_ PCSPATCH)                                                   {}
-func (l *WizardService) PCSPriceLockRequest(_ PCSPriceLockRequest)                             {}
-func (l *WizardService) PCSPriceLockResponse(_ PCSPriceLockResponse)                           {}
-func (l *WizardService) PCSPurchaseRequest(_ PCSPurchaseRequest)                               {}
-func (l *WizardService) PCSPurchaseResponse(_ PCSPurchaseResponse)                             {}
-func (l *WizardService) PCSSegDataRequest(_ PCSSegDataRequest)                                 {}
-func (l *WizardService) PCSSegDataResponse(_ PCSSegDataResponse)                               {}
-func (l *WizardService) PCSUpdateUserWishlist(_ PCSUpdateUserWishlist)                         {}
-func (l *WizardService) PetGameKiosk(_ PetGameKiosk)                                           {}
-func (l *WizardService) PetHatchCreate(_ PetHatchCreate)                                       {}
-func (l *WizardService) PetHatchJoinStatus(_ PetHatchJoinStatus)                               {}
-func (l *WizardService) PetHatchReadyStatus(_ PetHatchReadyStatus)                             {}
-func (l *WizardService) PetHatchRequest(_ PetHatchRequest)                                     {}
-func (l *WizardService) PetHatchResult(_ PetHatchResult)                                       {}
-func (l *WizardService) PetRenameConfirm(_ PetRenameConfirm)                                   {}
-func (l *WizardService) PetRenameRequest(_ PetRenameRequest)                                   {}
-func (l *WizardService) PlayerArrived(_ PlayerArrived)                                         {}
-func (l *WizardService) PlayerWizbang(_ PlayerWizbang)                                         {}
-func (l *WizardService) PlayMusic(_ PlayMusic)                                                 {}
-func (l *WizardService) PotionBuyConfirm(_ PotionBuyConfirm)                                   {}
-func (l *WizardService) PotionBuyRequest(_ PotionBuyRequest)                                   {}
-func (l *WizardService) PotionShopOpen(_ PotionShopOpen)                                       {}
-func (l *WizardService) PreLeaderboard(_ PreLeaderboard)                                       {}
-func (l *WizardService) PremiumContent(_ PremiumContent)                                       {}
-func (l *WizardService) PrePvPKiosk(_ PrePvPKiosk)                                             {}
-func (l *WizardService) PvPConfirm(_ PvPConfirm)                                               {}
-func (l *WizardService) PvPConfirmTourney(_ PvPConfirmTourney)                                 {}
-func (l *WizardService) PvPConsumePvPTourneyCurrency(_ PvPConsumePvPTourneyCurrency)           {}
-func (l *WizardService) PvPIntent(_ PvPIntent)                                                 {}
-func (l *WizardService) PvpMatchRequest(_ PvpMatchRequest)                                     {}
-func (l *WizardService) PvPQueue(_ PvPQueue)                                                   {}
-func (l *WizardService) PvPRegisterFailed(_ PvPRegisterFailed)                                 {}
-func (l *WizardService) PvPUpdateRequest(_ PvPUpdateRequest)                                   {}
-func (l *WizardService) QuestDialog(_ QuestDialog)                                             {}
-func (l *WizardService) QuestFinderOption(_ QuestFinderOption)                                 {}
-func (l *WizardService) QuestRewards(_ QuestRewards)                                           {}
-func (l *WizardService) QuickSellRequestBank(_ QuickSellRequestBank)                           {}
-func (l *WizardService) ReagentAdd(_ ReagentAdd)                                               {}
-func (l *WizardService) ReagentRemove(_ ReagentRemove)                                         {}
-func (l *WizardService) ReagentRemoveRequest(_ ReagentRemoveRequest)                           {}
-func (l *WizardService) ReagentUpdate(_ ReagentUpdate)                                         {}
-func (l *WizardService) RecipeAdd(_ RecipeAdd)                                                 {}
-func (l *WizardService) RecipeRemove(_ RecipeRemove)                                           {}
-func (l *WizardService) Registrar(_ Registrar)                                                 {}
-func (l *WizardService) RemoveSpellFromBook(_ RemoveSpellFromBook)                             {}
-func (l *WizardService) RemoveSpellFromDeck(_ RemoveSpellFromDeck)                             {}
-func (l *WizardService) RemoveTreasureSpellFromBook(_ RemoveTreasureSpellFromBook)             {}
-func (l *WizardService) RemoveTreasureSpellFromDeck(_ RemoveTreasureSpellFromDeck)             {}
-func (l *WizardService) RemoveTreasureSpellFromVault(_ RemoveTreasureSpellFromVault)           {}
-func (l *WizardService) RentalUpdate(_ RentalUpdate)                                           {}
-func (l *WizardService) RequestActiveMapQuests(_ RequestActiveMapQuests)                       {}
-func (l *WizardService) RequestAdventureParty(_ RequestAdventureParty)                         {}
-func (l *WizardService) RequestCombatSigils(_ RequestCombatSigils)                             {}
-func (l *WizardService) RequestCreateAdventureParty(_ RequestCreateAdventureParty)             {}
-func (l *WizardService) RequestFriendFinderCode(_ RequestFriendFinderCode)                     {}
-func (l *WizardService) RequestFriendlyPlayerQuest(_ RequestFriendlyPlayerQuest)               {}
-func (l *WizardService) RequestFriendlyPlayerQuest2(_ RequestFriendlyPlayerQuest2)             {}
-func (l *WizardService) RequestFriendlyPlayers(_ RequestFriendlyPlayers)                       {}
-func (l *WizardService) RequestHouseTeleport(_ RequestHouseTeleport)                           {}
-func (l *WizardService) RequestJoinAdventureParty(_ RequestJoinAdventureParty)                 {}
-func (l *WizardService) RequestLeaveAdventureParty(_ RequestLeaveAdventureParty)               {}
-func (l *WizardService) RequestNextClosestQuest(_ RequestNextClosestQuest)                     {}
-func (l *WizardService) RequestPrivacyOptions(_ RequestPrivacyOptions)                         {}
-func (l *WizardService) RequestPvPActor(_ RequestPvPActor)                                     {}
-func (l *WizardService) RequestPvPKiosk(_ RequestPvPKiosk)                                     {}
-func (l *WizardService) RequestQuestDialog(_ RequestQuestDialog)                               {}
-func (l *WizardService) RequestQuickSell(_ RequestQuickSell)                                   {}
-func (l *WizardService) RequestTeamUpInfo(_ RequestTeamUpInfo)                                 {}
-func (l *WizardService) RequestToggleLockItem(_ RequestToggleLockItem)                         {}
-func (l *WizardService) RequestVolunteerInfo(_ RequestVolunteerInfo)                           {}
-func (l *WizardService) RespecConfirm(_ RespecConfirm)                                         {}
-func (l *WizardService) ResponsePrivacyOptions(_ ResponsePrivacyOptions)                       {}
-func (l *WizardService) RideMount(_ RideMount)                                                 {}
-func (l *WizardService) SeamstressOpen(_ SeamstressOpen)                                       {}
-func (l *WizardService) SendFriendFinderCode(_ SendFriendFinderCode)                           {}
-func (l *WizardService) SendTalentDataCSR(_ SendTalentDataCSR)                                 {}
-func (l *WizardService) SetDeckName(_ SetDeckName)                                             {}
-func (l *WizardService) DontAllowFriendFinderCodes(_ DontAllowFriendFinderCodes)               {}
-func (l *WizardService) SetFriendlyPlayer(_ SetFriendlyPlayer)                                 {}
-func (l *WizardService) SetRentalTimer(_ SetRentalTimer)                                       {}
-func (l *WizardService) SetVolunteerFlag(_ SetVolunteerFlag)                                   {}
-func (l *WizardService) SharedBankDeleteReagentOrPetSnack(_ SharedBankDeleteReagentOrPetSnack) {}
-func (l *WizardService) SharedBankDeleteReagentOrPetSnackConfirm(_ SharedBankDeleteReagentOrPetSnackConfirm) {
-}
-func (l *WizardService) ShopBuyConfirm(_ ShopBuyConfirm)                           {}
-func (l *WizardService) ShopBuyRequest(_ ShopBuyRequest)                           {}
-func (l *WizardService) ShopList(_ ShopList)                                       {}
-func (l *WizardService) ShopSellConfirm(_ ShopSellConfirm)                         {}
-func (l *WizardService) ShopSellRequest(_ ShopSellRequest)                         {}
-func (l *WizardService) ShowcasedStoreItemInfo(_ ShowcasedStoreItemInfo)           {}
-func (l *WizardService) ShowClientMessageBox(_ ShowClientMessageBox)               {}
-func (l *WizardService) ShowGUI(_ ShowGUI)                                         {}
-func (l *WizardService) SnackList(_ SnackList)                                     {}
-func (l *WizardService) SpellList(_ SpellList)                                     {}
-func (l *WizardService) SpellTrainComplete(_ SpellTrainComplete)                   {}
-func (l *WizardService) StartRide(_ StartRide)                                     {}
-func (l *WizardService) StitchItems(_ StitchItems)                                 {}
-func (l *WizardService) StitchItemsConfirm(_ StitchItemsConfirm)                   {}
-func (l *WizardService) StorageClientAdd(_ StorageClientAdd)                       {}
-func (l *WizardService) StorageClientRemove(_ StorageClientRemove)                 {}
-func (l *WizardService) SubmitCombatSigils(_ SubmitCombatSigils)                   {}
-func (l *WizardService) SubscriberOnlyItems(_ SubscriberOnlyItems)                 {}
-func (l *WizardService) TimedAccessPasses(_ TimedAccessPasses)                     {}
-func (l *WizardService) TradeChangeItem(_ TradeChangeItem)                         {}
-func (l *WizardService) TradeChangeMoney(_ TradeChangeMoney)                       {}
-func (l *WizardService) TradeCreate(_ TradeCreate)                                 {}
-func (l *WizardService) TradeJoinStatus(_ TradeJoinStatus)                         {}
-func (l *WizardService) TradeReadyStatus(_ TradeReadyStatus)                       {}
-func (l *WizardService) TradeRequest(_ TradeRequest)                               {}
-func (l *WizardService) TradeResult(_ TradeResult)                                 {}
-func (l *WizardService) Train(_ Train)                                             {}
-func (l *WizardService) TreasureBuy(_ TreasureBuy)                                 {}
-func (l *WizardService) TreasureBuyConfirm(_ TreasureBuyConfirm)                   {}
-func (l *WizardService) TreasureShopList(_ TreasureShopList)                       {}
-func (l *WizardService) TutorialEvent(_ TutorialEvent)                             {}
-func (l *WizardService) UnstitchItems(_ UnstitchItems)                             {}
-func (l *WizardService) UnstitchOpen(_ UnstitchOpen)                               {}
-func (l *WizardService) UpdateArenaPoints(_ UpdateArenaPoints)                     {}
-func (l *WizardService) UpdateFriendlyPlayerWorlds(_ UpdateFriendlyPlayerWorlds)   {}
-func (l *WizardService) UpdateFriendlyWorld(_ UpdateFriendlyWorld)                 {}
-func (l *WizardService) UpdateGender(_ UpdateGender)                               {}
-func (l *WizardService) UpdateGold(_ UpdateGold)                                   {}
-func (l *WizardService) UpdateHealth(_ UpdateHealth)                               {}
-func (l *WizardService) UpdateMana(_ UpdateMana)                                   {}
-func (l *WizardService) UpdatePotions(_ UpdatePotions)                             {}
-func (l *WizardService) UpdatePowerPip(_ UpdatePowerPip)                           {}
-func (l *WizardService) UpdatePrivacyOptions(_ UpdatePrivacyOptions)               {}
-func (l *WizardService) UpdateSchool(_ UpdateSchool)                               {}
-func (l *WizardService) UpdateShadowPipRating(_ UpdateShadowPipRating)             {}
-func (l *WizardService) UpdateTraining(_ UpdateTraining)                           {}
-func (l *WizardService) UpdateVolunteerInfo(_ UpdateVolunteerInfo)                 {}
-func (l *WizardService) UpdateXP(_ UpdateXP)                                       {}
-func (l *WizardService) UseFriendFinderCode(_ UseFriendFinderCode)                 {}
-func (l *WizardService) UseFriendFinderCodeResponse(_ UseFriendFinderCodeResponse) {}
-func (l *WizardService) UsePotion(_ UsePotion)                                     {}
-func (l *WizardService) UseRecipe(_ UseRecipe)                                     {}
-func (l *WizardService) VolunteerRequest(_ VolunteerRequest)                       {}
-func (l *WizardService) VolunteerTeamHelpComplete(_ VolunteerTeamHelpComplete)     {}
-func (l *WizardService) VolunteerTeamHelpJoin(_ VolunteerTeamHelpJoin)             {}
-func (l *WizardService) WizGameStats(_ WizGameStats)                               {}
-func (l *WizardService) WizInventoryClientAdd(_ WizInventoryClientAdd)             {}
-func (l *WizardService) WizInventoryClientRemove(_ WizInventoryClientRemove)       {}
-func (l *WizardService) WorldTeleportList(_ WorldTeleportList)                     {}
-func (l *WizardService) WorldTeleportRequest(_ WorldTeleportRequest)               {}
-
-func RegisterWizardService(r *proto.MessageRouter, s wizardService) {
+func RegisterService(r *proto.MessageRouter, s service) {
 	proto.RegisterMessageHandler(r, 12, 1, s.AcceptQuestBogus)
 	proto.RegisterMessageHandler(r, 12, 2, s.AccessPassBuyConfirm)
 	proto.RegisterMessageHandler(r, 12, 3, s.AccessPassBuyRequest)
@@ -784,1022 +775,1029 @@ func RegisterWizardService(r *proto.MessageRouter, s wizardService) {
 	proto.RegisterMessageHandler(r, 12, 253, s.WorldTeleportRequest)
 }
 
-func NewWizardClient(c *proto.Client) WizardClient {
-	return WizardClient{c}
+func NewClient(c *proto.Client) Client {
+	return Client{c}
 }
 
-func (c WizardClient) AcceptQuestBogus(m *AcceptQuestBogus) error {
+func (c Client) AcceptQuestBogus(m *AcceptQuestBogus) error {
 	return c.c.WriteMessage(12, 1, m)
 }
 
-func (c WizardClient) AccessPassBuyConfirm(m *AccessPassBuyConfirm) error {
+func (c Client) AccessPassBuyConfirm(m *AccessPassBuyConfirm) error {
 	return c.c.WriteMessage(12, 2, m)
 }
 
-func (c WizardClient) AccessPassBuyRequest(m *AccessPassBuyRequest) error {
+func (c Client) AccessPassBuyRequest(m *AccessPassBuyRequest) error {
 	return c.c.WriteMessage(12, 3, m)
 }
 
-func (c WizardClient) AccessPassDeclined(m *AccessPassDeclined) error {
+func (c Client) AccessPassDeclined(m *AccessPassDeclined) error {
 	return c.c.WriteMessage(12, 4, m)
 }
 
-func (c WizardClient) AccessPassInfoRequest(m *AccessPassInfoRequest) error {
+func (c Client) AccessPassInfoRequest(m *AccessPassInfoRequest) error {
 	return c.c.WriteMessage(12, 5, m)
 }
 
-func (c WizardClient) AccessPassOffer(m *AccessPassOffer) error {
+func (c Client) AccessPassOffer(m *AccessPassOffer) error {
 	return c.c.WriteMessage(12, 6, m)
 }
 
-func (c WizardClient) AccessPassRejected(m *AccessPassRejected) error {
+func (c Client) AccessPassRejected(m *AccessPassRejected) error {
 	return c.c.WriteMessage(12, 7, m)
 }
 
-func (c WizardClient) ActorDialog(m *ActorDialog) error {
+func (c Client) ActorDialog(m *ActorDialog) error {
 	return c.c.WriteMessage(12, 8, m)
 }
 
-func (c WizardClient) AddQuestFinder(m *AddQuestFinder) error {
+func (c Client) AddQuestFinder(m *AddQuestFinder) error {
 	return c.c.WriteMessage(12, 9, m)
 }
 
-func (c WizardClient) AddSpellToBook(m *AddSpellToBook) error {
+func (c Client) AddSpellToBook(m *AddSpellToBook) error {
 	return c.c.WriteMessage(12, 10, m)
 }
 
-func (c WizardClient) AddSpellToDeck(m *AddSpellToDeck) error {
+func (c Client) AddSpellToDeck(m *AddSpellToDeck) error {
 	return c.c.WriteMessage(12, 11, m)
 }
 
-func (c WizardClient) AddTreasureSpellToBook(m *AddTreasureSpellToBook) error {
+func (c Client) AddTreasureSpellToBook(m *AddTreasureSpellToBook) error {
 	return c.c.WriteMessage(12, 12, m)
 }
 
-func (c WizardClient) AddTreasureSpellToDeck(m *AddTreasureSpellToDeck) error {
+func (c Client) AddTreasureSpellToDeck(m *AddTreasureSpellToDeck) error {
 	return c.c.WriteMessage(12, 13, m)
 }
 
-func (c WizardClient) AdventurePartyMessage(m *AdventurePartyMessage) error {
+func (c Client) AdventurePartyMessage(m *AdventurePartyMessage) error {
 	return c.c.WriteMessage(12, 14, m)
 }
 
-func (c WizardClient) Aggro(m *Aggro) error {
+func (c Client) Aggro(m *Aggro) error {
 	return c.c.WriteMessage(12, 15, m)
 }
 
-func (c WizardClient) AlchemyStation(m *AlchemyStation) error {
+func (c Client) AlchemyStation(m *AlchemyStation) error {
 	return c.c.WriteMessage(12, 16, m)
 }
 
-func (c WizardClient) ArenaError(m *ArenaError) error {
+func (c Client) ArenaError(m *ArenaError) error {
 	return c.c.WriteMessage(12, 17, m)
 }
 
-func (c WizardClient) AuctionHouseContents(m *AuctionHouseContents) error {
+func (c Client) AuctionHouseContents(m *AuctionHouseContents) error {
 	return c.c.WriteMessage(12, 18, m)
 }
 
-func (c WizardClient) AuctionHouseMoreAcknowledgement(m *AuctionHouseMoreAcknowledgement) error {
+func (c Client) AuctionHouseMoreAcknowledgement(m *AuctionHouseMoreAcknowledgement) error {
 	return c.c.WriteMessage(12, 19, m)
 }
 
-func (c WizardClient) AuctionHouseRequest(m *AuctionHouseRequest) error {
+func (c Client) AuctionHouseRequest(m *AuctionHouseRequest) error {
 	return c.c.WriteMessage(12, 20, m)
 }
 
-func (c WizardClient) AuctionRequestBank(m *AuctionRequestBank) error {
+func (c Client) AuctionRequestBank(m *AuctionRequestBank) error {
 	return c.c.WriteMessage(12, 21, m)
 }
 
-func (c WizardClient) AuctionResponse(m *AuctionResponse) error {
+func (c Client) AuctionResponse(m *AuctionResponse) error {
 	return c.c.WriteMessage(12, 22, m)
 }
 
-func (c WizardClient) BankDelete(m *BankDelete) error {
+func (c Client) BankDelete(m *BankDelete) error {
 	return c.c.WriteMessage(12, 23, m)
 }
 
-func (c WizardClient) BankDeleteConfirm(m *BankDeleteConfirm) error {
+func (c Client) BankDeleteConfirm(m *BankDeleteConfirm) error {
 	return c.c.WriteMessage(12, 24, m)
 }
 
-func (c WizardClient) BankToBankConfirm(m *BankToBankConfirm) error {
+func (c Client) BankToBankConfirm(m *BankToBankConfirm) error {
 	return c.c.WriteMessage(12, 25, m)
 }
 
-func (c WizardClient) BankToInvConfirm(m *BankToInvConfirm) error {
+func (c Client) BankToInvConfirm(m *BankToInvConfirm) error {
 	return c.c.WriteMessage(12, 26, m)
 }
 
-func (c WizardClient) BoosterDistributionResults(m *BoosterDistributionResults) error {
+func (c Client) BoosterDistributionResults(m *BoosterDistributionResults) error {
 	return c.c.WriteMessage(12, 27, m)
 }
 
-func (c WizardClient) BracketReport(m *BracketReport) error {
+func (c Client) BracketReport(m *BracketReport) error {
 	return c.c.WriteMessage(12, 28, m)
 }
 
-func (c WizardClient) BuyEnergyConfirm(m *BuyEnergyConfirm) error {
+func (c Client) BuyEnergyConfirm(m *BuyEnergyConfirm) error {
 	return c.c.WriteMessage(12, 29, m)
 }
 
-func (c WizardClient) ChatFilterBlack(m *ChatFilterBlack) error {
+func (c Client) ChatFilterBlack(m *ChatFilterBlack) error {
 	return c.c.WriteMessage(12, 30, m)
 }
 
-func (c WizardClient) ChatFilterWhite(m *ChatFilterWhite) error {
+func (c Client) ChatFilterWhite(m *ChatFilterWhite) error {
 	return c.c.WriteMessage(12, 31, m)
 }
 
-func (c WizardClient) ChooseFocus(m *ChooseFocus) error {
+func (c Client) ChooseFocus(m *ChooseFocus) error {
 	return c.c.WriteMessage(12, 32, m)
 }
 
-func (c WizardClient) ClearAllCraftingSlots(m *ClearAllCraftingSlots) error {
+func (c Client) ClearAllCraftingSlots(m *ClearAllCraftingSlots) error {
 	return c.c.WriteMessage(12, 33, m)
 }
 
-func (c WizardClient) ClearEquippedDeck(m *ClearEquippedDeck) error {
+func (c Client) ClearEquippedDeck(m *ClearEquippedDeck) error {
 	return c.c.WriteMessage(12, 34, m)
 }
 
-func (c WizardClient) CompleteDialog(m *CompleteDialog) error {
+func (c Client) CompleteDialog(m *CompleteDialog) error {
 	return c.c.WriteMessage(12, 35, m)
 }
 
-func (c WizardClient) ControlMusic(m *ControlMusic) error {
+func (c Client) ControlMusic(m *ControlMusic) error {
 	return c.c.WriteMessage(12, 36, m)
 }
 
-func (c WizardClient) CraftingSlotAdd(m *CraftingSlotAdd) error {
+func (c Client) CraftingSlotAdd(m *CraftingSlotAdd) error {
 	return c.c.WriteMessage(12, 37, m)
 }
 
-func (c WizardClient) CraftingSlotCount(m *CraftingSlotCount) error {
+func (c Client) CraftingSlotCount(m *CraftingSlotCount) error {
 	return c.c.WriteMessage(12, 38, m)
 }
 
-func (c WizardClient) CraftingSlotRemove(m *CraftingSlotRemove) error {
+func (c Client) CraftingSlotRemove(m *CraftingSlotRemove) error {
 	return c.c.WriteMessage(12, 39, m)
 }
 
-func (c WizardClient) CreateBoosterDistribution(m *CreateBoosterDistribution) error {
+func (c Client) CreateBoosterDistribution(m *CreateBoosterDistribution) error {
 	return c.c.WriteMessage(12, 40, m)
 }
 
-func (c WizardClient) CrownBalance(m *CrownBalance) error {
+func (c Client) CrownBalance(m *CrownBalance) error {
 	return c.c.WriteMessage(12, 41, m)
 }
 
-func (c WizardClient) CrownsBuyConfirm(m *CrownsBuyConfirm) error {
+func (c Client) CrownsBuyConfirm(m *CrownsBuyConfirm) error {
 	return c.c.WriteMessage(12, 42, m)
 }
 
-func (c WizardClient) CrownsBuyRequest(m *CrownsBuyRequest) error {
+func (c Client) CrownsBuyRequest(m *CrownsBuyRequest) error {
 	return c.c.WriteMessage(12, 43, m)
 }
 
-func (c WizardClient) CrownServicesOpen(m *CrownServicesOpen) error {
+func (c Client) CrownServicesOpen(m *CrownServicesOpen) error {
 	return c.c.WriteMessage(12, 44, m)
 }
 
-func (c WizardClient) CSRCrownBalance(m *CSRCrownBalance) error {
+func (c Client) CSRCrownBalance(m *CSRCrownBalance) error {
 	return c.c.WriteMessage(12, 45, m)
 }
 
-func (c WizardClient) CSRRequestBlobs(m *CSRRequestBlobs) error {
+func (c Client) CSRRequestBlobs(m *CSRRequestBlobs) error {
 	return c.c.WriteMessage(12, 46, m)
 }
 
-func (c WizardClient) DeliveryInvoiceRequestBank(m *DeliveryInvoiceRequestBank) error {
+func (c Client) DeliveryInvoiceRequestBank(m *DeliveryInvoiceRequestBank) error {
 	return c.c.WriteMessage(12, 47, m)
 }
 
-func (c WizardClient) DeliveryInvoiceTransferObjectsFromStorageToBank(m *DeliveryInvoiceTransferObjectsFromStorageToBank) error {
+func (c Client) DeliveryInvoiceTransferObjectsFromStorageToBank(m *DeliveryInvoiceTransferObjectsFromStorageToBank) error {
 	return c.c.WriteMessage(12, 48, m)
 }
 
-func (c WizardClient) DismissTutorialTip(m *DismissTutorialTip) error {
+func (c Client) DismissTutorialTip(m *DismissTutorialTip) error {
 	return c.c.WriteMessage(12, 49, m)
 }
 
-func (c WizardClient) DoneShopping(m *DoneShopping) error {
+func (c Client) DoneShopping(m *DoneShopping) error {
 	return c.c.WriteMessage(12, 50, m)
 }
 
-func (c WizardClient) DuelSimResult(m *DuelSimResult) error {
+func (c Client) DuelSimResult(m *DuelSimResult) error {
 	return c.c.WriteMessage(12, 51, m)
 }
 
-func (c WizardClient) DyeConfirm(m *DyeConfirm) error {
+func (c Client) DyeConfirm(m *DyeConfirm) error {
 	return c.c.WriteMessage(12, 52, m)
 }
 
-func (c WizardClient) DyeRequest(m *DyeRequest) error {
+func (c Client) DyeRequest(m *DyeRequest) error {
 	return c.c.WriteMessage(12, 53, m)
 }
 
-func (c WizardClient) DyeShopOpen(m *DyeShopOpen) error {
+func (c Client) DyeShopOpen(m *DyeShopOpen) error {
 	return c.c.WriteMessage(12, 54, m)
 }
 
-func (c WizardClient) ElixirStateChange(m *ElixirStateChange) error {
+func (c Client) ElixirStateChange(m *ElixirStateChange) error {
 	return c.c.WriteMessage(12, 55, m)
 }
 
-func (c WizardClient) EncounterDialog(m *EncounterDialog) error {
+func (c Client) EncounterDialog(m *EncounterDialog) error {
 	return c.c.WriteMessage(12, 56, m)
 }
 
-func (c WizardClient) EnergyBuyRequest(m *EnergyBuyRequest) error {
+func (c Client) EnergyBuyRequest(m *EnergyBuyRequest) error {
 	return c.c.WriteMessage(12, 57, m)
 }
 
-func (c WizardClient) EnergyShopOpen(m *EnergyShopOpen) error {
+func (c Client) EnergyShopOpen(m *EnergyShopOpen) error {
 	return c.c.WriteMessage(12, 58, m)
 }
 
-func (c WizardClient) EnterMinigame(m *EnterMinigame) error {
+func (c Client) EnterMinigame(m *EnterMinigame) error {
 	return c.c.WriteMessage(12, 59, m)
 }
 
-func (c WizardClient) ExitConfirmTeleport(m *ExitConfirmTeleport) error {
+func (c Client) ExitConfirmTeleport(m *ExitConfirmTeleport) error {
 	return c.c.WriteMessage(12, 60, m)
 }
 
-func (c WizardClient) ExpandPvPSearch(m *ExpandPvPSearch) error {
+func (c Client) ExpandPvPSearch(m *ExpandPvPSearch) error {
 	return c.c.WriteMessage(12, 61, m)
 }
 
-func (c WizardClient) FreeTourneyCreditInfo(m *FreeTourneyCreditInfo) error {
+func (c Client) FreeTourneyCreditInfo(m *FreeTourneyCreditInfo) error {
 	return c.c.WriteMessage(12, 62, m)
 }
 
-func (c WizardClient) GetSnackList(m *GetSnackList) error {
+func (c Client) GetSnackList(m *GetSnackList) error {
 	return c.c.WriteMessage(12, 63, m)
 }
 
-func (c WizardClient) GetSubscriberOnlyItems(m *GetSubscriberOnlyItems) error {
+func (c Client) GetSubscriberOnlyItems(m *GetSubscriberOnlyItems) error {
 	return c.c.WriteMessage(12, 64, m)
 }
 
-func (c WizardClient) GetTimedAccessPasses(m *GetTimedAccessPasses) error {
+func (c Client) GetTimedAccessPasses(m *GetTimedAccessPasses) error {
 	return c.c.WriteMessage(12, 65, m)
 }
 
-func (c WizardClient) GoHome(m *GoHome) error {
+func (c Client) GoHome(m *GoHome) error {
 	return c.c.WriteMessage(12, 66, m)
 }
 
-func (c WizardClient) GotoDorm(m *GotoDorm) error {
+func (c Client) GotoDorm(m *GotoDorm) error {
 	return c.c.WriteMessage(12, 67, m)
 }
 
-func (c WizardClient) GotoFriendlyPlayer(m *GotoFriendlyPlayer) error {
+func (c Client) GotoFriendlyPlayer(m *GotoFriendlyPlayer) error {
 	return c.c.WriteMessage(12, 68, m)
 }
 
-func (c WizardClient) GroupQuestCredit(m *GroupQuestCredit) error {
+func (c Client) GroupQuestCredit(m *GroupQuestCredit) error {
 	return c.c.WriteMessage(12, 69, m)
 }
 
-func (c WizardClient) InteractAvailableQuest(m *InteractAvailableQuest) error {
+func (c Client) InteractAvailableQuest(m *InteractAvailableQuest) error {
 	return c.c.WriteMessage(12, 70, m)
 }
 
-func (c WizardClient) InteractCompleteGoal(m *InteractCompleteGoal) error {
+func (c Client) InteractCompleteGoal(m *InteractCompleteGoal) error {
 	return c.c.WriteMessage(12, 71, m)
 }
 
-func (c WizardClient) InteractUnderwayQuest(m *InteractUnderwayQuest) error {
+func (c Client) InteractUnderwayQuest(m *InteractUnderwayQuest) error {
 	return c.c.WriteMessage(12, 72, m)
 }
 
-func (c WizardClient) InvToBankConfirm(m *InvToBankConfirm) error {
+func (c Client) InvToBankConfirm(m *InvToBankConfirm) error {
 	return c.c.WriteMessage(12, 73, m)
 }
 
-func (c WizardClient) ItemDrop(m *ItemDrop) error {
+func (c Client) ItemDrop(m *ItemDrop) error {
 	return c.c.WriteMessage(12, 74, m)
 }
 
-func (c WizardClient) ItemLock(m *ItemLock) error {
+func (c Client) ItemLock(m *ItemLock) error {
 	return c.c.WriteMessage(12, 75, m)
 }
 
-func (c WizardClient) ItemOverflowToBank(m *ItemOverflowToBank) error {
+func (c Client) ItemOverflowToBank(m *ItemOverflowToBank) error {
 	return c.c.WriteMessage(12, 76, m)
 }
 
-func (c WizardClient) LeaderboardFriendRequest(m *LeaderboardFriendRequest) error {
+func (c Client) LeaderboardFriendRequest(m *LeaderboardFriendRequest) error {
 	return c.c.WriteMessage(12, 77, m)
 }
 
-func (c WizardClient) LeaderboardRequest(m *LeaderboardRequest) error {
+func (c Client) LeaderboardRequest(m *LeaderboardRequest) error {
 	return c.c.WriteMessage(12, 78, m)
 }
 
-func (c WizardClient) LeaderboardResponse(m *LeaderboardResponse) error {
+func (c Client) LeaderboardResponse(m *LeaderboardResponse) error {
 	return c.c.WriteMessage(12, 79, m)
 }
 
-func (c WizardClient) Leash(m *Leash) error {
+func (c Client) Leash(m *Leash) error {
 	return c.c.WriteMessage(12, 80, m)
 }
 
-func (c WizardClient) LeashOffset(m *LeashOffset) error {
+func (c Client) LeashOffset(m *LeashOffset) error {
 	return c.c.WriteMessage(12, 81, m)
 }
 
-func (c WizardClient) LeaveAdventureParty(m *LeaveAdventureParty) error {
+func (c Client) LeaveAdventureParty(m *LeaveAdventureParty) error {
 	return c.c.WriteMessage(12, 82, m)
 }
 
-func (c WizardClient) LeaveMinigame(m *LeaveMinigame) error {
+func (c Client) LeaveMinigame(m *LeaveMinigame) error {
 	return c.c.WriteMessage(12, 83, m)
 }
 
-func (c WizardClient) LeaveSigilTimerWaiting(m *LeaveSigilTimerWaiting) error {
+func (c Client) LeaveSigilTimerWaiting(m *LeaveSigilTimerWaiting) error {
 	return c.c.WriteMessage(12, 84, m)
 }
 
-func (c WizardClient) LemuriaStatus(m *LemuriaStatus) error {
+func (c Client) LemuriaStatus(m *LemuriaStatus) error {
 	return c.c.WriteMessage(12, 85, m)
 }
 
-func (c WizardClient) LevelUp(m *LevelUp) error {
+func (c Client) LevelUp(m *LevelUp) error {
 	return c.c.WriteMessage(12, 86, m)
 }
 
-func (c WizardClient) LogClientResolution(m *LogClientResolution) error {
+func (c Client) LogClientResolution(m *LogClientResolution) error {
 	return c.c.WriteMessage(12, 87, m)
 }
 
-func (c WizardClient) LogOffer(m *LogOffer) error {
+func (c Client) LogOffer(m *LogOffer) error {
 	return c.c.WriteMessage(12, 88, m)
 }
 
-func (c WizardClient) LogPatchClientPatchTime(m *LogPatchClientPatchTime) error {
+func (c Client) LogPatchClientPatchTime(m *LogPatchClientPatchTime) error {
 	return c.c.WriteMessage(12, 89, m)
 }
 
-func (c WizardClient) Loot(m *Loot) error {
+func (c Client) Loot(m *Loot) error {
 	return c.c.WriteMessage(12, 90, m)
 }
 
-func (c WizardClient) MinigameKiosk(m *MinigameKiosk) error {
+func (c Client) MinigameKiosk(m *MinigameKiosk) error {
 	return c.c.WriteMessage(12, 91, m)
 }
 
-func (c WizardClient) MinigameRewards(m *MinigameRewards) error {
+func (c Client) MinigameRewards(m *MinigameRewards) error {
 	return c.c.WriteMessage(12, 92, m)
 }
 
-func (c WizardClient) MinigameSelect(m *MinigameSelect) error {
+func (c Client) MinigameSelect(m *MinigameSelect) error {
 	return c.c.WriteMessage(12, 93, m)
 }
 
-func (c WizardClient) MinigameTimerEnd(m *MinigameTimerEnd) error {
+func (c Client) MinigameTimerEnd(m *MinigameTimerEnd) error {
 	return c.c.WriteMessage(12, 94, m)
 }
 
-func (c WizardClient) MinigameTimerStart(m *MinigameTimerStart) error {
+func (c Client) MinigameTimerStart(m *MinigameTimerStart) error {
 	return c.c.WriteMessage(12, 95, m)
 }
 
-func (c WizardClient) MoveBankToBank(m *MoveBankToBank) error {
+func (c Client) MoveBankToBank(m *MoveBankToBank) error {
 	return c.c.WriteMessage(12, 96, m)
 }
 
-func (c WizardClient) MoveBankToInv(m *MoveBankToInv) error {
+func (c Client) MoveBankToInv(m *MoveBankToInv) error {
 	return c.c.WriteMessage(12, 97, m)
 }
 
-func (c WizardClient) MoveInvToBank(m *MoveInvToBank) error {
+func (c Client) MoveInvToBank(m *MoveInvToBank) error {
 	return c.c.WriteMessage(12, 98, m)
 }
 
-func (c WizardClient) NewTitle(m *NewTitle) error {
+func (c Client) NewTitle(m *NewTitle) error {
 	return c.c.WriteMessage(12, 99, m)
 }
 
-func (c WizardClient) NotifySchoolFocus(m *NotifySchoolFocus) error {
+func (c Client) NotifySchoolFocus(m *NotifySchoolFocus) error {
 	return c.c.WriteMessage(12, 100, m)
 }
 
-func (c WizardClient) OpenBank(m *OpenBank) error {
+func (c Client) OpenBank(m *OpenBank) error {
 	return c.c.WriteMessage(12, 101, m)
 }
 
-func (c WizardClient) PaidLootCrownsBalance(m *PaidLootCrownsBalance) error {
+func (c Client) PaidLootCrownsBalance(m *PaidLootCrownsBalance) error {
 	return c.c.WriteMessage(12, 102, m)
 }
 
-func (c WizardClient) PaidLootRollError(m *PaidLootRollError) error {
+func (c Client) PaidLootRollError(m *PaidLootRollError) error {
 	return c.c.WriteMessage(12, 103, m)
 }
 
-func (c WizardClient) PaidLootRollPrompt(m *PaidLootRollPrompt) error {
+func (c Client) PaidLootRollPrompt(m *PaidLootRollPrompt) error {
 	return c.c.WriteMessage(12, 104, m)
 }
 
-func (c WizardClient) PaidLootRollResponse(m *PaidLootRollResponse) error {
+func (c Client) PaidLootRollResponse(m *PaidLootRollResponse) error {
 	return c.c.WriteMessage(12, 105, m)
 }
 
-func (c WizardClient) PaidLootRollResult(m *PaidLootRollResult) error {
+func (c Client) PaidLootRollResult(m *PaidLootRollResult) error {
 	return c.c.WriteMessage(12, 106, m)
 }
 
-func (c WizardClient) PatchingBlocked(m *PatchingBlocked) error {
+func (c Client) PatchingBlocked(m *PatchingBlocked) error {
 	return c.c.WriteMessage(12, 107, m)
 }
 
-func (c WizardClient) PCSCacheSegReqsSummaryRequest(m *PCSCacheSegReqsSummaryRequest) error {
+func (c Client) PCSCacheSegReqsSummaryRequest(m *PCSCacheSegReqsSummaryRequest) error {
 	return c.c.WriteMessage(12, 108, m)
 }
 
-func (c WizardClient) PCSListRequest(m *PCSListRequest) error {
+func (c Client) PCSListRequest(m *PCSListRequest) error {
 	return c.c.WriteMessage(12, 109, m)
 }
 
-func (c WizardClient) PCSListResponse(m *PCSListResponse) error {
+func (c Client) PCSListResponse(m *PCSListResponse) error {
 	return c.c.WriteMessage(12, 110, m)
 }
 
-func (c WizardClient) PCSPATCH(m *PCSPATCH) error {
+func (c Client) PCSPATCH(m *PCSPATCH) error {
 	return c.c.WriteMessage(12, 111, m)
 }
 
-func (c WizardClient) PCSPriceLockRequest(m *PCSPriceLockRequest) error {
+func (c Client) PCSPriceLockRequest(m *PCSPriceLockRequest) error {
 	return c.c.WriteMessage(12, 112, m)
 }
 
-func (c WizardClient) PCSPriceLockResponse(m *PCSPriceLockResponse) error {
+func (c Client) PCSPriceLockResponse(m *PCSPriceLockResponse) error {
 	return c.c.WriteMessage(12, 113, m)
 }
 
-func (c WizardClient) PCSPurchaseRequest(m *PCSPurchaseRequest) error {
+func (c Client) PCSPurchaseRequest(m *PCSPurchaseRequest) error {
 	return c.c.WriteMessage(12, 114, m)
 }
 
-func (c WizardClient) PCSPurchaseResponse(m *PCSPurchaseResponse) error {
+func (c Client) PCSPurchaseResponse(m *PCSPurchaseResponse) error {
 	return c.c.WriteMessage(12, 115, m)
 }
 
-func (c WizardClient) PCSSegDataRequest(m *PCSSegDataRequest) error {
+func (c Client) PCSSegDataRequest(m *PCSSegDataRequest) error {
 	return c.c.WriteMessage(12, 116, m)
 }
 
-func (c WizardClient) PCSSegDataResponse(m *PCSSegDataResponse) error {
+func (c Client) PCSSegDataResponse(m *PCSSegDataResponse) error {
 	return c.c.WriteMessage(12, 117, m)
 }
 
-func (c WizardClient) PCSUpdateUserWishlist(m *PCSUpdateUserWishlist) error {
+func (c Client) PCSUpdateUserWishlist(m *PCSUpdateUserWishlist) error {
 	return c.c.WriteMessage(12, 118, m)
 }
 
-func (c WizardClient) PetGameKiosk(m *PetGameKiosk) error {
+func (c Client) PetGameKiosk(m *PetGameKiosk) error {
 	return c.c.WriteMessage(12, 119, m)
 }
 
-func (c WizardClient) PetHatchCreate(m *PetHatchCreate) error {
+func (c Client) PetHatchCreate(m *PetHatchCreate) error {
 	return c.c.WriteMessage(12, 120, m)
 }
 
-func (c WizardClient) PetHatchJoinStatus(m *PetHatchJoinStatus) error {
+func (c Client) PetHatchJoinStatus(m *PetHatchJoinStatus) error {
 	return c.c.WriteMessage(12, 121, m)
 }
 
-func (c WizardClient) PetHatchReadyStatus(m *PetHatchReadyStatus) error {
+func (c Client) PetHatchReadyStatus(m *PetHatchReadyStatus) error {
 	return c.c.WriteMessage(12, 122, m)
 }
 
-func (c WizardClient) PetHatchRequest(m *PetHatchRequest) error {
+func (c Client) PetHatchRequest(m *PetHatchRequest) error {
 	return c.c.WriteMessage(12, 123, m)
 }
 
-func (c WizardClient) PetHatchResult(m *PetHatchResult) error {
+func (c Client) PetHatchResult(m *PetHatchResult) error {
 	return c.c.WriteMessage(12, 124, m)
 }
 
-func (c WizardClient) PetRenameConfirm(m *PetRenameConfirm) error {
+func (c Client) PetRenameConfirm(m *PetRenameConfirm) error {
 	return c.c.WriteMessage(12, 125, m)
 }
 
-func (c WizardClient) PetRenameRequest(m *PetRenameRequest) error {
+func (c Client) PetRenameRequest(m *PetRenameRequest) error {
 	return c.c.WriteMessage(12, 126, m)
 }
 
-func (c WizardClient) PlayerArrived(m *PlayerArrived) error {
+func (c Client) PlayerArrived(m *PlayerArrived) error {
 	return c.c.WriteMessage(12, 127, m)
 }
 
-func (c WizardClient) PlayerWizbang(m *PlayerWizbang) error {
+func (c Client) PlayerWizbang(m *PlayerWizbang) error {
 	return c.c.WriteMessage(12, 128, m)
 }
 
-func (c WizardClient) PlayMusic(m *PlayMusic) error {
+func (c Client) PlayMusic(m *PlayMusic) error {
 	return c.c.WriteMessage(12, 129, m)
 }
 
-func (c WizardClient) PotionBuyConfirm(m *PotionBuyConfirm) error {
+func (c Client) PotionBuyConfirm(m *PotionBuyConfirm) error {
 	return c.c.WriteMessage(12, 130, m)
 }
 
-func (c WizardClient) PotionBuyRequest(m *PotionBuyRequest) error {
+func (c Client) PotionBuyRequest(m *PotionBuyRequest) error {
 	return c.c.WriteMessage(12, 131, m)
 }
 
-func (c WizardClient) PotionShopOpen(m *PotionShopOpen) error {
+func (c Client) PotionShopOpen(m *PotionShopOpen) error {
 	return c.c.WriteMessage(12, 132, m)
 }
 
-func (c WizardClient) PreLeaderboard(m *PreLeaderboard) error {
+func (c Client) PreLeaderboard(m *PreLeaderboard) error {
 	return c.c.WriteMessage(12, 133, m)
 }
 
-func (c WizardClient) PremiumContent(m *PremiumContent) error {
+func (c Client) PremiumContent(m *PremiumContent) error {
 	return c.c.WriteMessage(12, 134, m)
 }
 
-func (c WizardClient) PrePvPKiosk(m *PrePvPKiosk) error {
+func (c Client) PrePvPKiosk(m *PrePvPKiosk) error {
 	return c.c.WriteMessage(12, 135, m)
 }
 
-func (c WizardClient) PvPConfirm(m *PvPConfirm) error {
+func (c Client) PvPConfirm(m *PvPConfirm) error {
 	return c.c.WriteMessage(12, 136, m)
 }
 
-func (c WizardClient) PvPConfirmTourney(m *PvPConfirmTourney) error {
+func (c Client) PvPConfirmTourney(m *PvPConfirmTourney) error {
 	return c.c.WriteMessage(12, 137, m)
 }
 
-func (c WizardClient) PvPConsumePvPTourneyCurrency(m *PvPConsumePvPTourneyCurrency) error {
+func (c Client) PvPConsumePvPTourneyCurrency(m *PvPConsumePvPTourneyCurrency) error {
 	return c.c.WriteMessage(12, 138, m)
 }
 
-func (c WizardClient) PvPIntent(m *PvPIntent) error {
+func (c Client) PvPIntent(m *PvPIntent) error {
 	return c.c.WriteMessage(12, 139, m)
 }
 
-func (c WizardClient) PvpMatchRequest(m *PvpMatchRequest) error {
+func (c Client) PvpMatchRequest(m *PvpMatchRequest) error {
 	return c.c.WriteMessage(12, 140, m)
 }
 
-func (c WizardClient) PvPQueue(m *PvPQueue) error {
+func (c Client) PvPQueue(m *PvPQueue) error {
 	return c.c.WriteMessage(12, 141, m)
 }
 
-func (c WizardClient) PvPRegisterFailed(m *PvPRegisterFailed) error {
+func (c Client) PvPRegisterFailed(m *PvPRegisterFailed) error {
 	return c.c.WriteMessage(12, 142, m)
 }
 
-func (c WizardClient) PvPUpdateRequest(m *PvPUpdateRequest) error {
+func (c Client) PvPUpdateRequest(m *PvPUpdateRequest) error {
 	return c.c.WriteMessage(12, 143, m)
 }
 
-func (c WizardClient) QuestDialog(m *QuestDialog) error {
+func (c Client) QuestDialog(m *QuestDialog) error {
 	return c.c.WriteMessage(12, 144, m)
 }
 
-func (c WizardClient) QuestFinderOption(m *QuestFinderOption) error {
+func (c Client) QuestFinderOption(m *QuestFinderOption) error {
 	return c.c.WriteMessage(12, 145, m)
 }
 
-func (c WizardClient) QuestRewards(m *QuestRewards) error {
+func (c Client) QuestRewards(m *QuestRewards) error {
 	return c.c.WriteMessage(12, 146, m)
 }
 
-func (c WizardClient) QuickSellRequestBank(m *QuickSellRequestBank) error {
+func (c Client) QuickSellRequestBank(m *QuickSellRequestBank) error {
 	return c.c.WriteMessage(12, 147, m)
 }
 
-func (c WizardClient) ReagentAdd(m *ReagentAdd) error {
+func (c Client) ReagentAdd(m *ReagentAdd) error {
 	return c.c.WriteMessage(12, 148, m)
 }
 
-func (c WizardClient) ReagentRemove(m *ReagentRemove) error {
+func (c Client) ReagentRemove(m *ReagentRemove) error {
 	return c.c.WriteMessage(12, 149, m)
 }
 
-func (c WizardClient) ReagentRemoveRequest(m *ReagentRemoveRequest) error {
+func (c Client) ReagentRemoveRequest(m *ReagentRemoveRequest) error {
 	return c.c.WriteMessage(12, 150, m)
 }
 
-func (c WizardClient) ReagentUpdate(m *ReagentUpdate) error {
+func (c Client) ReagentUpdate(m *ReagentUpdate) error {
 	return c.c.WriteMessage(12, 151, m)
 }
 
-func (c WizardClient) RecipeAdd(m *RecipeAdd) error {
+func (c Client) RecipeAdd(m *RecipeAdd) error {
 	return c.c.WriteMessage(12, 152, m)
 }
 
-func (c WizardClient) RecipeRemove(m *RecipeRemove) error {
+func (c Client) RecipeRemove(m *RecipeRemove) error {
 	return c.c.WriteMessage(12, 153, m)
 }
 
-func (c WizardClient) Registrar(m *Registrar) error {
+func (c Client) Registrar(m *Registrar) error {
 	return c.c.WriteMessage(12, 154, m)
 }
 
-func (c WizardClient) RemoveSpellFromBook(m *RemoveSpellFromBook) error {
+func (c Client) RemoveSpellFromBook(m *RemoveSpellFromBook) error {
 	return c.c.WriteMessage(12, 155, m)
 }
 
-func (c WizardClient) RemoveSpellFromDeck(m *RemoveSpellFromDeck) error {
+func (c Client) RemoveSpellFromDeck(m *RemoveSpellFromDeck) error {
 	return c.c.WriteMessage(12, 156, m)
 }
 
-func (c WizardClient) RemoveTreasureSpellFromBook(m *RemoveTreasureSpellFromBook) error {
+func (c Client) RemoveTreasureSpellFromBook(m *RemoveTreasureSpellFromBook) error {
 	return c.c.WriteMessage(12, 157, m)
 }
 
-func (c WizardClient) RemoveTreasureSpellFromDeck(m *RemoveTreasureSpellFromDeck) error {
+func (c Client) RemoveTreasureSpellFromDeck(m *RemoveTreasureSpellFromDeck) error {
 	return c.c.WriteMessage(12, 158, m)
 }
 
-func (c WizardClient) RemoveTreasureSpellFromVault(m *RemoveTreasureSpellFromVault) error {
+func (c Client) RemoveTreasureSpellFromVault(m *RemoveTreasureSpellFromVault) error {
 	return c.c.WriteMessage(12, 159, m)
 }
 
-func (c WizardClient) RentalUpdate(m *RentalUpdate) error {
+func (c Client) RentalUpdate(m *RentalUpdate) error {
 	return c.c.WriteMessage(12, 160, m)
 }
 
-func (c WizardClient) RequestActiveMapQuests(m *RequestActiveMapQuests) error {
+func (c Client) RequestActiveMapQuests(m *RequestActiveMapQuests) error {
 	return c.c.WriteMessage(12, 161, m)
 }
 
-func (c WizardClient) RequestAdventureParty(m *RequestAdventureParty) error {
+func (c Client) RequestAdventureParty(m *RequestAdventureParty) error {
 	return c.c.WriteMessage(12, 162, m)
 }
 
-func (c WizardClient) RequestCombatSigils(m *RequestCombatSigils) error {
+func (c Client) RequestCombatSigils(m *RequestCombatSigils) error {
 	return c.c.WriteMessage(12, 163, m)
 }
 
-func (c WizardClient) RequestCreateAdventureParty(m *RequestCreateAdventureParty) error {
+func (c Client) RequestCreateAdventureParty(m *RequestCreateAdventureParty) error {
 	return c.c.WriteMessage(12, 164, m)
 }
 
-func (c WizardClient) RequestFriendFinderCode(m *RequestFriendFinderCode) error {
+func (c Client) RequestFriendFinderCode(m *RequestFriendFinderCode) error {
 	return c.c.WriteMessage(12, 165, m)
 }
 
-func (c WizardClient) RequestFriendlyPlayerQuest(m *RequestFriendlyPlayerQuest) error {
+func (c Client) RequestFriendlyPlayerQuest(m *RequestFriendlyPlayerQuest) error {
 	return c.c.WriteMessage(12, 166, m)
 }
 
-func (c WizardClient) RequestFriendlyPlayerQuest2(m *RequestFriendlyPlayerQuest2) error {
+func (c Client) RequestFriendlyPlayerQuest2(m *RequestFriendlyPlayerQuest2) error {
 	return c.c.WriteMessage(12, 167, m)
 }
 
-func (c WizardClient) RequestFriendlyPlayers(m *RequestFriendlyPlayers) error {
+func (c Client) RequestFriendlyPlayers(m *RequestFriendlyPlayers) error {
 	return c.c.WriteMessage(12, 168, m)
 }
 
-func (c WizardClient) RequestHouseTeleport(m *RequestHouseTeleport) error {
+func (c Client) RequestHouseTeleport(m *RequestHouseTeleport) error {
 	return c.c.WriteMessage(12, 169, m)
 }
 
-func (c WizardClient) RequestJoinAdventureParty(m *RequestJoinAdventureParty) error {
+func (c Client) RequestJoinAdventureParty(m *RequestJoinAdventureParty) error {
 	return c.c.WriteMessage(12, 170, m)
 }
 
-func (c WizardClient) RequestLeaveAdventureParty(m *RequestLeaveAdventureParty) error {
+func (c Client) RequestLeaveAdventureParty(m *RequestLeaveAdventureParty) error {
 	return c.c.WriteMessage(12, 171, m)
 }
 
-func (c WizardClient) RequestNextClosestQuest(m *RequestNextClosestQuest) error {
+func (c Client) RequestNextClosestQuest(m *RequestNextClosestQuest) error {
 	return c.c.WriteMessage(12, 172, m)
 }
 
-func (c WizardClient) RequestPrivacyOptions(m *RequestPrivacyOptions) error {
+func (c Client) RequestPrivacyOptions(m *RequestPrivacyOptions) error {
 	return c.c.WriteMessage(12, 173, m)
 }
 
-func (c WizardClient) RequestPvPActor(m *RequestPvPActor) error {
+func (c Client) RequestPvPActor(m *RequestPvPActor) error {
 	return c.c.WriteMessage(12, 174, m)
 }
 
-func (c WizardClient) RequestPvPKiosk(m *RequestPvPKiosk) error {
+func (c Client) RequestPvPKiosk(m *RequestPvPKiosk) error {
 	return c.c.WriteMessage(12, 175, m)
 }
 
-func (c WizardClient) RequestQuestDialog(m *RequestQuestDialog) error {
+func (c Client) RequestQuestDialog(m *RequestQuestDialog) error {
 	return c.c.WriteMessage(12, 176, m)
 }
 
-func (c WizardClient) RequestQuickSell(m *RequestQuickSell) error {
+func (c Client) RequestQuickSell(m *RequestQuickSell) error {
 	return c.c.WriteMessage(12, 177, m)
 }
 
-func (c WizardClient) RequestTeamUpInfo(m *RequestTeamUpInfo) error {
+func (c Client) RequestTeamUpInfo(m *RequestTeamUpInfo) error {
 	return c.c.WriteMessage(12, 178, m)
 }
 
-func (c WizardClient) RequestToggleLockItem(m *RequestToggleLockItem) error {
+func (c Client) RequestToggleLockItem(m *RequestToggleLockItem) error {
 	return c.c.WriteMessage(12, 179, m)
 }
 
-func (c WizardClient) RequestVolunteerInfo(m *RequestVolunteerInfo) error {
+func (c Client) RequestVolunteerInfo(m *RequestVolunteerInfo) error {
 	return c.c.WriteMessage(12, 180, m)
 }
 
-func (c WizardClient) RespecConfirm(m *RespecConfirm) error {
+func (c Client) RespecConfirm(m *RespecConfirm) error {
 	return c.c.WriteMessage(12, 181, m)
 }
 
-func (c WizardClient) ResponsePrivacyOptions(m *ResponsePrivacyOptions) error {
+func (c Client) ResponsePrivacyOptions(m *ResponsePrivacyOptions) error {
 	return c.c.WriteMessage(12, 182, m)
 }
 
-func (c WizardClient) RideMount(m *RideMount) error {
+func (c Client) RideMount(m *RideMount) error {
 	return c.c.WriteMessage(12, 183, m)
 }
 
-func (c WizardClient) SeamstressOpen(m *SeamstressOpen) error {
+func (c Client) SeamstressOpen(m *SeamstressOpen) error {
 	return c.c.WriteMessage(12, 184, m)
 }
 
-func (c WizardClient) SendFriendFinderCode(m *SendFriendFinderCode) error {
+func (c Client) SendFriendFinderCode(m *SendFriendFinderCode) error {
 	return c.c.WriteMessage(12, 185, m)
 }
 
-func (c WizardClient) SendTalentDataCSR(m *SendTalentDataCSR) error {
+func (c Client) SendTalentDataCSR(m *SendTalentDataCSR) error {
 	return c.c.WriteMessage(12, 186, m)
 }
 
-func (c WizardClient) SetDeckName(m *SetDeckName) error {
+func (c Client) SetDeckName(m *SetDeckName) error {
 	return c.c.WriteMessage(12, 187, m)
 }
 
-func (c WizardClient) DontAllowFriendFinderCodes(m *DontAllowFriendFinderCodes) error {
+func (c Client) DontAllowFriendFinderCodes(m *DontAllowFriendFinderCodes) error {
 	return c.c.WriteMessage(12, 188, m)
 }
 
-func (c WizardClient) SetFriendlyPlayer(m *SetFriendlyPlayer) error {
+func (c Client) SetFriendlyPlayer(m *SetFriendlyPlayer) error {
 	return c.c.WriteMessage(12, 189, m)
 }
 
-func (c WizardClient) SetRentalTimer(m *SetRentalTimer) error {
+func (c Client) SetRentalTimer(m *SetRentalTimer) error {
 	return c.c.WriteMessage(12, 190, m)
 }
 
-func (c WizardClient) SetVolunteerFlag(m *SetVolunteerFlag) error {
+func (c Client) SetVolunteerFlag(m *SetVolunteerFlag) error {
 	return c.c.WriteMessage(12, 191, m)
 }
 
-func (c WizardClient) SharedBankDeleteReagentOrPetSnack(m *SharedBankDeleteReagentOrPetSnack) error {
+func (c Client) SharedBankDeleteReagentOrPetSnack(m *SharedBankDeleteReagentOrPetSnack) error {
 	return c.c.WriteMessage(12, 192, m)
 }
 
-func (c WizardClient) SharedBankDeleteReagentOrPetSnackConfirm(m *SharedBankDeleteReagentOrPetSnackConfirm) error {
+func (c Client) SharedBankDeleteReagentOrPetSnackConfirm(m *SharedBankDeleteReagentOrPetSnackConfirm) error {
 	return c.c.WriteMessage(12, 193, m)
 }
 
-func (c WizardClient) ShopBuyConfirm(m *ShopBuyConfirm) error {
+func (c Client) ShopBuyConfirm(m *ShopBuyConfirm) error {
 	return c.c.WriteMessage(12, 194, m)
 }
 
-func (c WizardClient) ShopBuyRequest(m *ShopBuyRequest) error {
+func (c Client) ShopBuyRequest(m *ShopBuyRequest) error {
 	return c.c.WriteMessage(12, 195, m)
 }
 
-func (c WizardClient) ShopList(m *ShopList) error {
+func (c Client) ShopList(m *ShopList) error {
 	return c.c.WriteMessage(12, 196, m)
 }
 
-func (c WizardClient) ShopSellConfirm(m *ShopSellConfirm) error {
+func (c Client) ShopSellConfirm(m *ShopSellConfirm) error {
 	return c.c.WriteMessage(12, 197, m)
 }
 
-func (c WizardClient) ShopSellRequest(m *ShopSellRequest) error {
+func (c Client) ShopSellRequest(m *ShopSellRequest) error {
 	return c.c.WriteMessage(12, 198, m)
 }
 
-func (c WizardClient) ShowcasedStoreItemInfo(m *ShowcasedStoreItemInfo) error {
+func (c Client) ShowcasedStoreItemInfo(m *ShowcasedStoreItemInfo) error {
 	return c.c.WriteMessage(12, 199, m)
 }
 
-func (c WizardClient) ShowClientMessageBox(m *ShowClientMessageBox) error {
+func (c Client) ShowClientMessageBox(m *ShowClientMessageBox) error {
 	return c.c.WriteMessage(12, 200, m)
 }
 
-func (c WizardClient) ShowGUI(m *ShowGUI) error {
+func (c Client) ShowGUI(m *ShowGUI) error {
 	return c.c.WriteMessage(12, 201, m)
 }
 
-func (c WizardClient) SnackList(m *SnackList) error {
+func (c Client) SnackList(m *SnackList) error {
 	return c.c.WriteMessage(12, 202, m)
 }
 
-func (c WizardClient) SpellList(m *SpellList) error {
+func (c Client) SpellList(m *SpellList) error {
 	return c.c.WriteMessage(12, 203, m)
 }
 
-func (c WizardClient) SpellTrainComplete(m *SpellTrainComplete) error {
+func (c Client) SpellTrainComplete(m *SpellTrainComplete) error {
 	return c.c.WriteMessage(12, 204, m)
 }
 
-func (c WizardClient) StartRide(m *StartRide) error {
+func (c Client) StartRide(m *StartRide) error {
 	return c.c.WriteMessage(12, 205, m)
 }
 
-func (c WizardClient) StitchItems(m *StitchItems) error {
+func (c Client) StitchItems(m *StitchItems) error {
 	return c.c.WriteMessage(12, 206, m)
 }
 
-func (c WizardClient) StitchItemsConfirm(m *StitchItemsConfirm) error {
+func (c Client) StitchItemsConfirm(m *StitchItemsConfirm) error {
 	return c.c.WriteMessage(12, 207, m)
 }
 
-func (c WizardClient) StorageClientAdd(m *StorageClientAdd) error {
+func (c Client) StorageClientAdd(m *StorageClientAdd) error {
 	return c.c.WriteMessage(12, 208, m)
 }
 
-func (c WizardClient) StorageClientRemove(m *StorageClientRemove) error {
+func (c Client) StorageClientRemove(m *StorageClientRemove) error {
 	return c.c.WriteMessage(12, 209, m)
 }
 
-func (c WizardClient) SubmitCombatSigils(m *SubmitCombatSigils) error {
+func (c Client) SubmitCombatSigils(m *SubmitCombatSigils) error {
 	return c.c.WriteMessage(12, 210, m)
 }
 
-func (c WizardClient) SubscriberOnlyItems(m *SubscriberOnlyItems) error {
+func (c Client) SubscriberOnlyItems(m *SubscriberOnlyItems) error {
 	return c.c.WriteMessage(12, 211, m)
 }
 
-func (c WizardClient) TimedAccessPasses(m *TimedAccessPasses) error {
+func (c Client) TimedAccessPasses(m *TimedAccessPasses) error {
 	return c.c.WriteMessage(12, 212, m)
 }
 
-func (c WizardClient) TradeChangeItem(m *TradeChangeItem) error {
+func (c Client) TradeChangeItem(m *TradeChangeItem) error {
 	return c.c.WriteMessage(12, 213, m)
 }
 
-func (c WizardClient) TradeChangeMoney(m *TradeChangeMoney) error {
+func (c Client) TradeChangeMoney(m *TradeChangeMoney) error {
 	return c.c.WriteMessage(12, 214, m)
 }
 
-func (c WizardClient) TradeCreate(m *TradeCreate) error {
+func (c Client) TradeCreate(m *TradeCreate) error {
 	return c.c.WriteMessage(12, 215, m)
 }
 
-func (c WizardClient) TradeJoinStatus(m *TradeJoinStatus) error {
+func (c Client) TradeJoinStatus(m *TradeJoinStatus) error {
 	return c.c.WriteMessage(12, 216, m)
 }
 
-func (c WizardClient) TradeReadyStatus(m *TradeReadyStatus) error {
+func (c Client) TradeReadyStatus(m *TradeReadyStatus) error {
 	return c.c.WriteMessage(12, 217, m)
 }
 
-func (c WizardClient) TradeRequest(m *TradeRequest) error {
+func (c Client) TradeRequest(m *TradeRequest) error {
 	return c.c.WriteMessage(12, 218, m)
 }
 
-func (c WizardClient) TradeResult(m *TradeResult) error {
+func (c Client) TradeResult(m *TradeResult) error {
 	return c.c.WriteMessage(12, 219, m)
 }
 
-func (c WizardClient) Train(m *Train) error {
+func (c Client) Train(m *Train) error {
 	return c.c.WriteMessage(12, 220, m)
 }
 
-func (c WizardClient) TreasureBuy(m *TreasureBuy) error {
+func (c Client) TreasureBuy(m *TreasureBuy) error {
 	return c.c.WriteMessage(12, 221, m)
 }
 
-func (c WizardClient) TreasureBuyConfirm(m *TreasureBuyConfirm) error {
+func (c Client) TreasureBuyConfirm(m *TreasureBuyConfirm) error {
 	return c.c.WriteMessage(12, 222, m)
 }
 
-func (c WizardClient) TreasureShopList(m *TreasureShopList) error {
+func (c Client) TreasureShopList(m *TreasureShopList) error {
 	return c.c.WriteMessage(12, 223, m)
 }
 
-func (c WizardClient) TutorialEvent(m *TutorialEvent) error {
+func (c Client) TutorialEvent(m *TutorialEvent) error {
 	return c.c.WriteMessage(12, 224, m)
 }
 
-func (c WizardClient) UnstitchItems(m *UnstitchItems) error {
+func (c Client) UnstitchItems(m *UnstitchItems) error {
 	return c.c.WriteMessage(12, 225, m)
 }
 
-func (c WizardClient) UnstitchOpen(m *UnstitchOpen) error {
+func (c Client) UnstitchOpen(m *UnstitchOpen) error {
 	return c.c.WriteMessage(12, 226, m)
 }
 
-func (c WizardClient) UpdateArenaPoints(m *UpdateArenaPoints) error {
+func (c Client) UpdateArenaPoints(m *UpdateArenaPoints) error {
 	return c.c.WriteMessage(12, 227, m)
 }
 
-func (c WizardClient) UpdateFriendlyPlayerWorlds(m *UpdateFriendlyPlayerWorlds) error {
+func (c Client) UpdateFriendlyPlayerWorlds(m *UpdateFriendlyPlayerWorlds) error {
 	return c.c.WriteMessage(12, 228, m)
 }
 
-func (c WizardClient) UpdateFriendlyWorld(m *UpdateFriendlyWorld) error {
+func (c Client) UpdateFriendlyWorld(m *UpdateFriendlyWorld) error {
 	return c.c.WriteMessage(12, 229, m)
 }
 
-func (c WizardClient) UpdateGender(m *UpdateGender) error {
+func (c Client) UpdateGender(m *UpdateGender) error {
 	return c.c.WriteMessage(12, 230, m)
 }
 
-func (c WizardClient) UpdateGold(m *UpdateGold) error {
+func (c Client) UpdateGold(m *UpdateGold) error {
 	return c.c.WriteMessage(12, 231, m)
 }
 
-func (c WizardClient) UpdateHealth(m *UpdateHealth) error {
+func (c Client) UpdateHealth(m *UpdateHealth) error {
 	return c.c.WriteMessage(12, 232, m)
 }
 
-func (c WizardClient) UpdateMana(m *UpdateMana) error {
+func (c Client) UpdateMana(m *UpdateMana) error {
 	return c.c.WriteMessage(12, 233, m)
 }
 
-func (c WizardClient) UpdatePotions(m *UpdatePotions) error {
+func (c Client) UpdatePotions(m *UpdatePotions) error {
 	return c.c.WriteMessage(12, 234, m)
 }
 
-func (c WizardClient) UpdatePowerPip(m *UpdatePowerPip) error {
+func (c Client) UpdatePowerPip(m *UpdatePowerPip) error {
 	return c.c.WriteMessage(12, 235, m)
 }
 
-func (c WizardClient) UpdatePrivacyOptions(m *UpdatePrivacyOptions) error {
+func (c Client) UpdatePrivacyOptions(m *UpdatePrivacyOptions) error {
 	return c.c.WriteMessage(12, 236, m)
 }
 
-func (c WizardClient) UpdateSchool(m *UpdateSchool) error {
+func (c Client) UpdateSchool(m *UpdateSchool) error {
 	return c.c.WriteMessage(12, 237, m)
 }
 
-func (c WizardClient) UpdateShadowPipRating(m *UpdateShadowPipRating) error {
+func (c Client) UpdateShadowPipRating(m *UpdateShadowPipRating) error {
 	return c.c.WriteMessage(12, 238, m)
 }
 
-func (c WizardClient) UpdateTraining(m *UpdateTraining) error {
+func (c Client) UpdateTraining(m *UpdateTraining) error {
 	return c.c.WriteMessage(12, 239, m)
 }
 
-func (c WizardClient) UpdateVolunteerInfo(m *UpdateVolunteerInfo) error {
+func (c Client) UpdateVolunteerInfo(m *UpdateVolunteerInfo) error {
 	return c.c.WriteMessage(12, 240, m)
 }
 
-func (c WizardClient) UpdateXP(m *UpdateXP) error {
+func (c Client) UpdateXP(m *UpdateXP) error {
 	return c.c.WriteMessage(12, 241, m)
 }
 
-func (c WizardClient) UseFriendFinderCode(m *UseFriendFinderCode) error {
+func (c Client) UseFriendFinderCode(m *UseFriendFinderCode) error {
 	return c.c.WriteMessage(12, 242, m)
 }
 
-func (c WizardClient) UseFriendFinderCodeResponse(m *UseFriendFinderCodeResponse) error {
+func (c Client) UseFriendFinderCodeResponse(m *UseFriendFinderCodeResponse) error {
 	return c.c.WriteMessage(12, 243, m)
 }
 
-func (c WizardClient) UsePotion(m *UsePotion) error {
+func (c Client) UsePotion(m *UsePotion) error {
 	return c.c.WriteMessage(12, 244, m)
 }
 
-func (c WizardClient) UseRecipe(m *UseRecipe) error {
+func (c Client) UseRecipe(m *UseRecipe) error {
 	return c.c.WriteMessage(12, 245, m)
 }
 
-func (c WizardClient) VolunteerRequest(m *VolunteerRequest) error {
+func (c Client) VolunteerRequest(m *VolunteerRequest) error {
 	return c.c.WriteMessage(12, 246, m)
 }
 
-func (c WizardClient) VolunteerTeamHelpComplete(m *VolunteerTeamHelpComplete) error {
+func (c Client) VolunteerTeamHelpComplete(m *VolunteerTeamHelpComplete) error {
 	return c.c.WriteMessage(12, 247, m)
 }
 
-func (c WizardClient) VolunteerTeamHelpJoin(m *VolunteerTeamHelpJoin) error {
+func (c Client) VolunteerTeamHelpJoin(m *VolunteerTeamHelpJoin) error {
 	return c.c.WriteMessage(12, 248, m)
 }
 
-func (c WizardClient) WizGameStats(m *WizGameStats) error {
+func (c Client) WizGameStats(m *WizGameStats) error {
 	return c.c.WriteMessage(12, 249, m)
 }
 
-func (c WizardClient) WizInventoryClientAdd(m *WizInventoryClientAdd) error {
+func (c Client) WizInventoryClientAdd(m *WizInventoryClientAdd) error {
 	return c.c.WriteMessage(12, 250, m)
 }
 
-func (c WizardClient) WizInventoryClientRemove(m *WizInventoryClientRemove) error {
+func (c Client) WizInventoryClientRemove(m *WizInventoryClientRemove) error {
 	return c.c.WriteMessage(12, 251, m)
 }
 
-func (c WizardClient) WorldTeleportList(m *WorldTeleportList) error {
+func (c Client) WorldTeleportList(m *WorldTeleportList) error {
 	return c.c.WriteMessage(12, 252, m)
 }
 
-func (c WizardClient) WorldTeleportRequest(m *WorldTeleportRequest) error {
+func (c Client) WorldTeleportRequest(m *WorldTeleportRequest) error {
 	return c.c.WriteMessage(12, 253, m)
 }
 
+type Service struct {
+	service
+}
+
+type Client struct {
+	c *proto.Client
+}
 type AcceptQuestBogus struct {
 	QuestName string
 	MobileID  uint64
@@ -1809,10 +1807,7 @@ type AcceptQuestBogus struct {
 
 func (s *AcceptQuestBogus) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 26+len(s.QuestName)))
-	binary.Write(b, binary.LittleEndian, s.MobileID)
-	writeString_12(b, s.QuestName)
-	binary.Write(b, binary.LittleEndian, s.QuestID)
-	binary.Write(b, binary.LittleEndian, s.GoalID)
+	binary.Write(b, binary.LittleEndian, s.QuestName)
 	return b.Bytes()
 }
 
@@ -1822,7 +1817,7 @@ func (s *AcceptQuestBogus) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.MobileID); err != nil {
 		return err
 	}
-	if s.QuestName, err = readString_12(b); err != nil {
+	if s.QuestName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.QuestID); err != nil {
@@ -1842,9 +1837,6 @@ type AccessPassBuyConfirm struct {
 
 func (s *AccessPassBuyConfirm) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6))
-	binary.Write(b, binary.LittleEndian, s.Failure)
-	binary.Write(b, binary.LittleEndian, s.WebFailure)
-	binary.Write(b, binary.LittleEndian, s.Credits)
 	return b.Bytes()
 }
 
@@ -1870,15 +1862,14 @@ type AccessPassBuyRequest struct {
 
 func (s *AccessPassBuyRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.AccessPass)))
-	writeString_12(b, s.AccessPass)
-	binary.Write(b, binary.LittleEndian, s.TransactionID)
+	binary.Write(b, binary.LittleEndian, s.AccessPass)
 	return b.Bytes()
 }
 
 func (s *AccessPassBuyRequest) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.AccessPass, err = readString_12(b); err != nil {
+	if s.AccessPass, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.TransactionID); err != nil {
@@ -1894,8 +1885,6 @@ type AccessPassDeclined struct {
 
 func (s *AccessPassDeclined) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.TempQuestGID)
-	binary.Write(b, binary.LittleEndian, s.PreReqComplete)
 	return b.Bytes()
 }
 
@@ -1922,34 +1911,32 @@ type AccessPassInfoRequest struct {
 
 func (s *AccessPassInfoRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24+len(s.AccessPass)+len(s.TargetLoc)+len(s.ZoneName)+len(s.ClusterName)))
-	writeString_12(b, s.AccessPass)
-	writeString_12(b, s.TargetLoc)
-	binary.Write(b, binary.LittleEndian, s.ZoneID)
-	writeString_12(b, s.ZoneName)
-	binary.Write(b, binary.LittleEndian, s.ClusterID)
-	writeString_12(b, s.ClusterName)
+	binary.Write(b, binary.LittleEndian, s.AccessPass)
+	binary.Write(b, binary.LittleEndian, s.TargetLoc)
+	binary.Write(b, binary.LittleEndian, s.ZoneName)
+	binary.Write(b, binary.LittleEndian, s.ClusterName)
 	return b.Bytes()
 }
 
 func (s *AccessPassInfoRequest) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.AccessPass, err = readString_12(b); err != nil {
+	if s.AccessPass, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.TargetLoc, err = readString_12(b); err != nil {
+	if s.TargetLoc, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ZoneID); err != nil {
 		return err
 	}
-	if s.ZoneName, err = readString_12(b); err != nil {
+	if s.ZoneName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ClusterID); err != nil {
 		return err
 	}
-	if s.ClusterName, err = readString_12(b); err != nil {
+	if s.ClusterName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -1966,22 +1953,18 @@ type AccessPassOffer struct {
 
 func (s *AccessPassOffer) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 18+len(s.Data)+len(s.Sample)))
-	writeString_12(b, s.Data)
-	writeString_12(b, s.Sample)
-	binary.Write(b, binary.LittleEndian, s.TransactionID)
-	binary.Write(b, binary.LittleEndian, s.TotalCrowns)
-	binary.Write(b, binary.LittleEndian, s.WebFailure)
-	binary.Write(b, binary.LittleEndian, s.Failure)
+	binary.Write(b, binary.LittleEndian, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Sample)
 	return b.Bytes()
 }
 
 func (s *AccessPassOffer) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Sample, err = readString_12(b); err != nil {
+	if s.Sample, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.TransactionID); err != nil {
@@ -2012,42 +1995,40 @@ type AccessPassRejected struct {
 
 func (s *AccessPassRejected) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 28+len(s.AccessPass)+len(s.RequestedZoneDisplayName)+len(s.PayToPlayStyle)+len(s.TargetLoc)+len(s.ZoneName)+len(s.ClusterName)))
-	writeString_12(b, s.AccessPass)
-	writeString_12(b, s.RequestedZoneDisplayName)
-	writeString_12(b, s.PayToPlayStyle)
-	writeString_12(b, s.TargetLoc)
-	binary.Write(b, binary.LittleEndian, s.ZoneID)
-	writeString_12(b, s.ZoneName)
-	binary.Write(b, binary.LittleEndian, s.ClusterID)
-	writeString_12(b, s.ClusterName)
+	binary.Write(b, binary.LittleEndian, s.AccessPass)
+	binary.Write(b, binary.LittleEndian, s.RequestedZoneDisplayName)
+	binary.Write(b, binary.LittleEndian, s.PayToPlayStyle)
+	binary.Write(b, binary.LittleEndian, s.TargetLoc)
+	binary.Write(b, binary.LittleEndian, s.ZoneName)
+	binary.Write(b, binary.LittleEndian, s.ClusterName)
 	return b.Bytes()
 }
 
 func (s *AccessPassRejected) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.AccessPass, err = readString_12(b); err != nil {
+	if s.AccessPass, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.RequestedZoneDisplayName, err = readString_12(b); err != nil {
+	if s.RequestedZoneDisplayName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.PayToPlayStyle, err = readString_12(b); err != nil {
+	if s.PayToPlayStyle, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.TargetLoc, err = readString_12(b); err != nil {
+	if s.TargetLoc, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ZoneID); err != nil {
 		return err
 	}
-	if s.ZoneName, err = readString_12(b); err != nil {
+	if s.ZoneName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ClusterID); err != nil {
 		return err
 	}
-	if s.ClusterName, err = readString_12(b); err != nil {
+	if s.ClusterName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2070,18 +2051,12 @@ type ActorDialog struct {
 
 func (s *ActorDialog) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 39+len(s.CompletionType)+len(s.ActorDialog)+len(s.Persona)+len(s.PersonaName)+len(s.PersonaIcon)+len(s.DefaultDialogAnimation)))
-	binary.Write(b, binary.LittleEndian, s.MobileID)
-	binary.Write(b, binary.LittleEndian, s.QuestID)
-	binary.Write(b, binary.LittleEndian, s.GoalID)
-	writeString_12(b, s.CompletionType)
-	writeString_12(b, s.ActorDialog)
-	writeString_12(b, s.Persona)
-	writeString_12(b, s.PersonaName)
-	writeString_12(b, s.PersonaIcon)
-	binary.Write(b, binary.LittleEndian, s.RangeCheck)
-	binary.Write(b, binary.LittleEndian, s.IsEncounter)
-	writeString_12(b, s.DefaultDialogAnimation)
-	binary.Write(b, binary.LittleEndian, s.IsYesNo)
+	binary.Write(b, binary.LittleEndian, s.CompletionType)
+	binary.Write(b, binary.LittleEndian, s.ActorDialog)
+	binary.Write(b, binary.LittleEndian, s.Persona)
+	binary.Write(b, binary.LittleEndian, s.PersonaName)
+	binary.Write(b, binary.LittleEndian, s.PersonaIcon)
+	binary.Write(b, binary.LittleEndian, s.DefaultDialogAnimation)
 	return b.Bytes()
 }
 
@@ -2097,19 +2072,19 @@ func (s *ActorDialog) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GoalID); err != nil {
 		return err
 	}
-	if s.CompletionType, err = readString_12(b); err != nil {
+	if s.CompletionType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.ActorDialog, err = readString_12(b); err != nil {
+	if s.ActorDialog, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Persona, err = readString_12(b); err != nil {
+	if s.Persona, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.PersonaName, err = readString_12(b); err != nil {
+	if s.PersonaName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.PersonaIcon, err = readString_12(b); err != nil {
+	if s.PersonaIcon, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.RangeCheck); err != nil {
@@ -2118,7 +2093,7 @@ func (s *ActorDialog) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.IsEncounter); err != nil {
 		return err
 	}
-	if s.DefaultDialogAnimation, err = readString_12(b); err != nil {
+	if s.DefaultDialogAnimation, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.IsYesNo); err != nil {
@@ -2135,9 +2110,7 @@ type AddQuestFinder struct {
 
 func (s *AddQuestFinder) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 18+len(s.NPCList)))
-	binary.Write(b, binary.LittleEndian, s.QuestID)
-	binary.Write(b, binary.LittleEndian, s.GoalID)
-	writeString_12(b, s.NPCList)
+	binary.Write(b, binary.LittleEndian, s.NPCList)
 	return b.Bytes()
 }
 
@@ -2150,7 +2123,7 @@ func (s *AddQuestFinder) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GoalID); err != nil {
 		return err
 	}
-	if s.NPCList, err = readString_12(b); err != nil {
+	if s.NPCList, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2162,7 +2135,6 @@ type AddSpellToBook struct {
 
 func (s *AddSpellToBook) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.SpellID)
 	return b.Bytes()
 }
 
@@ -2183,9 +2155,6 @@ type AddSpellToDeck struct {
 
 func (s *AddSpellToDeck) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 13))
-	binary.Write(b, binary.LittleEndian, s.SpellID)
-	binary.Write(b, binary.LittleEndian, s.DeckID)
-	binary.Write(b, binary.LittleEndian, s.Success)
 	return b.Bytes()
 }
 
@@ -2211,8 +2180,6 @@ type AddTreasureSpellToBook struct {
 
 func (s *AddTreasureSpellToBook) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.SpellID)
-	binary.Write(b, binary.LittleEndian, s.EnchantmentID)
 	return b.Bytes()
 }
 
@@ -2238,11 +2205,6 @@ type AddTreasureSpellToDeck struct {
 
 func (s *AddTreasureSpellToDeck) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 18))
-	binary.Write(b, binary.LittleEndian, s.SpellID)
-	binary.Write(b, binary.LittleEndian, s.EnchantmentID)
-	binary.Write(b, binary.LittleEndian, s.DeckID)
-	binary.Write(b, binary.LittleEndian, s.NewSpell)
-	binary.Write(b, binary.LittleEndian, s.Success)
 	return b.Bytes()
 }
 
@@ -2279,13 +2241,7 @@ type AdventurePartyMessage struct {
 
 func (s *AdventurePartyMessage) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 31+len(s.PlayerName)))
-	binary.Write(b, binary.LittleEndian, s.PlayerGID)
-	binary.Write(b, binary.LittleEndian, s.PartyGID)
-	binary.Write(b, binary.LittleEndian, s.Status)
-	writeString_12(b, s.PlayerName)
-	binary.Write(b, binary.LittleEndian, s.PartyName)
-	binary.Write(b, binary.LittleEndian, s.PartyNameLocale)
-	binary.Write(b, binary.LittleEndian, s.Guild)
+	binary.Write(b, binary.LittleEndian, s.PlayerName)
 	return b.Bytes()
 }
 
@@ -2301,7 +2257,7 @@ func (s *AdventurePartyMessage) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Status); err != nil {
 		return err
 	}
-	if s.PlayerName, err = readString_12(b); err != nil {
+	if s.PlayerName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PartyName); err != nil {
@@ -2327,12 +2283,6 @@ type Aggro struct {
 
 func (s *Aggro) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 32))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.LocX)
-	binary.Write(b, binary.LittleEndian, s.LocY)
-	binary.Write(b, binary.LittleEndian, s.LocZ)
-	binary.Write(b, binary.LittleEndian, s.Yaw)
-	binary.Write(b, binary.LittleEndian, s.SigilGID)
 	return b.Bytes()
 }
 
@@ -2366,14 +2316,14 @@ type AlchemyStation struct {
 
 func (s *AlchemyStation) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.AllowedRecipes)))
-	writeString_12(b, s.AllowedRecipes)
+	binary.Write(b, binary.LittleEndian, s.AllowedRecipes)
 	return b.Bytes()
 }
 
 func (s *AlchemyStation) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.AllowedRecipes, err = readString_12(b); err != nil {
+	if s.AllowedRecipes, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2385,7 +2335,6 @@ type ArenaError struct {
 
 func (s *ArenaError) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.Error)
 	return b.Bytes()
 }
 
@@ -2405,8 +2354,7 @@ type AuctionHouseContents struct {
 
 func (s *AuctionHouseContents) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Contents)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_12(b, s.Contents)
+	binary.Write(b, binary.LittleEndian, s.Contents)
 	return b.Bytes()
 }
 
@@ -2416,7 +2364,7 @@ func (s *AuctionHouseContents) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.Contents, err = readString_12(b); err != nil {
+	if s.Contents, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2431,10 +2379,6 @@ type AuctionHouseMoreAcknowledgement struct {
 
 func (s *AuctionHouseMoreAcknowledgement) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 17))
-	binary.Write(b, binary.LittleEndian, s.ItemTemplateID)
-	binary.Write(b, binary.LittleEndian, s.IsSell)
-	binary.Write(b, binary.LittleEndian, s.TotalPrice)
-	binary.Write(b, binary.LittleEndian, s.QuantityPurchased)
 	return b.Bytes()
 }
 
@@ -2474,19 +2418,6 @@ type AuctionHouseRequest struct {
 
 func (s *AuctionHouseRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 55))
-	binary.Write(b, binary.LittleEndian, s.Command)
-	binary.Write(b, binary.LittleEndian, s.NpcGlobalID)
-	binary.Write(b, binary.LittleEndian, s.ItemTemplateID)
-	binary.Write(b, binary.LittleEndian, s.ItemGlobalID)
-	binary.Write(b, binary.LittleEndian, s.Texture)
-	binary.Write(b, binary.LittleEndian, s.Decal)
-	binary.Write(b, binary.LittleEndian, s.Decal2)
-	binary.Write(b, binary.LittleEndian, s.PetName)
-	binary.Write(b, binary.LittleEndian, s.ItemType)
-	binary.Write(b, binary.LittleEndian, s.Category)
-	binary.Write(b, binary.LittleEndian, s.Quantity)
-	binary.Write(b, binary.LittleEndian, s.Key)
-	binary.Write(b, binary.LittleEndian, s.BackpackBuddy)
 	return b.Bytes()
 }
 
@@ -2555,10 +2486,6 @@ type AuctionResponse struct {
 
 func (s *AuctionResponse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14))
-	binary.Write(b, binary.LittleEndian, s.Command)
-	binary.Write(b, binary.LittleEndian, s.ItemTemplateID)
-	binary.Write(b, binary.LittleEndian, s.Cost)
-	binary.Write(b, binary.LittleEndian, s.ReturnCode)
 	return b.Bytes()
 }
 
@@ -2589,10 +2516,6 @@ type BankDelete struct {
 
 func (s *BankDelete) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14))
-	binary.Write(b, binary.LittleEndian, s.ClientRequestID)
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.UseShared)
-	binary.Write(b, binary.LittleEndian, s.FromInventory)
 	return b.Bytes()
 }
 
@@ -2623,10 +2546,6 @@ type BankDeleteConfirm struct {
 
 func (s *BankDeleteConfirm) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14))
-	binary.Write(b, binary.LittleEndian, s.ClientRequestID)
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.UseShared)
-	binary.Write(b, binary.LittleEndian, s.Failure)
 	return b.Bytes()
 }
 
@@ -2658,11 +2577,6 @@ type BankToBankConfirm struct {
 
 func (s *BankToBankConfirm) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 25))
-	binary.Write(b, binary.LittleEndian, s.ClientRequestID)
-	binary.Write(b, binary.LittleEndian, s.OriginalGlobalID)
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.UseShared)
-	binary.Write(b, binary.LittleEndian, s.Error)
 	return b.Bytes()
 }
 
@@ -2696,10 +2610,6 @@ type BankToInvConfirm struct {
 
 func (s *BankToInvConfirm) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 21))
-	binary.Write(b, binary.LittleEndian, s.ClientRequestID)
-	binary.Write(b, binary.LittleEndian, s.OriginalGlobalID)
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.Failure)
 	return b.Bytes()
 }
 
@@ -2728,18 +2638,18 @@ type BoosterDistributionResults struct {
 
 func (s *BoosterDistributionResults) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4+len(s.LootList)+len(s.Error)))
-	writeString_12(b, s.LootList)
-	writeString_12(b, s.Error)
+	binary.Write(b, binary.LittleEndian, s.LootList)
+	binary.Write(b, binary.LittleEndian, s.Error)
 	return b.Bytes()
 }
 
 func (s *BoosterDistributionResults) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.LootList, err = readString_12(b); err != nil {
+	if s.LootList, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Error, err = readString_12(b); err != nil {
+	if s.Error, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2751,14 +2661,14 @@ type BracketReport struct {
 
 func (s *BracketReport) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Report)))
-	writeString_12(b, s.Report)
+	binary.Write(b, binary.LittleEndian, s.Report)
 	return b.Bytes()
 }
 
 func (s *BracketReport) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Report, err = readString_12(b); err != nil {
+	if s.Report, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2772,9 +2682,6 @@ type BuyEnergyConfirm struct {
 
 func (s *BuyEnergyConfirm) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6))
-	binary.Write(b, binary.LittleEndian, s.Failure)
-	binary.Write(b, binary.LittleEndian, s.WebFailure)
-	binary.Write(b, binary.LittleEndian, s.Credits)
 	return b.Bytes()
 }
 
@@ -2800,8 +2707,7 @@ type ChatFilterBlack struct {
 
 func (s *ChatFilterBlack) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Blacklist)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_12(b, s.Blacklist)
+	binary.Write(b, binary.LittleEndian, s.Blacklist)
 	return b.Bytes()
 }
 
@@ -2811,7 +2717,7 @@ func (s *ChatFilterBlack) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.Blacklist, err = readString_12(b); err != nil {
+	if s.Blacklist, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2824,8 +2730,7 @@ type ChatFilterWhite struct {
 
 func (s *ChatFilterWhite) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Whitelist)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_12(b, s.Whitelist)
+	binary.Write(b, binary.LittleEndian, s.Whitelist)
 	return b.Bytes()
 }
 
@@ -2835,7 +2740,7 @@ func (s *ChatFilterWhite) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.Whitelist, err = readString_12(b); err != nil {
+	if s.Whitelist, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2848,8 +2753,6 @@ type ChooseFocus struct {
 
 func (s *ChooseFocus) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.MobileID)
-	binary.Write(b, binary.LittleEndian, s.SchoolNameID)
 	return b.Bytes()
 }
 
@@ -2871,7 +2774,6 @@ type ClearAllCraftingSlots struct {
 
 func (s *ClearAllCraftingSlots) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
 	return b.Bytes()
 }
 
@@ -2903,9 +2805,8 @@ type CompleteDialog struct {
 
 func (s *CompleteDialog) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12+len(s.CompletionType)+len(s.EntryEvent)))
-	binary.Write(b, binary.LittleEndian, s.MobileID)
-	writeString_12(b, s.CompletionType)
-	writeString_12(b, s.EntryEvent)
+	binary.Write(b, binary.LittleEndian, s.CompletionType)
+	binary.Write(b, binary.LittleEndian, s.EntryEvent)
 	return b.Bytes()
 }
 
@@ -2915,10 +2816,10 @@ func (s *CompleteDialog) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.MobileID); err != nil {
 		return err
 	}
-	if s.CompletionType, err = readString_12(b); err != nil {
+	if s.CompletionType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.EntryEvent, err = readString_12(b); err != nil {
+	if s.EntryEvent, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2931,8 +2832,6 @@ type ControlMusic struct {
 
 func (s *ControlMusic) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.Action)
-	binary.Write(b, binary.LittleEndian, s.FadeTime)
 	return b.Bytes()
 }
 
@@ -2955,8 +2854,7 @@ type CraftingSlotAdd struct {
 
 func (s *CraftingSlotAdd) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_12(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -2966,7 +2864,7 @@ func (s *CraftingSlotAdd) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2979,8 +2877,6 @@ type CraftingSlotCount struct {
 
 func (s *CraftingSlotCount) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.BonusSlots)
 	return b.Bytes()
 }
 
@@ -3003,8 +2899,6 @@ type CraftingSlotRemove struct {
 
 func (s *CraftingSlotRemove) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.ItemID)
 	return b.Bytes()
 }
 
@@ -3031,12 +2925,9 @@ type CreateBoosterDistribution struct {
 
 func (s *CreateBoosterDistribution) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 18+len(s.LootTableName)+len(s.PlayerSchool)+len(s.PlayerGender)))
-	binary.Write(b, binary.LittleEndian, s.BoosterTemplateID)
-	writeString_12(b, s.LootTableName)
-	binary.Write(b, binary.LittleEndian, s.PlayerLevel)
-	writeString_12(b, s.PlayerSchool)
-	writeString_12(b, s.PlayerGender)
-	binary.Write(b, binary.LittleEndian, s.Samples)
+	binary.Write(b, binary.LittleEndian, s.LootTableName)
+	binary.Write(b, binary.LittleEndian, s.PlayerSchool)
+	binary.Write(b, binary.LittleEndian, s.PlayerGender)
 	return b.Bytes()
 }
 
@@ -3046,16 +2937,16 @@ func (s *CreateBoosterDistribution) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.BoosterTemplateID); err != nil {
 		return err
 	}
-	if s.LootTableName, err = readString_12(b); err != nil {
+	if s.LootTableName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PlayerLevel); err != nil {
 		return err
 	}
-	if s.PlayerSchool, err = readString_12(b); err != nil {
+	if s.PlayerSchool, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.PlayerGender, err = readString_12(b); err != nil {
+	if s.PlayerGender, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Samples); err != nil {
@@ -3073,10 +2964,6 @@ type CrownBalance struct {
 
 func (s *CrownBalance) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14))
-	binary.Write(b, binary.LittleEndian, s.Failure)
-	binary.Write(b, binary.LittleEndian, s.TotalCrowns)
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.CacheBalanceForCSSegmentation)
 	return b.Bytes()
 }
 
@@ -3108,11 +2995,7 @@ type CrownsBuyConfirm struct {
 
 func (s *CrownsBuyConfirm) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.Failure)
-	binary.Write(b, binary.LittleEndian, s.WebFailure)
-	binary.Write(b, binary.LittleEndian, s.Credits)
-	writeString_12(b, s.Data)
-	binary.Write(b, binary.LittleEndian, s.TemplateID)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -3128,7 +3011,7 @@ func (s *CrownsBuyConfirm) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Credits); err != nil {
 		return err
 	}
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.TemplateID); err != nil {
@@ -3145,9 +3028,6 @@ type CrownsBuyRequest struct {
 
 func (s *CrownsBuyRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.NpcGlobalID)
-	binary.Write(b, binary.LittleEndian, s.AmountEnum)
-	binary.Write(b, binary.LittleEndian, s.ItemIndex)
 	return b.Bytes()
 }
 
@@ -3176,11 +3056,8 @@ type CrownServicesOpen struct {
 
 func (s *CrownServicesOpen) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 17+len(s.ShopTitle)+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_12(b, s.ShopTitle)
-	binary.Write(b, binary.LittleEndian, s.Credits)
-	binary.Write(b, binary.LittleEndian, s.WebFailure)
-	writeString_12(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.ShopTitle)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -3190,7 +3067,7 @@ func (s *CrownServicesOpen) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.ShopTitle, err = readString_12(b); err != nil {
+	if s.ShopTitle, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Credits); err != nil {
@@ -3199,7 +3076,7 @@ func (s *CrownServicesOpen) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.WebFailure); err != nil {
 		return err
 	}
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -3213,9 +3090,6 @@ type CSRCrownBalance struct {
 
 func (s *CSRCrownBalance) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 13))
-	binary.Write(b, binary.LittleEndian, s.Success)
-	binary.Write(b, binary.LittleEndian, s.Balance)
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
 	return b.Bytes()
 }
 
@@ -3241,8 +3115,7 @@ type CSRRequestBlobs struct {
 
 func (s *CSRRequestBlobs) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.ContainerGID)
-	writeString_12(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -3252,7 +3125,7 @@ func (s *CSRRequestBlobs) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ContainerGID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -3286,14 +3159,14 @@ type DismissTutorialTip struct {
 
 func (s *DismissTutorialTip) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.TipID)))
-	writeString_12(b, s.TipID)
+	binary.Write(b, binary.LittleEndian, s.TipID)
 	return b.Bytes()
 }
 
 func (s *DismissTutorialTip) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.TipID, err = readString_12(b); err != nil {
+	if s.TipID, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -3305,7 +3178,6 @@ type DoneShopping struct {
 
 func (s *DoneShopping) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.TransactionID)
 	return b.Bytes()
 }
 
@@ -3329,12 +3201,6 @@ type DuelSimResult struct {
 
 func (s *DuelSimResult) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 28))
-	binary.Write(b, binary.LittleEndian, s.DuelID)
-	binary.Write(b, binary.LittleEndian, s.WinningTeamID)
-	binary.Write(b, binary.LittleEndian, s.Confidence)
-	binary.Write(b, binary.LittleEndian, s.Sims)
-	binary.Write(b, binary.LittleEndian, s.Results)
-	binary.Write(b, binary.LittleEndian, s.Time)
 	return b.Bytes()
 }
 
@@ -3372,11 +3238,6 @@ type DyeConfirm struct {
 
 func (s *DyeConfirm) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 21))
-	binary.Write(b, binary.LittleEndian, s.Failure)
-	binary.Write(b, binary.LittleEndian, s.ItemGID)
-	binary.Write(b, binary.LittleEndian, s.FirstLayer)
-	binary.Write(b, binary.LittleEndian, s.SecondLayer)
-	binary.Write(b, binary.LittleEndian, s.ThirdLayer)
 	return b.Bytes()
 }
 
@@ -3411,11 +3272,6 @@ type DyeRequest struct {
 
 func (s *DyeRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 28))
-	binary.Write(b, binary.LittleEndian, s.ItemGlobalID)
-	binary.Write(b, binary.LittleEndian, s.Texture)
-	binary.Write(b, binary.LittleEndian, s.Decal)
-	binary.Write(b, binary.LittleEndian, s.Decal2)
-	binary.Write(b, binary.LittleEndian, s.NpcGlobalID)
 	return b.Bytes()
 }
 
@@ -3447,8 +3303,7 @@ type DyeShopOpen struct {
 
 func (s *DyeShopOpen) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Title)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_12(b, s.Title)
+	binary.Write(b, binary.LittleEndian, s.Title)
 	return b.Bytes()
 }
 
@@ -3458,7 +3313,7 @@ func (s *DyeShopOpen) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.Title, err = readString_12(b); err != nil {
+	if s.Title, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -3471,8 +3326,6 @@ type ElixirStateChange struct {
 
 func (s *ElixirStateChange) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9))
-	binary.Write(b, binary.LittleEndian, s.ParentID)
-	binary.Write(b, binary.LittleEndian, s.EffectEnabled)
 	return b.Bytes()
 }
 
@@ -3501,14 +3354,11 @@ type EncounterDialog struct {
 
 func (s *EncounterDialog) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 34+len(s.CompletionType)+len(s.ActorDialog)+len(s.Persona)+len(s.PersonaName)+len(s.PersonaIcon)))
-	binary.Write(b, binary.LittleEndian, s.MobileID)
-	binary.Write(b, binary.LittleEndian, s.QuestID)
-	binary.Write(b, binary.LittleEndian, s.GoalID)
-	writeString_12(b, s.CompletionType)
-	writeString_12(b, s.ActorDialog)
-	writeString_12(b, s.Persona)
-	writeString_12(b, s.PersonaName)
-	writeString_12(b, s.PersonaIcon)
+	binary.Write(b, binary.LittleEndian, s.CompletionType)
+	binary.Write(b, binary.LittleEndian, s.ActorDialog)
+	binary.Write(b, binary.LittleEndian, s.Persona)
+	binary.Write(b, binary.LittleEndian, s.PersonaName)
+	binary.Write(b, binary.LittleEndian, s.PersonaIcon)
 	return b.Bytes()
 }
 
@@ -3524,19 +3374,19 @@ func (s *EncounterDialog) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GoalID); err != nil {
 		return err
 	}
-	if s.CompletionType, err = readString_12(b); err != nil {
+	if s.CompletionType, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.ActorDialog, err = readString_12(b); err != nil {
+	if s.ActorDialog, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Persona, err = readString_12(b); err != nil {
+	if s.Persona, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.PersonaName, err = readString_12(b); err != nil {
+	if s.PersonaName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.PersonaIcon, err = readString_12(b); err != nil {
+	if s.PersonaIcon, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -3550,9 +3400,6 @@ type EnergyBuyRequest struct {
 
 func (s *EnergyBuyRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 13))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.WebFailure)
-	binary.Write(b, binary.LittleEndian, s.Credits)
 	return b.Bytes()
 }
 
@@ -3579,9 +3426,6 @@ type EnergyShopOpen struct {
 
 func (s *EnergyShopOpen) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 13))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.WebFailure)
-	binary.Write(b, binary.LittleEndian, s.Credits)
 	return b.Bytes()
 }
 
@@ -3606,7 +3450,6 @@ type EnterMinigame struct {
 
 func (s *EnterMinigame) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
 	return b.Bytes()
 }
 
@@ -3626,8 +3469,7 @@ type ExitConfirmTeleport struct {
 
 func (s *ExitConfirmTeleport) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.PromptKey)))
-	binary.Write(b, binary.LittleEndian, s.ZoneCRC)
-	writeString_12(b, s.PromptKey)
+	binary.Write(b, binary.LittleEndian, s.PromptKey)
 	return b.Bytes()
 }
 
@@ -3637,7 +3479,7 @@ func (s *ExitConfirmTeleport) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ZoneCRC); err != nil {
 		return err
 	}
-	if s.PromptKey, err = readString_12(b); err != nil {
+	if s.PromptKey, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -3651,9 +3493,6 @@ type ExpandPvPSearch struct {
 
 func (s *ExpandPvPSearch) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6))
-	binary.Write(b, binary.LittleEndian, s.ExpandTeammateSearch)
-	binary.Write(b, binary.LittleEndian, s.ExpandMatchSearch)
-	binary.Write(b, binary.LittleEndian, s.TournamentNameID)
 	return b.Bytes()
 }
 
@@ -3678,7 +3517,6 @@ type FreeTourneyCreditInfo struct {
 
 func (s *FreeTourneyCreditInfo) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.HasFreeCredit)
 	return b.Bytes()
 }
 
@@ -3697,7 +3535,6 @@ type GetSnackList struct {
 
 func (s *GetSnackList) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.InvisibleToFriends)
 	return b.Bytes()
 }
 
@@ -3760,7 +3597,6 @@ type GotoFriendlyPlayer struct {
 
 func (s *GotoFriendlyPlayer) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.TargetCharacterID)
 	return b.Bytes()
 }
 
@@ -3791,8 +3627,7 @@ type InteractAvailableQuest struct {
 
 func (s *InteractAvailableQuest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.QuestName)))
-	binary.Write(b, binary.LittleEndian, s.MobileID)
-	writeString_12(b, s.QuestName)
+	binary.Write(b, binary.LittleEndian, s.QuestName)
 	return b.Bytes()
 }
 
@@ -3802,7 +3637,7 @@ func (s *InteractAvailableQuest) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.MobileID); err != nil {
 		return err
 	}
-	if s.QuestName, err = readString_12(b); err != nil {
+	if s.QuestName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -3816,9 +3651,6 @@ type InteractCompleteGoal struct {
 
 func (s *InteractCompleteGoal) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24))
-	binary.Write(b, binary.LittleEndian, s.MobileID)
-	binary.Write(b, binary.LittleEndian, s.QuestID)
-	binary.Write(b, binary.LittleEndian, s.GoalID)
 	return b.Bytes()
 }
 
@@ -3844,8 +3676,6 @@ type InteractUnderwayQuest struct {
 
 func (s *InteractUnderwayQuest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.MobileID)
-	binary.Write(b, binary.LittleEndian, s.QuestID)
 	return b.Bytes()
 }
 
@@ -3871,11 +3701,6 @@ type InvToBankConfirm struct {
 
 func (s *InvToBankConfirm) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 22))
-	binary.Write(b, binary.LittleEndian, s.ClientRequestID)
-	binary.Write(b, binary.LittleEndian, s.OriginalGlobalID)
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.UseShared)
-	binary.Write(b, binary.LittleEndian, s.Failure)
 	return b.Bytes()
 }
 
@@ -3907,8 +3732,6 @@ type ItemDrop struct {
 
 func (s *ItemDrop) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.TemplateID)
-	binary.Write(b, binary.LittleEndian, s.ErrorID)
 	return b.Bytes()
 }
 
@@ -3930,7 +3753,6 @@ type ItemLock struct {
 
 func (s *ItemLock) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.ItemLock)
 	return b.Bytes()
 }
 
@@ -3950,8 +3772,6 @@ type ItemOverflowToBank struct {
 
 func (s *ItemOverflowToBank) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.ItemID)
-	binary.Write(b, binary.LittleEndian, s.CountInBank)
 	return b.Bytes()
 }
 
@@ -3976,10 +3796,7 @@ type LeaderboardFriendRequest struct {
 
 func (s *LeaderboardFriendRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 11+len(s.Contents)))
-	binary.Write(b, binary.LittleEndian, s.LeaderboardType)
-	binary.Write(b, binary.LittleEndian, s.Page)
-	binary.Write(b, binary.LittleEndian, s.SortType)
-	writeString_12(b, s.Contents)
+	binary.Write(b, binary.LittleEndian, s.Contents)
 	return b.Bytes()
 }
 
@@ -3995,7 +3812,7 @@ func (s *LeaderboardFriendRequest) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.SortType); err != nil {
 		return err
 	}
-	if s.Contents, err = readString_12(b); err != nil {
+	if s.Contents, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -4010,10 +3827,6 @@ type LeaderboardRequest struct {
 
 func (s *LeaderboardRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10))
-	binary.Write(b, binary.LittleEndian, s.LeaderboardType)
-	binary.Write(b, binary.LittleEndian, s.Page)
-	binary.Write(b, binary.LittleEndian, s.SortType)
-	binary.Write(b, binary.LittleEndian, s.ShowMe)
 	return b.Bytes()
 }
 
@@ -4043,16 +3856,14 @@ type LeaderboardResponse struct {
 
 func (s *LeaderboardResponse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Contents)))
-	writeString_12(b, s.Contents)
-	binary.Write(b, binary.LittleEndian, s.TotalEntries)
-	binary.Write(b, binary.LittleEndian, s.CurrentPage)
+	binary.Write(b, binary.LittleEndian, s.Contents)
 	return b.Bytes()
 }
 
 func (s *LeaderboardResponse) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Contents, err = readString_12(b); err != nil {
+	if s.Contents, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.TotalEntries); err != nil {
@@ -4072,9 +3883,6 @@ type Leash struct {
 
 func (s *Leash) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 17))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.OwnerID)
-	binary.Write(b, binary.LittleEndian, s.Leashed)
 	return b.Bytes()
 }
 
@@ -4101,9 +3909,6 @@ type LeashOffset struct {
 
 func (s *LeashOffset) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.Radius)
-	binary.Write(b, binary.LittleEndian, s.Angle)
 	return b.Bytes()
 }
 
@@ -4133,12 +3938,7 @@ type LeaveAdventureParty struct {
 
 func (s *LeaveAdventureParty) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 23+len(s.PlayerName)))
-	binary.Write(b, binary.LittleEndian, s.PlayerGID)
-	writeString_12(b, s.PlayerName)
-	binary.Write(b, binary.LittleEndian, s.PartyName)
-	binary.Write(b, binary.LittleEndian, s.PartyNameLocale)
-	binary.Write(b, binary.LittleEndian, s.Status)
-	binary.Write(b, binary.LittleEndian, s.Guild)
+	binary.Write(b, binary.LittleEndian, s.PlayerName)
 	return b.Bytes()
 }
 
@@ -4148,7 +3948,7 @@ func (s *LeaveAdventureParty) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.PlayerGID); err != nil {
 		return err
 	}
-	if s.PlayerName, err = readString_12(b); err != nil {
+	if s.PlayerName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PartyName); err != nil {
@@ -4172,7 +3972,6 @@ type LeaveMinigame struct {
 
 func (s *LeaveMinigame) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
 	return b.Bytes()
 }
 
@@ -4191,7 +3990,6 @@ type LeaveSigilTimerWaiting struct {
 
 func (s *LeaveSigilTimerWaiting) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
 	return b.Bytes()
 }
 
@@ -4210,7 +4008,6 @@ type LemuriaStatus struct {
 
 func (s *LemuriaStatus) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.Status)
 	return b.Bytes()
 }
 
@@ -4233,11 +4030,7 @@ type LevelUp struct {
 
 func (s *LevelUp) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 22+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_12(b, s.Data)
-	binary.Write(b, binary.LittleEndian, s.NewLevel)
-	binary.Write(b, binary.LittleEndian, s.XP)
-	binary.Write(b, binary.LittleEndian, s.TrainingPoints)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -4247,7 +4040,7 @@ func (s *LevelUp) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.NewLevel); err != nil {
@@ -4271,10 +4064,6 @@ type LogClientResolution struct {
 
 func (s *LogClientResolution) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10))
-	binary.Write(b, binary.LittleEndian, s.ScreenWidth)
-	binary.Write(b, binary.LittleEndian, s.ScreenHeight)
-	binary.Write(b, binary.LittleEndian, s.FullScreen)
-	binary.Write(b, binary.LittleEndian, s.ClassicMode)
 	return b.Bytes()
 }
 
@@ -4306,11 +4095,7 @@ type LogOffer struct {
 
 func (s *LogOffer) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 18+len(s.Description)))
-	binary.Write(b, binary.LittleEndian, s.OfferType)
-	writeString_12(b, s.Description)
-	binary.Write(b, binary.LittleEndian, s.Cost)
-	binary.Write(b, binary.LittleEndian, s.TotalCurrency)
-	binary.Write(b, binary.LittleEndian, s.Action)
+	binary.Write(b, binary.LittleEndian, s.Description)
 	return b.Bytes()
 }
 
@@ -4320,7 +4105,7 @@ func (s *LogOffer) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.OfferType); err != nil {
 		return err
 	}
-	if s.Description, err = readString_12(b); err != nil {
+	if s.Description, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Cost); err != nil {
@@ -4341,7 +4126,6 @@ type LogPatchClientPatchTime struct {
 
 func (s *LogPatchClientPatchTime) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.PatchClientPatchTime)
 	return b.Bytes()
 }
 
@@ -4361,8 +4145,7 @@ type Loot struct {
 
 func (s *Loot) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.LootList)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_12(b, s.LootList)
+	binary.Write(b, binary.LittleEndian, s.LootList)
 	return b.Bytes()
 }
 
@@ -4372,7 +4155,7 @@ func (s *Loot) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.LootList, err = readString_12(b); err != nil {
+	if s.LootList, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -4384,7 +4167,6 @@ type MinigameKiosk struct {
 
 func (s *MinigameKiosk) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
 	return b.Bytes()
 }
 
@@ -4408,22 +4190,18 @@ type MinigameRewards struct {
 
 func (s *MinigameRewards) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20+len(s.Data)+len(s.Scores)))
-	writeString_12(b, s.Data)
-	writeString_12(b, s.Scores)
-	binary.Write(b, binary.LittleEndian, s.MinigameIndex)
-	binary.Write(b, binary.LittleEndian, s.FinalPhase)
-	binary.Write(b, binary.LittleEndian, s.Score)
-	binary.Write(b, binary.LittleEndian, s.Success)
+	binary.Write(b, binary.LittleEndian, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Scores)
 	return b.Bytes()
 }
 
 func (s *MinigameRewards) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Scores, err = readString_12(b); err != nil {
+	if s.Scores, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.MinigameIndex); err != nil {
@@ -4448,8 +4226,6 @@ type MinigameSelect struct {
 
 func (s *MinigameSelect) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.Index)
-	binary.Write(b, binary.LittleEndian, s.NpcGlobalID)
 	return b.Bytes()
 }
 
@@ -4471,7 +4247,6 @@ type MinigameTimerEnd struct {
 
 func (s *MinigameTimerEnd) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.SigilGID)
 	return b.Bytes()
 }
 
@@ -4492,9 +4267,6 @@ type MinigameTimerStart struct {
 
 func (s *MinigameTimerStart) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 13))
-	binary.Write(b, binary.LittleEndian, s.Time)
-	binary.Write(b, binary.LittleEndian, s.SigilGID)
-	binary.Write(b, binary.LittleEndian, s.Teleport)
 	return b.Bytes()
 }
 
@@ -4522,10 +4294,6 @@ type MoveBankToBank struct {
 
 func (s *MoveBankToBank) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24))
-	binary.Write(b, binary.LittleEndian, s.ClientRequestID)
-	binary.Write(b, binary.LittleEndian, s.BankID)
-	binary.Write(b, binary.LittleEndian, s.BankSharedID)
-	binary.Write(b, binary.LittleEndian, s.Error)
 	return b.Bytes()
 }
 
@@ -4556,10 +4324,6 @@ type MoveBankToInv struct {
 
 func (s *MoveBankToInv) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 17))
-	binary.Write(b, binary.LittleEndian, s.ClientRequestID)
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.UseShared)
-	binary.Write(b, binary.LittleEndian, s.Quantity)
 	return b.Bytes()
 }
 
@@ -4591,11 +4355,6 @@ type MoveInvToBank struct {
 
 func (s *MoveInvToBank) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 21))
-	binary.Write(b, binary.LittleEndian, s.ClientRequestID)
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.UseShared)
-	binary.Write(b, binary.LittleEndian, s.Quantity)
-	binary.Write(b, binary.LittleEndian, s.Debug)
 	return b.Bytes()
 }
 
@@ -4628,9 +4387,7 @@ type NewTitle struct {
 
 func (s *NewTitle) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.Title)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.PvPIconID)
-	writeString_12(b, s.Title)
+	binary.Write(b, binary.LittleEndian, s.Title)
 	return b.Bytes()
 }
 
@@ -4643,7 +4400,7 @@ func (s *NewTitle) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.PvPIconID); err != nil {
 		return err
 	}
-	if s.Title, err = readString_12(b); err != nil {
+	if s.Title, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -4657,9 +4414,6 @@ type NotifySchoolFocus struct {
 
 func (s *NotifySchoolFocus) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.MobileID)
-	binary.Write(b, binary.LittleEndian, s.SchoolID)
-	binary.Write(b, binary.LittleEndian, s.SecondarySchoolID)
 	return b.Bytes()
 }
 
@@ -4684,7 +4438,6 @@ type OpenBank struct {
 
 func (s *OpenBank) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
 	return b.Bytes()
 }
 
@@ -4703,7 +4456,6 @@ type PaidLootCrownsBalance struct {
 
 func (s *PaidLootCrownsBalance) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.Balance)
 	return b.Bytes()
 }
 
@@ -4735,9 +4487,6 @@ type PaidLootRollPrompt struct {
 
 func (s *PaidLootRollPrompt) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.Id)
-	binary.Write(b, binary.LittleEndian, s.Cost)
-	binary.Write(b, binary.LittleEndian, s.Uses)
 	return b.Bytes()
 }
 
@@ -4763,8 +4512,6 @@ type PaidLootRollResponse struct {
 
 func (s *PaidLootRollResponse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.Id)
-	binary.Write(b, binary.LittleEndian, s.Response)
 	return b.Bytes()
 }
 
@@ -4790,11 +4537,7 @@ type PaidLootRollResult struct {
 
 func (s *PaidLootRollResult) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 22+len(s.Loot)))
-	binary.Write(b, binary.LittleEndian, s.Id)
-	binary.Write(b, binary.LittleEndian, s.Cost)
-	binary.Write(b, binary.LittleEndian, s.Balance)
-	binary.Write(b, binary.LittleEndian, s.Uses)
-	writeString_12(b, s.Loot)
+	binary.Write(b, binary.LittleEndian, s.Loot)
 	return b.Bytes()
 }
 
@@ -4813,7 +4556,7 @@ func (s *PaidLootRollResult) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Uses); err != nil {
 		return err
 	}
-	if s.Loot, err = readString_12(b); err != nil {
+	if s.Loot, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -4826,18 +4569,18 @@ type PatchingBlocked struct {
 
 func (s *PatchingBlocked) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4+len(s.PackageName)+len(s.ZoneName)))
-	writeString_12(b, s.PackageName)
-	writeString_12(b, s.ZoneName)
+	binary.Write(b, binary.LittleEndian, s.PackageName)
+	binary.Write(b, binary.LittleEndian, s.ZoneName)
 	return b.Bytes()
 }
 
 func (s *PatchingBlocked) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.PackageName, err = readString_12(b); err != nil {
+	if s.PackageName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.ZoneName, err = readString_12(b); err != nil {
+	if s.ZoneName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -4850,15 +4593,14 @@ type PCSCacheSegReqsSummaryRequest struct {
 
 func (s *PCSCacheSegReqsSummaryRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.Data)))
-	writeString_12(b, s.Data)
-	binary.Write(b, binary.LittleEndian, s.UpdateID)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
 func (s *PCSCacheSegReqsSummaryRequest) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.UpdateID); err != nil {
@@ -4874,15 +4616,14 @@ type PCSListRequest struct {
 
 func (s *PCSListRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.Data)))
-	writeString_12(b, s.Data)
-	binary.Write(b, binary.LittleEndian, s.UpdateID)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
 func (s *PCSListRequest) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.UpdateID); err != nil {
@@ -4900,20 +4641,18 @@ type PCSListResponse struct {
 
 func (s *PCSListResponse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12+len(s.Data)+len(s.Updates)))
-	writeString_12(b, s.Data)
-	writeString_12(b, s.Updates)
-	binary.Write(b, binary.LittleEndian, s.UpdateID)
-	binary.Write(b, binary.LittleEndian, s.Error)
+	binary.Write(b, binary.LittleEndian, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Updates)
 	return b.Bytes()
 }
 
 func (s *PCSListResponse) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Updates, err = readString_12(b); err != nil {
+	if s.Updates, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.UpdateID); err != nil {
@@ -4932,15 +4671,14 @@ type PCSPATCH struct {
 
 func (s *PCSPATCH) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.Updates)))
-	writeString_12(b, s.Updates)
-	binary.Write(b, binary.LittleEndian, s.UpdateID)
+	binary.Write(b, binary.LittleEndian, s.Updates)
 	return b.Bytes()
 }
 
 func (s *PCSPATCH) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Updates, err = readString_12(b); err != nil {
+	if s.Updates, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.UpdateID); err != nil {
@@ -4957,9 +4695,6 @@ type PCSPriceLockRequest struct {
 
 func (s *PCSPriceLockRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.Item)
-	binary.Write(b, binary.LittleEndian, s.ItemFlags)
-	binary.Write(b, binary.LittleEndian, s.SaleID)
 	return b.Bytes()
 }
 
@@ -4988,11 +4723,6 @@ type PCSPriceLockResponse struct {
 
 func (s *PCSPriceLockResponse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24))
-	binary.Write(b, binary.LittleEndian, s.Item)
-	binary.Write(b, binary.LittleEndian, s.CostGold)
-	binary.Write(b, binary.LittleEndian, s.CostCrowns)
-	binary.Write(b, binary.LittleEndian, s.CostTickets)
-	binary.Write(b, binary.LittleEndian, s.Error)
 	return b.Bytes()
 }
 
@@ -5037,21 +4767,9 @@ type PCSPurchaseRequest struct {
 
 func (s *PCSPurchaseRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 62+len(s.RecipientName)+len(s.ActiveTabName)+len(s.ActiveCatName)))
-	binary.Write(b, binary.LittleEndian, s.Item)
-	binary.Write(b, binary.LittleEndian, s.Recipient)
-	writeString_12(b, s.RecipientName)
-	binary.Write(b, binary.LittleEndian, s.Type)
-	binary.Write(b, binary.LittleEndian, s.Cost)
-	binary.Write(b, binary.LittleEndian, s.Count)
-	binary.Write(b, binary.LittleEndian, s.Texture)
-	binary.Write(b, binary.LittleEndian, s.Decal)
-	binary.Write(b, binary.LittleEndian, s.PetName)
-	binary.Write(b, binary.LittleEndian, s.SaleID)
-	binary.Write(b, binary.LittleEndian, s.Reco)
-	binary.Write(b, binary.LittleEndian, s.ItemLocator)
-	binary.Write(b, binary.LittleEndian, s.PurchaseElixirEquipNow)
-	writeString_12(b, s.ActiveTabName)
-	writeString_12(b, s.ActiveCatName)
+	binary.Write(b, binary.LittleEndian, s.RecipientName)
+	binary.Write(b, binary.LittleEndian, s.ActiveTabName)
+	binary.Write(b, binary.LittleEndian, s.ActiveCatName)
 	return b.Bytes()
 }
 
@@ -5064,7 +4782,7 @@ func (s *PCSPurchaseRequest) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Recipient); err != nil {
 		return err
 	}
-	if s.RecipientName, err = readString_12(b); err != nil {
+	if s.RecipientName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Type); err != nil {
@@ -5097,10 +4815,10 @@ func (s *PCSPurchaseRequest) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.PurchaseElixirEquipNow); err != nil {
 		return err
 	}
-	if s.ActiveTabName, err = readString_12(b); err != nil {
+	if s.ActiveTabName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.ActiveCatName, err = readString_12(b); err != nil {
+	if s.ActiveCatName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -5117,12 +4835,6 @@ type PCSPurchaseResponse struct {
 
 func (s *PCSPurchaseResponse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 25))
-	binary.Write(b, binary.LittleEndian, s.Item)
-	binary.Write(b, binary.LittleEndian, s.Type)
-	binary.Write(b, binary.LittleEndian, s.Cost)
-	binary.Write(b, binary.LittleEndian, s.Count)
-	binary.Write(b, binary.LittleEndian, s.Gifted)
-	binary.Write(b, binary.LittleEndian, s.Error)
 	return b.Bytes()
 }
 
@@ -5168,8 +4880,7 @@ type PCSSegDataResponse struct {
 
 func (s *PCSSegDataResponse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 3+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.Success)
-	writeString_12(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -5179,7 +4890,7 @@ func (s *PCSSegDataResponse) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Success); err != nil {
 		return err
 	}
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -5193,9 +4904,8 @@ type PCSUpdateUserWishlist struct {
 
 func (s *PCSUpdateUserWishlist) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12+len(s.Data)+len(s.WLItemsRemAftPur)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_12(b, s.Data)
-	writeString_12(b, s.WLItemsRemAftPur)
+	binary.Write(b, binary.LittleEndian, s.Data)
+	binary.Write(b, binary.LittleEndian, s.WLItemsRemAftPur)
 	return b.Bytes()
 }
 
@@ -5205,10 +4915,10 @@ func (s *PCSUpdateUserWishlist) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.WLItemsRemAftPur, err = readString_12(b); err != nil {
+	if s.WLItemsRemAftPur, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -5222,9 +4932,7 @@ type PetGameKiosk struct {
 
 func (s *PetGameKiosk) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.GameInfo)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_12(b, s.GameInfo)
-	binary.Write(b, binary.LittleEndian, s.GamesWon)
+	binary.Write(b, binary.LittleEndian, s.GameInfo)
 	return b.Bytes()
 }
 
@@ -5234,7 +4942,7 @@ func (s *PetGameKiosk) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.GameInfo, err = readString_12(b); err != nil {
+	if s.GameInfo, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.GamesWon); err != nil {
@@ -5249,7 +4957,6 @@ type PetHatchCreate struct {
 
 func (s *PetHatchCreate) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.TargetGID)
 	return b.Bytes()
 }
 
@@ -5270,9 +4977,6 @@ type PetHatchJoinStatus struct {
 
 func (s *PetHatchJoinStatus) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.TargetGID)
-	binary.Write(b, binary.LittleEndian, s.TargetStatus)
-	binary.Write(b, binary.LittleEndian, s.PlayerStatus)
 	return b.Bytes()
 }
 
@@ -5299,9 +5003,6 @@ type PetHatchReadyStatus struct {
 
 func (s *PetHatchReadyStatus) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.TargetGID)
-	binary.Write(b, binary.LittleEndian, s.TargetStatus)
-	binary.Write(b, binary.LittleEndian, s.PlayerStatus)
 	return b.Bytes()
 }
 
@@ -5326,7 +5027,6 @@ type PetHatchRequest struct {
 
 func (s *PetHatchRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.TargetGID)
 	return b.Bytes()
 }
 
@@ -5346,8 +5046,6 @@ type PetHatchResult struct {
 
 func (s *PetHatchResult) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.TargetGID)
-	binary.Write(b, binary.LittleEndian, s.Status)
 	return b.Bytes()
 }
 
@@ -5369,7 +5067,6 @@ type PetRenameConfirm struct {
 
 func (s *PetRenameConfirm) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.Failure)
 	return b.Bytes()
 }
 
@@ -5390,9 +5087,6 @@ type PetRenameRequest struct {
 
 func (s *PetRenameRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20))
-	binary.Write(b, binary.LittleEndian, s.ItemGlobalID)
-	binary.Write(b, binary.LittleEndian, s.PetName)
-	binary.Write(b, binary.LittleEndian, s.NpcGlobalID)
 	return b.Bytes()
 }
 
@@ -5418,8 +5112,6 @@ type PlayerArrived struct {
 
 func (s *PlayerArrived) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.NodeIndex)
 	return b.Bytes()
 }
 
@@ -5441,14 +5133,14 @@ type PlayerWizbang struct {
 
 func (s *PlayerWizbang) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.StateName)))
-	writeString_12(b, s.StateName)
+	binary.Write(b, binary.LittleEndian, s.StateName)
 	return b.Bytes()
 }
 
 func (s *PlayerWizbang) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.StateName, err = readString_12(b); err != nil {
+	if s.StateName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -5464,11 +5156,7 @@ type PlayMusic struct {
 
 func (s *PlayMusic) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 19+len(s.SoundFilename)))
-	binary.Write(b, binary.LittleEndian, s.SoundID)
-	binary.Write(b, binary.LittleEndian, s.FadeTime)
-	binary.Write(b, binary.LittleEndian, s.Flags)
-	writeString_12(b, s.SoundFilename)
-	binary.Write(b, binary.LittleEndian, s.StartDelay)
+	binary.Write(b, binary.LittleEndian, s.SoundFilename)
 	return b.Bytes()
 }
 
@@ -5484,7 +5172,7 @@ func (s *PlayMusic) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Flags); err != nil {
 		return err
 	}
-	if s.SoundFilename, err = readString_12(b); err != nil {
+	if s.SoundFilename, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.StartDelay); err != nil {
@@ -5499,7 +5187,6 @@ type PotionBuyConfirm struct {
 
 func (s *PotionBuyConfirm) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.Failure)
 	return b.Bytes()
 }
 
@@ -5519,8 +5206,6 @@ type PotionBuyRequest struct {
 
 func (s *PotionBuyRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.AmountEnum)
-	binary.Write(b, binary.LittleEndian, s.NpcGlobalID)
 	return b.Bytes()
 }
 
@@ -5543,8 +5228,7 @@ type PotionShopOpen struct {
 
 func (s *PotionShopOpen) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.ShopTitle)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_12(b, s.ShopTitle)
+	binary.Write(b, binary.LittleEndian, s.ShopTitle)
 	return b.Bytes()
 }
 
@@ -5554,7 +5238,7 @@ func (s *PotionShopOpen) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.ShopTitle, err = readString_12(b); err != nil {
+	if s.ShopTitle, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -5566,7 +5250,6 @@ type PreLeaderboard struct {
 
 func (s *PreLeaderboard) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.LeaderboardNameID)
 	return b.Bytes()
 }
 
@@ -5594,16 +5277,10 @@ type PremiumContent struct {
 
 func (s *PremiumContent) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 34+len(s.ScrollTitle)+len(s.TitleText)+len(s.SubscribeText)+len(s.PurchaseList)))
-	binary.Write(b, binary.LittleEndian, s.MobileID)
-	binary.Write(b, binary.LittleEndian, s.TransactionID)
-	binary.Write(b, binary.LittleEndian, s.Failure)
-	binary.Write(b, binary.LittleEndian, s.TotalCrowns)
-	binary.Write(b, binary.LittleEndian, s.CanPurchase)
-	writeString_12(b, s.ScrollTitle)
-	writeString_12(b, s.TitleText)
-	writeString_12(b, s.SubscribeText)
-	binary.Write(b, binary.LittleEndian, s.Tournament)
-	writeString_12(b, s.PurchaseList)
+	binary.Write(b, binary.LittleEndian, s.ScrollTitle)
+	binary.Write(b, binary.LittleEndian, s.TitleText)
+	binary.Write(b, binary.LittleEndian, s.SubscribeText)
+	binary.Write(b, binary.LittleEndian, s.PurchaseList)
 	return b.Bytes()
 }
 
@@ -5625,19 +5302,19 @@ func (s *PremiumContent) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.CanPurchase); err != nil {
 		return err
 	}
-	if s.ScrollTitle, err = readString_12(b); err != nil {
+	if s.ScrollTitle, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.TitleText, err = readString_12(b); err != nil {
+	if s.TitleText, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.SubscribeText, err = readString_12(b); err != nil {
+	if s.SubscribeText, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Tournament); err != nil {
 		return err
 	}
-	if s.PurchaseList, err = readString_12(b); err != nil {
+	if s.PurchaseList, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -5654,12 +5331,6 @@ type PrePvPKiosk struct {
 
 func (s *PrePvPKiosk) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 29))
-	binary.Write(b, binary.LittleEndian, s.TournamentNameID)
-	binary.Write(b, binary.LittleEndian, s.MobileID)
-	binary.Write(b, binary.LittleEndian, s.LeagueID)
-	binary.Write(b, binary.LittleEndian, s.SeasonID)
-	binary.Write(b, binary.LittleEndian, s.TransactionID)
-	binary.Write(b, binary.LittleEndian, s.Patching)
 	return b.Bytes()
 }
 
@@ -5695,9 +5366,7 @@ type PvPConfirm struct {
 
 func (s *PvPConfirm) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 7+len(s.MatchActor)))
-	binary.Write(b, binary.LittleEndian, s.TournamentNameID)
-	binary.Write(b, binary.LittleEndian, s.Confirm)
-	writeString_12(b, s.MatchActor)
+	binary.Write(b, binary.LittleEndian, s.MatchActor)
 	return b.Bytes()
 }
 
@@ -5710,7 +5379,7 @@ func (s *PvPConfirm) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Confirm); err != nil {
 		return err
 	}
-	if s.MatchActor, err = readString_12(b); err != nil {
+	if s.MatchActor, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -5727,12 +5396,6 @@ type PvPConfirmTourney struct {
 
 func (s *PvPConfirmTourney) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 36))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.RegistrationID)
-	binary.Write(b, binary.LittleEndian, s.BracketID)
-	binary.Write(b, binary.LittleEndian, s.PricePvPTourneyCurrency)
-	binary.Write(b, binary.LittleEndian, s.SubPricePvPTourneyCurrency)
-	binary.Write(b, binary.LittleEndian, s.PlayerPvPTourneyCurrency)
 	return b.Bytes()
 }
 
@@ -5771,12 +5434,7 @@ type PvPConsumePvPTourneyCurrency struct {
 
 func (s *PvPConsumePvPTourneyCurrency) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 34+len(s.Bracket)))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.BracketID)
-	writeString_12(b, s.Bracket)
-	binary.Write(b, binary.LittleEndian, s.GroupJoinTeamID)
-	binary.Write(b, binary.LittleEndian, s.PricePvPTourneyCurrency)
-	binary.Write(b, binary.LittleEndian, s.SubPricePvPTourneyCurrency)
+	binary.Write(b, binary.LittleEndian, s.Bracket)
 	return b.Bytes()
 }
 
@@ -5789,7 +5447,7 @@ func (s *PvPConsumePvPTourneyCurrency) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.BracketID); err != nil {
 		return err
 	}
-	if s.Bracket, err = readString_12(b); err != nil {
+	if s.Bracket, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.GroupJoinTeamID); err != nil {
@@ -5816,13 +5474,7 @@ type PvPIntent struct {
 
 func (s *PvPIntent) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 31+len(s.TargetData)))
-	binary.Write(b, binary.LittleEndian, s.Command)
-	binary.Write(b, binary.LittleEndian, s.TargetObject)
-	writeString_12(b, s.TargetData)
-	binary.Write(b, binary.LittleEndian, s.TournamentNameID)
-	binary.Write(b, binary.LittleEndian, s.MatchNameID)
-	binary.Write(b, binary.LittleEndian, s.MatchID)
-	binary.Write(b, binary.LittleEndian, s.AllowExtMatchSearch)
+	binary.Write(b, binary.LittleEndian, s.TargetData)
 	return b.Bytes()
 }
 
@@ -5835,7 +5487,7 @@ func (s *PvPIntent) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.TargetObject); err != nil {
 		return err
 	}
-	if s.TargetData, err = readString_12(b); err != nil {
+	if s.TargetData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.TournamentNameID); err != nil {
@@ -5861,9 +5513,6 @@ type PvpMatchRequest struct {
 
 func (s *PvpMatchRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 13))
-	binary.Write(b, binary.LittleEndian, s.TournamentNameID)
-	binary.Write(b, binary.LittleEndian, s.MobileID)
-	binary.Write(b, binary.LittleEndian, s.Failure)
 	return b.Bytes()
 }
 
@@ -5890,9 +5539,7 @@ type PvPQueue struct {
 
 func (s *PvPQueue) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 11+len(s.PvPQueue)))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	writeString_12(b, s.PvPQueue)
-	binary.Write(b, binary.LittleEndian, s.Clear)
+	binary.Write(b, binary.LittleEndian, s.PvPQueue)
 	return b.Bytes()
 }
 
@@ -5902,7 +5549,7 @@ func (s *PvPQueue) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.CharacterID); err != nil {
 		return err
 	}
-	if s.PvPQueue, err = readString_12(b); err != nil {
+	if s.PvPQueue, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Clear); err != nil {
@@ -5928,14 +5575,14 @@ type PvPUpdateRequest struct {
 
 func (s *PvPUpdateRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.InfoRequest)))
-	writeString_12(b, s.InfoRequest)
+	binary.Write(b, binary.LittleEndian, s.InfoRequest)
 	return b.Bytes()
 }
 
 func (s *PvPUpdateRequest) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.InfoRequest, err = readString_12(b); err != nil {
+	if s.InfoRequest, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -5948,8 +5595,7 @@ type QuestDialog struct {
 
 func (s *QuestDialog) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.ActorDialog)))
-	binary.Write(b, binary.LittleEndian, s.QuestNameID)
-	writeString_12(b, s.ActorDialog)
+	binary.Write(b, binary.LittleEndian, s.ActorDialog)
 	return b.Bytes()
 }
 
@@ -5959,7 +5605,7 @@ func (s *QuestDialog) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.QuestNameID); err != nil {
 		return err
 	}
-	if s.ActorDialog, err = readString_12(b); err != nil {
+	if s.ActorDialog, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -5971,7 +5617,6 @@ type QuestFinderOption struct {
 
 func (s *QuestFinderOption) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.Enable)
 	return b.Bytes()
 }
 
@@ -5991,8 +5636,7 @@ type QuestRewards struct {
 
 func (s *QuestRewards) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.LootList)))
-	binary.Write(b, binary.LittleEndian, s.QuestID)
-	writeString_12(b, s.LootList)
+	binary.Write(b, binary.LittleEndian, s.LootList)
 	return b.Bytes()
 }
 
@@ -6002,7 +5646,7 @@ func (s *QuestRewards) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.QuestID); err != nil {
 		return err
 	}
-	if s.LootList, err = readString_12(b); err != nil {
+	if s.LootList, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6026,8 +5670,7 @@ type ReagentAdd struct {
 
 func (s *ReagentAdd) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_12(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -6037,7 +5680,7 @@ func (s *ReagentAdd) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6050,8 +5693,6 @@ type ReagentRemove struct {
 
 func (s *ReagentRemove) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.ItemID)
 	return b.Bytes()
 }
 
@@ -6073,7 +5714,6 @@ type ReagentRemoveRequest struct {
 
 func (s *ReagentRemoveRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
 	return b.Bytes()
 }
 
@@ -6094,9 +5734,6 @@ type ReagentUpdate struct {
 
 func (s *ReagentUpdate) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.ItemID)
-	binary.Write(b, binary.LittleEndian, s.Quantity)
 	return b.Bytes()
 }
 
@@ -6122,8 +5759,7 @@ type RecipeAdd struct {
 
 func (s *RecipeAdd) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_12(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -6133,7 +5769,7 @@ func (s *RecipeAdd) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6146,8 +5782,6 @@ type RecipeRemove struct {
 
 func (s *RecipeRemove) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.RecipeID)
 	return b.Bytes()
 }
 
@@ -6170,8 +5804,7 @@ type Registrar struct {
 
 func (s *Registrar) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.MobileID)
-	writeString_12(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -6181,7 +5814,7 @@ func (s *Registrar) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.MobileID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6193,7 +5826,6 @@ type RemoveSpellFromBook struct {
 
 func (s *RemoveSpellFromBook) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.SpellID)
 	return b.Bytes()
 }
 
@@ -6214,9 +5846,6 @@ type RemoveSpellFromDeck struct {
 
 func (s *RemoveSpellFromDeck) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 13))
-	binary.Write(b, binary.LittleEndian, s.SpellID)
-	binary.Write(b, binary.LittleEndian, s.DeckID)
-	binary.Write(b, binary.LittleEndian, s.Success)
 	return b.Bytes()
 }
 
@@ -6243,9 +5872,6 @@ type RemoveTreasureSpellFromBook struct {
 
 func (s *RemoveTreasureSpellFromBook) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.SpellID)
-	binary.Write(b, binary.LittleEndian, s.EnchantmentID)
-	binary.Write(b, binary.LittleEndian, s.Quantity)
 	return b.Bytes()
 }
 
@@ -6274,11 +5900,6 @@ type RemoveTreasureSpellFromDeck struct {
 
 func (s *RemoveTreasureSpellFromDeck) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 18))
-	binary.Write(b, binary.LittleEndian, s.SpellID)
-	binary.Write(b, binary.LittleEndian, s.EnchantmentID)
-	binary.Write(b, binary.LittleEndian, s.DeckID)
-	binary.Write(b, binary.LittleEndian, s.Success)
-	binary.Write(b, binary.LittleEndian, s.Destroy)
 	return b.Bytes()
 }
 
@@ -6311,9 +5932,6 @@ type RemoveTreasureSpellFromVault struct {
 
 func (s *RemoveTreasureSpellFromVault) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.SpellID)
-	binary.Write(b, binary.LittleEndian, s.EnchantmentID)
-	binary.Write(b, binary.LittleEndian, s.Quantity)
 	return b.Bytes()
 }
 
@@ -6339,8 +5957,6 @@ type RentalUpdate struct {
 
 func (s *RentalUpdate) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.TemplateID)
-	binary.Write(b, binary.LittleEndian, s.Reason)
 	return b.Bytes()
 }
 
@@ -6362,14 +5978,14 @@ type RequestActiveMapQuests struct {
 
 func (s *RequestActiveMapQuests) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Data)))
-	writeString_12(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
 func (s *RequestActiveMapQuests) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6383,9 +5999,7 @@ type RequestAdventureParty struct {
 
 func (s *RequestAdventureParty) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.Buffer)))
-	binary.Write(b, binary.LittleEndian, s.PlayerGID)
-	writeString_12(b, s.Buffer)
-	binary.Write(b, binary.LittleEndian, s.JoinCooldown)
+	binary.Write(b, binary.LittleEndian, s.Buffer)
 	return b.Bytes()
 }
 
@@ -6395,7 +6009,7 @@ func (s *RequestAdventureParty) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.PlayerGID); err != nil {
 		return err
 	}
-	if s.Buffer, err = readString_12(b); err != nil {
+	if s.Buffer, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.JoinCooldown); err != nil {
@@ -6410,7 +6024,6 @@ type RequestCombatSigils struct {
 
 func (s *RequestCombatSigils) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.ZoneID)
 	return b.Bytes()
 }
 
@@ -6434,12 +6047,7 @@ type RequestCreateAdventureParty struct {
 
 func (s *RequestCreateAdventureParty) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 30+len(s.OwnerName)))
-	binary.Write(b, binary.LittleEndian, s.PlayerGID)
-	binary.Write(b, binary.LittleEndian, s.OwnerGID)
-	binary.Write(b, binary.LittleEndian, s.Status)
-	binary.Write(b, binary.LittleEndian, s.PartyName)
-	binary.Write(b, binary.LittleEndian, s.PartyNameLocale)
-	writeString_12(b, s.OwnerName)
+	binary.Write(b, binary.LittleEndian, s.OwnerName)
 	return b.Bytes()
 }
 
@@ -6461,7 +6069,7 @@ func (s *RequestCreateAdventureParty) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.PartyNameLocale); err != nil {
 		return err
 	}
-	if s.OwnerName, err = readString_12(b); err != nil {
+	if s.OwnerName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6477,11 +6085,6 @@ type RequestFriendFinderCode struct {
 
 func (s *RequestFriendFinderCode) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 33))
-	binary.Write(b, binary.LittleEndian, s.Account1)
-	binary.Write(b, binary.LittleEndian, s.Account2)
-	binary.Write(b, binary.LittleEndian, s.BuddyID)
-	binary.Write(b, binary.LittleEndian, s.Forwarded)
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
 	return b.Bytes()
 }
 
@@ -6513,8 +6116,7 @@ type RequestFriendlyPlayerQuest struct {
 
 func (s *RequestFriendlyPlayerQuest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.PlayerGID)
-	writeString_12(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -6524,7 +6126,7 @@ func (s *RequestFriendlyPlayerQuest) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.PlayerGID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6538,9 +6140,7 @@ type RequestFriendlyPlayerQuest2 struct {
 
 func (s *RequestFriendlyPlayerQuest2) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 18+len(s.QuestName)))
-	binary.Write(b, binary.LittleEndian, s.RequestingPlayerGID)
-	binary.Write(b, binary.LittleEndian, s.PlayerGID)
-	writeString_12(b, s.QuestName)
+	binary.Write(b, binary.LittleEndian, s.QuestName)
 	return b.Bytes()
 }
 
@@ -6553,7 +6153,7 @@ func (s *RequestFriendlyPlayerQuest2) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.PlayerGID); err != nil {
 		return err
 	}
-	if s.QuestName, err = readString_12(b); err != nil {
+	if s.QuestName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6566,8 +6166,7 @@ type RequestFriendlyPlayers struct {
 
 func (s *RequestFriendlyPlayers) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.PlayerGID)
-	writeString_12(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -6577,7 +6176,7 @@ func (s *RequestFriendlyPlayers) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.PlayerGID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6593,24 +6192,22 @@ type RequestHouseTeleport struct {
 
 func (s *RequestHouseTeleport) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 18+len(s.DestinationZone)+len(s.DestinationLoc)+len(s.Position)))
-	writeString_12(b, s.DestinationZone)
-	writeString_12(b, s.DestinationLoc)
-	writeString_12(b, s.Position)
-	binary.Write(b, binary.LittleEndian, s.TransitionID)
-	binary.Write(b, binary.LittleEndian, s.ObjectGID)
+	binary.Write(b, binary.LittleEndian, s.DestinationZone)
+	binary.Write(b, binary.LittleEndian, s.DestinationLoc)
+	binary.Write(b, binary.LittleEndian, s.Position)
 	return b.Bytes()
 }
 
 func (s *RequestHouseTeleport) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.DestinationZone, err = readString_12(b); err != nil {
+	if s.DestinationZone, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.DestinationLoc, err = readString_12(b); err != nil {
+	if s.DestinationLoc, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Position, err = readString_12(b); err != nil {
+	if s.Position, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.TransitionID); err != nil {
@@ -6635,14 +6232,7 @@ type RequestJoinAdventureParty struct {
 
 func (s *RequestJoinAdventureParty) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 39+len(s.PlayerName)))
-	binary.Write(b, binary.LittleEndian, s.PlayerGID)
-	binary.Write(b, binary.LittleEndian, s.PartyGID)
-	binary.Write(b, binary.LittleEndian, s.Status)
-	binary.Write(b, binary.LittleEndian, s.RequestingPlayerGID)
-	writeString_12(b, s.PlayerName)
-	binary.Write(b, binary.LittleEndian, s.PartyName)
-	binary.Write(b, binary.LittleEndian, s.PartyNameLocale)
-	binary.Write(b, binary.LittleEndian, s.Guild)
+	binary.Write(b, binary.LittleEndian, s.PlayerName)
 	return b.Bytes()
 }
 
@@ -6661,7 +6251,7 @@ func (s *RequestJoinAdventureParty) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.RequestingPlayerGID); err != nil {
 		return err
 	}
-	if s.PlayerName, err = readString_12(b); err != nil {
+	if s.PlayerName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PartyName); err != nil {
@@ -6686,11 +6276,6 @@ type RequestLeaveAdventureParty struct {
 
 func (s *RequestLeaveAdventureParty) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 25))
-	binary.Write(b, binary.LittleEndian, s.PlayerGID)
-	binary.Write(b, binary.LittleEndian, s.PartyGID)
-	binary.Write(b, binary.LittleEndian, s.PartyName)
-	binary.Write(b, binary.LittleEndian, s.PartyNameLocale)
-	binary.Write(b, binary.LittleEndian, s.Guild)
 	return b.Bytes()
 }
 
@@ -6721,14 +6306,14 @@ type RequestNextClosestQuest struct {
 
 func (s *RequestNextClosestQuest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.NPCList)))
-	writeString_12(b, s.NPCList)
+	binary.Write(b, binary.LittleEndian, s.NPCList)
 	return b.Bytes()
 }
 
 func (s *RequestNextClosestQuest) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.NPCList, err = readString_12(b); err != nil {
+	if s.NPCList, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6754,10 +6339,6 @@ type RequestPvPActor struct {
 
 func (s *RequestPvPActor) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.TournamentNameID)
-	binary.Write(b, binary.LittleEndian, s.MatchNameID)
-	binary.Write(b, binary.LittleEndian, s.RequestID)
 	return b.Bytes()
 }
 
@@ -6787,9 +6368,6 @@ type RequestPvPKiosk struct {
 
 func (s *RequestPvPKiosk) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20))
-	binary.Write(b, binary.LittleEndian, s.MobileID)
-	binary.Write(b, binary.LittleEndian, s.TournamentNameID)
-	binary.Write(b, binary.LittleEndian, s.TransactionID)
 	return b.Bytes()
 }
 
@@ -6814,7 +6392,6 @@ type RequestQuestDialog struct {
 
 func (s *RequestQuestDialog) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.QuestNameID)
 	return b.Bytes()
 }
 
@@ -6835,9 +6412,6 @@ type RequestQuickSell struct {
 
 func (s *RequestQuickSell) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9))
-	binary.Write(b, binary.LittleEndian, s.SellModifier)
-	binary.Write(b, binary.LittleEndian, s.Section)
-	binary.Write(b, binary.LittleEndian, s.FromTemplateID)
 	return b.Bytes()
 }
 
@@ -6866,11 +6440,6 @@ type RequestTeamUpInfo struct {
 
 func (s *RequestTeamUpInfo) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 19))
-	binary.Write(b, binary.LittleEndian, s.PlayerGID)
-	binary.Write(b, binary.LittleEndian, s.NPCID)
-	binary.Write(b, binary.LittleEndian, s.IsFarming)
-	binary.Write(b, binary.LittleEndian, s.RequestedSigilMode)
-	binary.Write(b, binary.LittleEndian, s.TeamSize)
 	return b.Bytes()
 }
 
@@ -6903,9 +6472,6 @@ type RequestToggleLockItem struct {
 
 func (s *RequestToggleLockItem) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20))
-	binary.Write(b, binary.LittleEndian, s.ItemGID)
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.IsLocked)
 	return b.Bytes()
 }
 
@@ -6932,9 +6498,7 @@ type RequestVolunteerInfo struct {
 
 func (s *RequestVolunteerInfo) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 11+len(s.WorldInfo)))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	writeString_12(b, s.WorldInfo)
-	binary.Write(b, binary.LittleEndian, s.IsVolunteer)
+	binary.Write(b, binary.LittleEndian, s.WorldInfo)
 	return b.Bytes()
 }
 
@@ -6944,7 +6508,7 @@ func (s *RequestVolunteerInfo) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.CharacterID); err != nil {
 		return err
 	}
-	if s.WorldInfo, err = readString_12(b); err != nil {
+	if s.WorldInfo, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.IsVolunteer); err != nil {
@@ -6961,9 +6525,6 @@ type RespecConfirm struct {
 
 func (s *RespecConfirm) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6))
-	binary.Write(b, binary.LittleEndian, s.Failure)
-	binary.Write(b, binary.LittleEndian, s.WebFailure)
-	binary.Write(b, binary.LittleEndian, s.Credits)
 	return b.Bytes()
 }
 
@@ -6994,13 +6555,6 @@ type ResponsePrivacyOptions struct {
 
 func (s *ResponsePrivacyOptions) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 7))
-	binary.Write(b, binary.LittleEndian, s.AllowFriendRequest)
-	binary.Write(b, binary.LittleEndian, s.AllowFriendTeleport)
-	binary.Write(b, binary.LittleEndian, s.AllowTradeRequest)
-	binary.Write(b, binary.LittleEndian, s.AllowHatchRequest)
-	binary.Write(b, binary.LittleEndian, s.AllowPartyInvites)
-	binary.Write(b, binary.LittleEndian, s.HidePVPEnemyChat)
-	binary.Write(b, binary.LittleEndian, s.LimitHomeToFriends)
 	return b.Bytes()
 }
 
@@ -7042,12 +6596,6 @@ type RideMount struct {
 
 func (s *RideMount) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 23))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.DriverID)
-	binary.Write(b, binary.LittleEndian, s.Riding)
-	binary.Write(b, binary.LittleEndian, s.LocationX)
-	binary.Write(b, binary.LittleEndian, s.LocationY)
-	binary.Write(b, binary.LittleEndian, s.LocationZ)
 	return b.Bytes()
 }
 
@@ -7085,11 +6633,7 @@ type SeamstressOpen struct {
 
 func (s *SeamstressOpen) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 19+len(s.ShopTitle)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_12(b, s.ShopTitle)
-	binary.Write(b, binary.LittleEndian, s.Credits)
-	binary.Write(b, binary.LittleEndian, s.MergeCost)
-	binary.Write(b, binary.LittleEndian, s.WebFailure)
+	binary.Write(b, binary.LittleEndian, s.ShopTitle)
 	return b.Bytes()
 }
 
@@ -7099,7 +6643,7 @@ func (s *SeamstressOpen) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.ShopTitle, err = readString_12(b); err != nil {
+	if s.ShopTitle, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Credits); err != nil {
@@ -7124,24 +6668,21 @@ type SendFriendFinderCode struct {
 
 func (s *SendFriendFinderCode) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20+len(s.Code)+len(s.PackedName)))
-	writeString_12(b, s.Code)
-	binary.Write(b, binary.LittleEndian, s.Error)
-	writeString_12(b, s.PackedName)
-	binary.Write(b, binary.LittleEndian, s.IsRequester)
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
+	binary.Write(b, binary.LittleEndian, s.Code)
+	binary.Write(b, binary.LittleEndian, s.PackedName)
 	return b.Bytes()
 }
 
 func (s *SendFriendFinderCode) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Code, err = readString_12(b); err != nil {
+	if s.Code, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Error); err != nil {
 		return err
 	}
-	if s.PackedName, err = readString_12(b); err != nil {
+	if s.PackedName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.IsRequester); err != nil {
@@ -7159,14 +6700,14 @@ type SendTalentDataCSR struct {
 
 func (s *SendTalentDataCSR) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Talents)))
-	writeString_12(b, s.Talents)
+	binary.Write(b, binary.LittleEndian, s.Talents)
 	return b.Bytes()
 }
 
 func (s *SendTalentDataCSR) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Talents, err = readString_12(b); err != nil {
+	if s.Talents, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -7180,9 +6721,6 @@ type SetDeckName struct {
 
 func (s *SetDeckName) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.ItemGID)
-	binary.Write(b, binary.LittleEndian, s.DeckName)
-	binary.Write(b, binary.LittleEndian, s.DeckNameExtension)
 	return b.Bytes()
 }
 
@@ -7207,7 +6745,6 @@ type DontAllowFriendFinderCodes struct {
 
 func (s *DontAllowFriendFinderCodes) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.DontAllowFriendFinderCodes)
 	return b.Bytes()
 }
 
@@ -7227,8 +6764,6 @@ type SetFriendlyPlayer struct {
 
 func (s *SetFriendlyPlayer) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9))
-	binary.Write(b, binary.LittleEndian, s.FriendlyPlayer)
-	binary.Write(b, binary.LittleEndian, s.PlayerGID)
 	return b.Bytes()
 }
 
@@ -7251,8 +6786,6 @@ type SetRentalTimer struct {
 
 func (s *SetRentalTimer) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.TimerTime)
 	return b.Bytes()
 }
 
@@ -7275,8 +6808,6 @@ type SetVolunteerFlag struct {
 
 func (s *SetVolunteerFlag) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9))
-	binary.Write(b, binary.LittleEndian, s.VolunteerPlayer)
-	binary.Write(b, binary.LittleEndian, s.PlayerGID)
 	return b.Bytes()
 }
 
@@ -7300,9 +6831,6 @@ type SharedBankDeleteReagentOrPetSnack struct {
 
 func (s *SharedBankDeleteReagentOrPetSnack) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.ClientRequestID)
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.Quantity)
 	return b.Bytes()
 }
 
@@ -7329,9 +6857,6 @@ type SharedBankDeleteReagentOrPetSnackConfirm struct {
 
 func (s *SharedBankDeleteReagentOrPetSnackConfirm) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 13))
-	binary.Write(b, binary.LittleEndian, s.ClientRequestID)
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.Failure)
 	return b.Bytes()
 }
 
@@ -7358,9 +6883,6 @@ type ShopBuyConfirm struct {
 
 func (s *ShopBuyConfirm) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6))
-	binary.Write(b, binary.LittleEndian, s.Failure)
-	binary.Write(b, binary.LittleEndian, s.WebFailure)
-	binary.Write(b, binary.LittleEndian, s.Credits)
 	return b.Bytes()
 }
 
@@ -7392,14 +6914,6 @@ type ShopBuyRequest struct {
 
 func (s *ShopBuyRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 37))
-	binary.Write(b, binary.LittleEndian, s.ShopID)
-	binary.Write(b, binary.LittleEndian, s.CurrencyType)
-	binary.Write(b, binary.LittleEndian, s.Texture)
-	binary.Write(b, binary.LittleEndian, s.Decal)
-	binary.Write(b, binary.LittleEndian, s.Decal2)
-	binary.Write(b, binary.LittleEndian, s.PetName)
-	binary.Write(b, binary.LittleEndian, s.NpcGlobalID)
-	binary.Write(b, binary.LittleEndian, s.Quantity)
 	return b.Bytes()
 }
 
@@ -7442,10 +6956,7 @@ type ShopList struct {
 
 func (s *ShopList) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 15+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_12(b, s.Data)
-	binary.Write(b, binary.LittleEndian, s.Credits)
-	binary.Write(b, binary.LittleEndian, s.WebFailure)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -7455,7 +6966,7 @@ func (s *ShopList) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Credits); err != nil {
@@ -7475,9 +6986,6 @@ type ShopSellConfirm struct {
 
 func (s *ShopSellConfirm) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 13))
-	binary.Write(b, binary.LittleEndian, s.ClientRequestID)
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.Failure)
 	return b.Bytes()
 }
 
@@ -7505,10 +7013,6 @@ type ShopSellRequest struct {
 
 func (s *ShopSellRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 21))
-	binary.Write(b, binary.LittleEndian, s.Quantity)
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.IsQuickSell)
-	binary.Write(b, binary.LittleEndian, s.NpcGlobalID)
 	return b.Bytes()
 }
 
@@ -7537,18 +7041,18 @@ type ShowcasedStoreItemInfo struct {
 
 func (s *ShowcasedStoreItemInfo) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4+len(s.StoreTemplateIDsCSV)+len(s.Data)))
-	writeString_12(b, s.StoreTemplateIDsCSV)
-	writeString_12(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.StoreTemplateIDsCSV)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
 func (s *ShowcasedStoreItemInfo) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.StoreTemplateIDsCSV, err = readString_12(b); err != nil {
+	if s.StoreTemplateIDsCSV, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -7562,9 +7066,6 @@ type ShowClientMessageBox struct {
 
 func (s *ShowClientMessageBox) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9))
-	binary.Write(b, binary.LittleEndian, s.Message)
-	binary.Write(b, binary.LittleEndian, s.Title)
-	binary.Write(b, binary.LittleEndian, s.Delay)
 	return b.Bytes()
 }
 
@@ -7590,15 +7091,14 @@ type ShowGUI struct {
 
 func (s *ShowGUI) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 3+len(s.GUIFileName)))
-	writeString_12(b, s.GUIFileName)
-	binary.Write(b, binary.LittleEndian, s.StageIndex)
+	binary.Write(b, binary.LittleEndian, s.GUIFileName)
 	return b.Bytes()
 }
 
 func (s *ShowGUI) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.GUIFileName, err = readString_12(b); err != nil {
+	if s.GUIFileName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.StageIndex); err != nil {
@@ -7614,8 +7114,7 @@ type SnackList struct {
 
 func (s *SnackList) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 3+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.InvisibleToFriends)
-	writeString_12(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -7625,7 +7124,7 @@ func (s *SnackList) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.InvisibleToFriends); err != nil {
 		return err
 	}
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -7637,14 +7136,14 @@ type SpellList struct {
 
 func (s *SpellList) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Data)))
-	writeString_12(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
 func (s *SpellList) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -7658,9 +7157,7 @@ type SpellTrainComplete struct {
 
 func (s *SpellTrainComplete) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 11+len(s.DisplayText)))
-	binary.Write(b, binary.LittleEndian, s.SpellID)
-	writeString_12(b, s.DisplayText)
-	binary.Write(b, binary.LittleEndian, s.Success)
+	binary.Write(b, binary.LittleEndian, s.DisplayText)
 	return b.Bytes()
 }
 
@@ -7670,7 +7167,7 @@ func (s *SpellTrainComplete) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.SpellID); err != nil {
 		return err
 	}
-	if s.DisplayText, err = readString_12(b); err != nil {
+	if s.DisplayText, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Success); err != nil {
@@ -7686,8 +7183,6 @@ type StartRide struct {
 
 func (s *StartRide) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.Time)
 	return b.Bytes()
 }
 
@@ -7711,9 +7206,6 @@ type StitchItems struct {
 
 func (s *StitchItems) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.StatsID)
-	binary.Write(b, binary.LittleEndian, s.DisplayID)
 	return b.Bytes()
 }
 
@@ -7740,9 +7232,6 @@ type StitchItemsConfirm struct {
 
 func (s *StitchItemsConfirm) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9))
-	binary.Write(b, binary.LittleEndian, s.Failure)
-	binary.Write(b, binary.LittleEndian, s.WebFailure)
-	binary.Write(b, binary.LittleEndian, s.Credits)
 	return b.Bytes()
 }
 
@@ -7769,9 +7258,7 @@ type StorageClientAdd struct {
 
 func (s *StorageClientAdd) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 11+len(s.SerializedItem)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_12(b, s.SerializedItem)
-	binary.Write(b, binary.LittleEndian, s.SharedBank)
+	binary.Write(b, binary.LittleEndian, s.SerializedItem)
 	return b.Bytes()
 }
 
@@ -7781,7 +7268,7 @@ func (s *StorageClientAdd) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.SerializedItem, err = readString_12(b); err != nil {
+	if s.SerializedItem, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.SharedBank); err != nil {
@@ -7798,9 +7285,6 @@ type StorageClientRemove struct {
 
 func (s *StorageClientRemove) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 17))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.SharedBank)
-	binary.Write(b, binary.LittleEndian, s.ItemID)
 	return b.Bytes()
 }
 
@@ -7826,15 +7310,14 @@ type SubmitCombatSigils struct {
 
 func (s *SubmitCombatSigils) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.SigilPositions)))
-	writeString_12(b, s.SigilPositions)
-	binary.Write(b, binary.LittleEndian, s.ZoneID)
+	binary.Write(b, binary.LittleEndian, s.SigilPositions)
 	return b.Bytes()
 }
 
 func (s *SubmitCombatSigils) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.SigilPositions, err = readString_12(b); err != nil {
+	if s.SigilPositions, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ZoneID); err != nil {
@@ -7849,14 +7332,14 @@ type SubscriberOnlyItems struct {
 
 func (s *SubscriberOnlyItems) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Data)))
-	writeString_12(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
 func (s *SubscriberOnlyItems) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -7868,14 +7351,14 @@ type TimedAccessPasses struct {
 
 func (s *TimedAccessPasses) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Data)))
-	writeString_12(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
 func (s *TimedAccessPasses) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -7891,11 +7374,6 @@ type TradeChangeItem struct {
 
 func (s *TradeChangeItem) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 25))
-	binary.Write(b, binary.LittleEndian, s.TargetGID)
-	binary.Write(b, binary.LittleEndian, s.ChangeGID)
-	binary.Write(b, binary.LittleEndian, s.ItemTemplate)
-	binary.Write(b, binary.LittleEndian, s.ItemEnchant)
-	binary.Write(b, binary.LittleEndian, s.Action)
 	return b.Bytes()
 }
 
@@ -7928,9 +7406,6 @@ type TradeChangeMoney struct {
 
 func (s *TradeChangeMoney) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20))
-	binary.Write(b, binary.LittleEndian, s.TargetGID)
-	binary.Write(b, binary.LittleEndian, s.ChangeGID)
-	binary.Write(b, binary.LittleEndian, s.Amount)
 	return b.Bytes()
 }
 
@@ -7955,7 +7430,6 @@ type TradeCreate struct {
 
 func (s *TradeCreate) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.TargetGID)
 	return b.Bytes()
 }
 
@@ -7976,9 +7450,6 @@ type TradeJoinStatus struct {
 
 func (s *TradeJoinStatus) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.TargetGID)
-	binary.Write(b, binary.LittleEndian, s.TargetStatus)
-	binary.Write(b, binary.LittleEndian, s.PlayerStatus)
 	return b.Bytes()
 }
 
@@ -8005,9 +7476,6 @@ type TradeReadyStatus struct {
 
 func (s *TradeReadyStatus) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.TargetGID)
-	binary.Write(b, binary.LittleEndian, s.TargetStatus)
-	binary.Write(b, binary.LittleEndian, s.PlayerStatus)
 	return b.Bytes()
 }
 
@@ -8032,7 +7500,6 @@ type TradeRequest struct {
 
 func (s *TradeRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.TargetGID)
 	return b.Bytes()
 }
 
@@ -8054,10 +7521,6 @@ type TradeResult struct {
 
 func (s *TradeResult) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20))
-	binary.Write(b, binary.LittleEndian, s.TargetGID)
-	binary.Write(b, binary.LittleEndian, s.ItemsGained)
-	binary.Write(b, binary.LittleEndian, s.ItemsLost)
-	binary.Write(b, binary.LittleEndian, s.Status)
 	return b.Bytes()
 }
 
@@ -8086,8 +7549,6 @@ type Train struct {
 
 func (s *Train) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.MobileID)
-	binary.Write(b, binary.LittleEndian, s.TrainingIndex)
 	return b.Bytes()
 }
 
@@ -8112,10 +7573,6 @@ type TreasureBuy struct {
 
 func (s *TreasureBuy) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.TreasureCardID)
-	binary.Write(b, binary.LittleEndian, s.NpcGlobalID)
-	binary.Write(b, binary.LittleEndian, s.Quantity)
 	return b.Bytes()
 }
 
@@ -8145,9 +7602,6 @@ type TreasureBuyConfirm struct {
 
 func (s *TreasureBuyConfirm) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6))
-	binary.Write(b, binary.LittleEndian, s.Failure)
-	binary.Write(b, binary.LittleEndian, s.WebFailure)
-	binary.Write(b, binary.LittleEndian, s.Credits)
 	return b.Bytes()
 }
 
@@ -8176,11 +7630,7 @@ type TreasureShopList struct {
 
 func (s *TreasureShopList) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_12(b, s.Data)
-	binary.Write(b, binary.LittleEndian, s.Credits)
-	binary.Write(b, binary.LittleEndian, s.WebFailure)
-	binary.Write(b, binary.LittleEndian, s.ShowAuctionHouse)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -8190,7 +7640,7 @@ func (s *TreasureShopList) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Credits); err != nil {
@@ -8211,14 +7661,14 @@ type TutorialEvent struct {
 
 func (s *TutorialEvent) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.TutorialEvent)))
-	writeString_12(b, s.TutorialEvent)
+	binary.Write(b, binary.LittleEndian, s.TutorialEvent)
 	return b.Bytes()
 }
 
 func (s *TutorialEvent) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.TutorialEvent, err = readString_12(b); err != nil {
+	if s.TutorialEvent, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -8233,10 +7683,6 @@ type UnstitchItems struct {
 
 func (s *UnstitchItems) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.ItemID)
-	binary.Write(b, binary.LittleEndian, s.StatItemColor1)
-	binary.Write(b, binary.LittleEndian, s.StatItemColor2)
 	return b.Bytes()
 }
 
@@ -8268,11 +7714,7 @@ type UnstitchOpen struct {
 
 func (s *UnstitchOpen) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 19+len(s.ShopTitle)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_12(b, s.ShopTitle)
-	binary.Write(b, binary.LittleEndian, s.Credits)
-	binary.Write(b, binary.LittleEndian, s.MergeCost)
-	binary.Write(b, binary.LittleEndian, s.WebFailure)
+	binary.Write(b, binary.LittleEndian, s.ShopTitle)
 	return b.Bytes()
 }
 
@@ -8282,7 +7724,7 @@ func (s *UnstitchOpen) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.ShopTitle, err = readString_12(b); err != nil {
+	if s.ShopTitle, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Credits); err != nil {
@@ -8303,7 +7745,6 @@ type UpdateArenaPoints struct {
 
 func (s *UpdateArenaPoints) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.Points)
 	return b.Bytes()
 }
 
@@ -8322,14 +7763,14 @@ type UpdateFriendlyPlayerWorlds struct {
 
 func (s *UpdateFriendlyPlayerWorlds) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Data)))
-	writeString_12(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
 func (s *UpdateFriendlyPlayerWorlds) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -8341,7 +7782,6 @@ type UpdateFriendlyWorld struct {
 
 func (s *UpdateFriendlyWorld) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.FriendlyWorld)
 	return b.Bytes()
 }
 
@@ -8361,8 +7801,7 @@ type UpdateGender struct {
 
 func (s *UpdateGender) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.NewGender)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_12(b, s.NewGender)
+	binary.Write(b, binary.LittleEndian, s.NewGender)
 	return b.Bytes()
 }
 
@@ -8372,7 +7811,7 @@ func (s *UpdateGender) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.NewGender, err = readString_12(b); err != nil {
+	if s.NewGender, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -8385,8 +7824,6 @@ type UpdateGold struct {
 
 func (s *UpdateGold) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.Gold)
-	binary.Write(b, binary.LittleEndian, s.MaxGold)
 	return b.Bytes()
 }
 
@@ -8411,10 +7848,6 @@ type UpdateHealth struct {
 
 func (s *UpdateHealth) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 17))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	binary.Write(b, binary.LittleEndian, s.NewHealth)
-	binary.Write(b, binary.LittleEndian, s.NewHealthMax)
-	binary.Write(b, binary.LittleEndian, s.DisplayDiff)
 	return b.Bytes()
 }
 
@@ -8444,9 +7877,6 @@ type UpdateMana struct {
 
 func (s *UpdateMana) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9))
-	binary.Write(b, binary.LittleEndian, s.Mana)
-	binary.Write(b, binary.LittleEndian, s.MaxMana)
-	binary.Write(b, binary.LittleEndian, s.DisplayDiff)
 	return b.Bytes()
 }
 
@@ -8472,8 +7902,6 @@ type UpdatePotions struct {
 
 func (s *UpdatePotions) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.PotionMax)
-	binary.Write(b, binary.LittleEndian, s.PotionCharge)
 	return b.Bytes()
 }
 
@@ -8495,7 +7923,6 @@ type UpdatePowerPip struct {
 
 func (s *UpdatePowerPip) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.PowerPip)
 	return b.Bytes()
 }
 
@@ -8520,13 +7947,6 @@ type UpdatePrivacyOptions struct {
 
 func (s *UpdatePrivacyOptions) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 7))
-	binary.Write(b, binary.LittleEndian, s.AllowFriendRequest)
-	binary.Write(b, binary.LittleEndian, s.AllowFriendTeleport)
-	binary.Write(b, binary.LittleEndian, s.AllowTradeRequest)
-	binary.Write(b, binary.LittleEndian, s.AllowHatchRequest)
-	binary.Write(b, binary.LittleEndian, s.AllowPartyInvites)
-	binary.Write(b, binary.LittleEndian, s.HidePVPEnemyChat)
-	binary.Write(b, binary.LittleEndian, s.LimitHomeToFriends)
 	return b.Bytes()
 }
 
@@ -8564,15 +7984,14 @@ type UpdateSchool struct {
 
 func (s *UpdateSchool) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.Data)))
-	writeString_12(b, s.Data)
-	binary.Write(b, binary.LittleEndian, s.SchoolHash)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
 func (s *UpdateSchool) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.SchoolHash); err != nil {
@@ -8587,7 +8006,6 @@ type UpdateShadowPipRating struct {
 
 func (s *UpdateShadowPipRating) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.ShadowPipRating)
 	return b.Bytes()
 }
 
@@ -8606,7 +8024,6 @@ type UpdateTraining struct {
 
 func (s *UpdateTraining) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.TrainingPoints)
 	return b.Bytes()
 }
 
@@ -8626,8 +8043,7 @@ type UpdateVolunteerInfo struct {
 
 func (s *UpdateVolunteerInfo) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.CharacterID)
-	writeString_12(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -8637,7 +8053,7 @@ func (s *UpdateVolunteerInfo) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.CharacterID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -8651,9 +8067,6 @@ type UpdateXP struct {
 
 func (s *UpdateXP) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.XP)
-	binary.Write(b, binary.LittleEndian, s.OldXP)
 	return b.Bytes()
 }
 
@@ -8681,10 +8094,7 @@ type UseFriendFinderCode struct {
 
 func (s *UseFriendFinderCode) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 19+len(s.Code)))
-	binary.Write(b, binary.LittleEndian, s.AccountID)
-	writeString_12(b, s.Code)
-	binary.Write(b, binary.LittleEndian, s.Forwarded)
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
+	binary.Write(b, binary.LittleEndian, s.Code)
 	return b.Bytes()
 }
 
@@ -8694,7 +8104,7 @@ func (s *UseFriendFinderCode) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.AccountID); err != nil {
 		return err
 	}
-	if s.Code, err = readString_12(b); err != nil {
+	if s.Code, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Forwarded); err != nil {
@@ -8716,24 +8126,22 @@ type UseFriendFinderCodeResponse struct {
 
 func (s *UseFriendFinderCodeResponse) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 15+len(s.BuddyName)+len(s.Code)+len(s.Error)))
-	writeString_12(b, s.BuddyName)
-	writeString_12(b, s.Code)
-	writeString_12(b, s.Error)
-	binary.Write(b, binary.LittleEndian, s.Forwarded)
-	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
+	binary.Write(b, binary.LittleEndian, s.BuddyName)
+	binary.Write(b, binary.LittleEndian, s.Code)
+	binary.Write(b, binary.LittleEndian, s.Error)
 	return b.Bytes()
 }
 
 func (s *UseFriendFinderCodeResponse) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.BuddyName, err = readString_12(b); err != nil {
+	if s.BuddyName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Code, err = readString_12(b); err != nil {
+	if s.Code, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Error, err = readString_12(b); err != nil {
+	if s.Error, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Forwarded); err != nil {
@@ -8765,17 +8173,14 @@ type UseRecipe struct {
 
 func (s *UseRecipe) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 18+len(s.RecipeName)))
-	writeString_12(b, s.RecipeName)
-	binary.Write(b, binary.LittleEndian, s.FinalItemID)
-	binary.Write(b, binary.LittleEndian, s.Error)
-	binary.Write(b, binary.LittleEndian, s.Quantity)
+	binary.Write(b, binary.LittleEndian, s.RecipeName)
 	return b.Bytes()
 }
 
 func (s *UseRecipe) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.RecipeName, err = readString_12(b); err != nil {
+	if s.RecipeName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.FinalItemID); err != nil {
@@ -8800,11 +8205,7 @@ type VolunteerRequest struct {
 
 func (s *VolunteerRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 23+len(s.SigilInfo)))
-	binary.Write(b, binary.LittleEndian, s.PlayerGID)
-	binary.Write(b, binary.LittleEndian, s.TeamUpPlayerGID)
-	binary.Write(b, binary.LittleEndian, s.SigilID)
-	writeString_12(b, s.SigilInfo)
-	binary.Write(b, binary.LittleEndian, s.Status)
+	binary.Write(b, binary.LittleEndian, s.SigilInfo)
 	return b.Bytes()
 }
 
@@ -8820,7 +8221,7 @@ func (s *VolunteerRequest) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.SigilID); err != nil {
 		return err
 	}
-	if s.SigilInfo, err = readString_12(b); err != nil {
+	if s.SigilInfo, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Status); err != nil {
@@ -8836,8 +8237,6 @@ type VolunteerTeamHelpComplete struct {
 
 func (s *VolunteerTeamHelpComplete) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9))
-	binary.Write(b, binary.LittleEndian, s.PlayerGID)
-	binary.Write(b, binary.LittleEndian, s.Status)
 	return b.Bytes()
 }
 
@@ -8861,9 +8260,6 @@ type VolunteerTeamHelpJoin struct {
 
 func (s *VolunteerTeamHelpJoin) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.SigilID)
-	binary.Write(b, binary.LittleEndian, s.PlayerGID)
-	binary.Write(b, binary.LittleEndian, s.WorldID)
 	return b.Bytes()
 }
 
@@ -8889,8 +8285,7 @@ type WizGameStats struct {
 
 func (s *WizGameStats) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_12(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -8900,7 +8295,7 @@ func (s *WizGameStats) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -8913,8 +8308,7 @@ type WizInventoryClientAdd struct {
 
 func (s *WizInventoryClientAdd) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.SerializedItem)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_12(b, s.SerializedItem)
+	binary.Write(b, binary.LittleEndian, s.SerializedItem)
 	return b.Bytes()
 }
 
@@ -8924,7 +8318,7 @@ func (s *WizInventoryClientAdd) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.SerializedItem, err = readString_12(b); err != nil {
+	if s.SerializedItem, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -8937,8 +8331,6 @@ type WizInventoryClientRemove struct {
 
 func (s *WizInventoryClientRemove) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	binary.Write(b, binary.LittleEndian, s.ItemID)
 	return b.Bytes()
 }
 
@@ -8961,8 +8353,7 @@ type WorldTeleportList struct {
 
 func (s *WorldTeleportList) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_12(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -8972,7 +8363,7 @@ func (s *WorldTeleportList) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_12(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -8985,8 +8376,7 @@ type WorldTeleportRequest struct {
 
 func (s *WorldTeleportRequest) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.World)))
-	binary.Write(b, binary.LittleEndian, s.TeleportID)
-	writeString_12(b, s.World)
+	binary.Write(b, binary.LittleEndian, s.World)
 	return b.Bytes()
 }
 
@@ -8996,25 +8386,8 @@ func (s *WorldTeleportRequest) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.TeleportID); err != nil {
 		return err
 	}
-	if s.World, err = readString_12(b); err != nil {
+	if s.World, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
-}
-
-func writeString_12(b *bytes.Buffer, v string) {
-	binary.Write(b, binary.LittleEndian, uint16(len(v)))
-	b.WriteString(v)
-}
-
-func readString_12(buf *bytes.Reader) (string, error) {
-	var length uint16
-	if err := binary.Read(buf, binary.LittleEndian, &length); err != nil {
-		return "", err
-	}
-	data := make([]byte, length)
-	if _, err := buf.Read(data); err != nil {
-		return "", err
-	}
-	return *(*string)(unsafe.Pointer(&data)), nil
 }

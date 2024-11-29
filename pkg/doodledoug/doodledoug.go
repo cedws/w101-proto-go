@@ -4,11 +4,11 @@ package doodledoug
 import (
 	"bytes"
 	"encoding/binary"
+	"github.com/cedws/w101-client-go/codegen"
 	"github.com/cedws/w101-client-go/proto"
-	"unsafe"
 )
 
-type doodledougService interface {
+type service interface {
 	AllowLeavePvP(AllowLeavePvP)
 	CombatActions(CombatActions)
 	CombatAdd(CombatAdd)
@@ -47,52 +47,44 @@ type doodledougService interface {
 	UpdateDuelTimer(UpdateDuelTimer)
 }
 
-type DoodledougService struct {
-	doodledougService
-}
+func (Service) AllowLeavePvP(AllowLeavePvP)                       {}
+func (Service) CombatActions(CombatActions)                       {}
+func (Service) CombatAdd(CombatAdd)                               {}
+func (Service) CombatAFK(CombatAFK)                               {}
+func (Service) CombatCheat(CombatCheat)                           {}
+func (Service) CombatDraw(CombatDraw)                             {}
+func (Service) CombatFlee(CombatFlee)                             {}
+func (Service) CombatHand(CombatHand)                             {}
+func (Service) CombatHealth(CombatHealth)                         {}
+func (Service) CombatLoaded(CombatLoaded)                         {}
+func (Service) CombatMatchResult(CombatMatchResult)               {}
+func (Service) CombatMove(CombatMove)                             {}
+func (Service) CombatMoveSelection(CombatMoveSelection)           {}
+func (Service) CombatPaused(CombatPaused)                         {}
+func (Service) CombatPhase(CombatPhase)                           {}
+func (Service) CombatPhaseForSpectators(CombatPhaseForSpectators) {}
+func (Service) CombatPips(CombatPips)                             {}
+func (Service) CombatRemove(CombatRemove)                         {}
+func (Service) CombatRevealHanging(CombatRevealHanging)           {}
+func (Service) CombatStats(CombatStats)                           {}
+func (Service) CombatUpFirst(CombatUpFirst)                       {}
+func (Service) CombatVictory(CombatVictory)                       {}
+func (Service) DISMISSSUMMON(DISMISSSUMMON)                       {}
+func (Service) Duel(Duel)                                         {}
+func (Service) EndDuel(EndDuel)                                   {}
+func (Service) PetWillCast(PetWillCast)                           {}
+func (Service) SetDuelTimer(SetDuelTimer)                         {}
+func (Service) SetPlanningPhaseTimer(SetPlanningPhaseTimer)       {}
+func (Service) SetST(SetST)                                       {}
+func (Service) SetST2(SetST2)                                     {}
+func (Service) SetStatus(SetStatus)                               {}
+func (Service) ShowCombatUI(ShowCombatUI)                         {}
+func (Service) ShowPetCard(ShowPetCard)                           {}
+func (Service) SIGILSPELL(SIGILSPELL)                             {}
+func (Service) UpdateCombatParticipant(UpdateCombatParticipant)   {}
+func (Service) UpdateDuelTimer(UpdateDuelTimer)                   {}
 
-type DoodledougClient struct {
-	c *proto.Client
-}
-
-func (l *DoodledougService) AllowLeavePvP(_ AllowLeavePvP)                       {}
-func (l *DoodledougService) CombatActions(_ CombatActions)                       {}
-func (l *DoodledougService) CombatAdd(_ CombatAdd)                               {}
-func (l *DoodledougService) CombatAFK(_ CombatAFK)                               {}
-func (l *DoodledougService) CombatCheat(_ CombatCheat)                           {}
-func (l *DoodledougService) CombatDraw(_ CombatDraw)                             {}
-func (l *DoodledougService) CombatFlee(_ CombatFlee)                             {}
-func (l *DoodledougService) CombatHand(_ CombatHand)                             {}
-func (l *DoodledougService) CombatHealth(_ CombatHealth)                         {}
-func (l *DoodledougService) CombatLoaded(_ CombatLoaded)                         {}
-func (l *DoodledougService) CombatMatchResult(_ CombatMatchResult)               {}
-func (l *DoodledougService) CombatMove(_ CombatMove)                             {}
-func (l *DoodledougService) CombatMoveSelection(_ CombatMoveSelection)           {}
-func (l *DoodledougService) CombatPaused(_ CombatPaused)                         {}
-func (l *DoodledougService) CombatPhase(_ CombatPhase)                           {}
-func (l *DoodledougService) CombatPhaseForSpectators(_ CombatPhaseForSpectators) {}
-func (l *DoodledougService) CombatPips(_ CombatPips)                             {}
-func (l *DoodledougService) CombatRemove(_ CombatRemove)                         {}
-func (l *DoodledougService) CombatRevealHanging(_ CombatRevealHanging)           {}
-func (l *DoodledougService) CombatStats(_ CombatStats)                           {}
-func (l *DoodledougService) CombatUpFirst(_ CombatUpFirst)                       {}
-func (l *DoodledougService) CombatVictory(_ CombatVictory)                       {}
-func (l *DoodledougService) DISMISSSUMMON(_ DISMISSSUMMON)                       {}
-func (l *DoodledougService) Duel(_ Duel)                                         {}
-func (l *DoodledougService) EndDuel(_ EndDuel)                                   {}
-func (l *DoodledougService) PetWillCast(_ PetWillCast)                           {}
-func (l *DoodledougService) SetDuelTimer(_ SetDuelTimer)                         {}
-func (l *DoodledougService) SetPlanningPhaseTimer(_ SetPlanningPhaseTimer)       {}
-func (l *DoodledougService) SetST(_ SetST)                                       {}
-func (l *DoodledougService) SetST2(_ SetST2)                                     {}
-func (l *DoodledougService) SetStatus(_ SetStatus)                               {}
-func (l *DoodledougService) ShowCombatUI(_ ShowCombatUI)                         {}
-func (l *DoodledougService) ShowPetCard(_ ShowPetCard)                           {}
-func (l *DoodledougService) SIGILSPELL(_ SIGILSPELL)                             {}
-func (l *DoodledougService) UpdateCombatParticipant(_ UpdateCombatParticipant)   {}
-func (l *DoodledougService) UpdateDuelTimer(_ UpdateDuelTimer)                   {}
-
-func RegisterDoodledougService(r *proto.MessageRouter, s doodledougService) {
+func RegisterService(r *proto.MessageRouter, s service) {
 	proto.RegisterMessageHandler(r, 51, 1, s.AllowLeavePvP)
 	proto.RegisterMessageHandler(r, 51, 2, s.CombatActions)
 	proto.RegisterMessageHandler(r, 51, 3, s.CombatAdd)
@@ -131,154 +123,161 @@ func RegisterDoodledougService(r *proto.MessageRouter, s doodledougService) {
 	proto.RegisterMessageHandler(r, 51, 36, s.UpdateDuelTimer)
 }
 
-func NewDoodledougClient(c *proto.Client) DoodledougClient {
-	return DoodledougClient{c}
+func NewClient(c *proto.Client) Client {
+	return Client{c}
 }
 
-func (c DoodledougClient) AllowLeavePvP(m *AllowLeavePvP) error {
+func (c Client) AllowLeavePvP(m *AllowLeavePvP) error {
 	return c.c.WriteMessage(51, 1, m)
 }
 
-func (c DoodledougClient) CombatActions(m *CombatActions) error {
+func (c Client) CombatActions(m *CombatActions) error {
 	return c.c.WriteMessage(51, 2, m)
 }
 
-func (c DoodledougClient) CombatAdd(m *CombatAdd) error {
+func (c Client) CombatAdd(m *CombatAdd) error {
 	return c.c.WriteMessage(51, 3, m)
 }
 
-func (c DoodledougClient) CombatAFK(m *CombatAFK) error {
+func (c Client) CombatAFK(m *CombatAFK) error {
 	return c.c.WriteMessage(51, 4, m)
 }
 
-func (c DoodledougClient) CombatCheat(m *CombatCheat) error {
+func (c Client) CombatCheat(m *CombatCheat) error {
 	return c.c.WriteMessage(51, 5, m)
 }
 
-func (c DoodledougClient) CombatDraw(m *CombatDraw) error {
+func (c Client) CombatDraw(m *CombatDraw) error {
 	return c.c.WriteMessage(51, 6, m)
 }
 
-func (c DoodledougClient) CombatFlee(m *CombatFlee) error {
+func (c Client) CombatFlee(m *CombatFlee) error {
 	return c.c.WriteMessage(51, 7, m)
 }
 
-func (c DoodledougClient) CombatHand(m *CombatHand) error {
+func (c Client) CombatHand(m *CombatHand) error {
 	return c.c.WriteMessage(51, 8, m)
 }
 
-func (c DoodledougClient) CombatHealth(m *CombatHealth) error {
+func (c Client) CombatHealth(m *CombatHealth) error {
 	return c.c.WriteMessage(51, 9, m)
 }
 
-func (c DoodledougClient) CombatLoaded(m *CombatLoaded) error {
+func (c Client) CombatLoaded(m *CombatLoaded) error {
 	return c.c.WriteMessage(51, 10, m)
 }
 
-func (c DoodledougClient) CombatMatchResult(m *CombatMatchResult) error {
+func (c Client) CombatMatchResult(m *CombatMatchResult) error {
 	return c.c.WriteMessage(51, 11, m)
 }
 
-func (c DoodledougClient) CombatMove(m *CombatMove) error {
+func (c Client) CombatMove(m *CombatMove) error {
 	return c.c.WriteMessage(51, 12, m)
 }
 
-func (c DoodledougClient) CombatMoveSelection(m *CombatMoveSelection) error {
+func (c Client) CombatMoveSelection(m *CombatMoveSelection) error {
 	return c.c.WriteMessage(51, 13, m)
 }
 
-func (c DoodledougClient) CombatPaused(m *CombatPaused) error {
+func (c Client) CombatPaused(m *CombatPaused) error {
 	return c.c.WriteMessage(51, 14, m)
 }
 
-func (c DoodledougClient) CombatPhase(m *CombatPhase) error {
+func (c Client) CombatPhase(m *CombatPhase) error {
 	return c.c.WriteMessage(51, 15, m)
 }
 
-func (c DoodledougClient) CombatPhaseForSpectators(m *CombatPhaseForSpectators) error {
+func (c Client) CombatPhaseForSpectators(m *CombatPhaseForSpectators) error {
 	return c.c.WriteMessage(51, 16, m)
 }
 
-func (c DoodledougClient) CombatPips(m *CombatPips) error {
+func (c Client) CombatPips(m *CombatPips) error {
 	return c.c.WriteMessage(51, 17, m)
 }
 
-func (c DoodledougClient) CombatRemove(m *CombatRemove) error {
+func (c Client) CombatRemove(m *CombatRemove) error {
 	return c.c.WriteMessage(51, 18, m)
 }
 
-func (c DoodledougClient) CombatRevealHanging(m *CombatRevealHanging) error {
+func (c Client) CombatRevealHanging(m *CombatRevealHanging) error {
 	return c.c.WriteMessage(51, 19, m)
 }
 
-func (c DoodledougClient) CombatStats(m *CombatStats) error {
+func (c Client) CombatStats(m *CombatStats) error {
 	return c.c.WriteMessage(51, 20, m)
 }
 
-func (c DoodledougClient) CombatUpFirst(m *CombatUpFirst) error {
+func (c Client) CombatUpFirst(m *CombatUpFirst) error {
 	return c.c.WriteMessage(51, 21, m)
 }
 
-func (c DoodledougClient) CombatVictory(m *CombatVictory) error {
+func (c Client) CombatVictory(m *CombatVictory) error {
 	return c.c.WriteMessage(51, 22, m)
 }
 
-func (c DoodledougClient) DISMISSSUMMON(m *DISMISSSUMMON) error {
+func (c Client) DISMISSSUMMON(m *DISMISSSUMMON) error {
 	return c.c.WriteMessage(51, 23, m)
 }
 
-func (c DoodledougClient) Duel(m *Duel) error {
+func (c Client) Duel(m *Duel) error {
 	return c.c.WriteMessage(51, 24, m)
 }
 
-func (c DoodledougClient) EndDuel(m *EndDuel) error {
+func (c Client) EndDuel(m *EndDuel) error {
 	return c.c.WriteMessage(51, 25, m)
 }
 
-func (c DoodledougClient) PetWillCast(m *PetWillCast) error {
+func (c Client) PetWillCast(m *PetWillCast) error {
 	return c.c.WriteMessage(51, 26, m)
 }
 
-func (c DoodledougClient) SetDuelTimer(m *SetDuelTimer) error {
+func (c Client) SetDuelTimer(m *SetDuelTimer) error {
 	return c.c.WriteMessage(51, 27, m)
 }
 
-func (c DoodledougClient) SetPlanningPhaseTimer(m *SetPlanningPhaseTimer) error {
+func (c Client) SetPlanningPhaseTimer(m *SetPlanningPhaseTimer) error {
 	return c.c.WriteMessage(51, 28, m)
 }
 
-func (c DoodledougClient) SetST(m *SetST) error {
+func (c Client) SetST(m *SetST) error {
 	return c.c.WriteMessage(51, 29, m)
 }
 
-func (c DoodledougClient) SetST2(m *SetST2) error {
+func (c Client) SetST2(m *SetST2) error {
 	return c.c.WriteMessage(51, 30, m)
 }
 
-func (c DoodledougClient) SetStatus(m *SetStatus) error {
+func (c Client) SetStatus(m *SetStatus) error {
 	return c.c.WriteMessage(51, 31, m)
 }
 
-func (c DoodledougClient) ShowCombatUI(m *ShowCombatUI) error {
+func (c Client) ShowCombatUI(m *ShowCombatUI) error {
 	return c.c.WriteMessage(51, 32, m)
 }
 
-func (c DoodledougClient) ShowPetCard(m *ShowPetCard) error {
+func (c Client) ShowPetCard(m *ShowPetCard) error {
 	return c.c.WriteMessage(51, 33, m)
 }
 
-func (c DoodledougClient) SIGILSPELL(m *SIGILSPELL) error {
+func (c Client) SIGILSPELL(m *SIGILSPELL) error {
 	return c.c.WriteMessage(51, 34, m)
 }
 
-func (c DoodledougClient) UpdateCombatParticipant(m *UpdateCombatParticipant) error {
+func (c Client) UpdateCombatParticipant(m *UpdateCombatParticipant) error {
 	return c.c.WriteMessage(51, 35, m)
 }
 
-func (c DoodledougClient) UpdateDuelTimer(m *UpdateDuelTimer) error {
+func (c Client) UpdateDuelTimer(m *UpdateDuelTimer) error {
 	return c.c.WriteMessage(51, 36, m)
 }
 
+type Service struct {
+	service
+}
+
+type Client struct {
+	c *proto.Client
+}
 type AllowLeavePvP struct {
 }
 
@@ -297,8 +296,7 @@ type CombatActions struct {
 
 func (s *CombatActions) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.ActionData)))
-	binary.Write(b, binary.LittleEndian, s.DuelID)
-	writeString_51(b, s.ActionData)
+	binary.Write(b, binary.LittleEndian, s.ActionData)
 	return b.Bytes()
 }
 
@@ -308,7 +306,7 @@ func (s *CombatActions) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.DuelID); err != nil {
 		return err
 	}
-	if s.ActionData, err = readString_51(b); err != nil {
+	if s.ActionData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -321,8 +319,7 @@ type CombatAdd struct {
 
 func (s *CombatAdd) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.ParticipantData)))
-	binary.Write(b, binary.LittleEndian, s.DuelID)
-	writeString_51(b, s.ParticipantData)
+	binary.Write(b, binary.LittleEndian, s.ParticipantData)
 	return b.Bytes()
 }
 
@@ -332,7 +329,7 @@ func (s *CombatAdd) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.DuelID); err != nil {
 		return err
 	}
-	if s.ParticipantData, err = readString_51(b); err != nil {
+	if s.ParticipantData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -345,8 +342,6 @@ type CombatAFK struct {
 
 func (s *CombatAFK) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9))
-	binary.Write(b, binary.LittleEndian, s.DuelID)
-	binary.Write(b, binary.LittleEndian, s.IsCombatAFK)
 	return b.Bytes()
 }
 
@@ -369,8 +364,6 @@ type CombatCheat struct {
 
 func (s *CombatCheat) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.CheatFlags)
-	binary.Write(b, binary.LittleEndian, s.MaycastChance)
 	return b.Bytes()
 }
 
@@ -403,7 +396,6 @@ type CombatFlee struct {
 
 func (s *CombatFlee) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.ParticipantID)
 	return b.Bytes()
 }
 
@@ -426,11 +418,7 @@ type CombatHand struct {
 
 func (s *CombatHand) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.HandData)))
-	binary.Write(b, binary.LittleEndian, s.DeckCount)
-	binary.Write(b, binary.LittleEndian, s.TotalDeckCount)
-	binary.Write(b, binary.LittleEndian, s.TreasureCardCount)
-	binary.Write(b, binary.LittleEndian, s.ParticipantID)
-	writeString_51(b, s.HandData)
+	binary.Write(b, binary.LittleEndian, s.HandData)
 	return b.Bytes()
 }
 
@@ -449,7 +437,7 @@ func (s *CombatHand) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ParticipantID); err != nil {
 		return err
 	}
-	if s.HandData, err = readString_51(b); err != nil {
+	if s.HandData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -462,8 +450,7 @@ type CombatHealth struct {
 
 func (s *CombatHealth) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.HealthData)))
-	binary.Write(b, binary.LittleEndian, s.DuelID)
-	writeString_51(b, s.HealthData)
+	binary.Write(b, binary.LittleEndian, s.HealthData)
 	return b.Bytes()
 }
 
@@ -473,7 +460,7 @@ func (s *CombatHealth) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.DuelID); err != nil {
 		return err
 	}
-	if s.HealthData, err = readString_51(b); err != nil {
+	if s.HealthData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -488,10 +475,7 @@ type CombatLoaded struct {
 
 func (s *CombatLoaded) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 18+len(s.ParticipantList)))
-	binary.Write(b, binary.LittleEndian, s.DuelID)
-	binary.Write(b, binary.LittleEndian, s.RoundNum)
-	binary.Write(b, binary.LittleEndian, s.FirstTeamToAct)
-	writeString_51(b, s.ParticipantList)
+	binary.Write(b, binary.LittleEndian, s.ParticipantList)
 	return b.Bytes()
 }
 
@@ -507,7 +491,7 @@ func (s *CombatLoaded) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.FirstTeamToAct); err != nil {
 		return err
 	}
-	if s.ParticipantList, err = readString_51(b); err != nil {
+	if s.ParticipantList, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -520,8 +504,6 @@ type CombatMatchResult struct {
 
 func (s *CombatMatchResult) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.DuelID)
-	binary.Write(b, binary.LittleEndian, s.WinningTeam)
 	return b.Bytes()
 }
 
@@ -546,10 +528,6 @@ type CombatMove struct {
 
 func (s *CombatMove) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10))
-	binary.Write(b, binary.LittleEndian, s.MoveType)
-	binary.Write(b, binary.LittleEndian, s.SpellSelection)
-	binary.Write(b, binary.LittleEndian, s.SpellTarget)
-	binary.Write(b, binary.LittleEndian, s.TimeLeft)
 	return b.Bytes()
 }
 
@@ -585,15 +563,6 @@ type CombatMoveSelection struct {
 
 func (s *CombatMoveSelection) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 32))
-	binary.Write(b, binary.LittleEndian, s.DuelID)
-	binary.Write(b, binary.LittleEndian, s.ParticipantID)
-	binary.Write(b, binary.LittleEndian, s.MoveType)
-	binary.Write(b, binary.LittleEndian, s.SpellID)
-	binary.Write(b, binary.LittleEndian, s.SpellTargetIndex)
-	binary.Write(b, binary.LittleEndian, s.EnchantmentID)
-	binary.Write(b, binary.LittleEndian, s.IsItemCard)
-	binary.Write(b, binary.LittleEndian, s.IsTreasureCard)
-	binary.Write(b, binary.LittleEndian, s.IsBattleCard)
 	return b.Bytes()
 }
 
@@ -636,7 +605,6 @@ type CombatPaused struct {
 
 func (s *CombatPaused) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 1))
-	binary.Write(b, binary.LittleEndian, s.Paused)
 	return b.Bytes()
 }
 
@@ -658,10 +626,7 @@ type CombatPhase struct {
 
 func (s *CombatPhase) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 19+len(s.Data)))
-	binary.Write(b, binary.LittleEndian, s.DuelID)
-	binary.Write(b, binary.LittleEndian, s.NewPhase)
-	writeString_51(b, s.Data)
-	binary.Write(b, binary.LittleEndian, s.PlayerID)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
@@ -674,7 +639,7 @@ func (s *CombatPhase) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.NewPhase); err != nil {
 		return err
 	}
-	if s.Data, err = readString_51(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PlayerID); err != nil {
@@ -702,20 +667,14 @@ type CombatPhaseForSpectators struct {
 
 func (s *CombatPhaseForSpectators) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 38+len(s.ParticipantName1)+len(s.ParticipantName2)+len(s.ParticipantName3)+len(s.ParticipantName4)+len(s.ParticipantName5)+len(s.ParticipantName6)+len(s.ParticipantName7)+len(s.ParticipantName8)))
-	binary.Write(b, binary.LittleEndian, s.DuelID)
-	binary.Write(b, binary.LittleEndian, s.NewPhase)
-	binary.Write(b, binary.LittleEndian, s.Time)
-	writeString_51(b, s.ParticipantName1)
-	writeString_51(b, s.ParticipantName2)
-	writeString_51(b, s.ParticipantName3)
-	writeString_51(b, s.ParticipantName4)
-	writeString_51(b, s.ParticipantName5)
-	writeString_51(b, s.ParticipantName6)
-	writeString_51(b, s.ParticipantName7)
-	writeString_51(b, s.ParticipantName8)
-	binary.Write(b, binary.LittleEndian, s.Subcircles)
-	binary.Write(b, binary.LittleEndian, s.TeamName0)
-	binary.Write(b, binary.LittleEndian, s.TeamName1)
+	binary.Write(b, binary.LittleEndian, s.ParticipantName1)
+	binary.Write(b, binary.LittleEndian, s.ParticipantName2)
+	binary.Write(b, binary.LittleEndian, s.ParticipantName3)
+	binary.Write(b, binary.LittleEndian, s.ParticipantName4)
+	binary.Write(b, binary.LittleEndian, s.ParticipantName5)
+	binary.Write(b, binary.LittleEndian, s.ParticipantName6)
+	binary.Write(b, binary.LittleEndian, s.ParticipantName7)
+	binary.Write(b, binary.LittleEndian, s.ParticipantName8)
 	return b.Bytes()
 }
 
@@ -731,28 +690,28 @@ func (s *CombatPhaseForSpectators) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Time); err != nil {
 		return err
 	}
-	if s.ParticipantName1, err = readString_51(b); err != nil {
+	if s.ParticipantName1, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.ParticipantName2, err = readString_51(b); err != nil {
+	if s.ParticipantName2, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.ParticipantName3, err = readString_51(b); err != nil {
+	if s.ParticipantName3, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.ParticipantName4, err = readString_51(b); err != nil {
+	if s.ParticipantName4, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.ParticipantName5, err = readString_51(b); err != nil {
+	if s.ParticipantName5, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.ParticipantName6, err = readString_51(b); err != nil {
+	if s.ParticipantName6, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.ParticipantName7, err = readString_51(b); err != nil {
+	if s.ParticipantName7, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.ParticipantName8, err = readString_51(b); err != nil {
+	if s.ParticipantName8, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Subcircles); err != nil {
@@ -774,8 +733,7 @@ type CombatPips struct {
 
 func (s *CombatPips) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.PipData)))
-	binary.Write(b, binary.LittleEndian, s.DuelID)
-	writeString_51(b, s.PipData)
+	binary.Write(b, binary.LittleEndian, s.PipData)
 	return b.Bytes()
 }
 
@@ -785,7 +743,7 @@ func (s *CombatPips) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.DuelID); err != nil {
 		return err
 	}
-	if s.PipData, err = readString_51(b); err != nil {
+	if s.PipData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -798,8 +756,6 @@ type CombatRemove struct {
 
 func (s *CombatRemove) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.DuelID)
-	binary.Write(b, binary.LittleEndian, s.ParticipantID)
 	return b.Bytes()
 }
 
@@ -827,13 +783,6 @@ type CombatRevealHanging struct {
 
 func (s *CombatRevealHanging) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 29))
-	binary.Write(b, binary.LittleEndian, s.ParticipantID)
-	binary.Write(b, binary.LittleEndian, s.CloakEffectType)
-	binary.Write(b, binary.LittleEndian, s.SpellTemplateID)
-	binary.Write(b, binary.LittleEndian, s.EffectType)
-	binary.Write(b, binary.LittleEndian, s.EffectAmount)
-	binary.Write(b, binary.LittleEndian, s.DamageType)
-	binary.Write(b, binary.LittleEndian, s.ActNum)
 	return b.Bytes()
 }
 
@@ -872,9 +821,7 @@ type CombatStats struct {
 
 func (s *CombatStats) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 18+len(s.StatsData)))
-	binary.Write(b, binary.LittleEndian, s.DuelID)
-	binary.Write(b, binary.LittleEndian, s.PartID)
-	writeString_51(b, s.StatsData)
+	binary.Write(b, binary.LittleEndian, s.StatsData)
 	return b.Bytes()
 }
 
@@ -887,7 +834,7 @@ func (s *CombatStats) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.PartID); err != nil {
 		return err
 	}
-	if s.StatsData, err = readString_51(b); err != nil {
+	if s.StatsData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -903,11 +850,6 @@ type CombatUpFirst struct {
 
 func (s *CombatUpFirst) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 23))
-	binary.Write(b, binary.LittleEndian, s.DuelID)
-	binary.Write(b, binary.LittleEndian, s.UpFirst)
-	binary.Write(b, binary.LittleEndian, s.RoundNum)
-	binary.Write(b, binary.LittleEndian, s.PlayerID)
-	binary.Write(b, binary.LittleEndian, s.FirstTeamToAct)
 	return b.Bytes()
 }
 
@@ -949,7 +891,6 @@ type DISMISSSUMMON struct {
 
 func (s *DISMISSSUMMON) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4))
-	binary.Write(b, binary.LittleEndian, s.Subcircle)
 	return b.Bytes()
 }
 
@@ -968,14 +909,14 @@ type Duel struct {
 
 func (s *Duel) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Data)))
-	writeString_51(b, s.Data)
+	binary.Write(b, binary.LittleEndian, s.Data)
 	return b.Bytes()
 }
 
 func (s *Duel) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_51(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -987,7 +928,6 @@ type EndDuel struct {
 
 func (s *EndDuel) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 8))
-	binary.Write(b, binary.LittleEndian, s.DuelID)
 	return b.Bytes()
 }
 
@@ -1007,15 +947,14 @@ type PetWillCast struct {
 
 func (s *PetWillCast) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.PetCastingSpell)))
-	writeString_51(b, s.PetCastingSpell)
-	binary.Write(b, binary.LittleEndian, s.Target)
+	binary.Write(b, binary.LittleEndian, s.PetCastingSpell)
 	return b.Bytes()
 }
 
 func (s *PetWillCast) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.PetCastingSpell, err = readString_51(b); err != nil {
+	if s.PetCastingSpell, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Target); err != nil {
@@ -1034,11 +973,6 @@ type SetDuelTimer struct {
 
 func (s *SetDuelTimer) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24))
-	binary.Write(b, binary.LittleEndian, s.DuelID)
-	binary.Write(b, binary.LittleEndian, s.DurationTime)
-	binary.Write(b, binary.LittleEndian, s.RedTime)
-	binary.Write(b, binary.LittleEndian, s.YellowTime)
-	binary.Write(b, binary.LittleEndian, s.MinTurnTime)
 	return b.Bytes()
 }
 
@@ -1071,9 +1005,7 @@ type SetPlanningPhaseTimer struct {
 
 func (s *SetPlanningPhaseTimer) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.TimeData)))
-	binary.Write(b, binary.LittleEndian, s.DuelID)
-	binary.Write(b, binary.LittleEndian, s.Time)
-	writeString_51(b, s.TimeData)
+	binary.Write(b, binary.LittleEndian, s.TimeData)
 	return b.Bytes()
 }
 
@@ -1086,7 +1018,7 @@ func (s *SetPlanningPhaseTimer) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Time); err != nil {
 		return err
 	}
-	if s.TimeData, err = readString_51(b); err != nil {
+	if s.TimeData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -1102,11 +1034,6 @@ type SetST struct {
 
 func (s *SetST) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24))
-	binary.Write(b, binary.LittleEndian, s.DuelID)
-	binary.Write(b, binary.LittleEndian, s.Type)
-	binary.Write(b, binary.LittleEndian, s.Arg1)
-	binary.Write(b, binary.LittleEndian, s.Arg2)
-	binary.Write(b, binary.LittleEndian, s.Arg3)
 	return b.Bytes()
 }
 
@@ -1142,12 +1069,6 @@ type SetST2 struct {
 
 func (s *SetST2) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 32))
-	binary.Write(b, binary.LittleEndian, s.DuelID)
-	binary.Write(b, binary.LittleEndian, s.PlayerID)
-	binary.Write(b, binary.LittleEndian, s.SpellDamage)
-	binary.Write(b, binary.LittleEndian, s.StatDmg)
-	binary.Write(b, binary.LittleEndian, s.StatRes)
-	binary.Write(b, binary.LittleEndian, s.StatPierce)
 	return b.Bytes()
 }
 
@@ -1183,9 +1104,6 @@ type SetStatus struct {
 
 func (s *SetStatus) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 17))
-	binary.Write(b, binary.LittleEndian, s.DuelID)
-	binary.Write(b, binary.LittleEndian, s.Player)
-	binary.Write(b, binary.LittleEndian, s.Status)
 	return b.Bytes()
 }
 
@@ -1214,11 +1132,6 @@ type ShowCombatUI struct {
 
 func (s *ShowCombatUI) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24))
-	binary.Write(b, binary.LittleEndian, s.DuelID)
-	binary.Write(b, binary.LittleEndian, s.AltTurn)
-	binary.Write(b, binary.LittleEndian, s.AltTurnTeam)
-	binary.Write(b, binary.LittleEndian, s.DynamicTurnFlags)
-	binary.Write(b, binary.LittleEndian, s.DynamicSubcircles)
 	return b.Bytes()
 }
 
@@ -1252,17 +1165,14 @@ type ShowPetCard struct {
 
 func (s *ShowPetCard) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 11+len(s.PetData)))
-	writeString_51(b, s.PetData)
-	binary.Write(b, binary.LittleEndian, s.Cooldown)
-	binary.Write(b, binary.LittleEndian, s.RequirementFailed)
-	binary.Write(b, binary.LittleEndian, s.MyTurn)
+	binary.Write(b, binary.LittleEndian, s.PetData)
 	return b.Bytes()
 }
 
 func (s *ShowPetCard) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.PetData, err = readString_51(b); err != nil {
+	if s.PetData, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Cooldown); err != nil {
@@ -1285,9 +1195,6 @@ type SIGILSPELL struct {
 
 func (s *SIGILSPELL) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16))
-	binary.Write(b, binary.LittleEndian, s.DuelID)
-	binary.Write(b, binary.LittleEndian, s.Subcircles)
-	binary.Write(b, binary.LittleEndian, s.SpellID)
 	return b.Bytes()
 }
 
@@ -1313,8 +1220,6 @@ type UpdateCombatParticipant struct {
 
 func (s *UpdateCombatParticipant) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 9))
-	binary.Write(b, binary.LittleEndian, s.ObjectID)
-	binary.Write(b, binary.LittleEndian, s.HidePVPEnemyChat)
 	return b.Bytes()
 }
 
@@ -1337,8 +1242,6 @@ type UpdateDuelTimer struct {
 
 func (s *UpdateDuelTimer) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12))
-	binary.Write(b, binary.LittleEndian, s.DuelID)
-	binary.Write(b, binary.LittleEndian, s.RemainingTime)
 	return b.Bytes()
 }
 
@@ -1352,21 +1255,4 @@ func (s *UpdateDuelTimer) Unmarshal(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func writeString_51(b *bytes.Buffer, v string) {
-	binary.Write(b, binary.LittleEndian, uint16(len(v)))
-	b.WriteString(v)
-}
-
-func readString_51(buf *bytes.Reader) (string, error) {
-	var length uint16
-	if err := binary.Read(buf, binary.LittleEndian, &length); err != nil {
-		return "", err
-	}
-	data := make([]byte, length)
-	if _, err := buf.Read(data); err != nil {
-		return "", err
-	}
-	return *(*string)(unsafe.Pointer(&data)), nil
 }
