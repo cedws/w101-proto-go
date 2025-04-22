@@ -4,11 +4,11 @@ package login
 import (
 	"bytes"
 	"encoding/binary"
+	"github.com/cedws/w101-client-go/codegen"
 	"github.com/cedws/w101-client-go/proto"
-	"unsafe"
 )
 
-type loginService interface {
+type service interface {
 	CharacterInfo(CharacterInfo)
 	CharacterList(CharacterList)
 	CharacterSelected(CharacterSelected)
@@ -39,44 +39,36 @@ type loginService interface {
 	LoginLogCharacterCreation(LoginLogCharacterCreation)
 }
 
-type LoginService struct {
-	loginService
-}
+func (Service) CharacterInfo(CharacterInfo)                         {}
+func (Service) CharacterList(CharacterList)                         {}
+func (Service) CharacterSelected(CharacterSelected)                 {}
+func (Service) CreateCharacter(CreateCharacter)                     {}
+func (Service) CreateCharacterResponse(CreateCharacterResponse)     {}
+func (Service) DeleteCharacter(DeleteCharacter)                     {}
+func (Service) DeleteCharacterResponse(DeleteCharacterResponse)     {}
+func (Service) RequestCharacterList(RequestCharacterList)           {}
+func (Service) RequestServerList(RequestServerList)                 {}
+func (Service) SelectCharacter(SelectCharacter)                     {}
+func (Service) ServerList(ServerList)                               {}
+func (Service) StartCharacterList(StartCharacterList)               {}
+func (Service) UserAuthen(UserAuthen)                               {}
+func (Service) UserAuthenRsp(UserAuthenRsp)                         {}
+func (Service) UserValidate(UserValidate)                           {}
+func (Service) UserValidateRsp(UserValidateRsp)                     {}
+func (Service) DisconnectLoginAfk(DisconnectLoginAfk)               {}
+func (Service) LoginNotAfk(LoginNotAfk)                             {}
+func (Service) ServerShutdown(ServerShutdown)                       {}
+func (Service) UserAdmitInd(UserAdmitInd)                           {}
+func (Service) WebCharacterInfo(WebCharacterInfo)                   {}
+func (Service) UserAuthenV2(UserAuthenV2)                           {}
+func (Service) SaveCharacter(SaveCharacter)                         {}
+func (Service) WebAuthen(WebAuthen)                                 {}
+func (Service) WebValidate(WebValidate)                             {}
+func (Service) ChangeCharacterName(ChangeCharacterName)             {}
+func (Service) UserAuthenV3(UserAuthenV3)                           {}
+func (Service) LoginLogCharacterCreation(LoginLogCharacterCreation) {}
 
-type LoginClient struct {
-	c *proto.Client
-}
-
-func (l *LoginService) CharacterInfo(_ CharacterInfo)                         {}
-func (l *LoginService) CharacterList(_ CharacterList)                         {}
-func (l *LoginService) CharacterSelected(_ CharacterSelected)                 {}
-func (l *LoginService) CreateCharacter(_ CreateCharacter)                     {}
-func (l *LoginService) CreateCharacterResponse(_ CreateCharacterResponse)     {}
-func (l *LoginService) DeleteCharacter(_ DeleteCharacter)                     {}
-func (l *LoginService) DeleteCharacterResponse(_ DeleteCharacterResponse)     {}
-func (l *LoginService) RequestCharacterList(_ RequestCharacterList)           {}
-func (l *LoginService) RequestServerList(_ RequestServerList)                 {}
-func (l *LoginService) SelectCharacter(_ SelectCharacter)                     {}
-func (l *LoginService) ServerList(_ ServerList)                               {}
-func (l *LoginService) StartCharacterList(_ StartCharacterList)               {}
-func (l *LoginService) UserAuthen(_ UserAuthen)                               {}
-func (l *LoginService) UserAuthenRsp(_ UserAuthenRsp)                         {}
-func (l *LoginService) UserValidate(_ UserValidate)                           {}
-func (l *LoginService) UserValidateRsp(_ UserValidateRsp)                     {}
-func (l *LoginService) DisconnectLoginAfk(_ DisconnectLoginAfk)               {}
-func (l *LoginService) LoginNotAfk(_ LoginNotAfk)                             {}
-func (l *LoginService) ServerShutdown(_ ServerShutdown)                       {}
-func (l *LoginService) UserAdmitInd(_ UserAdmitInd)                           {}
-func (l *LoginService) WebCharacterInfo(_ WebCharacterInfo)                   {}
-func (l *LoginService) UserAuthenV2(_ UserAuthenV2)                           {}
-func (l *LoginService) SaveCharacter(_ SaveCharacter)                         {}
-func (l *LoginService) WebAuthen(_ WebAuthen)                                 {}
-func (l *LoginService) WebValidate(_ WebValidate)                             {}
-func (l *LoginService) ChangeCharacterName(_ ChangeCharacterName)             {}
-func (l *LoginService) UserAuthenV3(_ UserAuthenV3)                           {}
-func (l *LoginService) LoginLogCharacterCreation(_ LoginLogCharacterCreation) {}
-
-func RegisterLoginService(r *proto.MessageRouter, s loginService) {
+func RegisterService(r *proto.MessageRouter, s service) {
 	proto.RegisterMessageHandler(r, 7, 1, s.CharacterInfo)
 	proto.RegisterMessageHandler(r, 7, 2, s.CharacterList)
 	proto.RegisterMessageHandler(r, 7, 3, s.CharacterSelected)
@@ -107,136 +99,143 @@ func RegisterLoginService(r *proto.MessageRouter, s loginService) {
 	proto.RegisterMessageHandler(r, 7, 28, s.LoginLogCharacterCreation)
 }
 
-func NewLoginClient(c *proto.Client) LoginClient {
-	return LoginClient{c}
+func NewClient(c *proto.Client) Client {
+	return Client{c}
 }
 
-func (c LoginClient) CharacterInfo(m *CharacterInfo) error {
+func (c Client) CharacterInfo(m *CharacterInfo) error {
 	return c.c.WriteMessage(7, 1, m)
 }
 
-func (c LoginClient) CharacterList(m *CharacterList) error {
+func (c Client) CharacterList(m *CharacterList) error {
 	return c.c.WriteMessage(7, 2, m)
 }
 
-func (c LoginClient) CharacterSelected(m *CharacterSelected) error {
+func (c Client) CharacterSelected(m *CharacterSelected) error {
 	return c.c.WriteMessage(7, 3, m)
 }
 
-func (c LoginClient) CreateCharacter(m *CreateCharacter) error {
+func (c Client) CreateCharacter(m *CreateCharacter) error {
 	return c.c.WriteMessage(7, 4, m)
 }
 
-func (c LoginClient) CreateCharacterResponse(m *CreateCharacterResponse) error {
+func (c Client) CreateCharacterResponse(m *CreateCharacterResponse) error {
 	return c.c.WriteMessage(7, 5, m)
 }
 
-func (c LoginClient) DeleteCharacter(m *DeleteCharacter) error {
+func (c Client) DeleteCharacter(m *DeleteCharacter) error {
 	return c.c.WriteMessage(7, 6, m)
 }
 
-func (c LoginClient) DeleteCharacterResponse(m *DeleteCharacterResponse) error {
+func (c Client) DeleteCharacterResponse(m *DeleteCharacterResponse) error {
 	return c.c.WriteMessage(7, 7, m)
 }
 
-func (c LoginClient) RequestCharacterList(m *RequestCharacterList) error {
+func (c Client) RequestCharacterList(m *RequestCharacterList) error {
 	return c.c.WriteMessage(7, 8, m)
 }
 
-func (c LoginClient) RequestServerList(m *RequestServerList) error {
+func (c Client) RequestServerList(m *RequestServerList) error {
 	return c.c.WriteMessage(7, 9, m)
 }
 
-func (c LoginClient) SelectCharacter(m *SelectCharacter) error {
+func (c Client) SelectCharacter(m *SelectCharacter) error {
 	return c.c.WriteMessage(7, 10, m)
 }
 
-func (c LoginClient) ServerList(m *ServerList) error {
+func (c Client) ServerList(m *ServerList) error {
 	return c.c.WriteMessage(7, 11, m)
 }
 
-func (c LoginClient) StartCharacterList(m *StartCharacterList) error {
+func (c Client) StartCharacterList(m *StartCharacterList) error {
 	return c.c.WriteMessage(7, 12, m)
 }
 
-func (c LoginClient) UserAuthen(m *UserAuthen) error {
+func (c Client) UserAuthen(m *UserAuthen) error {
 	return c.c.WriteMessage(7, 13, m)
 }
 
-func (c LoginClient) UserAuthenRsp(m *UserAuthenRsp) error {
+func (c Client) UserAuthenRsp(m *UserAuthenRsp) error {
 	return c.c.WriteMessage(7, 14, m)
 }
 
-func (c LoginClient) UserValidate(m *UserValidate) error {
+func (c Client) UserValidate(m *UserValidate) error {
 	return c.c.WriteMessage(7, 15, m)
 }
 
-func (c LoginClient) UserValidateRsp(m *UserValidateRsp) error {
+func (c Client) UserValidateRsp(m *UserValidateRsp) error {
 	return c.c.WriteMessage(7, 16, m)
 }
 
-func (c LoginClient) DisconnectLoginAfk(m *DisconnectLoginAfk) error {
+func (c Client) DisconnectLoginAfk(m *DisconnectLoginAfk) error {
 	return c.c.WriteMessage(7, 17, m)
 }
 
-func (c LoginClient) LoginNotAfk(m *LoginNotAfk) error {
+func (c Client) LoginNotAfk(m *LoginNotAfk) error {
 	return c.c.WriteMessage(7, 18, m)
 }
 
-func (c LoginClient) ServerShutdown(m *ServerShutdown) error {
+func (c Client) ServerShutdown(m *ServerShutdown) error {
 	return c.c.WriteMessage(7, 19, m)
 }
 
-func (c LoginClient) UserAdmitInd(m *UserAdmitInd) error {
+func (c Client) UserAdmitInd(m *UserAdmitInd) error {
 	return c.c.WriteMessage(7, 20, m)
 }
 
-func (c LoginClient) WebCharacterInfo(m *WebCharacterInfo) error {
+func (c Client) WebCharacterInfo(m *WebCharacterInfo) error {
 	return c.c.WriteMessage(7, 21, m)
 }
 
-func (c LoginClient) UserAuthenV2(m *UserAuthenV2) error {
+func (c Client) UserAuthenV2(m *UserAuthenV2) error {
 	return c.c.WriteMessage(7, 22, m)
 }
 
-func (c LoginClient) SaveCharacter(m *SaveCharacter) error {
+func (c Client) SaveCharacter(m *SaveCharacter) error {
 	return c.c.WriteMessage(7, 23, m)
 }
 
-func (c LoginClient) WebAuthen(m *WebAuthen) error {
+func (c Client) WebAuthen(m *WebAuthen) error {
 	return c.c.WriteMessage(7, 24, m)
 }
 
-func (c LoginClient) WebValidate(m *WebValidate) error {
+func (c Client) WebValidate(m *WebValidate) error {
 	return c.c.WriteMessage(7, 25, m)
 }
 
-func (c LoginClient) ChangeCharacterName(m *ChangeCharacterName) error {
+func (c Client) ChangeCharacterName(m *ChangeCharacterName) error {
 	return c.c.WriteMessage(7, 26, m)
 }
 
-func (c LoginClient) UserAuthenV3(m *UserAuthenV3) error {
+func (c Client) UserAuthenV3(m *UserAuthenV3) error {
 	return c.c.WriteMessage(7, 27, m)
 }
 
-func (c LoginClient) LoginLogCharacterCreation(m *LoginLogCharacterCreation) error {
+func (c Client) LoginLogCharacterCreation(m *LoginLogCharacterCreation) error {
 	return c.c.WriteMessage(7, 28, m)
 }
 
+type Service struct {
+	service
+}
+
+type Client struct {
+	c *proto.Client
+}
 type CharacterInfo struct {
 	CharacterInfo string
 }
 
 func (s *CharacterInfo) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.CharacterInfo)))
-	writeString_7(b, s.CharacterInfo)
+	codegen.WriteString(b, s.CharacterInfo)
 	return b.Bytes()
 }
 
 func (s *CharacterInfo) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.CharacterInfo, err = readString_7(b); err != nil {
+	if s.CharacterInfo, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -262,43 +261,45 @@ func (s *CharacterList) Unmarshal(data []byte) error {
 }
 
 type CharacterSelected struct {
-	ZoneName    string
-	Key         string
-	Location    string
-	LoginServer string
-	IP          string
-	ZoneID      uint64
-	CharID      uint64
-	UserID      uint64
-	UDPPort     int32
-	Slot        int32
-	PrepPhase   int32
-	Error       int32
-	TCPPort     int32
+	ZoneName     string
+	Key          string
+	Location     string
+	LoginServer  string
+	IP           string
+	ZoneID       uint64
+	CharID       uint64
+	UserID       uint64
+	UDPPort      int32
+	Slot         int32
+	PrepPhase    int32
+	Error        int32
+	TCPPort      int32
+	PlatformType uint32
 }
 
 func (s *CharacterSelected) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 54+len(s.IP)+len(s.Key)+len(s.ZoneName)+len(s.Location)+len(s.LoginServer)))
-	writeString_7(b, s.IP)
+	b := bytes.NewBuffer(make([]byte, 0, 58+len(s.IP)+len(s.Key)+len(s.ZoneName)+len(s.Location)+len(s.LoginServer)))
+	codegen.WriteString(b, s.IP)
 	binary.Write(b, binary.LittleEndian, s.TCPPort)
 	binary.Write(b, binary.LittleEndian, s.UDPPort)
-	writeString_7(b, s.Key)
+	codegen.WriteString(b, s.Key)
 	binary.Write(b, binary.LittleEndian, s.UserID)
 	binary.Write(b, binary.LittleEndian, s.CharID)
 	binary.Write(b, binary.LittleEndian, s.ZoneID)
-	writeString_7(b, s.ZoneName)
-	writeString_7(b, s.Location)
+	codegen.WriteString(b, s.ZoneName)
+	codegen.WriteString(b, s.Location)
 	binary.Write(b, binary.LittleEndian, s.Slot)
 	binary.Write(b, binary.LittleEndian, s.PrepPhase)
 	binary.Write(b, binary.LittleEndian, s.Error)
-	writeString_7(b, s.LoginServer)
+	codegen.WriteString(b, s.LoginServer)
+	binary.Write(b, binary.LittleEndian, s.PlatformType)
 	return b.Bytes()
 }
 
 func (s *CharacterSelected) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.IP, err = readString_7(b); err != nil {
+	if s.IP, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.TCPPort); err != nil {
@@ -307,7 +308,7 @@ func (s *CharacterSelected) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.UDPPort); err != nil {
 		return err
 	}
-	if s.Key, err = readString_7(b); err != nil {
+	if s.Key, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.UserID); err != nil {
@@ -319,10 +320,10 @@ func (s *CharacterSelected) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ZoneID); err != nil {
 		return err
 	}
-	if s.ZoneName, err = readString_7(b); err != nil {
+	if s.ZoneName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Location, err = readString_7(b); err != nil {
+	if s.Location, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Slot); err != nil {
@@ -334,7 +335,10 @@ func (s *CharacterSelected) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Error); err != nil {
 		return err
 	}
-	if s.LoginServer, err = readString_7(b); err != nil {
+	if s.LoginServer, err = codegen.ReadString(b); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.PlatformType); err != nil {
 		return err
 	}
 	return nil
@@ -346,14 +350,14 @@ type CreateCharacter struct {
 
 func (s *CreateCharacter) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.CreationInfo)))
-	writeString_7(b, s.CreationInfo)
+	codegen.WriteString(b, s.CreationInfo)
 	return b.Bytes()
 }
 
 func (s *CreateCharacter) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.CreationInfo, err = readString_7(b); err != nil {
+	if s.CreationInfo, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -446,7 +450,7 @@ type SelectCharacter struct {
 func (s *SelectCharacter) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.ServerName)))
 	binary.Write(b, binary.LittleEndian, s.CharID)
-	writeString_7(b, s.ServerName)
+	codegen.WriteString(b, s.ServerName)
 	return b.Bytes()
 }
 
@@ -456,7 +460,7 @@ func (s *SelectCharacter) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.CharID); err != nil {
 		return err
 	}
-	if s.ServerName, err = readString_7(b); err != nil {
+	if s.ServerName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -480,7 +484,7 @@ type StartCharacterList struct {
 
 func (s *StartCharacterList) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.LoginServer)))
-	writeString_7(b, s.LoginServer)
+	codegen.WriteString(b, s.LoginServer)
 	binary.Write(b, binary.LittleEndian, s.PurchasedCharacterSlots)
 	return b.Bytes()
 }
@@ -488,7 +492,7 @@ func (s *StartCharacterList) Marshal() []byte {
 func (s *StartCharacterList) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.LoginServer, err = readString_7(b); err != nil {
+	if s.LoginServer, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PurchasedCharacterSlots); err != nil {
@@ -509,38 +513,38 @@ type UserAuthen struct {
 
 func (s *UserAuthen) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20+len(s.Rec1)+len(s.Version)+len(s.Revision)+len(s.DataRevision)+len(s.CRC)+len(s.PatchClientID)))
-	writeString_7(b, s.Rec1)
-	writeString_7(b, s.Version)
-	writeString_7(b, s.Revision)
-	writeString_7(b, s.DataRevision)
-	writeString_7(b, s.CRC)
+	codegen.WriteString(b, s.Rec1)
+	codegen.WriteString(b, s.Version)
+	codegen.WriteString(b, s.Revision)
+	codegen.WriteString(b, s.DataRevision)
+	codegen.WriteString(b, s.CRC)
 	binary.Write(b, binary.LittleEndian, s.MachineID)
-	writeString_7(b, s.PatchClientID)
+	codegen.WriteString(b, s.PatchClientID)
 	return b.Bytes()
 }
 
 func (s *UserAuthen) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Rec1, err = readString_7(b); err != nil {
+	if s.Rec1, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Version, err = readString_7(b); err != nil {
+	if s.Version, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Revision, err = readString_7(b); err != nil {
+	if s.Revision, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.DataRevision, err = readString_7(b); err != nil {
+	if s.DataRevision, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.CRC, err = readString_7(b); err != nil {
+	if s.CRC, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.MachineID); err != nil {
 		return err
 	}
-	if s.PatchClientID, err = readString_7(b); err != nil {
+	if s.PatchClientID, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -560,9 +564,9 @@ func (s *UserAuthenRsp) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 26+len(s.Rec1)+len(s.Reason)+len(s.TimeStamp)))
 	binary.Write(b, binary.LittleEndian, s.Error)
 	binary.Write(b, binary.LittleEndian, s.UserID)
-	writeString_7(b, s.Rec1)
-	writeString_7(b, s.Reason)
-	writeString_7(b, s.TimeStamp)
+	codegen.WriteString(b, s.Rec1)
+	codegen.WriteString(b, s.Reason)
+	codegen.WriteString(b, s.TimeStamp)
 	binary.Write(b, binary.LittleEndian, s.PayingUser)
 	binary.Write(b, binary.LittleEndian, s.Flags)
 	return b.Bytes()
@@ -577,13 +581,13 @@ func (s *UserAuthenRsp) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.UserID); err != nil {
 		return err
 	}
-	if s.Rec1, err = readString_7(b); err != nil {
+	if s.Rec1, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Reason, err = readString_7(b); err != nil {
+	if s.Reason, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.TimeStamp, err = readString_7(b); err != nil {
+	if s.TimeStamp, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PayingUser); err != nil {
@@ -606,10 +610,10 @@ type UserValidate struct {
 func (s *UserValidate) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 22+len(s.PassKey3)+len(s.Locale)+len(s.PatchClientID)))
 	binary.Write(b, binary.LittleEndian, s.UserID)
-	writeString_7(b, s.PassKey3)
+	codegen.WriteString(b, s.PassKey3)
 	binary.Write(b, binary.LittleEndian, s.MachineID)
-	writeString_7(b, s.Locale)
-	writeString_7(b, s.PatchClientID)
+	codegen.WriteString(b, s.Locale)
+	codegen.WriteString(b, s.PatchClientID)
 	return b.Bytes()
 }
 
@@ -619,16 +623,16 @@ func (s *UserValidate) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.UserID); err != nil {
 		return err
 	}
-	if s.PassKey3, err = readString_7(b); err != nil {
+	if s.PassKey3, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.MachineID); err != nil {
 		return err
 	}
-	if s.Locale, err = readString_7(b); err != nil {
+	if s.Locale, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.PatchClientID, err = readString_7(b); err != nil {
+	if s.PatchClientID, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -646,9 +650,9 @@ type UserValidateRsp struct {
 func (s *UserValidateRsp) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 24+len(s.Reason)+len(s.TimeStamp)))
 	binary.Write(b, binary.LittleEndian, s.Error)
-	writeString_7(b, s.Reason)
+	codegen.WriteString(b, s.Reason)
 	binary.Write(b, binary.LittleEndian, s.UserID)
-	writeString_7(b, s.TimeStamp)
+	codegen.WriteString(b, s.TimeStamp)
 	binary.Write(b, binary.LittleEndian, s.PayingUser)
 	binary.Write(b, binary.LittleEndian, s.Flags)
 	return b.Bytes()
@@ -660,13 +664,13 @@ func (s *UserValidateRsp) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.Error); err != nil {
 		return err
 	}
-	if s.Reason, err = readString_7(b); err != nil {
+	if s.Reason, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.UserID); err != nil {
 		return err
 	}
-	if s.TimeStamp, err = readString_7(b); err != nil {
+	if s.TimeStamp, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PayingUser); err != nil {
@@ -801,42 +805,42 @@ type UserAuthenV2 struct {
 
 func (s *UserAuthenV2) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 22+len(s.Rec1)+len(s.Version)+len(s.Revision)+len(s.DataRevision)+len(s.CRC)+len(s.Locale)+len(s.PatchClientID)))
-	writeString_7(b, s.Rec1)
-	writeString_7(b, s.Version)
-	writeString_7(b, s.Revision)
-	writeString_7(b, s.DataRevision)
-	writeString_7(b, s.CRC)
+	codegen.WriteString(b, s.Rec1)
+	codegen.WriteString(b, s.Version)
+	codegen.WriteString(b, s.Revision)
+	codegen.WriteString(b, s.DataRevision)
+	codegen.WriteString(b, s.CRC)
 	binary.Write(b, binary.LittleEndian, s.MachineID)
-	writeString_7(b, s.Locale)
-	writeString_7(b, s.PatchClientID)
+	codegen.WriteString(b, s.Locale)
+	codegen.WriteString(b, s.PatchClientID)
 	return b.Bytes()
 }
 
 func (s *UserAuthenV2) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Rec1, err = readString_7(b); err != nil {
+	if s.Rec1, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Version, err = readString_7(b); err != nil {
+	if s.Version, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Revision, err = readString_7(b); err != nil {
+	if s.Revision, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.DataRevision, err = readString_7(b); err != nil {
+	if s.DataRevision, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.CRC, err = readString_7(b); err != nil {
+	if s.CRC, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.MachineID); err != nil {
 		return err
 	}
-	if s.Locale, err = readString_7(b); err != nil {
+	if s.Locale, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.PatchClientID, err = readString_7(b); err != nil {
+	if s.PatchClientID, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -877,11 +881,11 @@ type WebAuthen struct {
 
 func (s *WebAuthen) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 18+len(s.Rec1)+len(s.Version)+len(s.Revision)+len(s.DataRevision)+len(s.CRC)))
-	writeString_7(b, s.Rec1)
-	writeString_7(b, s.Version)
-	writeString_7(b, s.Revision)
-	writeString_7(b, s.DataRevision)
-	writeString_7(b, s.CRC)
+	codegen.WriteString(b, s.Rec1)
+	codegen.WriteString(b, s.Version)
+	codegen.WriteString(b, s.Revision)
+	codegen.WriteString(b, s.DataRevision)
+	codegen.WriteString(b, s.CRC)
 	binary.Write(b, binary.LittleEndian, s.MachineID)
 	return b.Bytes()
 }
@@ -889,19 +893,19 @@ func (s *WebAuthen) Marshal() []byte {
 func (s *WebAuthen) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Rec1, err = readString_7(b); err != nil {
+	if s.Rec1, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Version, err = readString_7(b); err != nil {
+	if s.Version, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Revision, err = readString_7(b); err != nil {
+	if s.Revision, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.DataRevision, err = readString_7(b); err != nil {
+	if s.DataRevision, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.CRC, err = readString_7(b); err != nil {
+	if s.CRC, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.MachineID); err != nil {
@@ -920,9 +924,9 @@ type WebValidate struct {
 func (s *WebValidate) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 20+len(s.PassKey3)+len(s.Locale)))
 	binary.Write(b, binary.LittleEndian, s.UserID)
-	writeString_7(b, s.PassKey3)
+	codegen.WriteString(b, s.PassKey3)
 	binary.Write(b, binary.LittleEndian, s.MachineID)
-	writeString_7(b, s.Locale)
+	codegen.WriteString(b, s.Locale)
 	return b.Bytes()
 }
 
@@ -932,13 +936,13 @@ func (s *WebValidate) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.UserID); err != nil {
 		return err
 	}
-	if s.PassKey3, err = readString_7(b); err != nil {
+	if s.PassKey3, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.MachineID); err != nil {
 		return err
 	}
-	if s.Locale, err = readString_7(b); err != nil {
+	if s.Locale, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -953,8 +957,8 @@ type ChangeCharacterName struct {
 func (s *ChangeCharacterName) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 12+len(s.NewName)+len(s.ServerName)))
 	binary.Write(b, binary.LittleEndian, s.CharID)
-	writeString_7(b, s.NewName)
-	writeString_7(b, s.ServerName)
+	codegen.WriteString(b, s.NewName)
+	codegen.WriteString(b, s.ServerName)
 	return b.Bytes()
 }
 
@@ -964,10 +968,10 @@ func (s *ChangeCharacterName) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.CharID); err != nil {
 		return err
 	}
-	if s.NewName, err = readString_7(b); err != nil {
+	if s.NewName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.ServerName, err = readString_7(b); err != nil {
+	if s.ServerName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -988,14 +992,14 @@ type UserAuthenV3 struct {
 
 func (s *UserAuthenV3) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 27+len(s.Rec1)+len(s.Version)+len(s.Revision)+len(s.DataRevision)+len(s.CRC)+len(s.Locale)+len(s.PatchClientID)))
-	writeString_7(b, s.Rec1)
-	writeString_7(b, s.Version)
-	writeString_7(b, s.Revision)
-	writeString_7(b, s.DataRevision)
-	writeString_7(b, s.CRC)
+	codegen.WriteString(b, s.Rec1)
+	codegen.WriteString(b, s.Version)
+	codegen.WriteString(b, s.Revision)
+	codegen.WriteString(b, s.DataRevision)
+	codegen.WriteString(b, s.CRC)
 	binary.Write(b, binary.LittleEndian, s.MachineID)
-	writeString_7(b, s.Locale)
-	writeString_7(b, s.PatchClientID)
+	codegen.WriteString(b, s.Locale)
+	codegen.WriteString(b, s.PatchClientID)
 	binary.Write(b, binary.LittleEndian, s.IsSteamPatcher)
 	binary.Write(b, binary.LittleEndian, s.ConsoleType)
 	return b.Bytes()
@@ -1004,28 +1008,28 @@ func (s *UserAuthenV3) Marshal() []byte {
 func (s *UserAuthenV3) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Rec1, err = readString_7(b); err != nil {
+	if s.Rec1, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Version, err = readString_7(b); err != nil {
+	if s.Version, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Revision, err = readString_7(b); err != nil {
+	if s.Revision, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.DataRevision, err = readString_7(b); err != nil {
+	if s.DataRevision, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.CRC, err = readString_7(b); err != nil {
+	if s.CRC, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.MachineID); err != nil {
 		return err
 	}
-	if s.Locale, err = readString_7(b); err != nil {
+	if s.Locale, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.PatchClientID, err = readString_7(b); err != nil {
+	if s.PatchClientID, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.IsSteamPatcher); err != nil {
@@ -1059,21 +1063,4 @@ func (s *LoginLogCharacterCreation) Unmarshal(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func writeString_7(b *bytes.Buffer, v string) {
-	binary.Write(b, binary.LittleEndian, uint16(len(v)))
-	b.WriteString(v)
-}
-
-func readString_7(buf *bytes.Reader) (string, error) {
-	var length uint16
-	if err := binary.Read(buf, binary.LittleEndian, &length); err != nil {
-		return "", err
-	}
-	data := make([]byte, length)
-	if _, err := buf.Read(data); err != nil {
-		return "", err
-	}
-	return *(*string)(unsafe.Pointer(&data)), nil
 }

@@ -4,11 +4,11 @@ package pet
 import (
 	"bytes"
 	"encoding/binary"
+	"github.com/cedws/w101-client-go/codegen"
 	"github.com/cedws/w101-client-go/proto"
-	"unsafe"
 )
 
-type petService interface {
+type service interface {
 	CheerCostMapUpdate(CheerCostMapUpdate)
 	DerbyEffectApply(DerbyEffectApply)
 	DerbyEffectRemove(DerbyEffectRemove)
@@ -66,71 +66,63 @@ type petService interface {
 	PetUpdateBehavior(PetUpdateBehavior)
 }
 
-type PetService struct {
-	petService
-}
+func (Service) CheerCostMapUpdate(CheerCostMapUpdate)             {}
+func (Service) DerbyEffectApply(DerbyEffectApply)                 {}
+func (Service) DerbyEffectRemove(DerbyEffectRemove)               {}
+func (Service) DerbyEffectsListUpdate(DerbyEffectsListUpdate)     {}
+func (Service) DerbyLocation(DerbyLocation)                       {}
+func (Service) DerbyPetEnergyInfo(DerbyPetEnergyInfo)             {}
+func (Service) DerbyStatMod(DerbyStatMod)                         {}
+func (Service) DerbySync(DerbySync)                               {}
+func (Service) HatchEggNow(HatchEggNow)                           {}
+func (Service) LentPet(LentPet)                                   {}
+func (Service) PetDerbyBuff(PetDerbyBuff)                         {}
+func (Service) PetDerbyCheer(PetDerbyCheer)                       {}
+func (Service) PetDerbyJumpDuck(PetDerbyJumpDuck)                 {}
+func (Service) PetDerbyLap(PetDerbyLap)                           {}
+func (Service) PetDerbyModifyStat(PetDerbyModifyStat)             {}
+func (Service) PetDerbyMorale(PetDerbyMorale)                     {}
+func (Service) PetDerbyPhotoFinish(PetDerbyPhotoFinish)           {}
+func (Service) PetDerbyPlayerLeft(PetDerbyPlayerLeft)             {}
+func (Service) PetDerbySlow(PetDerbySlow)                         {}
+func (Service) PetDerbySpeed(PetDerbySpeed)                       {}
+func (Service) PetDerbyStart(PetDerbyStart)                       {}
+func (Service) PetDerbySwitchLane(PetDerbySwitchLane)             {}
+func (Service) PetDerbySwitchLaneFail(PetDerbySwitchLaneFail)     {}
+func (Service) PetDerbyUseTalent(PetDerbyUseTalent)               {}
+func (Service) PetEggMorphed(PetEggMorphed)                       {}
+func (Service) PetEnergyMax(PetEnergyMax)                         {}
+func (Service) PetEnergyTick(PetEnergyTick)                       {}
+func (Service) PetGameDance(PetGameDance)                         {}
+func (Service) PetGameData(PetGameData)                           {}
+func (Service) PetGameDerbyResults(PetGameDerbyResults)           {}
+func (Service) PetGameDropBonus(PetGameDropBonus)                 {}
+func (Service) PetGameDropObject(PetGameDropObject)               {}
+func (Service) PetGameEnd(PetGameEnd)                             {}
+func (Service) PetGameEnding(PetGameEnding)                       {}
+func (Service) PetGameIndividualResults(PetGameIndividualResults) {}
+func (Service) PetGameInit(PetGameInit)                           {}
+func (Service) PetGameJoin(PetGameJoin)                           {}
+func (Service) PetGameJoinRsp(PetGameJoinRsp)                     {}
+func (Service) PetGameJump(PetGameJump)                           {}
+func (Service) PetGameMaze(PetGameMaze)                           {}
+func (Service) PetGameReady(PetGameReady)                         {}
+func (Service) PetGameSnackFeedFailed(PetGameSnackFeedFailed)     {}
+func (Service) PetGameSnackFeedSuccess(PetGameSnackFeedSuccess)   {}
+func (Service) PetGameStart(PetGameStart)                         {}
+func (Service) PetHatched(PetHatched)                             {}
+func (Service) PetLevelUp(PetLevelUp)                             {}
+func (Service) PetMorphCanAfford(PetMorphCanAfford)               {}
+func (Service) PetMorphingSlot(PetMorphingSlot)                   {}
+func (Service) PetMorphReady(PetMorphReady)                       {}
+func (Service) PetMorphSet(PetMorphSet)                           {}
+func (Service) PetSnackAdd(PetSnackAdd)                           {}
+func (Service) PetSnackRemove(PetSnackRemove)                     {}
+func (Service) PetSnackRemoveRequest(PetSnackRemoveRequest)       {}
+func (Service) PetSnackUpdate(PetSnackUpdate)                     {}
+func (Service) PetUpdateBehavior(PetUpdateBehavior)               {}
 
-type PetClient struct {
-	c *proto.Client
-}
-
-func (l *PetService) CheerCostMapUpdate(_ CheerCostMapUpdate)             {}
-func (l *PetService) DerbyEffectApply(_ DerbyEffectApply)                 {}
-func (l *PetService) DerbyEffectRemove(_ DerbyEffectRemove)               {}
-func (l *PetService) DerbyEffectsListUpdate(_ DerbyEffectsListUpdate)     {}
-func (l *PetService) DerbyLocation(_ DerbyLocation)                       {}
-func (l *PetService) DerbyPetEnergyInfo(_ DerbyPetEnergyInfo)             {}
-func (l *PetService) DerbyStatMod(_ DerbyStatMod)                         {}
-func (l *PetService) DerbySync(_ DerbySync)                               {}
-func (l *PetService) HatchEggNow(_ HatchEggNow)                           {}
-func (l *PetService) LentPet(_ LentPet)                                   {}
-func (l *PetService) PetDerbyBuff(_ PetDerbyBuff)                         {}
-func (l *PetService) PetDerbyCheer(_ PetDerbyCheer)                       {}
-func (l *PetService) PetDerbyJumpDuck(_ PetDerbyJumpDuck)                 {}
-func (l *PetService) PetDerbyLap(_ PetDerbyLap)                           {}
-func (l *PetService) PetDerbyModifyStat(_ PetDerbyModifyStat)             {}
-func (l *PetService) PetDerbyMorale(_ PetDerbyMorale)                     {}
-func (l *PetService) PetDerbyPhotoFinish(_ PetDerbyPhotoFinish)           {}
-func (l *PetService) PetDerbyPlayerLeft(_ PetDerbyPlayerLeft)             {}
-func (l *PetService) PetDerbySlow(_ PetDerbySlow)                         {}
-func (l *PetService) PetDerbySpeed(_ PetDerbySpeed)                       {}
-func (l *PetService) PetDerbyStart(_ PetDerbyStart)                       {}
-func (l *PetService) PetDerbySwitchLane(_ PetDerbySwitchLane)             {}
-func (l *PetService) PetDerbySwitchLaneFail(_ PetDerbySwitchLaneFail)     {}
-func (l *PetService) PetDerbyUseTalent(_ PetDerbyUseTalent)               {}
-func (l *PetService) PetEggMorphed(_ PetEggMorphed)                       {}
-func (l *PetService) PetEnergyMax(_ PetEnergyMax)                         {}
-func (l *PetService) PetEnergyTick(_ PetEnergyTick)                       {}
-func (l *PetService) PetGameDance(_ PetGameDance)                         {}
-func (l *PetService) PetGameData(_ PetGameData)                           {}
-func (l *PetService) PetGameDerbyResults(_ PetGameDerbyResults)           {}
-func (l *PetService) PetGameDropBonus(_ PetGameDropBonus)                 {}
-func (l *PetService) PetGameDropObject(_ PetGameDropObject)               {}
-func (l *PetService) PetGameEnd(_ PetGameEnd)                             {}
-func (l *PetService) PetGameEnding(_ PetGameEnding)                       {}
-func (l *PetService) PetGameIndividualResults(_ PetGameIndividualResults) {}
-func (l *PetService) PetGameInit(_ PetGameInit)                           {}
-func (l *PetService) PetGameJoin(_ PetGameJoin)                           {}
-func (l *PetService) PetGameJoinRsp(_ PetGameJoinRsp)                     {}
-func (l *PetService) PetGameJump(_ PetGameJump)                           {}
-func (l *PetService) PetGameMaze(_ PetGameMaze)                           {}
-func (l *PetService) PetGameReady(_ PetGameReady)                         {}
-func (l *PetService) PetGameSnackFeedFailed(_ PetGameSnackFeedFailed)     {}
-func (l *PetService) PetGameSnackFeedSuccess(_ PetGameSnackFeedSuccess)   {}
-func (l *PetService) PetGameStart(_ PetGameStart)                         {}
-func (l *PetService) PetHatched(_ PetHatched)                             {}
-func (l *PetService) PetLevelUp(_ PetLevelUp)                             {}
-func (l *PetService) PetMorphCanAfford(_ PetMorphCanAfford)               {}
-func (l *PetService) PetMorphingSlot(_ PetMorphingSlot)                   {}
-func (l *PetService) PetMorphReady(_ PetMorphReady)                       {}
-func (l *PetService) PetMorphSet(_ PetMorphSet)                           {}
-func (l *PetService) PetSnackAdd(_ PetSnackAdd)                           {}
-func (l *PetService) PetSnackRemove(_ PetSnackRemove)                     {}
-func (l *PetService) PetSnackRemoveRequest(_ PetSnackRemoveRequest)       {}
-func (l *PetService) PetSnackUpdate(_ PetSnackUpdate)                     {}
-func (l *PetService) PetUpdateBehavior(_ PetUpdateBehavior)               {}
-
-func RegisterPetService(r *proto.MessageRouter, s petService) {
+func RegisterService(r *proto.MessageRouter, s service) {
 	proto.RegisterMessageHandler(r, 9, 1, s.CheerCostMapUpdate)
 	proto.RegisterMessageHandler(r, 9, 2, s.DerbyEffectApply)
 	proto.RegisterMessageHandler(r, 9, 3, s.DerbyEffectRemove)
@@ -188,244 +180,251 @@ func RegisterPetService(r *proto.MessageRouter, s petService) {
 	proto.RegisterMessageHandler(r, 9, 55, s.PetUpdateBehavior)
 }
 
-func NewPetClient(c *proto.Client) PetClient {
-	return PetClient{c}
+func NewClient(c *proto.Client) Client {
+	return Client{c}
 }
 
-func (c PetClient) CheerCostMapUpdate(m *CheerCostMapUpdate) error {
+func (c Client) CheerCostMapUpdate(m *CheerCostMapUpdate) error {
 	return c.c.WriteMessage(9, 1, m)
 }
 
-func (c PetClient) DerbyEffectApply(m *DerbyEffectApply) error {
+func (c Client) DerbyEffectApply(m *DerbyEffectApply) error {
 	return c.c.WriteMessage(9, 2, m)
 }
 
-func (c PetClient) DerbyEffectRemove(m *DerbyEffectRemove) error {
+func (c Client) DerbyEffectRemove(m *DerbyEffectRemove) error {
 	return c.c.WriteMessage(9, 3, m)
 }
 
-func (c PetClient) DerbyEffectsListUpdate(m *DerbyEffectsListUpdate) error {
+func (c Client) DerbyEffectsListUpdate(m *DerbyEffectsListUpdate) error {
 	return c.c.WriteMessage(9, 4, m)
 }
 
-func (c PetClient) DerbyLocation(m *DerbyLocation) error {
+func (c Client) DerbyLocation(m *DerbyLocation) error {
 	return c.c.WriteMessage(9, 5, m)
 }
 
-func (c PetClient) DerbyPetEnergyInfo(m *DerbyPetEnergyInfo) error {
+func (c Client) DerbyPetEnergyInfo(m *DerbyPetEnergyInfo) error {
 	return c.c.WriteMessage(9, 6, m)
 }
 
-func (c PetClient) DerbyStatMod(m *DerbyStatMod) error {
+func (c Client) DerbyStatMod(m *DerbyStatMod) error {
 	return c.c.WriteMessage(9, 7, m)
 }
 
-func (c PetClient) DerbySync(m *DerbySync) error {
+func (c Client) DerbySync(m *DerbySync) error {
 	return c.c.WriteMessage(9, 8, m)
 }
 
-func (c PetClient) HatchEggNow(m *HatchEggNow) error {
+func (c Client) HatchEggNow(m *HatchEggNow) error {
 	return c.c.WriteMessage(9, 9, m)
 }
 
-func (c PetClient) LentPet(m *LentPet) error {
+func (c Client) LentPet(m *LentPet) error {
 	return c.c.WriteMessage(9, 10, m)
 }
 
-func (c PetClient) PetDerbyBuff(m *PetDerbyBuff) error {
+func (c Client) PetDerbyBuff(m *PetDerbyBuff) error {
 	return c.c.WriteMessage(9, 11, m)
 }
 
-func (c PetClient) PetDerbyCheer(m *PetDerbyCheer) error {
+func (c Client) PetDerbyCheer(m *PetDerbyCheer) error {
 	return c.c.WriteMessage(9, 12, m)
 }
 
-func (c PetClient) PetDerbyJumpDuck(m *PetDerbyJumpDuck) error {
+func (c Client) PetDerbyJumpDuck(m *PetDerbyJumpDuck) error {
 	return c.c.WriteMessage(9, 13, m)
 }
 
-func (c PetClient) PetDerbyLap(m *PetDerbyLap) error {
+func (c Client) PetDerbyLap(m *PetDerbyLap) error {
 	return c.c.WriteMessage(9, 14, m)
 }
 
-func (c PetClient) PetDerbyModifyStat(m *PetDerbyModifyStat) error {
+func (c Client) PetDerbyModifyStat(m *PetDerbyModifyStat) error {
 	return c.c.WriteMessage(9, 15, m)
 }
 
-func (c PetClient) PetDerbyMorale(m *PetDerbyMorale) error {
+func (c Client) PetDerbyMorale(m *PetDerbyMorale) error {
 	return c.c.WriteMessage(9, 16, m)
 }
 
-func (c PetClient) PetDerbyPhotoFinish(m *PetDerbyPhotoFinish) error {
+func (c Client) PetDerbyPhotoFinish(m *PetDerbyPhotoFinish) error {
 	return c.c.WriteMessage(9, 17, m)
 }
 
-func (c PetClient) PetDerbyPlayerLeft(m *PetDerbyPlayerLeft) error {
+func (c Client) PetDerbyPlayerLeft(m *PetDerbyPlayerLeft) error {
 	return c.c.WriteMessage(9, 18, m)
 }
 
-func (c PetClient) PetDerbySlow(m *PetDerbySlow) error {
+func (c Client) PetDerbySlow(m *PetDerbySlow) error {
 	return c.c.WriteMessage(9, 19, m)
 }
 
-func (c PetClient) PetDerbySpeed(m *PetDerbySpeed) error {
+func (c Client) PetDerbySpeed(m *PetDerbySpeed) error {
 	return c.c.WriteMessage(9, 20, m)
 }
 
-func (c PetClient) PetDerbyStart(m *PetDerbyStart) error {
+func (c Client) PetDerbyStart(m *PetDerbyStart) error {
 	return c.c.WriteMessage(9, 21, m)
 }
 
-func (c PetClient) PetDerbySwitchLane(m *PetDerbySwitchLane) error {
+func (c Client) PetDerbySwitchLane(m *PetDerbySwitchLane) error {
 	return c.c.WriteMessage(9, 22, m)
 }
 
-func (c PetClient) PetDerbySwitchLaneFail(m *PetDerbySwitchLaneFail) error {
+func (c Client) PetDerbySwitchLaneFail(m *PetDerbySwitchLaneFail) error {
 	return c.c.WriteMessage(9, 23, m)
 }
 
-func (c PetClient) PetDerbyUseTalent(m *PetDerbyUseTalent) error {
+func (c Client) PetDerbyUseTalent(m *PetDerbyUseTalent) error {
 	return c.c.WriteMessage(9, 24, m)
 }
 
-func (c PetClient) PetEggMorphed(m *PetEggMorphed) error {
+func (c Client) PetEggMorphed(m *PetEggMorphed) error {
 	return c.c.WriteMessage(9, 25, m)
 }
 
-func (c PetClient) PetEnergyMax(m *PetEnergyMax) error {
+func (c Client) PetEnergyMax(m *PetEnergyMax) error {
 	return c.c.WriteMessage(9, 26, m)
 }
 
-func (c PetClient) PetEnergyTick(m *PetEnergyTick) error {
+func (c Client) PetEnergyTick(m *PetEnergyTick) error {
 	return c.c.WriteMessage(9, 27, m)
 }
 
-func (c PetClient) PetGameDance(m *PetGameDance) error {
+func (c Client) PetGameDance(m *PetGameDance) error {
 	return c.c.WriteMessage(9, 28, m)
 }
 
-func (c PetClient) PetGameData(m *PetGameData) error {
+func (c Client) PetGameData(m *PetGameData) error {
 	return c.c.WriteMessage(9, 29, m)
 }
 
-func (c PetClient) PetGameDerbyResults(m *PetGameDerbyResults) error {
+func (c Client) PetGameDerbyResults(m *PetGameDerbyResults) error {
 	return c.c.WriteMessage(9, 30, m)
 }
 
-func (c PetClient) PetGameDropBonus(m *PetGameDropBonus) error {
+func (c Client) PetGameDropBonus(m *PetGameDropBonus) error {
 	return c.c.WriteMessage(9, 31, m)
 }
 
-func (c PetClient) PetGameDropObject(m *PetGameDropObject) error {
+func (c Client) PetGameDropObject(m *PetGameDropObject) error {
 	return c.c.WriteMessage(9, 32, m)
 }
 
-func (c PetClient) PetGameEnd(m *PetGameEnd) error {
+func (c Client) PetGameEnd(m *PetGameEnd) error {
 	return c.c.WriteMessage(9, 33, m)
 }
 
-func (c PetClient) PetGameEnding(m *PetGameEnding) error {
+func (c Client) PetGameEnding(m *PetGameEnding) error {
 	return c.c.WriteMessage(9, 34, m)
 }
 
-func (c PetClient) PetGameIndividualResults(m *PetGameIndividualResults) error {
+func (c Client) PetGameIndividualResults(m *PetGameIndividualResults) error {
 	return c.c.WriteMessage(9, 35, m)
 }
 
-func (c PetClient) PetGameInit(m *PetGameInit) error {
+func (c Client) PetGameInit(m *PetGameInit) error {
 	return c.c.WriteMessage(9, 36, m)
 }
 
-func (c PetClient) PetGameJoin(m *PetGameJoin) error {
+func (c Client) PetGameJoin(m *PetGameJoin) error {
 	return c.c.WriteMessage(9, 37, m)
 }
 
-func (c PetClient) PetGameJoinRsp(m *PetGameJoinRsp) error {
+func (c Client) PetGameJoinRsp(m *PetGameJoinRsp) error {
 	return c.c.WriteMessage(9, 38, m)
 }
 
-func (c PetClient) PetGameJump(m *PetGameJump) error {
+func (c Client) PetGameJump(m *PetGameJump) error {
 	return c.c.WriteMessage(9, 39, m)
 }
 
-func (c PetClient) PetGameMaze(m *PetGameMaze) error {
+func (c Client) PetGameMaze(m *PetGameMaze) error {
 	return c.c.WriteMessage(9, 40, m)
 }
 
-func (c PetClient) PetGameReady(m *PetGameReady) error {
+func (c Client) PetGameReady(m *PetGameReady) error {
 	return c.c.WriteMessage(9, 41, m)
 }
 
-func (c PetClient) PetGameSnackFeedFailed(m *PetGameSnackFeedFailed) error {
+func (c Client) PetGameSnackFeedFailed(m *PetGameSnackFeedFailed) error {
 	return c.c.WriteMessage(9, 42, m)
 }
 
-func (c PetClient) PetGameSnackFeedSuccess(m *PetGameSnackFeedSuccess) error {
+func (c Client) PetGameSnackFeedSuccess(m *PetGameSnackFeedSuccess) error {
 	return c.c.WriteMessage(9, 43, m)
 }
 
-func (c PetClient) PetGameStart(m *PetGameStart) error {
+func (c Client) PetGameStart(m *PetGameStart) error {
 	return c.c.WriteMessage(9, 44, m)
 }
 
-func (c PetClient) PetHatched(m *PetHatched) error {
+func (c Client) PetHatched(m *PetHatched) error {
 	return c.c.WriteMessage(9, 45, m)
 }
 
-func (c PetClient) PetLevelUp(m *PetLevelUp) error {
+func (c Client) PetLevelUp(m *PetLevelUp) error {
 	return c.c.WriteMessage(9, 46, m)
 }
 
-func (c PetClient) PetMorphCanAfford(m *PetMorphCanAfford) error {
+func (c Client) PetMorphCanAfford(m *PetMorphCanAfford) error {
 	return c.c.WriteMessage(9, 47, m)
 }
 
-func (c PetClient) PetMorphingSlot(m *PetMorphingSlot) error {
+func (c Client) PetMorphingSlot(m *PetMorphingSlot) error {
 	return c.c.WriteMessage(9, 48, m)
 }
 
-func (c PetClient) PetMorphReady(m *PetMorphReady) error {
+func (c Client) PetMorphReady(m *PetMorphReady) error {
 	return c.c.WriteMessage(9, 49, m)
 }
 
-func (c PetClient) PetMorphSet(m *PetMorphSet) error {
+func (c Client) PetMorphSet(m *PetMorphSet) error {
 	return c.c.WriteMessage(9, 50, m)
 }
 
-func (c PetClient) PetSnackAdd(m *PetSnackAdd) error {
+func (c Client) PetSnackAdd(m *PetSnackAdd) error {
 	return c.c.WriteMessage(9, 51, m)
 }
 
-func (c PetClient) PetSnackRemove(m *PetSnackRemove) error {
+func (c Client) PetSnackRemove(m *PetSnackRemove) error {
 	return c.c.WriteMessage(9, 52, m)
 }
 
-func (c PetClient) PetSnackRemoveRequest(m *PetSnackRemoveRequest) error {
+func (c Client) PetSnackRemoveRequest(m *PetSnackRemoveRequest) error {
 	return c.c.WriteMessage(9, 53, m)
 }
 
-func (c PetClient) PetSnackUpdate(m *PetSnackUpdate) error {
+func (c Client) PetSnackUpdate(m *PetSnackUpdate) error {
 	return c.c.WriteMessage(9, 54, m)
 }
 
-func (c PetClient) PetUpdateBehavior(m *PetUpdateBehavior) error {
+func (c Client) PetUpdateBehavior(m *PetUpdateBehavior) error {
 	return c.c.WriteMessage(9, 55, m)
 }
 
+type Service struct {
+	service
+}
+
+type Client struct {
+	c *proto.Client
+}
 type CheerCostMapUpdate struct {
 	CheerCostMods string
 }
 
 func (s *CheerCostMapUpdate) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.CheerCostMods)))
-	writeString_9(b, s.CheerCostMods)
+	codegen.WriteString(b, s.CheerCostMods)
 	return b.Bytes()
 }
 
 func (s *CheerCostMapUpdate) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.CheerCostMods, err = readString_9(b); err != nil {
+	if s.CheerCostMods, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -438,18 +437,18 @@ type DerbyEffectApply struct {
 
 func (s *DerbyEffectApply) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4+len(s.Game)+len(s.Data)))
-	writeString_9(b, s.Game)
-	writeString_9(b, s.Data)
+	codegen.WriteString(b, s.Game)
+	codegen.WriteString(b, s.Data)
 	return b.Bytes()
 }
 
 func (s *DerbyEffectApply) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Game, err = readString_9(b); err != nil {
+	if s.Game, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Data, err = readString_9(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -462,7 +461,7 @@ type DerbyEffectRemove struct {
 
 func (s *DerbyEffectRemove) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.Game)))
-	writeString_9(b, s.Game)
+	codegen.WriteString(b, s.Game)
 	binary.Write(b, binary.LittleEndian, s.ID)
 	return b.Bytes()
 }
@@ -470,7 +469,7 @@ func (s *DerbyEffectRemove) Marshal() []byte {
 func (s *DerbyEffectRemove) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Game, err = readString_9(b); err != nil {
+	if s.Game, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ID); err != nil {
@@ -485,14 +484,14 @@ type DerbyEffectsListUpdate struct {
 
 func (s *DerbyEffectsListUpdate) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Data)))
-	writeString_9(b, s.Data)
+	codegen.WriteString(b, s.Data)
 	return b.Bytes()
 }
 
 func (s *DerbyEffectsListUpdate) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_9(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -577,14 +576,14 @@ type DerbyStatMod struct {
 
 func (s *DerbyStatMod) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Data)))
-	writeString_9(b, s.Data)
+	codegen.WriteString(b, s.Data)
 	return b.Bytes()
 }
 
 func (s *DerbyStatMod) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_9(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -1070,14 +1069,14 @@ type PetGameDance struct {
 
 func (s *PetGameDance) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Moves)))
-	writeString_9(b, s.Moves)
+	codegen.WriteString(b, s.Moves)
 	return b.Bytes()
 }
 
 func (s *PetGameDance) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Moves, err = readString_9(b); err != nil {
+	if s.Moves, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -1090,18 +1089,18 @@ type PetGameData struct {
 
 func (s *PetGameData) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4+len(s.Game)+len(s.Data)))
-	writeString_9(b, s.Game)
-	writeString_9(b, s.Data)
+	codegen.WriteString(b, s.Game)
+	codegen.WriteString(b, s.Data)
 	return b.Bytes()
 }
 
 func (s *PetGameData) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Game, err = readString_9(b); err != nil {
+	if s.Game, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Data, err = readString_9(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -1113,14 +1112,14 @@ type PetGameDerbyResults struct {
 
 func (s *PetGameDerbyResults) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Data)))
-	writeString_9(b, s.Data)
+	codegen.WriteString(b, s.Data)
 	return b.Bytes()
 }
 
 func (s *PetGameDerbyResults) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_9(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -1181,18 +1180,18 @@ type PetGameEnd struct {
 
 func (s *PetGameEnd) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4+len(s.Game)+len(s.Data)))
-	writeString_9(b, s.Game)
-	writeString_9(b, s.Data)
+	codegen.WriteString(b, s.Game)
+	codegen.WriteString(b, s.Data)
 	return b.Bytes()
 }
 
 func (s *PetGameEnd) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Game, err = readString_9(b); err != nil {
+	if s.Game, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Data, err = readString_9(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -1205,7 +1204,7 @@ type PetGameEnding struct {
 
 func (s *PetGameEnding) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Game)))
-	writeString_9(b, s.Game)
+	codegen.WriteString(b, s.Game)
 	binary.Write(b, binary.LittleEndian, s.GlobalID)
 	return b.Bytes()
 }
@@ -1213,7 +1212,7 @@ func (s *PetGameEnding) Marshal() []byte {
 func (s *PetGameEnding) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Game, err = readString_9(b); err != nil {
+	if s.Game, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
@@ -1228,14 +1227,14 @@ type PetGameIndividualResults struct {
 
 func (s *PetGameIndividualResults) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Data)))
-	writeString_9(b, s.Data)
+	codegen.WriteString(b, s.Data)
 	return b.Bytes()
 }
 
 func (s *PetGameIndividualResults) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_9(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -1250,8 +1249,8 @@ type PetGameInit struct {
 
 func (s *PetGameInit) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.Game)+len(s.Data)))
-	writeString_9(b, s.Game)
-	writeString_9(b, s.Data)
+	codegen.WriteString(b, s.Game)
+	codegen.WriteString(b, s.Data)
 	binary.Write(b, binary.LittleEndian, s.MinLevel)
 	binary.Write(b, binary.LittleEndian, s.Track)
 	return b.Bytes()
@@ -1260,10 +1259,10 @@ func (s *PetGameInit) Marshal() []byte {
 func (s *PetGameInit) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Game, err = readString_9(b); err != nil {
+	if s.Game, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Data, err = readString_9(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.MinLevel); err != nil {
@@ -1282,18 +1281,18 @@ type PetGameJoin struct {
 
 func (s *PetGameJoin) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4+len(s.Game)+len(s.Track)))
-	writeString_9(b, s.Game)
-	writeString_9(b, s.Track)
+	codegen.WriteString(b, s.Game)
+	codegen.WriteString(b, s.Track)
 	return b.Bytes()
 }
 
 func (s *PetGameJoin) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Game, err = readString_9(b); err != nil {
+	if s.Game, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Track, err = readString_9(b); err != nil {
+	if s.Track, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -1306,7 +1305,7 @@ type PetGameJoinRsp struct {
 
 func (s *PetGameJoinRsp) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 3+len(s.Game)))
-	writeString_9(b, s.Game)
+	codegen.WriteString(b, s.Game)
 	binary.Write(b, binary.LittleEndian, s.Success)
 	return b.Bytes()
 }
@@ -1314,7 +1313,7 @@ func (s *PetGameJoinRsp) Marshal() []byte {
 func (s *PetGameJoinRsp) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Game, err = readString_9(b); err != nil {
+	if s.Game, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Success); err != nil {
@@ -1391,14 +1390,14 @@ type PetGameSnackFeedSuccess struct {
 
 func (s *PetGameSnackFeedSuccess) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.Data)))
-	writeString_9(b, s.Data)
+	codegen.WriteString(b, s.Data)
 	return b.Bytes()
 }
 
 func (s *PetGameSnackFeedSuccess) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Data, err = readString_9(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -1411,18 +1410,18 @@ type PetGameStart struct {
 
 func (s *PetGameStart) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 4+len(s.Game)+len(s.Data)))
-	writeString_9(b, s.Game)
-	writeString_9(b, s.Data)
+	codegen.WriteString(b, s.Game)
+	codegen.WriteString(b, s.Data)
 	return b.Bytes()
 }
 
 func (s *PetGameStart) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.Game, err = readString_9(b); err != nil {
+	if s.Game, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Data, err = readString_9(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -1600,7 +1599,7 @@ type PetSnackAdd struct {
 func (s *PetSnackAdd) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Data)))
 	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_9(b, s.Data)
+	codegen.WriteString(b, s.Data)
 	return b.Bytes()
 }
 
@@ -1610,7 +1609,7 @@ func (s *PetSnackAdd) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_9(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -1696,7 +1695,7 @@ type PetUpdateBehavior struct {
 func (s *PetUpdateBehavior) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Data)))
 	binary.Write(b, binary.LittleEndian, s.GlobalID)
-	writeString_9(b, s.Data)
+	codegen.WriteString(b, s.Data)
 	return b.Bytes()
 }
 
@@ -1706,25 +1705,8 @@ func (s *PetUpdateBehavior) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
 		return err
 	}
-	if s.Data, err = readString_9(b); err != nil {
+	if s.Data, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
-}
-
-func writeString_9(b *bytes.Buffer, v string) {
-	binary.Write(b, binary.LittleEndian, uint16(len(v)))
-	b.WriteString(v)
-}
-
-func readString_9(buf *bytes.Reader) (string, error) {
-	var length uint16
-	if err := binary.Read(buf, binary.LittleEndian, &length); err != nil {
-		return "", err
-	}
-	data := make([]byte, length)
-	if _, err := buf.Read(data); err != nil {
-		return "", err
-	}
-	return *(*string)(unsafe.Pointer(&data)), nil
 }

@@ -4,50 +4,49 @@ package patch
 import (
 	"bytes"
 	"encoding/binary"
+	"github.com/cedws/w101-client-go/codegen"
 	"github.com/cedws/w101-client-go/proto"
-	"unsafe"
 )
 
-type patchService interface {
+type service interface {
 	LatestFileList(LatestFileList)
 	LatestFileListV2(LatestFileListV2)
 	NextVersion(NextVersion)
 }
 
-type PatchService struct {
-	patchService
-}
+func (Service) LatestFileList(LatestFileList)     {}
+func (Service) LatestFileListV2(LatestFileListV2) {}
+func (Service) NextVersion(NextVersion)           {}
 
-type PatchClient struct {
-	c *proto.Client
-}
-
-func (l *PatchService) LatestFileList(_ LatestFileList)     {}
-func (l *PatchService) LatestFileListV2(_ LatestFileListV2) {}
-func (l *PatchService) NextVersion(_ NextVersion)           {}
-
-func RegisterPatchService(r *proto.MessageRouter, s patchService) {
+func RegisterService(r *proto.MessageRouter, s service) {
 	proto.RegisterMessageHandler(r, 8, 1, s.LatestFileList)
 	proto.RegisterMessageHandler(r, 8, 2, s.LatestFileListV2)
 	proto.RegisterMessageHandler(r, 8, 3, s.NextVersion)
 }
 
-func NewPatchClient(c *proto.Client) PatchClient {
-	return PatchClient{c}
+func NewClient(c *proto.Client) Client {
+	return Client{c}
 }
 
-func (c PatchClient) LatestFileList(m *LatestFileList) error {
+func (c Client) LatestFileList(m *LatestFileList) error {
 	return c.c.WriteMessage(8, 1, m)
 }
 
-func (c PatchClient) LatestFileListV2(m *LatestFileListV2) error {
+func (c Client) LatestFileListV2(m *LatestFileListV2) error {
 	return c.c.WriteMessage(8, 2, m)
 }
 
-func (c PatchClient) NextVersion(m *NextVersion) error {
+func (c Client) NextVersion(m *NextVersion) error {
 	return c.c.WriteMessage(8, 3, m)
 }
 
+type Service struct {
+	service
+}
+
+type Client struct {
+	c *proto.Client
+}
 type LatestFileList struct {
 	URLSuffix     string
 	URLPrefix     string
@@ -63,14 +62,14 @@ type LatestFileList struct {
 func (s *LatestFileList) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 28+len(s.ListFileName)+len(s.ListFileURL)+len(s.URLPrefix)+len(s.URLSuffix)))
 	binary.Write(b, binary.LittleEndian, s.LatestVersion)
-	writeString_8(b, s.ListFileName)
+	codegen.WriteString(b, s.ListFileName)
 	binary.Write(b, binary.LittleEndian, s.ListFileType)
 	binary.Write(b, binary.LittleEndian, s.ListFileTime)
 	binary.Write(b, binary.LittleEndian, s.ListFileSize)
 	binary.Write(b, binary.LittleEndian, s.ListFileCRC)
-	writeString_8(b, s.ListFileURL)
-	writeString_8(b, s.URLPrefix)
-	writeString_8(b, s.URLSuffix)
+	codegen.WriteString(b, s.ListFileURL)
+	codegen.WriteString(b, s.URLPrefix)
+	codegen.WriteString(b, s.URLSuffix)
 	return b.Bytes()
 }
 
@@ -80,7 +79,7 @@ func (s *LatestFileList) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.LatestVersion); err != nil {
 		return err
 	}
-	if s.ListFileName, err = readString_8(b); err != nil {
+	if s.ListFileName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ListFileType); err != nil {
@@ -95,13 +94,13 @@ func (s *LatestFileList) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ListFileCRC); err != nil {
 		return err
 	}
-	if s.ListFileURL, err = readString_8(b); err != nil {
+	if s.ListFileURL, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.URLPrefix, err = readString_8(b); err != nil {
+	if s.URLPrefix, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.URLSuffix, err = readString_8(b); err != nil {
+	if s.URLSuffix, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -123,15 +122,15 @@ type LatestFileListV2 struct {
 func (s *LatestFileListV2) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 30+len(s.ListFileName)+len(s.ListFileURL)+len(s.URLPrefix)+len(s.URLSuffix)+len(s.Locale)))
 	binary.Write(b, binary.LittleEndian, s.LatestVersion)
-	writeString_8(b, s.ListFileName)
+	codegen.WriteString(b, s.ListFileName)
 	binary.Write(b, binary.LittleEndian, s.ListFileType)
 	binary.Write(b, binary.LittleEndian, s.ListFileTime)
 	binary.Write(b, binary.LittleEndian, s.ListFileSize)
 	binary.Write(b, binary.LittleEndian, s.ListFileCRC)
-	writeString_8(b, s.ListFileURL)
-	writeString_8(b, s.URLPrefix)
-	writeString_8(b, s.URLSuffix)
-	writeString_8(b, s.Locale)
+	codegen.WriteString(b, s.ListFileURL)
+	codegen.WriteString(b, s.URLPrefix)
+	codegen.WriteString(b, s.URLSuffix)
+	codegen.WriteString(b, s.Locale)
 	return b.Bytes()
 }
 
@@ -141,7 +140,7 @@ func (s *LatestFileListV2) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.LatestVersion); err != nil {
 		return err
 	}
-	if s.ListFileName, err = readString_8(b); err != nil {
+	if s.ListFileName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ListFileType); err != nil {
@@ -156,16 +155,16 @@ func (s *LatestFileListV2) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ListFileCRC); err != nil {
 		return err
 	}
-	if s.ListFileURL, err = readString_8(b); err != nil {
+	if s.ListFileURL, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.URLPrefix, err = readString_8(b); err != nil {
+	if s.URLPrefix, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.URLSuffix, err = readString_8(b); err != nil {
+	if s.URLSuffix, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.Locale, err = readString_8(b); err != nil {
+	if s.Locale, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -181,10 +180,10 @@ type NextVersion struct {
 
 func (s *NextVersion) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 14+len(s.PkgName)+len(s.URLPrefix)+len(s.FileName)))
-	writeString_8(b, s.PkgName)
+	codegen.WriteString(b, s.PkgName)
 	binary.Write(b, binary.LittleEndian, s.Version)
-	writeString_8(b, s.URLPrefix)
-	writeString_8(b, s.FileName)
+	codegen.WriteString(b, s.URLPrefix)
+	codegen.WriteString(b, s.FileName)
 	binary.Write(b, binary.LittleEndian, s.FileType)
 	return b.Bytes()
 }
@@ -192,37 +191,20 @@ func (s *NextVersion) Marshal() []byte {
 func (s *NextVersion) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
-	if s.PkgName, err = readString_8(b); err != nil {
+	if s.PkgName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Version); err != nil {
 		return err
 	}
-	if s.URLPrefix, err = readString_8(b); err != nil {
+	if s.URLPrefix, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.FileName, err = readString_8(b); err != nil {
+	if s.FileName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.FileType); err != nil {
 		return err
 	}
 	return nil
-}
-
-func writeString_8(b *bytes.Buffer, v string) {
-	binary.Write(b, binary.LittleEndian, uint16(len(v)))
-	b.WriteString(v)
-}
-
-func readString_8(buf *bytes.Reader) (string, error) {
-	var length uint16
-	if err := binary.Read(buf, binary.LittleEndian, &length); err != nil {
-		return "", err
-	}
-	data := make([]byte, length)
-	if _, err := buf.Read(data); err != nil {
-		return "", err
-	}
-	return *(*string)(unsafe.Pointer(&data)), nil
 }

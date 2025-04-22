@@ -4,11 +4,11 @@ package cantrips
 import (
 	"bytes"
 	"encoding/binary"
+	"github.com/cedws/w101-client-go/codegen"
 	"github.com/cedws/w101-client-go/proto"
-	"unsafe"
 )
 
-type cantripsService interface {
+type service interface {
 	BeneficialLuckUpdate(BeneficialLuckUpdate)
 	CancelInvisibility(CancelInvisibility)
 	CantripAffectedPlayer(CantripAffectedPlayer)
@@ -29,34 +29,26 @@ type cantripsService interface {
 	UpdateRitualObject(UpdateRitualObject)
 }
 
-type CantripsService struct {
-	cantripsService
-}
+func (Service) BeneficialLuckUpdate(BeneficialLuckUpdate)   {}
+func (Service) CancelInvisibility(CancelInvisibility)       {}
+func (Service) CantripAffectedPlayer(CantripAffectedPlayer) {}
+func (Service) CantripEndLoop(CantripEndLoop)               {}
+func (Service) CantripLevelUp(CantripLevelUp)               {}
+func (Service) CantripNoAggro(CantripNoAggro)               {}
+func (Service) CantripsSigilSpell(CantripsSigilSpell)       {}
+func (Service) CantripsResponse(CantripsResponse)           {}
+func (Service) CantripsResponseError(CantripsResponseError) {}
+func (Service) CantripsSpellCast(CantripsSpellCast)         {}
+func (Service) CantripTutorialEffect(CantripTutorialEffect) {}
+func (Service) CastEffect(CastEffect)                       {}
+func (Service) CastRitual(CastRitual)                       {}
+func (Service) ControlVisibility(ControlVisibility)         {}
+func (Service) EnterBeneficialObject(EnterBeneficialObject) {}
+func (Service) ExitBeneficialObject(ExitBeneficialObject)   {}
+func (Service) UpdateCantripXP(UpdateCantripXP)             {}
+func (Service) UpdateRitualObject(UpdateRitualObject)       {}
 
-type CantripsClient struct {
-	c *proto.Client
-}
-
-func (l *CantripsService) BeneficialLuckUpdate(_ BeneficialLuckUpdate)   {}
-func (l *CantripsService) CancelInvisibility(_ CancelInvisibility)       {}
-func (l *CantripsService) CantripAffectedPlayer(_ CantripAffectedPlayer) {}
-func (l *CantripsService) CantripEndLoop(_ CantripEndLoop)               {}
-func (l *CantripsService) CantripLevelUp(_ CantripLevelUp)               {}
-func (l *CantripsService) CantripNoAggro(_ CantripNoAggro)               {}
-func (l *CantripsService) CantripsSigilSpell(_ CantripsSigilSpell)       {}
-func (l *CantripsService) CantripsResponse(_ CantripsResponse)           {}
-func (l *CantripsService) CantripsResponseError(_ CantripsResponseError) {}
-func (l *CantripsService) CantripsSpellCast(_ CantripsSpellCast)         {}
-func (l *CantripsService) CantripTutorialEffect(_ CantripTutorialEffect) {}
-func (l *CantripsService) CastEffect(_ CastEffect)                       {}
-func (l *CantripsService) CastRitual(_ CastRitual)                       {}
-func (l *CantripsService) ControlVisibility(_ ControlVisibility)         {}
-func (l *CantripsService) EnterBeneficialObject(_ EnterBeneficialObject) {}
-func (l *CantripsService) ExitBeneficialObject(_ ExitBeneficialObject)   {}
-func (l *CantripsService) UpdateCantripXP(_ UpdateCantripXP)             {}
-func (l *CantripsService) UpdateRitualObject(_ UpdateRitualObject)       {}
-
-func RegisterCantripsService(r *proto.MessageRouter, s cantripsService) {
+func RegisterService(r *proto.MessageRouter, s service) {
 	proto.RegisterMessageHandler(r, 57, 1, s.BeneficialLuckUpdate)
 	proto.RegisterMessageHandler(r, 57, 2, s.CancelInvisibility)
 	proto.RegisterMessageHandler(r, 57, 3, s.CantripAffectedPlayer)
@@ -77,82 +69,89 @@ func RegisterCantripsService(r *proto.MessageRouter, s cantripsService) {
 	proto.RegisterMessageHandler(r, 57, 18, s.UpdateRitualObject)
 }
 
-func NewCantripsClient(c *proto.Client) CantripsClient {
-	return CantripsClient{c}
+func NewClient(c *proto.Client) Client {
+	return Client{c}
 }
 
-func (c CantripsClient) BeneficialLuckUpdate(m *BeneficialLuckUpdate) error {
+func (c Client) BeneficialLuckUpdate(m *BeneficialLuckUpdate) error {
 	return c.c.WriteMessage(57, 1, m)
 }
 
-func (c CantripsClient) CancelInvisibility(m *CancelInvisibility) error {
+func (c Client) CancelInvisibility(m *CancelInvisibility) error {
 	return c.c.WriteMessage(57, 2, m)
 }
 
-func (c CantripsClient) CantripAffectedPlayer(m *CantripAffectedPlayer) error {
+func (c Client) CantripAffectedPlayer(m *CantripAffectedPlayer) error {
 	return c.c.WriteMessage(57, 3, m)
 }
 
-func (c CantripsClient) CantripEndLoop(m *CantripEndLoop) error {
+func (c Client) CantripEndLoop(m *CantripEndLoop) error {
 	return c.c.WriteMessage(57, 4, m)
 }
 
-func (c CantripsClient) CantripLevelUp(m *CantripLevelUp) error {
+func (c Client) CantripLevelUp(m *CantripLevelUp) error {
 	return c.c.WriteMessage(57, 5, m)
 }
 
-func (c CantripsClient) CantripNoAggro(m *CantripNoAggro) error {
+func (c Client) CantripNoAggro(m *CantripNoAggro) error {
 	return c.c.WriteMessage(57, 6, m)
 }
 
-func (c CantripsClient) CantripsSigilSpell(m *CantripsSigilSpell) error {
+func (c Client) CantripsSigilSpell(m *CantripsSigilSpell) error {
 	return c.c.WriteMessage(57, 7, m)
 }
 
-func (c CantripsClient) CantripsResponse(m *CantripsResponse) error {
+func (c Client) CantripsResponse(m *CantripsResponse) error {
 	return c.c.WriteMessage(57, 8, m)
 }
 
-func (c CantripsClient) CantripsResponseError(m *CantripsResponseError) error {
+func (c Client) CantripsResponseError(m *CantripsResponseError) error {
 	return c.c.WriteMessage(57, 9, m)
 }
 
-func (c CantripsClient) CantripsSpellCast(m *CantripsSpellCast) error {
+func (c Client) CantripsSpellCast(m *CantripsSpellCast) error {
 	return c.c.WriteMessage(57, 10, m)
 }
 
-func (c CantripsClient) CantripTutorialEffect(m *CantripTutorialEffect) error {
+func (c Client) CantripTutorialEffect(m *CantripTutorialEffect) error {
 	return c.c.WriteMessage(57, 11, m)
 }
 
-func (c CantripsClient) CastEffect(m *CastEffect) error {
+func (c Client) CastEffect(m *CastEffect) error {
 	return c.c.WriteMessage(57, 12, m)
 }
 
-func (c CantripsClient) CastRitual(m *CastRitual) error {
+func (c Client) CastRitual(m *CastRitual) error {
 	return c.c.WriteMessage(57, 13, m)
 }
 
-func (c CantripsClient) ControlVisibility(m *ControlVisibility) error {
+func (c Client) ControlVisibility(m *ControlVisibility) error {
 	return c.c.WriteMessage(57, 14, m)
 }
 
-func (c CantripsClient) EnterBeneficialObject(m *EnterBeneficialObject) error {
+func (c Client) EnterBeneficialObject(m *EnterBeneficialObject) error {
 	return c.c.WriteMessage(57, 15, m)
 }
 
-func (c CantripsClient) ExitBeneficialObject(m *ExitBeneficialObject) error {
+func (c Client) ExitBeneficialObject(m *ExitBeneficialObject) error {
 	return c.c.WriteMessage(57, 16, m)
 }
 
-func (c CantripsClient) UpdateCantripXP(m *UpdateCantripXP) error {
+func (c Client) UpdateCantripXP(m *UpdateCantripXP) error {
 	return c.c.WriteMessage(57, 17, m)
 }
 
-func (c CantripsClient) UpdateRitualObject(m *UpdateRitualObject) error {
+func (c Client) UpdateRitualObject(m *UpdateRitualObject) error {
 	return c.c.WriteMessage(57, 18, m)
 }
 
+type Service struct {
+	service
+}
+
+type Client struct {
+	c *proto.Client
+}
 type BeneficialLuckUpdate struct {
 	GlobalID   uint64
 	LuckOffset float32
@@ -423,8 +422,8 @@ func (s *CastEffect) Marshal() []byte {
 	b := bytes.NewBuffer(make([]byte, 0, 16+len(s.AnimationKFM)+len(s.AnimationName)))
 	binary.Write(b, binary.LittleEndian, s.GameObjectID)
 	binary.Write(b, binary.LittleEndian, s.SpellTemplateID)
-	writeString_57(b, s.AnimationKFM)
-	writeString_57(b, s.AnimationName)
+	codegen.WriteString(b, s.AnimationKFM)
+	codegen.WriteString(b, s.AnimationName)
 	return b.Bytes()
 }
 
@@ -437,10 +436,10 @@ func (s *CastEffect) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.SpellTemplateID); err != nil {
 		return err
 	}
-	if s.AnimationKFM, err = readString_57(b); err != nil {
+	if s.AnimationKFM, err = codegen.ReadString(b); err != nil {
 		return err
 	}
-	if s.AnimationName, err = readString_57(b); err != nil {
+	if s.AnimationName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -633,21 +632,4 @@ func (s *UpdateRitualObject) Unmarshal(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func writeString_57(b *bytes.Buffer, v string) {
-	binary.Write(b, binary.LittleEndian, uint16(len(v)))
-	b.WriteString(v)
-}
-
-func readString_57(buf *bytes.Reader) (string, error) {
-	var length uint16
-	if err := binary.Read(buf, binary.LittleEndian, &length); err != nil {
-		return "", err
-	}
-	data := make([]byte, length)
-	if _, err := buf.Read(data); err != nil {
-		return "", err
-	}
-	return *(*string)(unsafe.Pointer(&data)), nil
 }
