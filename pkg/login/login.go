@@ -551,6 +551,7 @@ func (s *UserAuthen) Unmarshal(data []byte) error {
 }
 
 type UserAuthenRsp struct {
+	SupportID  string
 	TimeStamp  string
 	Reason     string
 	Rec1       string
@@ -561,7 +562,7 @@ type UserAuthenRsp struct {
 }
 
 func (s *UserAuthenRsp) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 26+len(s.Rec1)+len(s.Reason)+len(s.TimeStamp)))
+	b := bytes.NewBuffer(make([]byte, 0, 28+len(s.Rec1)+len(s.Reason)+len(s.TimeStamp)+len(s.SupportID)))
 	binary.Write(b, binary.LittleEndian, s.Error)
 	binary.Write(b, binary.LittleEndian, s.UserID)
 	codegen.WriteString(b, s.Rec1)
@@ -569,6 +570,7 @@ func (s *UserAuthenRsp) Marshal() []byte {
 	codegen.WriteString(b, s.TimeStamp)
 	binary.Write(b, binary.LittleEndian, s.PayingUser)
 	binary.Write(b, binary.LittleEndian, s.Flags)
+	codegen.WriteString(b, s.SupportID)
 	return b.Bytes()
 }
 
@@ -594,6 +596,9 @@ func (s *UserAuthenRsp) Unmarshal(data []byte) error {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Flags); err != nil {
+		return err
+	}
+	if s.SupportID, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -639,6 +644,7 @@ func (s *UserValidate) Unmarshal(data []byte) error {
 }
 
 type UserValidateRsp struct {
+	SupportID  string
 	TimeStamp  string
 	Reason     string
 	UserID     uint64
@@ -648,13 +654,14 @@ type UserValidateRsp struct {
 }
 
 func (s *UserValidateRsp) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 24+len(s.Reason)+len(s.TimeStamp)))
+	b := bytes.NewBuffer(make([]byte, 0, 26+len(s.Reason)+len(s.TimeStamp)+len(s.SupportID)))
 	binary.Write(b, binary.LittleEndian, s.Error)
 	codegen.WriteString(b, s.Reason)
 	binary.Write(b, binary.LittleEndian, s.UserID)
 	codegen.WriteString(b, s.TimeStamp)
 	binary.Write(b, binary.LittleEndian, s.PayingUser)
 	binary.Write(b, binary.LittleEndian, s.Flags)
+	codegen.WriteString(b, s.SupportID)
 	return b.Bytes()
 }
 
@@ -677,6 +684,9 @@ func (s *UserValidateRsp) Unmarshal(data []byte) error {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Flags); err != nil {
+		return err
+	}
+	if s.SupportID, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
