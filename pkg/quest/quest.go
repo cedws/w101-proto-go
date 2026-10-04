@@ -590,34 +590,35 @@ func (s *RemoveQuest) Unmarshal(data []byte) error {
 }
 
 type SendGoal struct {
-	PersonaName         string
-	GoalImage2          string
-	GoalMadlibs         string
-	GoalDestinationZone string
-	GoalLocation        string
-	GoalTitle           string
-	ClientTags          string
-	PatronIcon          string
-	TallyText           string
-	GoalImage1          string
-	QuestID             uint64
-	GoalID              uint64
-	SubscriberGoalTotal int32
-	SendType            int32
-	GoalTotal           int32
-	GoalNameID          uint32
-	GoalCount           int32
-	GoalStatus          uint8
-	UseTally            uint8
-	GoalType            uint8
-	NoQuestHelper       uint8
-	PetOnlyQuest        uint8
-	HasActiveResults    uint8
-	HideGoalFloatyText  uint8
+	GoalMadlibs                string
+	PersonaName                string
+	GoalImage2                 string
+	ClientTags                 string
+	GoalDestinationZone        string
+	GoalLocation               string
+	GoalTitle                  string
+	PatronIcon                 string
+	RequiresMagicWeavingSchool string
+	TallyText                  string
+	GoalImage1                 string
+	QuestID                    uint64
+	GoalID                     uint64
+	GoalTotal                  int32
+	SubscriberGoalTotal        int32
+	GoalNameID                 uint32
+	SendType                   int32
+	GoalCount                  int32
+	GoalType                   uint8
+	GoalStatus                 uint8
+	NoQuestHelper              uint8
+	PetOnlyQuest               uint8
+	HasActiveResults           uint8
+	HideGoalFloatyText         uint8
+	UseTally                   uint8
 }
 
 func (s *SendGoal) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 63+len(s.GoalTitle)+len(s.GoalLocation)+len(s.GoalDestinationZone)+len(s.GoalImage1)+len(s.GoalImage2)+len(s.PersonaName)+len(s.TallyText)+len(s.GoalMadlibs)+len(s.ClientTags)+len(s.PatronIcon)))
+	b := bytes.NewBuffer(make([]byte, 0, 65+len(s.GoalTitle)+len(s.GoalLocation)+len(s.GoalDestinationZone)+len(s.GoalImage1)+len(s.GoalImage2)+len(s.PersonaName)+len(s.TallyText)+len(s.GoalMadlibs)+len(s.ClientTags)+len(s.PatronIcon)+len(s.RequiresMagicWeavingSchool)))
 	binary.Write(b, binary.LittleEndian, s.QuestID)
 	binary.Write(b, binary.LittleEndian, s.GoalID)
 	binary.Write(b, binary.LittleEndian, s.GoalNameID)
@@ -642,6 +643,7 @@ func (s *SendGoal) Marshal() []byte {
 	binary.Write(b, binary.LittleEndian, s.PetOnlyQuest)
 	binary.Write(b, binary.LittleEndian, s.HasActiveResults)
 	binary.Write(b, binary.LittleEndian, s.HideGoalFloatyText)
+	codegen.WriteString(b, s.RequiresMagicWeavingSchool)
 	return b.Bytes()
 }
 
@@ -720,6 +722,9 @@ func (s *SendGoal) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.HideGoalFloatyText); err != nil {
 		return err
 	}
+	if s.RequiresMagicWeavingSchool, err = codegen.ReadString(b); err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -753,28 +758,29 @@ func (s *SendNPCOptions) Unmarshal(data []byte) error {
 }
 
 type SendQuest struct {
-	QuestInfo        string
-	QuestTitle       string
-	Rewards          string
-	ClientTags       string
-	AssociatedWorlds string
-	QuestMadlibs     string
-	GoalData         string
-	QuestID          uint64
-	QuestLevel       int32
-	QuestType        uint32
-	QuestNameID      uint32
-	New              uint8
-	NoQuestHelper    uint8
-	Mainline         uint8
-	ReadyToTurnIn    uint8
-	SkipQHAutoSelect uint8
-	PetOnlyQuest     uint8
-	ActivityType     uint8
+	Rewards                    string
+	QuestInfo                  string
+	QuestTitle                 string
+	ClientTags                 string
+	AssociatedWorlds           string
+	RequiresMagicWeavingSchool string
+	QuestMadlibs               string
+	GoalData                   string
+	QuestID                    uint64
+	QuestLevel                 int32
+	QuestType                  uint32
+	QuestNameID                uint32
+	New                        uint8
+	NoQuestHelper              uint8
+	Mainline                   uint8
+	ReadyToTurnIn              uint8
+	SkipQHAutoSelect           uint8
+	PetOnlyQuest               uint8
+	ActivityType               uint8
 }
 
 func (s *SendQuest) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 41+len(s.QuestTitle)+len(s.QuestInfo)+len(s.QuestMadlibs)+len(s.GoalData)+len(s.Rewards)+len(s.ClientTags)+len(s.AssociatedWorlds)))
+	b := bytes.NewBuffer(make([]byte, 0, 43+len(s.QuestTitle)+len(s.QuestInfo)+len(s.QuestMadlibs)+len(s.GoalData)+len(s.Rewards)+len(s.ClientTags)+len(s.AssociatedWorlds)+len(s.RequiresMagicWeavingSchool)))
 	binary.Write(b, binary.LittleEndian, s.QuestID)
 	binary.Write(b, binary.LittleEndian, s.QuestNameID)
 	binary.Write(b, binary.LittleEndian, s.QuestType)
@@ -793,6 +799,7 @@ func (s *SendQuest) Marshal() []byte {
 	binary.Write(b, binary.LittleEndian, s.SkipQHAutoSelect)
 	binary.Write(b, binary.LittleEndian, s.PetOnlyQuest)
 	binary.Write(b, binary.LittleEndian, s.ActivityType)
+	codegen.WriteString(b, s.RequiresMagicWeavingSchool)
 	return b.Bytes()
 }
 
@@ -851,6 +858,9 @@ func (s *SendQuest) Unmarshal(data []byte) error {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ActivityType); err != nil {
+		return err
+	}
+	if s.RequiresMagicWeavingSchool, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil

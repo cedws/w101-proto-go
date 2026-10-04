@@ -37,6 +37,7 @@ type service interface {
 	ChangeCharacterName(ChangeCharacterName)
 	UserAuthenV3(UserAuthenV3)
 	LoginLogCharacterCreation(LoginLogCharacterCreation)
+	FulfillPromoCode(FulfillPromoCode)
 }
 
 func (Service) CharacterInfo(CharacterInfo)                         {}
@@ -67,6 +68,7 @@ func (Service) WebValidate(WebValidate)                             {}
 func (Service) ChangeCharacterName(ChangeCharacterName)             {}
 func (Service) UserAuthenV3(UserAuthenV3)                           {}
 func (Service) LoginLogCharacterCreation(LoginLogCharacterCreation) {}
+func (Service) FulfillPromoCode(FulfillPromoCode)                   {}
 
 func RegisterService(r *proto.MessageRouter, s service) {
 	proto.RegisterMessageHandler(r, 7, 1, s.CharacterInfo)
@@ -97,6 +99,7 @@ func RegisterService(r *proto.MessageRouter, s service) {
 	proto.RegisterMessageHandler(r, 7, 26, s.ChangeCharacterName)
 	proto.RegisterMessageHandler(r, 7, 27, s.UserAuthenV3)
 	proto.RegisterMessageHandler(r, 7, 28, s.LoginLogCharacterCreation)
+	proto.RegisterMessageHandler(r, 7, 29, s.FulfillPromoCode)
 }
 
 func NewClient(c *proto.Client) Client {
@@ -213,6 +216,10 @@ func (c Client) UserAuthenV3(m *UserAuthenV3) error {
 
 func (c Client) LoginLogCharacterCreation(m *LoginLogCharacterCreation) error {
 	return c.c.WriteMessage(7, 28, m)
+}
+
+func (c Client) FulfillPromoCode(m *FulfillPromoCode) error {
+	return c.c.WriteMessage(7, 29, m)
 }
 
 type Service struct {
@@ -502,17 +509,18 @@ func (s *StartCharacterList) Unmarshal(data []byte) error {
 }
 
 type UserAuthen struct {
-	PatchClientID string
-	CRC           string
-	DataRevision  string
-	Revision      string
-	Version       string
-	Rec1          string
-	MachineID     uint64
+	PlatformChatID string
+	PatchClientID  string
+	CRC            string
+	DataRevision   string
+	Revision       string
+	Version        string
+	Rec1           string
+	MachineID      uint64
 }
 
 func (s *UserAuthen) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 20+len(s.Rec1)+len(s.Version)+len(s.Revision)+len(s.DataRevision)+len(s.CRC)+len(s.PatchClientID)))
+	b := bytes.NewBuffer(make([]byte, 0, 22+len(s.Rec1)+len(s.Version)+len(s.Revision)+len(s.DataRevision)+len(s.CRC)+len(s.PatchClientID)+len(s.PlatformChatID)))
 	codegen.WriteString(b, s.Rec1)
 	codegen.WriteString(b, s.Version)
 	codegen.WriteString(b, s.Revision)
@@ -520,6 +528,7 @@ func (s *UserAuthen) Marshal() []byte {
 	codegen.WriteString(b, s.CRC)
 	binary.Write(b, binary.LittleEndian, s.MachineID)
 	codegen.WriteString(b, s.PatchClientID)
+	codegen.WriteString(b, s.PlatformChatID)
 	return b.Bytes()
 }
 
@@ -547,22 +556,26 @@ func (s *UserAuthen) Unmarshal(data []byte) error {
 	if s.PatchClientID, err = codegen.ReadString(b); err != nil {
 		return err
 	}
+	if s.PlatformChatID, err = codegen.ReadString(b); err != nil {
+		return err
+	}
 	return nil
 }
 
 type UserAuthenRsp struct {
-	SupportID  string
-	TimeStamp  string
-	Reason     string
-	Rec1       string
-	UserID     uint64
-	Error      int32
-	PayingUser int32
-	Flags      int32
+	PublicPlayerName string
+	SupportID        string
+	TimeStamp        string
+	Reason           string
+	Rec1             string
+	UserID           uint64
+	Error            int32
+	PayingUser       int32
+	Flags            int32
 }
 
 func (s *UserAuthenRsp) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 28+len(s.Rec1)+len(s.Reason)+len(s.TimeStamp)+len(s.SupportID)))
+	b := bytes.NewBuffer(make([]byte, 0, 30+len(s.Rec1)+len(s.Reason)+len(s.TimeStamp)+len(s.SupportID)+len(s.PublicPlayerName)))
 	binary.Write(b, binary.LittleEndian, s.Error)
 	binary.Write(b, binary.LittleEndian, s.UserID)
 	codegen.WriteString(b, s.Rec1)
@@ -571,6 +584,7 @@ func (s *UserAuthenRsp) Marshal() []byte {
 	binary.Write(b, binary.LittleEndian, s.PayingUser)
 	binary.Write(b, binary.LittleEndian, s.Flags)
 	codegen.WriteString(b, s.SupportID)
+	codegen.WriteString(b, s.PublicPlayerName)
 	return b.Bytes()
 }
 
@@ -601,24 +615,29 @@ func (s *UserAuthenRsp) Unmarshal(data []byte) error {
 	if s.SupportID, err = codegen.ReadString(b); err != nil {
 		return err
 	}
+	if s.PublicPlayerName, err = codegen.ReadString(b); err != nil {
+		return err
+	}
 	return nil
 }
 
 type UserValidate struct {
-	PatchClientID string
-	Locale        string
-	PassKey3      string
-	UserID        uint64
-	MachineID     uint64
+	PlatformChatID string
+	PatchClientID  string
+	Locale         string
+	PassKey3       string
+	UserID         uint64
+	MachineID      uint64
 }
 
 func (s *UserValidate) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 22+len(s.PassKey3)+len(s.Locale)+len(s.PatchClientID)))
+	b := bytes.NewBuffer(make([]byte, 0, 24+len(s.PassKey3)+len(s.Locale)+len(s.PatchClientID)+len(s.PlatformChatID)))
 	binary.Write(b, binary.LittleEndian, s.UserID)
 	codegen.WriteString(b, s.PassKey3)
 	binary.Write(b, binary.LittleEndian, s.MachineID)
 	codegen.WriteString(b, s.Locale)
 	codegen.WriteString(b, s.PatchClientID)
+	codegen.WriteString(b, s.PlatformChatID)
 	return b.Bytes()
 }
 
@@ -638,6 +657,9 @@ func (s *UserValidate) Unmarshal(data []byte) error {
 		return err
 	}
 	if s.PatchClientID, err = codegen.ReadString(b); err != nil {
+		return err
+	}
+	if s.PlatformChatID, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -803,18 +825,19 @@ func (s *WebCharacterInfo) Unmarshal(data []byte) error {
 }
 
 type UserAuthenV2 struct {
-	PatchClientID string
-	Locale        string
-	CRC           string
-	DataRevision  string
-	Revision      string
-	Version       string
-	Rec1          string
-	MachineID     uint64
+	PlatformChatID string
+	PatchClientID  string
+	Locale         string
+	CRC            string
+	DataRevision   string
+	Revision       string
+	Version        string
+	Rec1           string
+	MachineID      uint64
 }
 
 func (s *UserAuthenV2) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 22+len(s.Rec1)+len(s.Version)+len(s.Revision)+len(s.DataRevision)+len(s.CRC)+len(s.Locale)+len(s.PatchClientID)))
+	b := bytes.NewBuffer(make([]byte, 0, 24+len(s.Rec1)+len(s.Version)+len(s.Revision)+len(s.DataRevision)+len(s.CRC)+len(s.Locale)+len(s.PatchClientID)+len(s.PlatformChatID)))
 	codegen.WriteString(b, s.Rec1)
 	codegen.WriteString(b, s.Version)
 	codegen.WriteString(b, s.Revision)
@@ -823,6 +846,7 @@ func (s *UserAuthenV2) Marshal() []byte {
 	binary.Write(b, binary.LittleEndian, s.MachineID)
 	codegen.WriteString(b, s.Locale)
 	codegen.WriteString(b, s.PatchClientID)
+	codegen.WriteString(b, s.PlatformChatID)
 	return b.Bytes()
 }
 
@@ -851,6 +875,9 @@ func (s *UserAuthenV2) Unmarshal(data []byte) error {
 		return err
 	}
 	if s.PatchClientID, err = codegen.ReadString(b); err != nil {
+		return err
+	}
+	if s.PlatformChatID, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -988,20 +1015,23 @@ func (s *ChangeCharacterName) Unmarshal(data []byte) error {
 }
 
 type UserAuthenV3 struct {
-	PatchClientID  string
-	Locale         string
-	CRC            string
-	DataRevision   string
-	Revision       string
-	Version        string
-	Rec1           string
-	MachineID      uint64
-	IsSteamPatcher uint32
-	ConsoleType    uint8
+	SteamID         string
+	PatchClientID   string
+	Rec1            string
+	SteamAuthTicket string
+	CRC             string
+	DataRevision    string
+	Revision        string
+	Version         string
+	PlatformChatID  string
+	Locale          string
+	MachineID       uint64
+	IsSteamPatcher  uint32
+	ConsoleType     uint8
 }
 
 func (s *UserAuthenV3) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 27+len(s.Rec1)+len(s.Version)+len(s.Revision)+len(s.DataRevision)+len(s.CRC)+len(s.Locale)+len(s.PatchClientID)))
+	b := bytes.NewBuffer(make([]byte, 0, 33+len(s.Rec1)+len(s.Version)+len(s.Revision)+len(s.DataRevision)+len(s.CRC)+len(s.Locale)+len(s.PatchClientID)+len(s.PlatformChatID)+len(s.SteamID)+len(s.SteamAuthTicket)))
 	codegen.WriteString(b, s.Rec1)
 	codegen.WriteString(b, s.Version)
 	codegen.WriteString(b, s.Revision)
@@ -1012,6 +1042,9 @@ func (s *UserAuthenV3) Marshal() []byte {
 	codegen.WriteString(b, s.PatchClientID)
 	binary.Write(b, binary.LittleEndian, s.IsSteamPatcher)
 	binary.Write(b, binary.LittleEndian, s.ConsoleType)
+	codegen.WriteString(b, s.PlatformChatID)
+	codegen.WriteString(b, s.SteamID)
+	codegen.WriteString(b, s.SteamAuthTicket)
 	return b.Bytes()
 }
 
@@ -1048,6 +1081,15 @@ func (s *UserAuthenV3) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.ConsoleType); err != nil {
 		return err
 	}
+	if s.PlatformChatID, err = codegen.ReadString(b); err != nil {
+		return err
+	}
+	if s.SteamID, err = codegen.ReadString(b); err != nil {
+		return err
+	}
+	if s.SteamAuthTicket, err = codegen.ReadString(b); err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -1070,6 +1112,40 @@ func (s *LoginLogCharacterCreation) Unmarshal(data []byte) error {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Parameter); err != nil {
+		return err
+	}
+	return nil
+}
+
+type FulfillPromoCode struct {
+	ErrorDesc string
+	ItemList  string
+	Code      string
+	Success   uint32
+}
+
+func (s *FulfillPromoCode) Marshal() []byte {
+	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Code)+len(s.ItemList)+len(s.ErrorDesc)))
+	codegen.WriteString(b, s.Code)
+	binary.Write(b, binary.LittleEndian, s.Success)
+	codegen.WriteString(b, s.ItemList)
+	codegen.WriteString(b, s.ErrorDesc)
+	return b.Bytes()
+}
+
+func (s *FulfillPromoCode) Unmarshal(data []byte) error {
+	b := bytes.NewReader(data)
+	var err error
+	if s.Code, err = codegen.ReadString(b); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.Success); err != nil {
+		return err
+	}
+	if s.ItemList, err = codegen.ReadString(b); err != nil {
+		return err
+	}
+	if s.ErrorDesc, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil

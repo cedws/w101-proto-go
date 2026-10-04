@@ -2326,16 +2326,24 @@ type Aggro struct {
 	LocY     float32
 	LocZ     float32
 	Yaw      float32
+	SigilX   float32
+	SigilY   float32
+	SigilZ   float32
+	SigilYaw float32
 }
 
 func (s *Aggro) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 32))
+	b := bytes.NewBuffer(make([]byte, 0, 48))
 	binary.Write(b, binary.LittleEndian, s.GlobalID)
 	binary.Write(b, binary.LittleEndian, s.LocX)
 	binary.Write(b, binary.LittleEndian, s.LocY)
 	binary.Write(b, binary.LittleEndian, s.LocZ)
 	binary.Write(b, binary.LittleEndian, s.Yaw)
 	binary.Write(b, binary.LittleEndian, s.SigilGID)
+	binary.Write(b, binary.LittleEndian, s.SigilX)
+	binary.Write(b, binary.LittleEndian, s.SigilY)
+	binary.Write(b, binary.LittleEndian, s.SigilZ)
+	binary.Write(b, binary.LittleEndian, s.SigilYaw)
 	return b.Bytes()
 }
 
@@ -2360,16 +2368,36 @@ func (s *Aggro) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.SigilGID); err != nil {
 		return err
 	}
+	if err = binary.Read(b, binary.LittleEndian, &s.SigilX); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.SigilY); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.SigilZ); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.SigilYaw); err != nil {
+		return err
+	}
 	return nil
 }
 
 type AlchemyStation struct {
-	AllowedRecipes string
+	CreateButtonOverride string
+	TitleOverride        string
+	AllowedRecipes       string
+	SegmentedMessage     uint8
+	LastSegment          uint8
 }
 
 func (s *AlchemyStation) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 2+len(s.AllowedRecipes)))
+	b := bytes.NewBuffer(make([]byte, 0, 8+len(s.AllowedRecipes)+len(s.TitleOverride)+len(s.CreateButtonOverride)))
 	codegen.WriteString(b, s.AllowedRecipes)
+	codegen.WriteString(b, s.TitleOverride)
+	codegen.WriteString(b, s.CreateButtonOverride)
+	binary.Write(b, binary.LittleEndian, s.SegmentedMessage)
+	binary.Write(b, binary.LittleEndian, s.LastSegment)
 	return b.Bytes()
 }
 
@@ -2377,6 +2405,18 @@ func (s *AlchemyStation) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if s.AllowedRecipes, err = codegen.ReadString(b); err != nil {
+		return err
+	}
+	if s.TitleOverride, err = codegen.ReadString(b); err != nil {
+		return err
+	}
+	if s.CreateButtonOverride, err = codegen.ReadString(b); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.SegmentedMessage); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.LastSegment); err != nil {
 		return err
 	}
 	return nil
@@ -3764,11 +3804,15 @@ func (s *GotoDorm) Unmarshal(data []byte) error {
 
 type GotoFriendlyPlayer struct {
 	TargetCharacterID uint64
+	DisableCrossPlay  uint8
+	ClientPlatform    uint8
 }
 
 func (s *GotoFriendlyPlayer) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 8))
+	b := bytes.NewBuffer(make([]byte, 0, 10))
 	binary.Write(b, binary.LittleEndian, s.TargetCharacterID)
+	binary.Write(b, binary.LittleEndian, s.DisableCrossPlay)
+	binary.Write(b, binary.LittleEndian, s.ClientPlatform)
 	return b.Bytes()
 }
 
@@ -3776,6 +3820,12 @@ func (s *GotoFriendlyPlayer) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if err = binary.Read(b, binary.LittleEndian, &s.TargetCharacterID); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.DisableCrossPlay); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.ClientPlatform); err != nil {
 		return err
 	}
 	return nil
@@ -5028,23 +5078,27 @@ func (s *PCSPriceLockResponse) Unmarshal(data []byte) error {
 type PCSPurchaseRequest struct {
 	ActiveTabName          string
 	ActiveCatName          string
+	Search                 string
+	SecretSearch           string
 	RecipientName          string
 	Item                   uint64
 	Recipient              uint64
-	Texture                int32
-	Count                  int32
-	Decal                  int32
 	PetName                uint32
+	Decal                  int32
 	SaleID                 uint32
 	Reco                   uint32
 	ItemLocator            uint32
 	PurchaseElixirEquipNow uint32
+	Texture                int32
+	Count                  int32
+	IndexInList            int32
+	ViewMode               int32
 	Cost                   int32
 	Type                   int32
 }
 
 func (s *PCSPurchaseRequest) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 62+len(s.RecipientName)+len(s.ActiveTabName)+len(s.ActiveCatName)))
+	b := bytes.NewBuffer(make([]byte, 0, 74+len(s.RecipientName)+len(s.ActiveTabName)+len(s.ActiveCatName)+len(s.Search)+len(s.SecretSearch)))
 	binary.Write(b, binary.LittleEndian, s.Item)
 	binary.Write(b, binary.LittleEndian, s.Recipient)
 	codegen.WriteString(b, s.RecipientName)
@@ -5060,6 +5114,10 @@ func (s *PCSPurchaseRequest) Marshal() []byte {
 	binary.Write(b, binary.LittleEndian, s.PurchaseElixirEquipNow)
 	codegen.WriteString(b, s.ActiveTabName)
 	codegen.WriteString(b, s.ActiveCatName)
+	binary.Write(b, binary.LittleEndian, s.IndexInList)
+	binary.Write(b, binary.LittleEndian, s.ViewMode)
+	codegen.WriteString(b, s.Search)
+	codegen.WriteString(b, s.SecretSearch)
 	return b.Bytes()
 }
 
@@ -5109,6 +5167,18 @@ func (s *PCSPurchaseRequest) Unmarshal(data []byte) error {
 		return err
 	}
 	if s.ActiveCatName, err = codegen.ReadString(b); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.IndexInList); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.ViewMode); err != nil {
+		return err
+	}
+	if s.Search, err = codegen.ReadString(b); err != nil {
+		return err
+	}
+	if s.SecretSearch, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -6432,22 +6502,24 @@ func (s *RequestCombatSigils) Unmarshal(data []byte) error {
 }
 
 type RequestCreateAdventureParty struct {
-	OwnerName       string
-	PlayerGID       uint64
-	OwnerGID        uint64
-	Status          int32
-	PartyName       uint32
-	PartyNameLocale uint32
+	OwnerName              string
+	PlayerGID              uint64
+	OwnerGID               uint64
+	Status                 int32
+	PartyName              uint32
+	PartyNameLocale        uint32
+	MinimumSocialPartySize int32
 }
 
 func (s *RequestCreateAdventureParty) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 30+len(s.OwnerName)))
+	b := bytes.NewBuffer(make([]byte, 0, 34+len(s.OwnerName)))
 	binary.Write(b, binary.LittleEndian, s.PlayerGID)
 	binary.Write(b, binary.LittleEndian, s.OwnerGID)
 	binary.Write(b, binary.LittleEndian, s.Status)
 	binary.Write(b, binary.LittleEndian, s.PartyName)
 	binary.Write(b, binary.LittleEndian, s.PartyNameLocale)
 	codegen.WriteString(b, s.OwnerName)
+	binary.Write(b, binary.LittleEndian, s.MinimumSocialPartySize)
 	return b.Bytes()
 }
 
@@ -6470,6 +6542,9 @@ func (s *RequestCreateAdventureParty) Unmarshal(data []byte) error {
 		return err
 	}
 	if s.OwnerName, err = codegen.ReadString(b); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.MinimumSocialPartySize); err != nil {
 		return err
 	}
 	return nil
@@ -6870,15 +6945,17 @@ type RequestTeamUpInfo struct {
 	IsFarming          uint8
 	RequestedSigilMode uint8
 	TeamSize           uint8
+	ClientPlatform     uint8
 }
 
 func (s *RequestTeamUpInfo) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 19))
+	b := bytes.NewBuffer(make([]byte, 0, 20))
 	binary.Write(b, binary.LittleEndian, s.PlayerGID)
 	binary.Write(b, binary.LittleEndian, s.NPCID)
 	binary.Write(b, binary.LittleEndian, s.IsFarming)
 	binary.Write(b, binary.LittleEndian, s.RequestedSigilMode)
 	binary.Write(b, binary.LittleEndian, s.TeamSize)
+	binary.Write(b, binary.LittleEndian, s.ClientPlatform)
 	return b.Bytes()
 }
 
@@ -6898,6 +6975,9 @@ func (s *RequestTeamUpInfo) Unmarshal(data []byte) error {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.TeamSize); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.ClientPlatform); err != nil {
 		return err
 	}
 	return nil
@@ -8804,15 +8884,17 @@ type VolunteerRequest struct {
 	TeamUpPlayerGID uint64
 	SigilID         uint32
 	Status          uint8
+	ClientPlatform  uint8
 }
 
 func (s *VolunteerRequest) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 23+len(s.SigilInfo)))
+	b := bytes.NewBuffer(make([]byte, 0, 24+len(s.SigilInfo)))
 	binary.Write(b, binary.LittleEndian, s.PlayerGID)
 	binary.Write(b, binary.LittleEndian, s.TeamUpPlayerGID)
 	binary.Write(b, binary.LittleEndian, s.SigilID)
 	codegen.WriteString(b, s.SigilInfo)
 	binary.Write(b, binary.LittleEndian, s.Status)
+	binary.Write(b, binary.LittleEndian, s.ClientPlatform)
 	return b.Bytes()
 }
 
@@ -8832,6 +8914,9 @@ func (s *VolunteerRequest) Unmarshal(data []byte) error {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Status); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.ClientPlatform); err != nil {
 		return err
 	}
 	return nil
@@ -8862,16 +8947,18 @@ func (s *VolunteerTeamHelpComplete) Unmarshal(data []byte) error {
 }
 
 type VolunteerTeamHelpJoin struct {
-	PlayerGID uint64
-	SigilID   uint32
-	WorldID   uint32
+	PlayerGID      uint64
+	SigilID        uint32
+	WorldID        uint32
+	ClientPlatform uint8
 }
 
 func (s *VolunteerTeamHelpJoin) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 16))
+	b := bytes.NewBuffer(make([]byte, 0, 17))
 	binary.Write(b, binary.LittleEndian, s.SigilID)
 	binary.Write(b, binary.LittleEndian, s.PlayerGID)
 	binary.Write(b, binary.LittleEndian, s.WorldID)
+	binary.Write(b, binary.LittleEndian, s.ClientPlatform)
 	return b.Bytes()
 }
 
@@ -8885,6 +8972,9 @@ func (s *VolunteerTeamHelpJoin) Unmarshal(data []byte) error {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.WorldID); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.ClientPlatform); err != nil {
 		return err
 	}
 	return nil
