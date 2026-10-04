@@ -2017,26 +2017,27 @@ func (s *AddZoneTimer) Unmarshal(data []byte) error {
 }
 
 type Attach struct {
-	PassKey        string
-	Location       string
-	ZoneName       string
-	LoginKey       string
-	Locale         string
-	UserID         uint64
-	CharID         uint64
-	TargetPlayerID uint64
-	ZoneID         uint64
-	GameObjectID   uint64
-	SessionID      uint64
-	MachineID      uint64
-	Slot           int32
-	SessionSlot    int32
-	Retry          uint8
-	Reattach       uint8
+	Location         string
+	ZoneName         string
+	PlatformGamerTag string
+	PassKey          string
+	LoginKey         string
+	Locale           string
+	TargetPlayerID   uint64
+	ZoneID           uint64
+	GameObjectID     uint64
+	SessionID        uint64
+	CharID           uint64
+	UserID           uint64
+	MachineID        uint64
+	Slot             int32
+	SessionSlot      int32
+	Retry            uint8
+	Reattach         uint8
 }
 
 func (s *Attach) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 76+len(s.LoginKey)+len(s.ZoneName)+len(s.Location)+len(s.PassKey)+len(s.Locale)))
+	b := bytes.NewBuffer(make([]byte, 0, 78+len(s.LoginKey)+len(s.ZoneName)+len(s.Location)+len(s.PassKey)+len(s.Locale)+len(s.PlatformGamerTag)))
 	binary.Write(b, binary.LittleEndian, s.GameObjectID)
 	codegen.WriteString(b, s.LoginKey)
 	binary.Write(b, binary.LittleEndian, s.UserID)
@@ -2053,6 +2054,7 @@ func (s *Attach) Marshal() []byte {
 	binary.Write(b, binary.LittleEndian, s.Retry)
 	codegen.WriteString(b, s.Locale)
 	binary.Write(b, binary.LittleEndian, s.MachineID)
+	codegen.WriteString(b, s.PlatformGamerTag)
 	return b.Bytes()
 }
 
@@ -2105,6 +2107,9 @@ func (s *Attach) Unmarshal(data []byte) error {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.MachineID); err != nil {
+		return err
+	}
+	if s.PlatformGamerTag, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2174,10 +2179,11 @@ type Badges struct {
 	Add             int8
 	Remove          int8
 	Display         uint8
+	LastSegment     uint8
 }
 
 func (s *Badges) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 22+len(s.BadgeName)+len(s.BadgeInfo)+len(s.BadgeFilterInfo)))
+	b := bytes.NewBuffer(make([]byte, 0, 23+len(s.BadgeName)+len(s.BadgeInfo)+len(s.BadgeFilterInfo)))
 	binary.Write(b, binary.LittleEndian, s.CurrentBadge)
 	binary.Write(b, binary.LittleEndian, s.UpdateAll)
 	binary.Write(b, binary.LittleEndian, s.TotalBadges)
@@ -2188,6 +2194,7 @@ func (s *Badges) Marshal() []byte {
 	binary.Write(b, binary.LittleEndian, s.BadgeNameID)
 	codegen.WriteString(b, s.BadgeFilterInfo)
 	binary.Write(b, binary.LittleEndian, s.Display)
+	binary.Write(b, binary.LittleEndian, s.LastSegment)
 	return b.Bytes()
 }
 
@@ -2222,6 +2229,9 @@ func (s *Badges) Unmarshal(data []byte) error {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.Display); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.LastSegment); err != nil {
 		return err
 	}
 	return nil
@@ -2359,26 +2369,29 @@ func (s *BuddyDrop) Unmarshal(data []byte) error {
 }
 
 type BuddyEntry struct {
-	RealmName        string
-	PreviousName     string
-	Name             string
 	ZoneName         string
+	PreviousName     string
+	PlatformGamerTag string
+	PlatformChatID   string
+	Name             string
+	RealmName        string
 	EntryGID         uint64
 	GameObjectID     uint64
 	ListOwnerGID     uint64
 	FriendStatusDate uint32
-	Permissions      uint32
 	Locale           uint32
 	FriendDate       uint32
-	FriendInfo       uint32
+	Permissions      uint32
 	PlatformType     int32
+	FriendInfo       uint32
 	PasswordChat     uint8
-	Status           uint8
 	DisableCrossPlay uint8
+	CrossPlayUpdated uint8
+	Status           uint8
 }
 
 func (s *BuddyEntry) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 59+len(s.Name)+len(s.ZoneName)+len(s.RealmName)+len(s.PreviousName)))
+	b := bytes.NewBuffer(make([]byte, 0, 64+len(s.Name)+len(s.ZoneName)+len(s.RealmName)+len(s.PreviousName)+len(s.PlatformGamerTag)+len(s.PlatformChatID)))
 	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
 	binary.Write(b, binary.LittleEndian, s.EntryGID)
 	binary.Write(b, binary.LittleEndian, s.GameObjectID)
@@ -2394,7 +2407,10 @@ func (s *BuddyEntry) Marshal() []byte {
 	binary.Write(b, binary.LittleEndian, s.FriendStatusDate)
 	codegen.WriteString(b, s.PreviousName)
 	binary.Write(b, binary.LittleEndian, s.PlatformType)
+	codegen.WriteString(b, s.PlatformGamerTag)
 	binary.Write(b, binary.LittleEndian, s.DisableCrossPlay)
+	binary.Write(b, binary.LittleEndian, s.CrossPlayUpdated)
+	codegen.WriteString(b, s.PlatformChatID)
 	return b.Bytes()
 }
 
@@ -2446,7 +2462,16 @@ func (s *BuddyEntry) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.PlatformType); err != nil {
 		return err
 	}
+	if s.PlatformGamerTag, err = codegen.ReadString(b); err != nil {
+		return err
+	}
 	if err = binary.Read(b, binary.LittleEndian, &s.DisableCrossPlay); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.CrossPlayUpdated); err != nil {
+		return err
+	}
+	if s.PlatformChatID, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2472,25 +2497,28 @@ func (s *BuddyListComplete) Unmarshal(data []byte) error {
 }
 
 type BuddyRequestAccept struct {
+	PreviousName     string
+	PlatformGamerTag string
+	PlatformChatID   string
 	EntryName        string
 	OwnerName        string
-	PreviousName     string
+	ListOwnerGID     uint64
 	EntryGID         uint64
 	SourceObjectID   uint64
 	DestObjectID     uint64
-	ListOwnerGID     uint64
-	Error            uint32
-	EntryLocale      uint32
+	FriendStatusDate uint32
 	FriendInfo       uint32
 	FriendDate       uint32
-	FriendStatusDate uint32
-	Permissions      uint32
+	EntryLocale      uint32
 	PlatformType     int32
+	Permissions      uint32
+	Error            uint32
 	Forwarded        uint8
+	DisableCrossPlay uint8
 }
 
 func (s *BuddyRequestAccept) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 67+len(s.OwnerName)+len(s.EntryName)+len(s.PreviousName)))
+	b := bytes.NewBuffer(make([]byte, 0, 72+len(s.OwnerName)+len(s.EntryName)+len(s.PreviousName)+len(s.PlatformGamerTag)+len(s.PlatformChatID)))
 	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
 	binary.Write(b, binary.LittleEndian, s.EntryGID)
 	codegen.WriteString(b, s.OwnerName)
@@ -2506,6 +2534,9 @@ func (s *BuddyRequestAccept) Marshal() []byte {
 	binary.Write(b, binary.LittleEndian, s.FriendStatusDate)
 	codegen.WriteString(b, s.PreviousName)
 	binary.Write(b, binary.LittleEndian, s.PlatformType)
+	codegen.WriteString(b, s.PlatformGamerTag)
+	codegen.WriteString(b, s.PlatformChatID)
+	binary.Write(b, binary.LittleEndian, s.DisableCrossPlay)
 	return b.Bytes()
 }
 
@@ -2557,10 +2588,20 @@ func (s *BuddyRequestAccept) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.PlatformType); err != nil {
 		return err
 	}
+	if s.PlatformGamerTag, err = codegen.ReadString(b); err != nil {
+		return err
+	}
+	if s.PlatformChatID, err = codegen.ReadString(b); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.DisableCrossPlay); err != nil {
+		return err
+	}
 	return nil
 }
 
 type BuddyRequestAcceptFwd struct {
+	PlatformChatID   string
 	EntryName        string
 	OwnerName        string
 	PreviousName     string
@@ -2569,15 +2610,16 @@ type BuddyRequestAcceptFwd struct {
 	DestObjectID     uint64
 	ListOwnerGID     uint64
 	Permissions      uint32
-	FriendInfo       uint32
 	FriendDate       uint32
 	FriendStatusDate uint32
-	EntryLocale      uint32
+	FriendInfo       uint32
 	PlatformType     int32
+	EntryLocale      uint32
+	DisableCrossPlay uint8
 }
 
 func (s *BuddyRequestAcceptFwd) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 62+len(s.OwnerName)+len(s.EntryName)+len(s.PreviousName)))
+	b := bytes.NewBuffer(make([]byte, 0, 65+len(s.OwnerName)+len(s.EntryName)+len(s.PreviousName)+len(s.PlatformChatID)))
 	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
 	binary.Write(b, binary.LittleEndian, s.EntryGID)
 	codegen.WriteString(b, s.OwnerName)
@@ -2591,6 +2633,8 @@ func (s *BuddyRequestAcceptFwd) Marshal() []byte {
 	binary.Write(b, binary.LittleEndian, s.FriendStatusDate)
 	codegen.WriteString(b, s.PreviousName)
 	binary.Write(b, binary.LittleEndian, s.PlatformType)
+	codegen.WriteString(b, s.PlatformChatID)
+	binary.Write(b, binary.LittleEndian, s.DisableCrossPlay)
 	return b.Bytes()
 }
 
@@ -2636,21 +2680,28 @@ func (s *BuddyRequestAcceptFwd) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.PlatformType); err != nil {
 		return err
 	}
+	if s.PlatformChatID, err = codegen.ReadString(b); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.DisableCrossPlay); err != nil {
+		return err
+	}
 	return nil
 }
 
 type BuddyRequestAdd struct {
-	OwnerSchool       string
-	OwnerName         string
-	ListOwnerGID      uint64
-	EntryGID          uint64
-	OwnerPlatformType int32
-	OwnerLevel        uint8
-	Remove            uint8
+	OwnerPlatformGamerTag string
+	OwnerSchool           string
+	OwnerName             string
+	ListOwnerGID          uint64
+	EntryGID              uint64
+	OwnerPlatformType     int32
+	OwnerLevel            uint8
+	Remove                uint8
 }
 
 func (s *BuddyRequestAdd) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 26+len(s.OwnerName)+len(s.OwnerSchool)))
+	b := bytes.NewBuffer(make([]byte, 0, 28+len(s.OwnerName)+len(s.OwnerSchool)+len(s.OwnerPlatformGamerTag)))
 	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
 	binary.Write(b, binary.LittleEndian, s.EntryGID)
 	codegen.WriteString(b, s.OwnerName)
@@ -2658,6 +2709,7 @@ func (s *BuddyRequestAdd) Marshal() []byte {
 	codegen.WriteString(b, s.OwnerSchool)
 	binary.Write(b, binary.LittleEndian, s.Remove)
 	binary.Write(b, binary.LittleEndian, s.OwnerPlatformType)
+	codegen.WriteString(b, s.OwnerPlatformGamerTag)
 	return b.Bytes()
 }
 
@@ -2685,21 +2737,25 @@ func (s *BuddyRequestAdd) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.OwnerPlatformType); err != nil {
 		return err
 	}
+	if s.OwnerPlatformGamerTag, err = codegen.ReadString(b); err != nil {
+		return err
+	}
 	return nil
 }
 
 type BuddyRequestAddFwd struct {
-	OwnerSchool       string
-	OwnerName         string
-	ListOwnerGID      uint64
-	EntryGID          uint64
-	OwnerPlatformType int32
-	OwnerLevel        uint8
-	Remove            uint8
+	OwnerPlatformGamerTag string
+	OwnerSchool           string
+	OwnerName             string
+	ListOwnerGID          uint64
+	EntryGID              uint64
+	OwnerPlatformType     int32
+	OwnerLevel            uint8
+	Remove                uint8
 }
 
 func (s *BuddyRequestAddFwd) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 26+len(s.OwnerName)+len(s.OwnerSchool)))
+	b := bytes.NewBuffer(make([]byte, 0, 28+len(s.OwnerName)+len(s.OwnerSchool)+len(s.OwnerPlatformGamerTag)))
 	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
 	binary.Write(b, binary.LittleEndian, s.EntryGID)
 	codegen.WriteString(b, s.OwnerName)
@@ -2707,6 +2763,7 @@ func (s *BuddyRequestAddFwd) Marshal() []byte {
 	codegen.WriteString(b, s.OwnerSchool)
 	binary.Write(b, binary.LittleEndian, s.Remove)
 	binary.Write(b, binary.LittleEndian, s.OwnerPlatformType)
+	codegen.WriteString(b, s.OwnerPlatformGamerTag)
 	return b.Bytes()
 }
 
@@ -2732,6 +2789,9 @@ func (s *BuddyRequestAddFwd) Unmarshal(data []byte) error {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.OwnerPlatformType); err != nil {
+		return err
+	}
+	if s.OwnerPlatformGamerTag, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2982,22 +3042,25 @@ func (s *BuddyStats) Unmarshal(data []byte) error {
 }
 
 type BuddyStatusUpdate struct {
-	PreviousName     string
 	RealmName        string
+	PlatformChatID   string
 	ZoneName         string
-	ListOwnerGID     uint64
+	PlatformGamerTag string
+	PreviousName     string
 	EntryGID         uint64
+	ListOwnerGID     uint64
 	Permissions      uint32
-	Locale           uint32
-	FriendInfo       uint32
 	FriendDate       uint32
 	FriendStatusDate uint32
+	FriendInfo       uint32
 	PlatformType     int32
+	Locale           uint32
 	Status           uint8
+	DisableCrossPlay uint8
 }
 
 func (s *BuddyStatusUpdate) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 47+len(s.ZoneName)+len(s.RealmName)+len(s.PreviousName)))
+	b := bytes.NewBuffer(make([]byte, 0, 52+len(s.ZoneName)+len(s.RealmName)+len(s.PreviousName)+len(s.PlatformChatID)+len(s.PlatformGamerTag)))
 	binary.Write(b, binary.LittleEndian, s.ListOwnerGID)
 	binary.Write(b, binary.LittleEndian, s.EntryGID)
 	binary.Write(b, binary.LittleEndian, s.Status)
@@ -3010,6 +3073,9 @@ func (s *BuddyStatusUpdate) Marshal() []byte {
 	binary.Write(b, binary.LittleEndian, s.FriendStatusDate)
 	codegen.WriteString(b, s.PreviousName)
 	binary.Write(b, binary.LittleEndian, s.PlatformType)
+	codegen.WriteString(b, s.PlatformChatID)
+	codegen.WriteString(b, s.PlatformGamerTag)
+	binary.Write(b, binary.LittleEndian, s.DisableCrossPlay)
 	return b.Bytes()
 }
 
@@ -3050,6 +3116,15 @@ func (s *BuddyStatusUpdate) Unmarshal(data []byte) error {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.PlatformType); err != nil {
+		return err
+	}
+	if s.PlatformChatID, err = codegen.ReadString(b); err != nil {
+		return err
+	}
+	if s.PlatformGamerTag, err = codegen.ReadString(b); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.DisableCrossPlay); err != nil {
 		return err
 	}
 	return nil
@@ -3681,35 +3756,39 @@ func (s *CSRBankItemsDone) Unmarshal(data []byte) error {
 }
 
 type CSREditCharacter struct {
-	Object           string
-	AccessPasses     string
-	CurrentMute      string
-	CurrentBan       string
-	UserName         string
-	BadgeList        string
-	DynaMods         string
-	Registry         string
-	CurrentQuests    string
-	UserID           uint64
-	CharacterID      uint64
-	ChunkNum         uint32
-	CharacterSlots   int32
-	PlatformType     int32
-	AcctAssoc        uint8
-	Edit             uint8
-	AllowedToReport  uint8
-	SegmentedMessage uint8
-	LastSegment      uint8
+	Object               string
+	AccessPasses         string
+	CurrentPvPBlock      string
+	CurrentMute          string
+	CurrentBan           string
+	UserName             string
+	BadgeList            string
+	DynaMods             string
+	CurrentQuests        string
+	Registry             string
+	UserID               uint64
+	CharacterID          uint64
+	ChunkNum             uint32
+	CharacterSlots       int32
+	PlatformType         int32
+	CharacterCount       int32
+	AcctAssoc            uint8
+	Edit                 uint8
+	AllowedToReport      uint8
+	PvPNoMatchIgnoreList uint8
+	SegmentedMessage     uint8
+	LastSegment          uint8
 }
 
 func (s *CSREditCharacter) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 51+len(s.UserName)+len(s.CurrentBan)+len(s.CurrentMute)+len(s.Object)+len(s.CurrentQuests)+len(s.Registry)+len(s.AccessPasses)+len(s.BadgeList)+len(s.DynaMods)))
+	b := bytes.NewBuffer(make([]byte, 0, 58+len(s.UserName)+len(s.CurrentBan)+len(s.CurrentMute)+len(s.CurrentPvPBlock)+len(s.Object)+len(s.CurrentQuests)+len(s.Registry)+len(s.AccessPasses)+len(s.BadgeList)+len(s.DynaMods)))
 	binary.Write(b, binary.LittleEndian, s.ChunkNum)
 	binary.Write(b, binary.LittleEndian, s.CharacterID)
 	binary.Write(b, binary.LittleEndian, s.UserID)
 	codegen.WriteString(b, s.UserName)
 	codegen.WriteString(b, s.CurrentBan)
 	codegen.WriteString(b, s.CurrentMute)
+	codegen.WriteString(b, s.CurrentPvPBlock)
 	binary.Write(b, binary.LittleEndian, s.AcctAssoc)
 	codegen.WriteString(b, s.Object)
 	codegen.WriteString(b, s.CurrentQuests)
@@ -3721,8 +3800,10 @@ func (s *CSREditCharacter) Marshal() []byte {
 	codegen.WriteString(b, s.DynaMods)
 	binary.Write(b, binary.LittleEndian, s.CharacterSlots)
 	binary.Write(b, binary.LittleEndian, s.PlatformType)
+	binary.Write(b, binary.LittleEndian, s.PvPNoMatchIgnoreList)
 	binary.Write(b, binary.LittleEndian, s.SegmentedMessage)
 	binary.Write(b, binary.LittleEndian, s.LastSegment)
+	binary.Write(b, binary.LittleEndian, s.CharacterCount)
 	return b.Bytes()
 }
 
@@ -3745,6 +3826,9 @@ func (s *CSREditCharacter) Unmarshal(data []byte) error {
 		return err
 	}
 	if s.CurrentMute, err = codegen.ReadString(b); err != nil {
+		return err
+	}
+	if s.CurrentPvPBlock, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.AcctAssoc); err != nil {
@@ -3780,10 +3864,16 @@ func (s *CSREditCharacter) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.PlatformType); err != nil {
 		return err
 	}
+	if err = binary.Read(b, binary.LittleEndian, &s.PvPNoMatchIgnoreList); err != nil {
+		return err
+	}
 	if err = binary.Read(b, binary.LittleEndian, &s.SegmentedMessage); err != nil {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.LastSegment); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.CharacterCount); err != nil {
 		return err
 	}
 	return nil
@@ -4676,6 +4766,7 @@ func (s *GiftRedeemed) Unmarshal(data []byte) error {
 }
 
 type GotoPlayer struct {
+	GroupID           string
 	TargetCharacterID uint64
 	OriginatorID      uint64
 	MustBeFriend      uint8
@@ -4684,12 +4775,13 @@ type GotoPlayer struct {
 }
 
 func (s *GotoPlayer) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 19))
+	b := bytes.NewBuffer(make([]byte, 0, 21+len(s.GroupID)))
 	binary.Write(b, binary.LittleEndian, s.TargetCharacterID)
 	binary.Write(b, binary.LittleEndian, s.OriginatorID)
 	binary.Write(b, binary.LittleEndian, s.MustBeFriend)
 	binary.Write(b, binary.LittleEndian, s.DisableCrossPlay)
 	binary.Write(b, binary.LittleEndian, s.ClientPlatform)
+	codegen.WriteString(b, s.GroupID)
 	return b.Bytes()
 }
 
@@ -4709,6 +4801,9 @@ func (s *GotoPlayer) Unmarshal(data []byte) error {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.ClientPlatform); err != nil {
+		return err
+	}
+	if s.GroupID, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -5184,18 +5279,20 @@ func (s *KILLCLIENTPROCESS) Unmarshal(data []byte) error {
 }
 
 type LADDER struct {
-	LadderData               string
-	CharacterID              uint64
-	TourneyCredits           uint32
-	TourneyHostingCreditType uint32
+	LadderData            string
+	CharacterID           uint64
+	TourneyCredits        uint32
+	TourneyHostingCredits uint32
+	PvPNoMatchIgnoreList  uint8
 }
 
 func (s *LADDER) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 18+len(s.LadderData)))
+	b := bytes.NewBuffer(make([]byte, 0, 19+len(s.LadderData)))
 	binary.Write(b, binary.LittleEndian, s.CharacterID)
 	codegen.WriteString(b, s.LadderData)
 	binary.Write(b, binary.LittleEndian, s.TourneyCredits)
-	binary.Write(b, binary.LittleEndian, s.TourneyHostingCreditType)
+	binary.Write(b, binary.LittleEndian, s.TourneyHostingCredits)
+	binary.Write(b, binary.LittleEndian, s.PvPNoMatchIgnoreList)
 	return b.Bytes()
 }
 
@@ -5211,7 +5308,10 @@ func (s *LADDER) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.TourneyCredits); err != nil {
 		return err
 	}
-	if err = binary.Read(b, binary.LittleEndian, &s.TourneyHostingCreditType); err != nil {
+	if err = binary.Read(b, binary.LittleEndian, &s.TourneyHostingCredits); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.PvPNoMatchIgnoreList); err != nil {
 		return err
 	}
 	return nil

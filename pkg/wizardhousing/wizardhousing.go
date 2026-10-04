@@ -40,6 +40,9 @@ type service interface {
 	CastleToursEnableRatingDisplay(CastleToursEnableRatingDisplay)
 	CastleToursFavoriteInfo(CastleToursFavoriteInfo)
 	CastleToursFavoriteInfo2(CastleToursFavoriteInfo2)
+	CastleToursHallOfFame(CastleToursHallOfFame)
+	CastleToursHallOfFameRatings(CastleToursHallOfFameRatings)
+	CastleToursHallOfFameResponse(CastleToursHallOfFameResponse)
 	CastleToursLeaderboardResponse(CastleToursLeaderboardResponse)
 	CastleToursPlayerBanned(CastleToursPlayerBanned)
 	CastleToursPostRateHouse(CastleToursPostRateHouse)
@@ -47,16 +50,19 @@ type service interface {
 	CastleToursRatingDisplay(CastleToursRatingDisplay)
 	CastleToursRemove(CastleToursRemove)
 	CastleToursRemoveFavorite(CastleToursRemoveFavorite)
+	CastleToursRemoveHallOfFame(CastleToursRemoveHallOfFame)
 	CastleToursRemoveResult(CastleToursRemoveResult)
 	CastleToursRequest(CastleToursRequest)
 	CastleToursRequestFriends(CastleToursRequestFriends)
 	CastleToursRequestLeaderboard(CastleToursRequestLeaderboard)
 	CastleToursRequestMyCastleData(CastleToursRequestMyCastleData)
 	CastleToursRequestMyCastles(CastleToursRequestMyCastles)
+	CastleToursRequestNextLeaderboard(CastleToursRequestNextLeaderboard)
 	CastleToursSendRating(CastleToursSendRating)
 	CastleToursTeleportPlayer(CastleToursTeleportPlayer)
 	CastleToursTeleportRejected(CastleToursTeleportRejected)
 	CastleToursVisitCastle(CastleToursVisitCastle)
+	CastleToursVisitIgnored(CastleToursVisitIgnored)
 	CatchFish(CatchFish)
 	CatchOfTheDayOpen(CatchOfTheDayOpen)
 	CatchSuccess(CatchSuccess)
@@ -248,6 +254,9 @@ func (Service) CastleToursDeleteCharacter(CastleToursDeleteCharacter)           
 func (Service) CastleToursEnableRatingDisplay(CastleToursEnableRatingDisplay)         {}
 func (Service) CastleToursFavoriteInfo(CastleToursFavoriteInfo)                       {}
 func (Service) CastleToursFavoriteInfo2(CastleToursFavoriteInfo2)                     {}
+func (Service) CastleToursHallOfFame(CastleToursHallOfFame)                           {}
+func (Service) CastleToursHallOfFameRatings(CastleToursHallOfFameRatings)             {}
+func (Service) CastleToursHallOfFameResponse(CastleToursHallOfFameResponse)           {}
 func (Service) CastleToursLeaderboardResponse(CastleToursLeaderboardResponse)         {}
 func (Service) CastleToursPlayerBanned(CastleToursPlayerBanned)                       {}
 func (Service) CastleToursPostRateHouse(CastleToursPostRateHouse)                     {}
@@ -255,16 +264,19 @@ func (Service) CastleToursPreAdd(CastleToursPreAdd)                             
 func (Service) CastleToursRatingDisplay(CastleToursRatingDisplay)                     {}
 func (Service) CastleToursRemove(CastleToursRemove)                                   {}
 func (Service) CastleToursRemoveFavorite(CastleToursRemoveFavorite)                   {}
+func (Service) CastleToursRemoveHallOfFame(CastleToursRemoveHallOfFame)               {}
 func (Service) CastleToursRemoveResult(CastleToursRemoveResult)                       {}
 func (Service) CastleToursRequest(CastleToursRequest)                                 {}
 func (Service) CastleToursRequestFriends(CastleToursRequestFriends)                   {}
 func (Service) CastleToursRequestLeaderboard(CastleToursRequestLeaderboard)           {}
 func (Service) CastleToursRequestMyCastleData(CastleToursRequestMyCastleData)         {}
 func (Service) CastleToursRequestMyCastles(CastleToursRequestMyCastles)               {}
+func (Service) CastleToursRequestNextLeaderboard(CastleToursRequestNextLeaderboard)   {}
 func (Service) CastleToursSendRating(CastleToursSendRating)                           {}
 func (Service) CastleToursTeleportPlayer(CastleToursTeleportPlayer)                   {}
 func (Service) CastleToursTeleportRejected(CastleToursTeleportRejected)               {}
 func (Service) CastleToursVisitCastle(CastleToursVisitCastle)                         {}
+func (Service) CastleToursVisitIgnored(CastleToursVisitIgnored)                       {}
 func (Service) CatchFish(CatchFish)                                                   {}
 func (Service) CatchOfTheDayOpen(CatchOfTheDayOpen)                                   {}
 func (Service) CatchSuccess(CatchSuccess)                                             {}
@@ -456,181 +468,187 @@ func RegisterService(r *proto.MessageRouter, s service) {
 	proto.RegisterMessageHandler(r, 50, 29, s.CastleToursEnableRatingDisplay)
 	proto.RegisterMessageHandler(r, 50, 30, s.CastleToursFavoriteInfo)
 	proto.RegisterMessageHandler(r, 50, 31, s.CastleToursFavoriteInfo2)
-	proto.RegisterMessageHandler(r, 50, 32, s.CastleToursLeaderboardResponse)
-	proto.RegisterMessageHandler(r, 50, 33, s.CastleToursPlayerBanned)
-	proto.RegisterMessageHandler(r, 50, 34, s.CastleToursPostRateHouse)
-	proto.RegisterMessageHandler(r, 50, 35, s.CastleToursPreAdd)
-	proto.RegisterMessageHandler(r, 50, 36, s.CastleToursRatingDisplay)
-	proto.RegisterMessageHandler(r, 50, 37, s.CastleToursRemove)
-	proto.RegisterMessageHandler(r, 50, 38, s.CastleToursRemoveFavorite)
-	proto.RegisterMessageHandler(r, 50, 39, s.CastleToursRemoveResult)
-	proto.RegisterMessageHandler(r, 50, 40, s.CastleToursRequest)
-	proto.RegisterMessageHandler(r, 50, 41, s.CastleToursRequestFriends)
-	proto.RegisterMessageHandler(r, 50, 42, s.CastleToursRequestLeaderboard)
-	proto.RegisterMessageHandler(r, 50, 43, s.CastleToursRequestMyCastleData)
-	proto.RegisterMessageHandler(r, 50, 44, s.CastleToursRequestMyCastles)
-	proto.RegisterMessageHandler(r, 50, 45, s.CastleToursSendRating)
-	proto.RegisterMessageHandler(r, 50, 46, s.CastleToursTeleportPlayer)
-	proto.RegisterMessageHandler(r, 50, 47, s.CastleToursTeleportRejected)
-	proto.RegisterMessageHandler(r, 50, 48, s.CastleToursVisitCastle)
-	proto.RegisterMessageHandler(r, 50, 49, s.CatchFish)
-	proto.RegisterMessageHandler(r, 50, 50, s.CatchOfTheDayOpen)
-	proto.RegisterMessageHandler(r, 50, 51, s.CatchSuccess)
-	proto.RegisterMessageHandler(r, 50, 52, s.ChangeBreadCrumbRequest)
-	proto.RegisterMessageHandler(r, 50, 53, s.CreateTestIsland)
-	proto.RegisterMessageHandler(r, 50, 54, s.DailyPvPOpen)
-	proto.RegisterMessageHandler(r, 50, 55, s.DailyQuestCompleted)
-	proto.RegisterMessageHandler(r, 50, 56, s.DailyQuestCSRData)
-	proto.RegisterMessageHandler(r, 50, 57, s.DailyQuestExplore)
-	proto.RegisterMessageHandler(r, 50, 58, s.DailyQuestOpen)
-	proto.RegisterMessageHandler(r, 50, 59, s.DeleteEquippedHousingItem)
-	proto.RegisterMessageHandler(r, 50, 60, s.DeleteFish)
-	proto.RegisterMessageHandler(r, 50, 61, s.DeleteFromAttic)
-	proto.RegisterMessageHandler(r, 50, 62, s.DeleteMusicLoop)
-	proto.RegisterMessageHandler(r, 50, 63, s.DisplayCatchFish)
-	proto.RegisterMessageHandler(r, 50, 64, s.DisplayCaughtFish)
-	proto.RegisterMessageHandler(r, 50, 65, s.DisposableDungeonNoOwner)
-	proto.RegisterMessageHandler(r, 50, 66, s.DailyPvPUpdate)
-	proto.RegisterMessageHandler(r, 50, 67, s.DailyQuestUpdate)
-	proto.RegisterMessageHandler(r, 50, 68, s.EmptyLotCheck)
-	proto.RegisterMessageHandler(r, 50, 69, s.EndFishingCast)
-	proto.RegisterMessageHandler(r, 50, 70, s.EnterTournamentFish)
-	proto.RegisterMessageHandler(r, 50, 71, s.EnterTournamentFishResult)
-	proto.RegisterMessageHandler(r, 50, 72, s.EquipHouseMusic)
-	proto.RegisterMessageHandler(r, 50, 73, s.EquipMannequinItem)
-	proto.RegisterMessageHandler(r, 50, 74, s.FishEscaped)
-	proto.RegisterMessageHandler(r, 50, 75, s.FishingCSRResults)
-	proto.RegisterMessageHandler(r, 50, 76, s.FishingSpellCast)
-	proto.RegisterMessageHandler(r, 50, 77, s.FishTournamentLeaderBoardOpen)
-	proto.RegisterMessageHandler(r, 50, 78, s.FishTournamentLeaderBoardRequest)
-	proto.RegisterMessageHandler(r, 50, 79, s.FishTournamentOpen)
-	proto.RegisterMessageHandler(r, 50, 80, s.GardeningCastSpell)
-	proto.RegisterMessageHandler(r, 50, 81, s.GardeningCommand)
-	proto.RegisterMessageHandler(r, 50, 82, s.GardeningCommandResponse)
-	proto.RegisterMessageHandler(r, 50, 83, s.GardeningCSRResults)
-	proto.RegisterMessageHandler(r, 50, 84, s.GardeningHarvestPlant)
-	proto.RegisterMessageHandler(r, 50, 85, s.GardeningHarvestPlantSecondSpring)
-	proto.RegisterMessageHandler(r, 50, 86, s.GardeningSpellFizzle)
-	proto.RegisterMessageHandler(r, 50, 87, s.GardeningSpellInspect)
-	proto.RegisterMessageHandler(r, 50, 88, s.GardenLevelUp)
-	proto.RegisterMessageHandler(r, 50, 89, s.HideHousingObject)
-	proto.RegisterMessageHandler(r, 50, 90, s.HousingGameRequestPoweruplocations)
-	proto.RegisterMessageHandler(r, 50, 91, s.HousingGameStatusUpdate)
-	proto.RegisterMessageHandler(r, 50, 92, s.HousingGameUsePowerup)
-	proto.RegisterMessageHandler(r, 50, 93, s.HousingObjectNoPickup)
-	proto.RegisterMessageHandler(r, 50, 94, s.HousingObjectProximity)
-	proto.RegisterMessageHandler(r, 50, 95, s.HousingZonePlayer)
-	proto.RegisterMessageHandler(r, 50, 96, s.HousingZonePlayerList)
-	proto.RegisterMessageHandler(r, 50, 97, s.InteractiveMusicError)
-	proto.RegisterMessageHandler(r, 50, 98, s.InteractiveMusicInUse)
-	proto.RegisterMessageHandler(r, 50, 99, s.InteractiveMusicInUse2)
-	proto.RegisterMessageHandler(r, 50, 100, s.IslandSpaceBuyRequest)
-	proto.RegisterMessageHandler(r, 50, 101, s.IslandSpaceShopOpen)
-	proto.RegisterMessageHandler(r, 50, 102, s.MissFish)
-	proto.RegisterMessageHandler(r, 50, 103, s.MonsterMagicAddMonster)
-	proto.RegisterMessageHandler(r, 50, 104, s.MonsterMagicEraseMonster)
-	proto.RegisterMessageHandler(r, 50, 105, s.MoveFromAttic)
-	proto.RegisterMessageHandler(r, 50, 106, s.MoveGearFromGearVault)
-	proto.RegisterMessageHandler(r, 50, 107, s.MoveGearToGearVault)
-	proto.RegisterMessageHandler(r, 50, 108, s.MoveJewelFromJewelVault)
-	proto.RegisterMessageHandler(r, 50, 109, s.MoveJewelToJewelVault)
-	proto.RegisterMessageHandler(r, 50, 110, s.MoveSeedFromGardeningShed)
-	proto.RegisterMessageHandler(r, 50, 111, s.MoveSeedToGardeningShed)
-	proto.RegisterMessageHandler(r, 50, 112, s.MoveTCFromTCVault)
-	proto.RegisterMessageHandler(r, 50, 113, s.MoveTCToTCVault)
-	proto.RegisterMessageHandler(r, 50, 114, s.MoveToAttic)
-	proto.RegisterMessageHandler(r, 50, 115, s.NoFishSpace)
-	proto.RegisterMessageHandler(r, 50, 116, s.PatchAddAttic)
-	proto.RegisterMessageHandler(r, 50, 117, s.PatchAddHousingObject)
-	proto.RegisterMessageHandler(r, 50, 118, s.PatchAquarium)
-	proto.RegisterMessageHandler(r, 50, 119, s.PatchCastleMagic)
-	proto.RegisterMessageHandler(r, 50, 120, s.PatchDeleteAttic)
-	proto.RegisterMessageHandler(r, 50, 121, s.PatchDeleteHousingObject)
-	proto.RegisterMessageHandler(r, 50, 122, s.PatchEquipHousingObject)
-	proto.RegisterMessageHandler(r, 50, 123, s.PatchGardening)
-	proto.RegisterMessageHandler(r, 50, 124, s.PatchHouse)
-	proto.RegisterMessageHandler(r, 50, 125, s.PatchHousingBreadCrumb)
-	proto.RegisterMessageHandler(r, 50, 126, s.PatchHousingGardeningShed)
-	proto.RegisterMessageHandler(r, 50, 127, s.PatchHousingGearVault)
-	proto.RegisterMessageHandler(r, 50, 128, s.PatchHousingJewelVault)
-	proto.RegisterMessageHandler(r, 50, 129, s.PatchHousingMusicObject)
-	proto.RegisterMessageHandler(r, 50, 130, s.PatchHousingSignObject)
-	proto.RegisterMessageHandler(r, 50, 131, s.PatchHousingTeleporterObject)
-	proto.RegisterMessageHandler(r, 50, 132, s.PatchHousingTrain)
-	proto.RegisterMessageHandler(r, 50, 133, s.PatchMonsterArena)
-	proto.RegisterMessageHandler(r, 50, 134, s.PatchMusicLoop)
-	proto.RegisterMessageHandler(r, 50, 135, s.PatchRemoveTextureRemap)
-	proto.RegisterMessageHandler(r, 50, 136, s.PatchTextureRemap)
-	proto.RegisterMessageHandler(r, 50, 137, s.PatchTintHousingObject)
-	proto.RegisterMessageHandler(r, 50, 138, s.PatchTreasureCardPoster)
-	proto.RegisterMessageHandler(r, 50, 139, s.PatchTreasureCardVault)
-	proto.RegisterMessageHandler(r, 50, 140, s.PatchUpdateHousingObject)
-	proto.RegisterMessageHandler(r, 50, 141, s.PatchExtendedTile)
-	proto.RegisterMessageHandler(r, 50, 142, s.PetTomeScanAttic)
-	proto.RegisterMessageHandler(r, 50, 143, s.PickUpAll)
-	proto.RegisterMessageHandler(r, 50, 144, s.PickUpHousingTexture)
-	proto.RegisterMessageHandler(r, 50, 145, s.PlaceHousingFish)
-	proto.RegisterMessageHandler(r, 50, 146, s.PlaceHousingObject)
-	proto.RegisterMessageHandler(r, 50, 147, s.PlayerTeleportingToFriend)
-	proto.RegisterMessageHandler(r, 50, 148, s.PlayInteractiveMusic)
-	proto.RegisterMessageHandler(r, 50, 149, s.PlayInteractiveMusic2)
-	proto.RegisterMessageHandler(r, 50, 150, s.PlayInteractiveMusicLoop)
-	proto.RegisterMessageHandler(r, 50, 151, s.PlayInteractiveMusicLooping)
-	proto.RegisterMessageHandler(r, 50, 152, s.PlayInteractiveMusicLooping2)
-	proto.RegisterMessageHandler(r, 50, 153, s.PlayTrainSound)
-	proto.RegisterMessageHandler(r, 50, 154, s.RemoveFishFromAquarium)
-	proto.RegisterMessageHandler(r, 50, 155, s.RemoveHouseMusic)
-	proto.RegisterMessageHandler(r, 50, 156, s.ReportHouse)
-	proto.RegisterMessageHandler(r, 50, 157, s.AddRequestAllFish)
-	proto.RegisterMessageHandler(r, 50, 158, s.RequestAttic)
-	proto.RegisterMessageHandler(r, 50, 159, s.RequestCatchSuccess)
-	proto.RegisterMessageHandler(r, 50, 160, s.RequestDeedZone)
-	proto.RegisterMessageHandler(r, 50, 161, s.AddRequestFishHistory)
-	proto.RegisterMessageHandler(r, 50, 162, s.RequestHouseOwnerCharacterID)
-	proto.RegisterMessageHandler(r, 50, 163, s.RequestHouseTransferList)
-	proto.RegisterMessageHandler(r, 50, 164, s.RequestHousingZone)
-	proto.RegisterMessageHandler(r, 50, 165, s.RequestHousingZoneTeleport)
-	proto.RegisterMessageHandler(r, 50, 166, s.RequestInteractiveMusic)
-	proto.RegisterMessageHandler(r, 50, 167, s.RequestIslandSwitch)
-	proto.RegisterMessageHandler(r, 50, 168, s.RequestRestoreState)
-	proto.RegisterMessageHandler(r, 50, 169, s.RequestSendAway)
-	proto.RegisterMessageHandler(r, 50, 170, s.RequestTeleporterHousingConfirm)
-	proto.RegisterMessageHandler(r, 50, 171, s.RequestTeleporterHousingZone)
-	proto.RegisterMessageHandler(r, 50, 172, s.RequestTransition)
-	proto.RegisterMessageHandler(r, 50, 173, s.RequestBlobs)
-	proto.RegisterMessageHandler(r, 50, 174, s.Respec)
-	proto.RegisterMessageHandler(r, 50, 175, s.SelectHouseMusic)
-	proto.RegisterMessageHandler(r, 50, 176, s.SelectMusicStyle)
-	proto.RegisterMessageHandler(r, 50, 177, s.SellFishOpen)
-	proto.RegisterMessageHandler(r, 50, 178, s.SellFishRequest)
-	proto.RegisterMessageHandler(r, 50, 179, s.SendHousingObjectStates)
-	proto.RegisterMessageHandler(r, 50, 180, s.SendHousingTextureInfo)
-	proto.RegisterMessageHandler(r, 50, 181, s.SendBlob)
-	proto.RegisterMessageHandler(r, 50, 182, s.SetAtticID)
-	proto.RegisterMessageHandler(r, 50, 183, s.SetFishingPlayers)
-	proto.RegisterMessageHandler(r, 50, 184, s.SetHouseSign)
-	proto.RegisterMessageHandler(r, 50, 185, s.SetHouseTeleporter)
-	proto.RegisterMessageHandler(r, 50, 186, s.SetHousingGameState)
-	proto.RegisterMessageHandler(r, 50, 187, s.SetHousingPalette)
-	proto.RegisterMessageHandler(r, 50, 188, s.SetInstanceFish)
-	proto.RegisterMessageHandler(r, 50, 189, s.InvisibleToFriends)
-	proto.RegisterMessageHandler(r, 50, 190, s.SetMusicLoop)
-	proto.RegisterMessageHandler(r, 50, 191, s.SetNextTrain)
-	proto.RegisterMessageHandler(r, 50, 192, s.SetTileWallpaper)
-	proto.RegisterMessageHandler(r, 50, 193, s.ShowFishingCast)
-	proto.RegisterMessageHandler(r, 50, 194, s.StartHousingGame)
-	proto.RegisterMessageHandler(r, 50, 195, s.StartTrain)
-	proto.RegisterMessageHandler(r, 50, 196, s.StopInteractiveMusicLoop)
-	proto.RegisterMessageHandler(r, 50, 197, s.SwitchGotoCommons)
-	proto.RegisterMessageHandler(r, 50, 198, s.TeleportedToDeletedLot)
-	proto.RegisterMessageHandler(r, 50, 199, s.TeleportToStart)
-	proto.RegisterMessageHandler(r, 50, 200, s.UpdateAtticCount)
-	proto.RegisterMessageHandler(r, 50, 201, s.UpdateGardeningXP)
-	proto.RegisterMessageHandler(r, 50, 202, s.UpdateHousingObject)
-	proto.RegisterMessageHandler(r, 50, 203, s.UpdateHousingPet)
-	proto.RegisterMessageHandler(r, 50, 204, s.UpdateIslandSpace)
-	proto.RegisterMessageHandler(r, 50, 205, s.UpdateMaximumHousingItems)
-	proto.RegisterMessageHandler(r, 50, 206, s.UpdateTrain)
+	proto.RegisterMessageHandler(r, 50, 32, s.CastleToursHallOfFame)
+	proto.RegisterMessageHandler(r, 50, 33, s.CastleToursHallOfFameRatings)
+	proto.RegisterMessageHandler(r, 50, 34, s.CastleToursHallOfFameResponse)
+	proto.RegisterMessageHandler(r, 50, 35, s.CastleToursLeaderboardResponse)
+	proto.RegisterMessageHandler(r, 50, 36, s.CastleToursPlayerBanned)
+	proto.RegisterMessageHandler(r, 50, 37, s.CastleToursPostRateHouse)
+	proto.RegisterMessageHandler(r, 50, 38, s.CastleToursPreAdd)
+	proto.RegisterMessageHandler(r, 50, 39, s.CastleToursRatingDisplay)
+	proto.RegisterMessageHandler(r, 50, 40, s.CastleToursRemove)
+	proto.RegisterMessageHandler(r, 50, 41, s.CastleToursRemoveFavorite)
+	proto.RegisterMessageHandler(r, 50, 42, s.CastleToursRemoveHallOfFame)
+	proto.RegisterMessageHandler(r, 50, 43, s.CastleToursRemoveResult)
+	proto.RegisterMessageHandler(r, 50, 44, s.CastleToursRequest)
+	proto.RegisterMessageHandler(r, 50, 45, s.CastleToursRequestFriends)
+	proto.RegisterMessageHandler(r, 50, 46, s.CastleToursRequestLeaderboard)
+	proto.RegisterMessageHandler(r, 50, 47, s.CastleToursRequestMyCastleData)
+	proto.RegisterMessageHandler(r, 50, 48, s.CastleToursRequestMyCastles)
+	proto.RegisterMessageHandler(r, 50, 49, s.CastleToursRequestNextLeaderboard)
+	proto.RegisterMessageHandler(r, 50, 50, s.CastleToursSendRating)
+	proto.RegisterMessageHandler(r, 50, 51, s.CastleToursTeleportPlayer)
+	proto.RegisterMessageHandler(r, 50, 52, s.CastleToursTeleportRejected)
+	proto.RegisterMessageHandler(r, 50, 53, s.CastleToursVisitCastle)
+	proto.RegisterMessageHandler(r, 50, 54, s.CastleToursVisitIgnored)
+	proto.RegisterMessageHandler(r, 50, 55, s.CatchFish)
+	proto.RegisterMessageHandler(r, 50, 56, s.CatchOfTheDayOpen)
+	proto.RegisterMessageHandler(r, 50, 57, s.CatchSuccess)
+	proto.RegisterMessageHandler(r, 50, 58, s.ChangeBreadCrumbRequest)
+	proto.RegisterMessageHandler(r, 50, 59, s.CreateTestIsland)
+	proto.RegisterMessageHandler(r, 50, 60, s.DailyPvPOpen)
+	proto.RegisterMessageHandler(r, 50, 61, s.DailyQuestCompleted)
+	proto.RegisterMessageHandler(r, 50, 62, s.DailyQuestCSRData)
+	proto.RegisterMessageHandler(r, 50, 63, s.DailyQuestExplore)
+	proto.RegisterMessageHandler(r, 50, 64, s.DailyQuestOpen)
+	proto.RegisterMessageHandler(r, 50, 65, s.DeleteEquippedHousingItem)
+	proto.RegisterMessageHandler(r, 50, 66, s.DeleteFish)
+	proto.RegisterMessageHandler(r, 50, 67, s.DeleteFromAttic)
+	proto.RegisterMessageHandler(r, 50, 68, s.DeleteMusicLoop)
+	proto.RegisterMessageHandler(r, 50, 69, s.DisplayCatchFish)
+	proto.RegisterMessageHandler(r, 50, 70, s.DisplayCaughtFish)
+	proto.RegisterMessageHandler(r, 50, 71, s.DisposableDungeonNoOwner)
+	proto.RegisterMessageHandler(r, 50, 72, s.DailyPvPUpdate)
+	proto.RegisterMessageHandler(r, 50, 73, s.DailyQuestUpdate)
+	proto.RegisterMessageHandler(r, 50, 74, s.EmptyLotCheck)
+	proto.RegisterMessageHandler(r, 50, 75, s.EndFishingCast)
+	proto.RegisterMessageHandler(r, 50, 76, s.EnterTournamentFish)
+	proto.RegisterMessageHandler(r, 50, 77, s.EnterTournamentFishResult)
+	proto.RegisterMessageHandler(r, 50, 78, s.EquipHouseMusic)
+	proto.RegisterMessageHandler(r, 50, 79, s.EquipMannequinItem)
+	proto.RegisterMessageHandler(r, 50, 80, s.FishEscaped)
+	proto.RegisterMessageHandler(r, 50, 81, s.FishingCSRResults)
+	proto.RegisterMessageHandler(r, 50, 82, s.FishingSpellCast)
+	proto.RegisterMessageHandler(r, 50, 83, s.FishTournamentLeaderBoardOpen)
+	proto.RegisterMessageHandler(r, 50, 84, s.FishTournamentLeaderBoardRequest)
+	proto.RegisterMessageHandler(r, 50, 85, s.FishTournamentOpen)
+	proto.RegisterMessageHandler(r, 50, 86, s.GardeningCastSpell)
+	proto.RegisterMessageHandler(r, 50, 87, s.GardeningCommand)
+	proto.RegisterMessageHandler(r, 50, 88, s.GardeningCommandResponse)
+	proto.RegisterMessageHandler(r, 50, 89, s.GardeningCSRResults)
+	proto.RegisterMessageHandler(r, 50, 90, s.GardeningHarvestPlant)
+	proto.RegisterMessageHandler(r, 50, 91, s.GardeningHarvestPlantSecondSpring)
+	proto.RegisterMessageHandler(r, 50, 92, s.GardeningSpellFizzle)
+	proto.RegisterMessageHandler(r, 50, 93, s.GardeningSpellInspect)
+	proto.RegisterMessageHandler(r, 50, 94, s.GardenLevelUp)
+	proto.RegisterMessageHandler(r, 50, 95, s.HideHousingObject)
+	proto.RegisterMessageHandler(r, 50, 96, s.HousingGameRequestPoweruplocations)
+	proto.RegisterMessageHandler(r, 50, 97, s.HousingGameStatusUpdate)
+	proto.RegisterMessageHandler(r, 50, 98, s.HousingGameUsePowerup)
+	proto.RegisterMessageHandler(r, 50, 99, s.HousingObjectNoPickup)
+	proto.RegisterMessageHandler(r, 50, 100, s.HousingObjectProximity)
+	proto.RegisterMessageHandler(r, 50, 101, s.HousingZonePlayer)
+	proto.RegisterMessageHandler(r, 50, 102, s.HousingZonePlayerList)
+	proto.RegisterMessageHandler(r, 50, 103, s.InteractiveMusicError)
+	proto.RegisterMessageHandler(r, 50, 104, s.InteractiveMusicInUse)
+	proto.RegisterMessageHandler(r, 50, 105, s.InteractiveMusicInUse2)
+	proto.RegisterMessageHandler(r, 50, 106, s.IslandSpaceBuyRequest)
+	proto.RegisterMessageHandler(r, 50, 107, s.IslandSpaceShopOpen)
+	proto.RegisterMessageHandler(r, 50, 108, s.MissFish)
+	proto.RegisterMessageHandler(r, 50, 109, s.MonsterMagicAddMonster)
+	proto.RegisterMessageHandler(r, 50, 110, s.MonsterMagicEraseMonster)
+	proto.RegisterMessageHandler(r, 50, 111, s.MoveFromAttic)
+	proto.RegisterMessageHandler(r, 50, 112, s.MoveGearFromGearVault)
+	proto.RegisterMessageHandler(r, 50, 113, s.MoveGearToGearVault)
+	proto.RegisterMessageHandler(r, 50, 114, s.MoveJewelFromJewelVault)
+	proto.RegisterMessageHandler(r, 50, 115, s.MoveJewelToJewelVault)
+	proto.RegisterMessageHandler(r, 50, 116, s.MoveSeedFromGardeningShed)
+	proto.RegisterMessageHandler(r, 50, 117, s.MoveSeedToGardeningShed)
+	proto.RegisterMessageHandler(r, 50, 118, s.MoveTCFromTCVault)
+	proto.RegisterMessageHandler(r, 50, 119, s.MoveTCToTCVault)
+	proto.RegisterMessageHandler(r, 50, 120, s.MoveToAttic)
+	proto.RegisterMessageHandler(r, 50, 121, s.NoFishSpace)
+	proto.RegisterMessageHandler(r, 50, 122, s.PatchAddAttic)
+	proto.RegisterMessageHandler(r, 50, 123, s.PatchAddHousingObject)
+	proto.RegisterMessageHandler(r, 50, 124, s.PatchAquarium)
+	proto.RegisterMessageHandler(r, 50, 125, s.PatchCastleMagic)
+	proto.RegisterMessageHandler(r, 50, 126, s.PatchDeleteAttic)
+	proto.RegisterMessageHandler(r, 50, 127, s.PatchDeleteHousingObject)
+	proto.RegisterMessageHandler(r, 50, 128, s.PatchEquipHousingObject)
+	proto.RegisterMessageHandler(r, 50, 129, s.PatchGardening)
+	proto.RegisterMessageHandler(r, 50, 130, s.PatchHouse)
+	proto.RegisterMessageHandler(r, 50, 131, s.PatchHousingBreadCrumb)
+	proto.RegisterMessageHandler(r, 50, 132, s.PatchHousingGardeningShed)
+	proto.RegisterMessageHandler(r, 50, 133, s.PatchHousingGearVault)
+	proto.RegisterMessageHandler(r, 50, 134, s.PatchHousingJewelVault)
+	proto.RegisterMessageHandler(r, 50, 135, s.PatchHousingMusicObject)
+	proto.RegisterMessageHandler(r, 50, 136, s.PatchHousingSignObject)
+	proto.RegisterMessageHandler(r, 50, 137, s.PatchHousingTeleporterObject)
+	proto.RegisterMessageHandler(r, 50, 138, s.PatchHousingTrain)
+	proto.RegisterMessageHandler(r, 50, 139, s.PatchMonsterArena)
+	proto.RegisterMessageHandler(r, 50, 140, s.PatchMusicLoop)
+	proto.RegisterMessageHandler(r, 50, 141, s.PatchRemoveTextureRemap)
+	proto.RegisterMessageHandler(r, 50, 142, s.PatchTextureRemap)
+	proto.RegisterMessageHandler(r, 50, 143, s.PatchTintHousingObject)
+	proto.RegisterMessageHandler(r, 50, 144, s.PatchTreasureCardPoster)
+	proto.RegisterMessageHandler(r, 50, 145, s.PatchTreasureCardVault)
+	proto.RegisterMessageHandler(r, 50, 146, s.PatchUpdateHousingObject)
+	proto.RegisterMessageHandler(r, 50, 147, s.PatchExtendedTile)
+	proto.RegisterMessageHandler(r, 50, 148, s.PetTomeScanAttic)
+	proto.RegisterMessageHandler(r, 50, 149, s.PickUpAll)
+	proto.RegisterMessageHandler(r, 50, 150, s.PickUpHousingTexture)
+	proto.RegisterMessageHandler(r, 50, 151, s.PlaceHousingFish)
+	proto.RegisterMessageHandler(r, 50, 152, s.PlaceHousingObject)
+	proto.RegisterMessageHandler(r, 50, 153, s.PlayerTeleportingToFriend)
+	proto.RegisterMessageHandler(r, 50, 154, s.PlayInteractiveMusic)
+	proto.RegisterMessageHandler(r, 50, 155, s.PlayInteractiveMusic2)
+	proto.RegisterMessageHandler(r, 50, 156, s.PlayInteractiveMusicLoop)
+	proto.RegisterMessageHandler(r, 50, 157, s.PlayInteractiveMusicLooping)
+	proto.RegisterMessageHandler(r, 50, 158, s.PlayInteractiveMusicLooping2)
+	proto.RegisterMessageHandler(r, 50, 159, s.PlayTrainSound)
+	proto.RegisterMessageHandler(r, 50, 160, s.RemoveFishFromAquarium)
+	proto.RegisterMessageHandler(r, 50, 161, s.RemoveHouseMusic)
+	proto.RegisterMessageHandler(r, 50, 162, s.ReportHouse)
+	proto.RegisterMessageHandler(r, 50, 163, s.AddRequestAllFish)
+	proto.RegisterMessageHandler(r, 50, 164, s.RequestAttic)
+	proto.RegisterMessageHandler(r, 50, 165, s.RequestCatchSuccess)
+	proto.RegisterMessageHandler(r, 50, 166, s.RequestDeedZone)
+	proto.RegisterMessageHandler(r, 50, 167, s.AddRequestFishHistory)
+	proto.RegisterMessageHandler(r, 50, 168, s.RequestHouseOwnerCharacterID)
+	proto.RegisterMessageHandler(r, 50, 169, s.RequestHouseTransferList)
+	proto.RegisterMessageHandler(r, 50, 170, s.RequestHousingZone)
+	proto.RegisterMessageHandler(r, 50, 171, s.RequestHousingZoneTeleport)
+	proto.RegisterMessageHandler(r, 50, 172, s.RequestInteractiveMusic)
+	proto.RegisterMessageHandler(r, 50, 173, s.RequestIslandSwitch)
+	proto.RegisterMessageHandler(r, 50, 174, s.RequestRestoreState)
+	proto.RegisterMessageHandler(r, 50, 175, s.RequestSendAway)
+	proto.RegisterMessageHandler(r, 50, 176, s.RequestTeleporterHousingConfirm)
+	proto.RegisterMessageHandler(r, 50, 177, s.RequestTeleporterHousingZone)
+	proto.RegisterMessageHandler(r, 50, 178, s.RequestTransition)
+	proto.RegisterMessageHandler(r, 50, 179, s.RequestBlobs)
+	proto.RegisterMessageHandler(r, 50, 180, s.Respec)
+	proto.RegisterMessageHandler(r, 50, 181, s.SelectHouseMusic)
+	proto.RegisterMessageHandler(r, 50, 182, s.SelectMusicStyle)
+	proto.RegisterMessageHandler(r, 50, 183, s.SellFishOpen)
+	proto.RegisterMessageHandler(r, 50, 184, s.SellFishRequest)
+	proto.RegisterMessageHandler(r, 50, 185, s.SendHousingObjectStates)
+	proto.RegisterMessageHandler(r, 50, 186, s.SendHousingTextureInfo)
+	proto.RegisterMessageHandler(r, 50, 187, s.SendBlob)
+	proto.RegisterMessageHandler(r, 50, 188, s.SetAtticID)
+	proto.RegisterMessageHandler(r, 50, 189, s.SetFishingPlayers)
+	proto.RegisterMessageHandler(r, 50, 190, s.SetHouseSign)
+	proto.RegisterMessageHandler(r, 50, 191, s.SetHouseTeleporter)
+	proto.RegisterMessageHandler(r, 50, 192, s.SetHousingGameState)
+	proto.RegisterMessageHandler(r, 50, 193, s.SetHousingPalette)
+	proto.RegisterMessageHandler(r, 50, 194, s.SetInstanceFish)
+	proto.RegisterMessageHandler(r, 50, 195, s.InvisibleToFriends)
+	proto.RegisterMessageHandler(r, 50, 196, s.SetMusicLoop)
+	proto.RegisterMessageHandler(r, 50, 197, s.SetNextTrain)
+	proto.RegisterMessageHandler(r, 50, 198, s.SetTileWallpaper)
+	proto.RegisterMessageHandler(r, 50, 199, s.ShowFishingCast)
+	proto.RegisterMessageHandler(r, 50, 200, s.StartHousingGame)
+	proto.RegisterMessageHandler(r, 50, 201, s.StartTrain)
+	proto.RegisterMessageHandler(r, 50, 202, s.StopInteractiveMusicLoop)
+	proto.RegisterMessageHandler(r, 50, 203, s.SwitchGotoCommons)
+	proto.RegisterMessageHandler(r, 50, 204, s.TeleportedToDeletedLot)
+	proto.RegisterMessageHandler(r, 50, 205, s.TeleportToStart)
+	proto.RegisterMessageHandler(r, 50, 206, s.UpdateAtticCount)
+	proto.RegisterMessageHandler(r, 50, 207, s.UpdateGardeningXP)
+	proto.RegisterMessageHandler(r, 50, 208, s.UpdateHousingObject)
+	proto.RegisterMessageHandler(r, 50, 209, s.UpdateHousingPet)
+	proto.RegisterMessageHandler(r, 50, 210, s.UpdateIslandSpace)
+	proto.RegisterMessageHandler(r, 50, 211, s.UpdateMaximumHousingItems)
+	proto.RegisterMessageHandler(r, 50, 212, s.UpdateTrain)
 }
 
 func NewClient(c *proto.Client) Client {
@@ -761,704 +779,728 @@ func (c Client) CastleToursFavoriteInfo2(m *CastleToursFavoriteInfo2) error {
 	return c.c.WriteMessage(50, 31, m)
 }
 
-func (c Client) CastleToursLeaderboardResponse(m *CastleToursLeaderboardResponse) error {
+func (c Client) CastleToursHallOfFame(m *CastleToursHallOfFame) error {
 	return c.c.WriteMessage(50, 32, m)
 }
 
-func (c Client) CastleToursPlayerBanned(m *CastleToursPlayerBanned) error {
+func (c Client) CastleToursHallOfFameRatings(m *CastleToursHallOfFameRatings) error {
 	return c.c.WriteMessage(50, 33, m)
 }
 
-func (c Client) CastleToursPostRateHouse(m *CastleToursPostRateHouse) error {
+func (c Client) CastleToursHallOfFameResponse(m *CastleToursHallOfFameResponse) error {
 	return c.c.WriteMessage(50, 34, m)
 }
 
-func (c Client) CastleToursPreAdd(m *CastleToursPreAdd) error {
+func (c Client) CastleToursLeaderboardResponse(m *CastleToursLeaderboardResponse) error {
 	return c.c.WriteMessage(50, 35, m)
 }
 
-func (c Client) CastleToursRatingDisplay(m *CastleToursRatingDisplay) error {
+func (c Client) CastleToursPlayerBanned(m *CastleToursPlayerBanned) error {
 	return c.c.WriteMessage(50, 36, m)
 }
 
-func (c Client) CastleToursRemove(m *CastleToursRemove) error {
+func (c Client) CastleToursPostRateHouse(m *CastleToursPostRateHouse) error {
 	return c.c.WriteMessage(50, 37, m)
 }
 
-func (c Client) CastleToursRemoveFavorite(m *CastleToursRemoveFavorite) error {
+func (c Client) CastleToursPreAdd(m *CastleToursPreAdd) error {
 	return c.c.WriteMessage(50, 38, m)
 }
 
-func (c Client) CastleToursRemoveResult(m *CastleToursRemoveResult) error {
+func (c Client) CastleToursRatingDisplay(m *CastleToursRatingDisplay) error {
 	return c.c.WriteMessage(50, 39, m)
 }
 
-func (c Client) CastleToursRequest(m *CastleToursRequest) error {
+func (c Client) CastleToursRemove(m *CastleToursRemove) error {
 	return c.c.WriteMessage(50, 40, m)
 }
 
-func (c Client) CastleToursRequestFriends(m *CastleToursRequestFriends) error {
+func (c Client) CastleToursRemoveFavorite(m *CastleToursRemoveFavorite) error {
 	return c.c.WriteMessage(50, 41, m)
 }
 
-func (c Client) CastleToursRequestLeaderboard(m *CastleToursRequestLeaderboard) error {
+func (c Client) CastleToursRemoveHallOfFame(m *CastleToursRemoveHallOfFame) error {
 	return c.c.WriteMessage(50, 42, m)
 }
 
-func (c Client) CastleToursRequestMyCastleData(m *CastleToursRequestMyCastleData) error {
+func (c Client) CastleToursRemoveResult(m *CastleToursRemoveResult) error {
 	return c.c.WriteMessage(50, 43, m)
 }
 
-func (c Client) CastleToursRequestMyCastles(m *CastleToursRequestMyCastles) error {
+func (c Client) CastleToursRequest(m *CastleToursRequest) error {
 	return c.c.WriteMessage(50, 44, m)
 }
 
-func (c Client) CastleToursSendRating(m *CastleToursSendRating) error {
+func (c Client) CastleToursRequestFriends(m *CastleToursRequestFriends) error {
 	return c.c.WriteMessage(50, 45, m)
 }
 
-func (c Client) CastleToursTeleportPlayer(m *CastleToursTeleportPlayer) error {
+func (c Client) CastleToursRequestLeaderboard(m *CastleToursRequestLeaderboard) error {
 	return c.c.WriteMessage(50, 46, m)
 }
 
-func (c Client) CastleToursTeleportRejected(m *CastleToursTeleportRejected) error {
+func (c Client) CastleToursRequestMyCastleData(m *CastleToursRequestMyCastleData) error {
 	return c.c.WriteMessage(50, 47, m)
 }
 
-func (c Client) CastleToursVisitCastle(m *CastleToursVisitCastle) error {
+func (c Client) CastleToursRequestMyCastles(m *CastleToursRequestMyCastles) error {
 	return c.c.WriteMessage(50, 48, m)
 }
 
-func (c Client) CatchFish(m *CatchFish) error {
+func (c Client) CastleToursRequestNextLeaderboard(m *CastleToursRequestNextLeaderboard) error {
 	return c.c.WriteMessage(50, 49, m)
 }
 
-func (c Client) CatchOfTheDayOpen(m *CatchOfTheDayOpen) error {
+func (c Client) CastleToursSendRating(m *CastleToursSendRating) error {
 	return c.c.WriteMessage(50, 50, m)
 }
 
-func (c Client) CatchSuccess(m *CatchSuccess) error {
+func (c Client) CastleToursTeleportPlayer(m *CastleToursTeleportPlayer) error {
 	return c.c.WriteMessage(50, 51, m)
 }
 
-func (c Client) ChangeBreadCrumbRequest(m *ChangeBreadCrumbRequest) error {
+func (c Client) CastleToursTeleportRejected(m *CastleToursTeleportRejected) error {
 	return c.c.WriteMessage(50, 52, m)
 }
 
-func (c Client) CreateTestIsland(m *CreateTestIsland) error {
+func (c Client) CastleToursVisitCastle(m *CastleToursVisitCastle) error {
 	return c.c.WriteMessage(50, 53, m)
 }
 
-func (c Client) DailyPvPOpen(m *DailyPvPOpen) error {
+func (c Client) CastleToursVisitIgnored(m *CastleToursVisitIgnored) error {
 	return c.c.WriteMessage(50, 54, m)
 }
 
-func (c Client) DailyQuestCompleted(m *DailyQuestCompleted) error {
+func (c Client) CatchFish(m *CatchFish) error {
 	return c.c.WriteMessage(50, 55, m)
 }
 
-func (c Client) DailyQuestCSRData(m *DailyQuestCSRData) error {
+func (c Client) CatchOfTheDayOpen(m *CatchOfTheDayOpen) error {
 	return c.c.WriteMessage(50, 56, m)
 }
 
-func (c Client) DailyQuestExplore(m *DailyQuestExplore) error {
+func (c Client) CatchSuccess(m *CatchSuccess) error {
 	return c.c.WriteMessage(50, 57, m)
 }
 
-func (c Client) DailyQuestOpen(m *DailyQuestOpen) error {
+func (c Client) ChangeBreadCrumbRequest(m *ChangeBreadCrumbRequest) error {
 	return c.c.WriteMessage(50, 58, m)
 }
 
-func (c Client) DeleteEquippedHousingItem(m *DeleteEquippedHousingItem) error {
+func (c Client) CreateTestIsland(m *CreateTestIsland) error {
 	return c.c.WriteMessage(50, 59, m)
 }
 
-func (c Client) DeleteFish(m *DeleteFish) error {
+func (c Client) DailyPvPOpen(m *DailyPvPOpen) error {
 	return c.c.WriteMessage(50, 60, m)
 }
 
-func (c Client) DeleteFromAttic(m *DeleteFromAttic) error {
+func (c Client) DailyQuestCompleted(m *DailyQuestCompleted) error {
 	return c.c.WriteMessage(50, 61, m)
 }
 
-func (c Client) DeleteMusicLoop(m *DeleteMusicLoop) error {
+func (c Client) DailyQuestCSRData(m *DailyQuestCSRData) error {
 	return c.c.WriteMessage(50, 62, m)
 }
 
-func (c Client) DisplayCatchFish(m *DisplayCatchFish) error {
+func (c Client) DailyQuestExplore(m *DailyQuestExplore) error {
 	return c.c.WriteMessage(50, 63, m)
 }
 
-func (c Client) DisplayCaughtFish(m *DisplayCaughtFish) error {
+func (c Client) DailyQuestOpen(m *DailyQuestOpen) error {
 	return c.c.WriteMessage(50, 64, m)
 }
 
-func (c Client) DisposableDungeonNoOwner(m *DisposableDungeonNoOwner) error {
+func (c Client) DeleteEquippedHousingItem(m *DeleteEquippedHousingItem) error {
 	return c.c.WriteMessage(50, 65, m)
 }
 
-func (c Client) DailyPvPUpdate(m *DailyPvPUpdate) error {
+func (c Client) DeleteFish(m *DeleteFish) error {
 	return c.c.WriteMessage(50, 66, m)
 }
 
-func (c Client) DailyQuestUpdate(m *DailyQuestUpdate) error {
+func (c Client) DeleteFromAttic(m *DeleteFromAttic) error {
 	return c.c.WriteMessage(50, 67, m)
 }
 
-func (c Client) EmptyLotCheck(m *EmptyLotCheck) error {
+func (c Client) DeleteMusicLoop(m *DeleteMusicLoop) error {
 	return c.c.WriteMessage(50, 68, m)
 }
 
-func (c Client) EndFishingCast(m *EndFishingCast) error {
+func (c Client) DisplayCatchFish(m *DisplayCatchFish) error {
 	return c.c.WriteMessage(50, 69, m)
 }
 
-func (c Client) EnterTournamentFish(m *EnterTournamentFish) error {
+func (c Client) DisplayCaughtFish(m *DisplayCaughtFish) error {
 	return c.c.WriteMessage(50, 70, m)
 }
 
-func (c Client) EnterTournamentFishResult(m *EnterTournamentFishResult) error {
+func (c Client) DisposableDungeonNoOwner(m *DisposableDungeonNoOwner) error {
 	return c.c.WriteMessage(50, 71, m)
 }
 
-func (c Client) EquipHouseMusic(m *EquipHouseMusic) error {
+func (c Client) DailyPvPUpdate(m *DailyPvPUpdate) error {
 	return c.c.WriteMessage(50, 72, m)
 }
 
-func (c Client) EquipMannequinItem(m *EquipMannequinItem) error {
+func (c Client) DailyQuestUpdate(m *DailyQuestUpdate) error {
 	return c.c.WriteMessage(50, 73, m)
 }
 
-func (c Client) FishEscaped(m *FishEscaped) error {
+func (c Client) EmptyLotCheck(m *EmptyLotCheck) error {
 	return c.c.WriteMessage(50, 74, m)
 }
 
-func (c Client) FishingCSRResults(m *FishingCSRResults) error {
+func (c Client) EndFishingCast(m *EndFishingCast) error {
 	return c.c.WriteMessage(50, 75, m)
 }
 
-func (c Client) FishingSpellCast(m *FishingSpellCast) error {
+func (c Client) EnterTournamentFish(m *EnterTournamentFish) error {
 	return c.c.WriteMessage(50, 76, m)
 }
 
-func (c Client) FishTournamentLeaderBoardOpen(m *FishTournamentLeaderBoardOpen) error {
+func (c Client) EnterTournamentFishResult(m *EnterTournamentFishResult) error {
 	return c.c.WriteMessage(50, 77, m)
 }
 
-func (c Client) FishTournamentLeaderBoardRequest(m *FishTournamentLeaderBoardRequest) error {
+func (c Client) EquipHouseMusic(m *EquipHouseMusic) error {
 	return c.c.WriteMessage(50, 78, m)
 }
 
-func (c Client) FishTournamentOpen(m *FishTournamentOpen) error {
+func (c Client) EquipMannequinItem(m *EquipMannequinItem) error {
 	return c.c.WriteMessage(50, 79, m)
 }
 
-func (c Client) GardeningCastSpell(m *GardeningCastSpell) error {
+func (c Client) FishEscaped(m *FishEscaped) error {
 	return c.c.WriteMessage(50, 80, m)
 }
 
-func (c Client) GardeningCommand(m *GardeningCommand) error {
+func (c Client) FishingCSRResults(m *FishingCSRResults) error {
 	return c.c.WriteMessage(50, 81, m)
 }
 
-func (c Client) GardeningCommandResponse(m *GardeningCommandResponse) error {
+func (c Client) FishingSpellCast(m *FishingSpellCast) error {
 	return c.c.WriteMessage(50, 82, m)
 }
 
-func (c Client) GardeningCSRResults(m *GardeningCSRResults) error {
+func (c Client) FishTournamentLeaderBoardOpen(m *FishTournamentLeaderBoardOpen) error {
 	return c.c.WriteMessage(50, 83, m)
 }
 
-func (c Client) GardeningHarvestPlant(m *GardeningHarvestPlant) error {
+func (c Client) FishTournamentLeaderBoardRequest(m *FishTournamentLeaderBoardRequest) error {
 	return c.c.WriteMessage(50, 84, m)
 }
 
-func (c Client) GardeningHarvestPlantSecondSpring(m *GardeningHarvestPlantSecondSpring) error {
+func (c Client) FishTournamentOpen(m *FishTournamentOpen) error {
 	return c.c.WriteMessage(50, 85, m)
 }
 
-func (c Client) GardeningSpellFizzle(m *GardeningSpellFizzle) error {
+func (c Client) GardeningCastSpell(m *GardeningCastSpell) error {
 	return c.c.WriteMessage(50, 86, m)
 }
 
-func (c Client) GardeningSpellInspect(m *GardeningSpellInspect) error {
+func (c Client) GardeningCommand(m *GardeningCommand) error {
 	return c.c.WriteMessage(50, 87, m)
 }
 
-func (c Client) GardenLevelUp(m *GardenLevelUp) error {
+func (c Client) GardeningCommandResponse(m *GardeningCommandResponse) error {
 	return c.c.WriteMessage(50, 88, m)
 }
 
-func (c Client) HideHousingObject(m *HideHousingObject) error {
+func (c Client) GardeningCSRResults(m *GardeningCSRResults) error {
 	return c.c.WriteMessage(50, 89, m)
 }
 
-func (c Client) HousingGameRequestPoweruplocations(m *HousingGameRequestPoweruplocations) error {
+func (c Client) GardeningHarvestPlant(m *GardeningHarvestPlant) error {
 	return c.c.WriteMessage(50, 90, m)
 }
 
-func (c Client) HousingGameStatusUpdate(m *HousingGameStatusUpdate) error {
+func (c Client) GardeningHarvestPlantSecondSpring(m *GardeningHarvestPlantSecondSpring) error {
 	return c.c.WriteMessage(50, 91, m)
 }
 
-func (c Client) HousingGameUsePowerup(m *HousingGameUsePowerup) error {
+func (c Client) GardeningSpellFizzle(m *GardeningSpellFizzle) error {
 	return c.c.WriteMessage(50, 92, m)
 }
 
-func (c Client) HousingObjectNoPickup(m *HousingObjectNoPickup) error {
+func (c Client) GardeningSpellInspect(m *GardeningSpellInspect) error {
 	return c.c.WriteMessage(50, 93, m)
 }
 
-func (c Client) HousingObjectProximity(m *HousingObjectProximity) error {
+func (c Client) GardenLevelUp(m *GardenLevelUp) error {
 	return c.c.WriteMessage(50, 94, m)
 }
 
-func (c Client) HousingZonePlayer(m *HousingZonePlayer) error {
+func (c Client) HideHousingObject(m *HideHousingObject) error {
 	return c.c.WriteMessage(50, 95, m)
 }
 
-func (c Client) HousingZonePlayerList(m *HousingZonePlayerList) error {
+func (c Client) HousingGameRequestPoweruplocations(m *HousingGameRequestPoweruplocations) error {
 	return c.c.WriteMessage(50, 96, m)
 }
 
-func (c Client) InteractiveMusicError(m *InteractiveMusicError) error {
+func (c Client) HousingGameStatusUpdate(m *HousingGameStatusUpdate) error {
 	return c.c.WriteMessage(50, 97, m)
 }
 
-func (c Client) InteractiveMusicInUse(m *InteractiveMusicInUse) error {
+func (c Client) HousingGameUsePowerup(m *HousingGameUsePowerup) error {
 	return c.c.WriteMessage(50, 98, m)
 }
 
-func (c Client) InteractiveMusicInUse2(m *InteractiveMusicInUse2) error {
+func (c Client) HousingObjectNoPickup(m *HousingObjectNoPickup) error {
 	return c.c.WriteMessage(50, 99, m)
 }
 
-func (c Client) IslandSpaceBuyRequest(m *IslandSpaceBuyRequest) error {
+func (c Client) HousingObjectProximity(m *HousingObjectProximity) error {
 	return c.c.WriteMessage(50, 100, m)
 }
 
-func (c Client) IslandSpaceShopOpen(m *IslandSpaceShopOpen) error {
+func (c Client) HousingZonePlayer(m *HousingZonePlayer) error {
 	return c.c.WriteMessage(50, 101, m)
 }
 
-func (c Client) MissFish(m *MissFish) error {
+func (c Client) HousingZonePlayerList(m *HousingZonePlayerList) error {
 	return c.c.WriteMessage(50, 102, m)
 }
 
-func (c Client) MonsterMagicAddMonster(m *MonsterMagicAddMonster) error {
+func (c Client) InteractiveMusicError(m *InteractiveMusicError) error {
 	return c.c.WriteMessage(50, 103, m)
 }
 
-func (c Client) MonsterMagicEraseMonster(m *MonsterMagicEraseMonster) error {
+func (c Client) InteractiveMusicInUse(m *InteractiveMusicInUse) error {
 	return c.c.WriteMessage(50, 104, m)
 }
 
-func (c Client) MoveFromAttic(m *MoveFromAttic) error {
+func (c Client) InteractiveMusicInUse2(m *InteractiveMusicInUse2) error {
 	return c.c.WriteMessage(50, 105, m)
 }
 
-func (c Client) MoveGearFromGearVault(m *MoveGearFromGearVault) error {
+func (c Client) IslandSpaceBuyRequest(m *IslandSpaceBuyRequest) error {
 	return c.c.WriteMessage(50, 106, m)
 }
 
-func (c Client) MoveGearToGearVault(m *MoveGearToGearVault) error {
+func (c Client) IslandSpaceShopOpen(m *IslandSpaceShopOpen) error {
 	return c.c.WriteMessage(50, 107, m)
 }
 
-func (c Client) MoveJewelFromJewelVault(m *MoveJewelFromJewelVault) error {
+func (c Client) MissFish(m *MissFish) error {
 	return c.c.WriteMessage(50, 108, m)
 }
 
-func (c Client) MoveJewelToJewelVault(m *MoveJewelToJewelVault) error {
+func (c Client) MonsterMagicAddMonster(m *MonsterMagicAddMonster) error {
 	return c.c.WriteMessage(50, 109, m)
 }
 
-func (c Client) MoveSeedFromGardeningShed(m *MoveSeedFromGardeningShed) error {
+func (c Client) MonsterMagicEraseMonster(m *MonsterMagicEraseMonster) error {
 	return c.c.WriteMessage(50, 110, m)
 }
 
-func (c Client) MoveSeedToGardeningShed(m *MoveSeedToGardeningShed) error {
+func (c Client) MoveFromAttic(m *MoveFromAttic) error {
 	return c.c.WriteMessage(50, 111, m)
 }
 
-func (c Client) MoveTCFromTCVault(m *MoveTCFromTCVault) error {
+func (c Client) MoveGearFromGearVault(m *MoveGearFromGearVault) error {
 	return c.c.WriteMessage(50, 112, m)
 }
 
-func (c Client) MoveTCToTCVault(m *MoveTCToTCVault) error {
+func (c Client) MoveGearToGearVault(m *MoveGearToGearVault) error {
 	return c.c.WriteMessage(50, 113, m)
 }
 
-func (c Client) MoveToAttic(m *MoveToAttic) error {
+func (c Client) MoveJewelFromJewelVault(m *MoveJewelFromJewelVault) error {
 	return c.c.WriteMessage(50, 114, m)
 }
 
-func (c Client) NoFishSpace(m *NoFishSpace) error {
+func (c Client) MoveJewelToJewelVault(m *MoveJewelToJewelVault) error {
 	return c.c.WriteMessage(50, 115, m)
 }
 
-func (c Client) PatchAddAttic(m *PatchAddAttic) error {
+func (c Client) MoveSeedFromGardeningShed(m *MoveSeedFromGardeningShed) error {
 	return c.c.WriteMessage(50, 116, m)
 }
 
-func (c Client) PatchAddHousingObject(m *PatchAddHousingObject) error {
+func (c Client) MoveSeedToGardeningShed(m *MoveSeedToGardeningShed) error {
 	return c.c.WriteMessage(50, 117, m)
 }
 
-func (c Client) PatchAquarium(m *PatchAquarium) error {
+func (c Client) MoveTCFromTCVault(m *MoveTCFromTCVault) error {
 	return c.c.WriteMessage(50, 118, m)
 }
 
-func (c Client) PatchCastleMagic(m *PatchCastleMagic) error {
+func (c Client) MoveTCToTCVault(m *MoveTCToTCVault) error {
 	return c.c.WriteMessage(50, 119, m)
 }
 
-func (c Client) PatchDeleteAttic(m *PatchDeleteAttic) error {
+func (c Client) MoveToAttic(m *MoveToAttic) error {
 	return c.c.WriteMessage(50, 120, m)
 }
 
-func (c Client) PatchDeleteHousingObject(m *PatchDeleteHousingObject) error {
+func (c Client) NoFishSpace(m *NoFishSpace) error {
 	return c.c.WriteMessage(50, 121, m)
 }
 
-func (c Client) PatchEquipHousingObject(m *PatchEquipHousingObject) error {
+func (c Client) PatchAddAttic(m *PatchAddAttic) error {
 	return c.c.WriteMessage(50, 122, m)
 }
 
-func (c Client) PatchGardening(m *PatchGardening) error {
+func (c Client) PatchAddHousingObject(m *PatchAddHousingObject) error {
 	return c.c.WriteMessage(50, 123, m)
 }
 
-func (c Client) PatchHouse(m *PatchHouse) error {
+func (c Client) PatchAquarium(m *PatchAquarium) error {
 	return c.c.WriteMessage(50, 124, m)
 }
 
-func (c Client) PatchHousingBreadCrumb(m *PatchHousingBreadCrumb) error {
+func (c Client) PatchCastleMagic(m *PatchCastleMagic) error {
 	return c.c.WriteMessage(50, 125, m)
 }
 
-func (c Client) PatchHousingGardeningShed(m *PatchHousingGardeningShed) error {
+func (c Client) PatchDeleteAttic(m *PatchDeleteAttic) error {
 	return c.c.WriteMessage(50, 126, m)
 }
 
-func (c Client) PatchHousingGearVault(m *PatchHousingGearVault) error {
+func (c Client) PatchDeleteHousingObject(m *PatchDeleteHousingObject) error {
 	return c.c.WriteMessage(50, 127, m)
 }
 
-func (c Client) PatchHousingJewelVault(m *PatchHousingJewelVault) error {
+func (c Client) PatchEquipHousingObject(m *PatchEquipHousingObject) error {
 	return c.c.WriteMessage(50, 128, m)
 }
 
-func (c Client) PatchHousingMusicObject(m *PatchHousingMusicObject) error {
+func (c Client) PatchGardening(m *PatchGardening) error {
 	return c.c.WriteMessage(50, 129, m)
 }
 
-func (c Client) PatchHousingSignObject(m *PatchHousingSignObject) error {
+func (c Client) PatchHouse(m *PatchHouse) error {
 	return c.c.WriteMessage(50, 130, m)
 }
 
-func (c Client) PatchHousingTeleporterObject(m *PatchHousingTeleporterObject) error {
+func (c Client) PatchHousingBreadCrumb(m *PatchHousingBreadCrumb) error {
 	return c.c.WriteMessage(50, 131, m)
 }
 
-func (c Client) PatchHousingTrain(m *PatchHousingTrain) error {
+func (c Client) PatchHousingGardeningShed(m *PatchHousingGardeningShed) error {
 	return c.c.WriteMessage(50, 132, m)
 }
 
-func (c Client) PatchMonsterArena(m *PatchMonsterArena) error {
+func (c Client) PatchHousingGearVault(m *PatchHousingGearVault) error {
 	return c.c.WriteMessage(50, 133, m)
 }
 
-func (c Client) PatchMusicLoop(m *PatchMusicLoop) error {
+func (c Client) PatchHousingJewelVault(m *PatchHousingJewelVault) error {
 	return c.c.WriteMessage(50, 134, m)
 }
 
-func (c Client) PatchRemoveTextureRemap(m *PatchRemoveTextureRemap) error {
+func (c Client) PatchHousingMusicObject(m *PatchHousingMusicObject) error {
 	return c.c.WriteMessage(50, 135, m)
 }
 
-func (c Client) PatchTextureRemap(m *PatchTextureRemap) error {
+func (c Client) PatchHousingSignObject(m *PatchHousingSignObject) error {
 	return c.c.WriteMessage(50, 136, m)
 }
 
-func (c Client) PatchTintHousingObject(m *PatchTintHousingObject) error {
+func (c Client) PatchHousingTeleporterObject(m *PatchHousingTeleporterObject) error {
 	return c.c.WriteMessage(50, 137, m)
 }
 
-func (c Client) PatchTreasureCardPoster(m *PatchTreasureCardPoster) error {
+func (c Client) PatchHousingTrain(m *PatchHousingTrain) error {
 	return c.c.WriteMessage(50, 138, m)
 }
 
-func (c Client) PatchTreasureCardVault(m *PatchTreasureCardVault) error {
+func (c Client) PatchMonsterArena(m *PatchMonsterArena) error {
 	return c.c.WriteMessage(50, 139, m)
 }
 
-func (c Client) PatchUpdateHousingObject(m *PatchUpdateHousingObject) error {
+func (c Client) PatchMusicLoop(m *PatchMusicLoop) error {
 	return c.c.WriteMessage(50, 140, m)
 }
 
-func (c Client) PatchExtendedTile(m *PatchExtendedTile) error {
+func (c Client) PatchRemoveTextureRemap(m *PatchRemoveTextureRemap) error {
 	return c.c.WriteMessage(50, 141, m)
 }
 
-func (c Client) PetTomeScanAttic(m *PetTomeScanAttic) error {
+func (c Client) PatchTextureRemap(m *PatchTextureRemap) error {
 	return c.c.WriteMessage(50, 142, m)
 }
 
-func (c Client) PickUpAll(m *PickUpAll) error {
+func (c Client) PatchTintHousingObject(m *PatchTintHousingObject) error {
 	return c.c.WriteMessage(50, 143, m)
 }
 
-func (c Client) PickUpHousingTexture(m *PickUpHousingTexture) error {
+func (c Client) PatchTreasureCardPoster(m *PatchTreasureCardPoster) error {
 	return c.c.WriteMessage(50, 144, m)
 }
 
-func (c Client) PlaceHousingFish(m *PlaceHousingFish) error {
+func (c Client) PatchTreasureCardVault(m *PatchTreasureCardVault) error {
 	return c.c.WriteMessage(50, 145, m)
 }
 
-func (c Client) PlaceHousingObject(m *PlaceHousingObject) error {
+func (c Client) PatchUpdateHousingObject(m *PatchUpdateHousingObject) error {
 	return c.c.WriteMessage(50, 146, m)
 }
 
-func (c Client) PlayerTeleportingToFriend(m *PlayerTeleportingToFriend) error {
+func (c Client) PatchExtendedTile(m *PatchExtendedTile) error {
 	return c.c.WriteMessage(50, 147, m)
 }
 
-func (c Client) PlayInteractiveMusic(m *PlayInteractiveMusic) error {
+func (c Client) PetTomeScanAttic(m *PetTomeScanAttic) error {
 	return c.c.WriteMessage(50, 148, m)
 }
 
-func (c Client) PlayInteractiveMusic2(m *PlayInteractiveMusic2) error {
+func (c Client) PickUpAll(m *PickUpAll) error {
 	return c.c.WriteMessage(50, 149, m)
 }
 
-func (c Client) PlayInteractiveMusicLoop(m *PlayInteractiveMusicLoop) error {
+func (c Client) PickUpHousingTexture(m *PickUpHousingTexture) error {
 	return c.c.WriteMessage(50, 150, m)
 }
 
-func (c Client) PlayInteractiveMusicLooping(m *PlayInteractiveMusicLooping) error {
+func (c Client) PlaceHousingFish(m *PlaceHousingFish) error {
 	return c.c.WriteMessage(50, 151, m)
 }
 
-func (c Client) PlayInteractiveMusicLooping2(m *PlayInteractiveMusicLooping2) error {
+func (c Client) PlaceHousingObject(m *PlaceHousingObject) error {
 	return c.c.WriteMessage(50, 152, m)
 }
 
-func (c Client) PlayTrainSound(m *PlayTrainSound) error {
+func (c Client) PlayerTeleportingToFriend(m *PlayerTeleportingToFriend) error {
 	return c.c.WriteMessage(50, 153, m)
 }
 
-func (c Client) RemoveFishFromAquarium(m *RemoveFishFromAquarium) error {
+func (c Client) PlayInteractiveMusic(m *PlayInteractiveMusic) error {
 	return c.c.WriteMessage(50, 154, m)
 }
 
-func (c Client) RemoveHouseMusic(m *RemoveHouseMusic) error {
+func (c Client) PlayInteractiveMusic2(m *PlayInteractiveMusic2) error {
 	return c.c.WriteMessage(50, 155, m)
 }
 
-func (c Client) ReportHouse(m *ReportHouse) error {
+func (c Client) PlayInteractiveMusicLoop(m *PlayInteractiveMusicLoop) error {
 	return c.c.WriteMessage(50, 156, m)
 }
 
-func (c Client) AddRequestAllFish(m *AddRequestAllFish) error {
+func (c Client) PlayInteractiveMusicLooping(m *PlayInteractiveMusicLooping) error {
 	return c.c.WriteMessage(50, 157, m)
 }
 
-func (c Client) RequestAttic(m *RequestAttic) error {
+func (c Client) PlayInteractiveMusicLooping2(m *PlayInteractiveMusicLooping2) error {
 	return c.c.WriteMessage(50, 158, m)
 }
 
-func (c Client) RequestCatchSuccess(m *RequestCatchSuccess) error {
+func (c Client) PlayTrainSound(m *PlayTrainSound) error {
 	return c.c.WriteMessage(50, 159, m)
 }
 
-func (c Client) RequestDeedZone(m *RequestDeedZone) error {
+func (c Client) RemoveFishFromAquarium(m *RemoveFishFromAquarium) error {
 	return c.c.WriteMessage(50, 160, m)
 }
 
-func (c Client) AddRequestFishHistory(m *AddRequestFishHistory) error {
+func (c Client) RemoveHouseMusic(m *RemoveHouseMusic) error {
 	return c.c.WriteMessage(50, 161, m)
 }
 
-func (c Client) RequestHouseOwnerCharacterID(m *RequestHouseOwnerCharacterID) error {
+func (c Client) ReportHouse(m *ReportHouse) error {
 	return c.c.WriteMessage(50, 162, m)
 }
 
-func (c Client) RequestHouseTransferList(m *RequestHouseTransferList) error {
+func (c Client) AddRequestAllFish(m *AddRequestAllFish) error {
 	return c.c.WriteMessage(50, 163, m)
 }
 
-func (c Client) RequestHousingZone(m *RequestHousingZone) error {
+func (c Client) RequestAttic(m *RequestAttic) error {
 	return c.c.WriteMessage(50, 164, m)
 }
 
-func (c Client) RequestHousingZoneTeleport(m *RequestHousingZoneTeleport) error {
+func (c Client) RequestCatchSuccess(m *RequestCatchSuccess) error {
 	return c.c.WriteMessage(50, 165, m)
 }
 
-func (c Client) RequestInteractiveMusic(m *RequestInteractiveMusic) error {
+func (c Client) RequestDeedZone(m *RequestDeedZone) error {
 	return c.c.WriteMessage(50, 166, m)
 }
 
-func (c Client) RequestIslandSwitch(m *RequestIslandSwitch) error {
+func (c Client) AddRequestFishHistory(m *AddRequestFishHistory) error {
 	return c.c.WriteMessage(50, 167, m)
 }
 
-func (c Client) RequestRestoreState(m *RequestRestoreState) error {
+func (c Client) RequestHouseOwnerCharacterID(m *RequestHouseOwnerCharacterID) error {
 	return c.c.WriteMessage(50, 168, m)
 }
 
-func (c Client) RequestSendAway(m *RequestSendAway) error {
+func (c Client) RequestHouseTransferList(m *RequestHouseTransferList) error {
 	return c.c.WriteMessage(50, 169, m)
 }
 
-func (c Client) RequestTeleporterHousingConfirm(m *RequestTeleporterHousingConfirm) error {
+func (c Client) RequestHousingZone(m *RequestHousingZone) error {
 	return c.c.WriteMessage(50, 170, m)
 }
 
-func (c Client) RequestTeleporterHousingZone(m *RequestTeleporterHousingZone) error {
+func (c Client) RequestHousingZoneTeleport(m *RequestHousingZoneTeleport) error {
 	return c.c.WriteMessage(50, 171, m)
 }
 
-func (c Client) RequestTransition(m *RequestTransition) error {
+func (c Client) RequestInteractiveMusic(m *RequestInteractiveMusic) error {
 	return c.c.WriteMessage(50, 172, m)
 }
 
-func (c Client) RequestBlobs(m *RequestBlobs) error {
+func (c Client) RequestIslandSwitch(m *RequestIslandSwitch) error {
 	return c.c.WriteMessage(50, 173, m)
 }
 
-func (c Client) Respec(m *Respec) error {
+func (c Client) RequestRestoreState(m *RequestRestoreState) error {
 	return c.c.WriteMessage(50, 174, m)
 }
 
-func (c Client) SelectHouseMusic(m *SelectHouseMusic) error {
+func (c Client) RequestSendAway(m *RequestSendAway) error {
 	return c.c.WriteMessage(50, 175, m)
 }
 
-func (c Client) SelectMusicStyle(m *SelectMusicStyle) error {
+func (c Client) RequestTeleporterHousingConfirm(m *RequestTeleporterHousingConfirm) error {
 	return c.c.WriteMessage(50, 176, m)
 }
 
-func (c Client) SellFishOpen(m *SellFishOpen) error {
+func (c Client) RequestTeleporterHousingZone(m *RequestTeleporterHousingZone) error {
 	return c.c.WriteMessage(50, 177, m)
 }
 
-func (c Client) SellFishRequest(m *SellFishRequest) error {
+func (c Client) RequestTransition(m *RequestTransition) error {
 	return c.c.WriteMessage(50, 178, m)
 }
 
-func (c Client) SendHousingObjectStates(m *SendHousingObjectStates) error {
+func (c Client) RequestBlobs(m *RequestBlobs) error {
 	return c.c.WriteMessage(50, 179, m)
 }
 
-func (c Client) SendHousingTextureInfo(m *SendHousingTextureInfo) error {
+func (c Client) Respec(m *Respec) error {
 	return c.c.WriteMessage(50, 180, m)
 }
 
-func (c Client) SendBlob(m *SendBlob) error {
+func (c Client) SelectHouseMusic(m *SelectHouseMusic) error {
 	return c.c.WriteMessage(50, 181, m)
 }
 
-func (c Client) SetAtticID(m *SetAtticID) error {
+func (c Client) SelectMusicStyle(m *SelectMusicStyle) error {
 	return c.c.WriteMessage(50, 182, m)
 }
 
-func (c Client) SetFishingPlayers(m *SetFishingPlayers) error {
+func (c Client) SellFishOpen(m *SellFishOpen) error {
 	return c.c.WriteMessage(50, 183, m)
 }
 
-func (c Client) SetHouseSign(m *SetHouseSign) error {
+func (c Client) SellFishRequest(m *SellFishRequest) error {
 	return c.c.WriteMessage(50, 184, m)
 }
 
-func (c Client) SetHouseTeleporter(m *SetHouseTeleporter) error {
+func (c Client) SendHousingObjectStates(m *SendHousingObjectStates) error {
 	return c.c.WriteMessage(50, 185, m)
 }
 
-func (c Client) SetHousingGameState(m *SetHousingGameState) error {
+func (c Client) SendHousingTextureInfo(m *SendHousingTextureInfo) error {
 	return c.c.WriteMessage(50, 186, m)
 }
 
-func (c Client) SetHousingPalette(m *SetHousingPalette) error {
+func (c Client) SendBlob(m *SendBlob) error {
 	return c.c.WriteMessage(50, 187, m)
 }
 
-func (c Client) SetInstanceFish(m *SetInstanceFish) error {
+func (c Client) SetAtticID(m *SetAtticID) error {
 	return c.c.WriteMessage(50, 188, m)
 }
 
-func (c Client) InvisibleToFriends(m *InvisibleToFriends) error {
+func (c Client) SetFishingPlayers(m *SetFishingPlayers) error {
 	return c.c.WriteMessage(50, 189, m)
 }
 
-func (c Client) SetMusicLoop(m *SetMusicLoop) error {
+func (c Client) SetHouseSign(m *SetHouseSign) error {
 	return c.c.WriteMessage(50, 190, m)
 }
 
-func (c Client) SetNextTrain(m *SetNextTrain) error {
+func (c Client) SetHouseTeleporter(m *SetHouseTeleporter) error {
 	return c.c.WriteMessage(50, 191, m)
 }
 
-func (c Client) SetTileWallpaper(m *SetTileWallpaper) error {
+func (c Client) SetHousingGameState(m *SetHousingGameState) error {
 	return c.c.WriteMessage(50, 192, m)
 }
 
-func (c Client) ShowFishingCast(m *ShowFishingCast) error {
+func (c Client) SetHousingPalette(m *SetHousingPalette) error {
 	return c.c.WriteMessage(50, 193, m)
 }
 
-func (c Client) StartHousingGame(m *StartHousingGame) error {
+func (c Client) SetInstanceFish(m *SetInstanceFish) error {
 	return c.c.WriteMessage(50, 194, m)
 }
 
-func (c Client) StartTrain(m *StartTrain) error {
+func (c Client) InvisibleToFriends(m *InvisibleToFriends) error {
 	return c.c.WriteMessage(50, 195, m)
 }
 
-func (c Client) StopInteractiveMusicLoop(m *StopInteractiveMusicLoop) error {
+func (c Client) SetMusicLoop(m *SetMusicLoop) error {
 	return c.c.WriteMessage(50, 196, m)
 }
 
-func (c Client) SwitchGotoCommons(m *SwitchGotoCommons) error {
+func (c Client) SetNextTrain(m *SetNextTrain) error {
 	return c.c.WriteMessage(50, 197, m)
 }
 
-func (c Client) TeleportedToDeletedLot(m *TeleportedToDeletedLot) error {
+func (c Client) SetTileWallpaper(m *SetTileWallpaper) error {
 	return c.c.WriteMessage(50, 198, m)
 }
 
-func (c Client) TeleportToStart(m *TeleportToStart) error {
+func (c Client) ShowFishingCast(m *ShowFishingCast) error {
 	return c.c.WriteMessage(50, 199, m)
 }
 
-func (c Client) UpdateAtticCount(m *UpdateAtticCount) error {
+func (c Client) StartHousingGame(m *StartHousingGame) error {
 	return c.c.WriteMessage(50, 200, m)
 }
 
-func (c Client) UpdateGardeningXP(m *UpdateGardeningXP) error {
+func (c Client) StartTrain(m *StartTrain) error {
 	return c.c.WriteMessage(50, 201, m)
 }
 
-func (c Client) UpdateHousingObject(m *UpdateHousingObject) error {
+func (c Client) StopInteractiveMusicLoop(m *StopInteractiveMusicLoop) error {
 	return c.c.WriteMessage(50, 202, m)
 }
 
-func (c Client) UpdateHousingPet(m *UpdateHousingPet) error {
+func (c Client) SwitchGotoCommons(m *SwitchGotoCommons) error {
 	return c.c.WriteMessage(50, 203, m)
 }
 
-func (c Client) UpdateIslandSpace(m *UpdateIslandSpace) error {
+func (c Client) TeleportedToDeletedLot(m *TeleportedToDeletedLot) error {
 	return c.c.WriteMessage(50, 204, m)
 }
 
-func (c Client) UpdateMaximumHousingItems(m *UpdateMaximumHousingItems) error {
+func (c Client) TeleportToStart(m *TeleportToStart) error {
 	return c.c.WriteMessage(50, 205, m)
 }
 
-func (c Client) UpdateTrain(m *UpdateTrain) error {
+func (c Client) UpdateAtticCount(m *UpdateAtticCount) error {
 	return c.c.WriteMessage(50, 206, m)
+}
+
+func (c Client) UpdateGardeningXP(m *UpdateGardeningXP) error {
+	return c.c.WriteMessage(50, 207, m)
+}
+
+func (c Client) UpdateHousingObject(m *UpdateHousingObject) error {
+	return c.c.WriteMessage(50, 208, m)
+}
+
+func (c Client) UpdateHousingPet(m *UpdateHousingPet) error {
+	return c.c.WriteMessage(50, 209, m)
+}
+
+func (c Client) UpdateIslandSpace(m *UpdateIslandSpace) error {
+	return c.c.WriteMessage(50, 210, m)
+}
+
+func (c Client) UpdateMaximumHousingItems(m *UpdateMaximumHousingItems) error {
+	return c.c.WriteMessage(50, 211, m)
+}
+
+func (c Client) UpdateTrain(m *UpdateTrain) error {
+	return c.c.WriteMessage(50, 212, m)
 }
 
 type Service struct {
@@ -1920,12 +1962,20 @@ func (s *CastleMagicRequestAllowPVP) Unmarshal(data []byte) error {
 type CastleMagicRequestPlayerTeleport struct {
 	TargetPlayerGID uint64
 	TargetGID       uint64
+	LocX            float32
+	LocY            float32
+	LocZ            float32
+	Yaw             float32
 }
 
 func (s *CastleMagicRequestPlayerTeleport) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 16))
+	b := bytes.NewBuffer(make([]byte, 0, 32))
 	binary.Write(b, binary.LittleEndian, s.TargetPlayerGID)
 	binary.Write(b, binary.LittleEndian, s.TargetGID)
+	binary.Write(b, binary.LittleEndian, s.LocX)
+	binary.Write(b, binary.LittleEndian, s.LocY)
+	binary.Write(b, binary.LittleEndian, s.LocZ)
+	binary.Write(b, binary.LittleEndian, s.Yaw)
 	return b.Bytes()
 }
 
@@ -1938,16 +1988,30 @@ func (s *CastleMagicRequestPlayerTeleport) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.TargetGID); err != nil {
 		return err
 	}
+	if err = binary.Read(b, binary.LittleEndian, &s.LocX); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.LocY); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.LocZ); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.Yaw); err != nil {
+		return err
+	}
 	return nil
 }
 
 type CastleMagicRequestPVPState struct {
-	State int8
+	ModifierName string
+	State        int8
 }
 
 func (s *CastleMagicRequestPVPState) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 1))
+	b := bytes.NewBuffer(make([]byte, 0, 3+len(s.ModifierName)))
 	binary.Write(b, binary.LittleEndian, s.State)
+	codegen.WriteString(b, s.ModifierName)
 	return b.Bytes()
 }
 
@@ -1955,6 +2019,9 @@ func (s *CastleMagicRequestPVPState) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if err = binary.Read(b, binary.LittleEndian, &s.State); err != nil {
+		return err
+	}
+	if s.ModifierName, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2159,14 +2226,14 @@ func (s *CastleToursDeleteCharacter) Unmarshal(data []byte) error {
 type CastleToursEnableRatingDisplay struct {
 	LotGID       uint64
 	StructureGID uint64
+	FirstDisplay int32
 	TemplateID   uint32
 	CastleType   int8
 	Rating       int8
-	FirstDisplay int8
 }
 
 func (s *CastleToursEnableRatingDisplay) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 23))
+	b := bytes.NewBuffer(make([]byte, 0, 26))
 	binary.Write(b, binary.LittleEndian, s.CastleType)
 	binary.Write(b, binary.LittleEndian, s.Rating)
 	binary.Write(b, binary.LittleEndian, s.FirstDisplay)
@@ -2243,6 +2310,65 @@ func (s *CastleToursFavoriteInfo2) Unmarshal(data []byte) error {
 		return err
 	}
 	if s.FavoriteData, err = codegen.ReadString(b); err != nil {
+		return err
+	}
+	return nil
+}
+
+type CastleToursHallOfFame struct {
+}
+
+func (s *CastleToursHallOfFame) Marshal() []byte {
+	return []byte{}
+}
+
+func (s *CastleToursHallOfFame) Unmarshal(data []byte) error {
+	return nil
+}
+
+type CastleToursHallOfFameRatings struct {
+	Buffer    string
+	PlayerGID uint64
+}
+
+func (s *CastleToursHallOfFameRatings) Marshal() []byte {
+	b := bytes.NewBuffer(make([]byte, 0, 10+len(s.Buffer)))
+	binary.Write(b, binary.LittleEndian, s.PlayerGID)
+	codegen.WriteString(b, s.Buffer)
+	return b.Bytes()
+}
+
+func (s *CastleToursHallOfFameRatings) Unmarshal(data []byte) error {
+	b := bytes.NewReader(data)
+	var err error
+	if err = binary.Read(b, binary.LittleEndian, &s.PlayerGID); err != nil {
+		return err
+	}
+	if s.Buffer, err = codegen.ReadString(b); err != nil {
+		return err
+	}
+	return nil
+}
+
+type CastleToursHallOfFameResponse struct {
+	Buffer string
+	State  uint32
+}
+
+func (s *CastleToursHallOfFameResponse) Marshal() []byte {
+	b := bytes.NewBuffer(make([]byte, 0, 6+len(s.Buffer)))
+	binary.Write(b, binary.LittleEndian, s.State)
+	codegen.WriteString(b, s.Buffer)
+	return b.Bytes()
+}
+
+func (s *CastleToursHallOfFameResponse) Unmarshal(data []byte) error {
+	b := bytes.NewReader(data)
+	var err error
+	if err = binary.Read(b, binary.LittleEndian, &s.State); err != nil {
+		return err
+	}
+	if s.Buffer, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -2428,6 +2554,35 @@ func (s *CastleToursRemoveFavorite) Unmarshal(data []byte) error {
 	return nil
 }
 
+type CastleToursRemoveHallOfFame struct {
+	PlayerGID  uint64
+	OutsideGID uint64
+	InsideGID  uint64
+}
+
+func (s *CastleToursRemoveHallOfFame) Marshal() []byte {
+	b := bytes.NewBuffer(make([]byte, 0, 24))
+	binary.Write(b, binary.LittleEndian, s.PlayerGID)
+	binary.Write(b, binary.LittleEndian, s.OutsideGID)
+	binary.Write(b, binary.LittleEndian, s.InsideGID)
+	return b.Bytes()
+}
+
+func (s *CastleToursRemoveHallOfFame) Unmarshal(data []byte) error {
+	b := bytes.NewReader(data)
+	var err error
+	if err = binary.Read(b, binary.LittleEndian, &s.PlayerGID); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.OutsideGID); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.InsideGID); err != nil {
+		return err
+	}
+	return nil
+}
+
 type CastleToursRemoveResult struct {
 	Status uint32
 }
@@ -2448,12 +2603,14 @@ func (s *CastleToursRemoveResult) Unmarshal(data []byte) error {
 }
 
 type CastleToursRequest struct {
-	GlobalID uint64
+	GlobalID           uint64
+	HasNominatedHouses int8
 }
 
 func (s *CastleToursRequest) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 8))
+	b := bytes.NewBuffer(make([]byte, 0, 9))
 	binary.Write(b, binary.LittleEndian, s.GlobalID)
+	binary.Write(b, binary.LittleEndian, s.HasNominatedHouses)
 	return b.Bytes()
 }
 
@@ -2461,6 +2618,9 @@ func (s *CastleToursRequest) Unmarshal(data []byte) error {
 	b := bytes.NewReader(data)
 	var err error
 	if err = binary.Read(b, binary.LittleEndian, &s.GlobalID); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.HasNominatedHouses); err != nil {
 		return err
 	}
 	return nil
@@ -2577,6 +2737,35 @@ func (s *CastleToursRequestMyCastles) Unmarshal(data []byte) error {
 	return nil
 }
 
+type CastleToursRequestNextLeaderboard struct {
+	ClusterGID      uint64
+	OwnerGID        uint64
+	LeaderboardType int8
+}
+
+func (s *CastleToursRequestNextLeaderboard) Marshal() []byte {
+	b := bytes.NewBuffer(make([]byte, 0, 17))
+	binary.Write(b, binary.LittleEndian, s.LeaderboardType)
+	binary.Write(b, binary.LittleEndian, s.ClusterGID)
+	binary.Write(b, binary.LittleEndian, s.OwnerGID)
+	return b.Bytes()
+}
+
+func (s *CastleToursRequestNextLeaderboard) Unmarshal(data []byte) error {
+	b := bytes.NewReader(data)
+	var err error
+	if err = binary.Read(b, binary.LittleEndian, &s.LeaderboardType); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.ClusterGID); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.OwnerGID); err != nil {
+		return err
+	}
+	return nil
+}
+
 type CastleToursSendRating struct {
 	Rating int8
 }
@@ -2599,16 +2788,18 @@ func (s *CastleToursSendRating) Unmarshal(data []byte) error {
 type CastleToursTeleportPlayer struct {
 	TeleportData        string
 	CharacterID         uint64
+	OwnerID             uint64
 	Source              int8
 	LeaderboardTeleport int8
 }
 
 func (s *CastleToursTeleportPlayer) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 12+len(s.TeleportData)))
+	b := bytes.NewBuffer(make([]byte, 0, 20+len(s.TeleportData)))
 	binary.Write(b, binary.LittleEndian, s.CharacterID)
 	codegen.WriteString(b, s.TeleportData)
 	binary.Write(b, binary.LittleEndian, s.Source)
 	binary.Write(b, binary.LittleEndian, s.LeaderboardTeleport)
+	binary.Write(b, binary.LittleEndian, s.OwnerID)
 	return b.Bytes()
 }
 
@@ -2625,6 +2816,9 @@ func (s *CastleToursTeleportPlayer) Unmarshal(data []byte) error {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.LeaderboardTeleport); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.OwnerID); err != nil {
 		return err
 	}
 	return nil
@@ -2660,6 +2854,25 @@ func (s *CastleToursVisitCastle) Unmarshal(data []byte) error {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.HouseType); err != nil {
+		return err
+	}
+	return nil
+}
+
+type CastleToursVisitIgnored struct {
+	PlayerGID uint64
+}
+
+func (s *CastleToursVisitIgnored) Marshal() []byte {
+	b := bytes.NewBuffer(make([]byte, 0, 8))
+	binary.Write(b, binary.LittleEndian, s.PlayerGID)
+	return b.Bytes()
+}
+
+func (s *CastleToursVisitIgnored) Unmarshal(data []byte) error {
+	b := bytes.NewReader(data)
+	var err error
+	if err = binary.Read(b, binary.LittleEndian, &s.PlayerGID); err != nil {
 		return err
 	}
 	return nil
@@ -5710,14 +5923,16 @@ func (s *PlaceHousingObject) Unmarshal(data []byte) error {
 }
 
 type PlayerTeleportingToFriend struct {
+	GroupID           string
 	TargetCharacterID uint64
 	OriginatorID      uint64
 }
 
 func (s *PlayerTeleportingToFriend) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 16))
+	b := bytes.NewBuffer(make([]byte, 0, 18+len(s.GroupID)))
 	binary.Write(b, binary.LittleEndian, s.TargetCharacterID)
 	binary.Write(b, binary.LittleEndian, s.OriginatorID)
+	codegen.WriteString(b, s.GroupID)
 	return b.Bytes()
 }
 
@@ -5728,6 +5943,9 @@ func (s *PlayerTeleportingToFriend) Unmarshal(data []byte) error {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.OriginatorID); err != nil {
+		return err
+	}
+	if s.GroupID, err = codegen.ReadString(b); err != nil {
 		return err
 	}
 	return nil
@@ -7055,13 +7273,26 @@ func (s *StopInteractiveMusicLoop) Unmarshal(data []byte) error {
 }
 
 type SwitchGotoCommons struct {
+	ClusterGID uint64
+	OwnerGID   uint64
 }
 
 func (s *SwitchGotoCommons) Marshal() []byte {
-	return []byte{}
+	b := bytes.NewBuffer(make([]byte, 0, 16))
+	binary.Write(b, binary.LittleEndian, s.ClusterGID)
+	binary.Write(b, binary.LittleEndian, s.OwnerGID)
+	return b.Bytes()
 }
 
 func (s *SwitchGotoCommons) Unmarshal(data []byte) error {
+	b := bytes.NewReader(data)
+	var err error
+	if err = binary.Read(b, binary.LittleEndian, &s.ClusterGID); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.OwnerGID); err != nil {
+		return err
+	}
 	return nil
 }
 

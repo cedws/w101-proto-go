@@ -537,18 +537,22 @@ func (s *CombatMatchResult) Unmarshal(data []byte) error {
 }
 
 type CombatMove struct {
-	SpellTarget    uint32
-	TimeLeft       int32
-	MoveType       uint8
-	SpellSelection uint8
+	SpellTarget           uint32
+	TimeLeft              int32
+	ShadowPactTarget      int32
+	SelectedTieredSpellID int32
+	MoveType              uint8
+	SpellSelection        uint8
 }
 
 func (s *CombatMove) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 10))
+	b := bytes.NewBuffer(make([]byte, 0, 18))
 	binary.Write(b, binary.LittleEndian, s.MoveType)
 	binary.Write(b, binary.LittleEndian, s.SpellSelection)
 	binary.Write(b, binary.LittleEndian, s.SpellTarget)
 	binary.Write(b, binary.LittleEndian, s.TimeLeft)
+	binary.Write(b, binary.LittleEndian, s.ShadowPactTarget)
+	binary.Write(b, binary.LittleEndian, s.SelectedTieredSpellID)
 	return b.Bytes()
 }
 
@@ -567,6 +571,12 @@ func (s *CombatMove) Unmarshal(data []byte) error {
 	if err = binary.Read(b, binary.LittleEndian, &s.TimeLeft); err != nil {
 		return err
 	}
+	if err = binary.Read(b, binary.LittleEndian, &s.ShadowPactTarget); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.SelectedTieredSpellID); err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -576,6 +586,7 @@ type CombatMoveSelection struct {
 	SpellID          int32
 	SpellTargetIndex uint32
 	EnchantmentID    int32
+	ShadowPactTarget int32
 	MoveType         uint8
 	IsItemCard       uint8
 	IsTreasureCard   uint8
@@ -583,7 +594,7 @@ type CombatMoveSelection struct {
 }
 
 func (s *CombatMoveSelection) Marshal() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, 32))
+	b := bytes.NewBuffer(make([]byte, 0, 36))
 	binary.Write(b, binary.LittleEndian, s.DuelID)
 	binary.Write(b, binary.LittleEndian, s.ParticipantID)
 	binary.Write(b, binary.LittleEndian, s.MoveType)
@@ -593,6 +604,7 @@ func (s *CombatMoveSelection) Marshal() []byte {
 	binary.Write(b, binary.LittleEndian, s.IsItemCard)
 	binary.Write(b, binary.LittleEndian, s.IsTreasureCard)
 	binary.Write(b, binary.LittleEndian, s.IsBattleCard)
+	binary.Write(b, binary.LittleEndian, s.ShadowPactTarget)
 	return b.Bytes()
 }
 
@@ -624,6 +636,9 @@ func (s *CombatMoveSelection) Unmarshal(data []byte) error {
 		return err
 	}
 	if err = binary.Read(b, binary.LittleEndian, &s.IsBattleCard); err != nil {
+		return err
+	}
+	if err = binary.Read(b, binary.LittleEndian, &s.ShadowPactTarget); err != nil {
 		return err
 	}
 	return nil
